@@ -19,7 +19,7 @@ import ngat.ngtcs.subsystem.sdb.*;
  * static method <code>getReference</code>.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TTL_Autoguider
   extends BasicSingletonMechanism
@@ -35,7 +35,7 @@ public class TTL_Autoguider
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_Autoguider.java,v 1.2 2003-09-22 11:29:02 je Exp $" );
+    new String( "$Id: TTL_Autoguider.java,v 1.3 2003-09-24 13:07:51 je Exp $" );
 
   /**
    * The single instance of this class.
@@ -73,6 +73,13 @@ public class TTL_Autoguider
    * correction.
    */
   protected VirtualTelescope vt;
+
+  /**
+   * The maximum acceptable position error that will return a successfully
+   * acheived demand of the autoguider position.  This value is read from the
+   * config file.
+   */
+  protected double positionTolerance = 0.0;
 
   /**
    * The maximum acceptable position error that will return a successfully
@@ -236,6 +243,18 @@ public class TTL_Autoguider
   public double getFocusPositionTolerance()
   {
     return focusPositionTolerance;
+  }
+
+
+  /**
+   * Return the maximum acceptable position error that will return a
+   * successfully acheived demand of the autoguider position.
+   * @return positionTolerance
+   * @see #positionTolerance
+   */
+  public double getPositionTolerance()
+  {
+    return positionTolerance;
   }
 
   /*=======================================================================*/
@@ -639,11 +658,14 @@ public class TTL_Autoguider
   }
 }
 /*
- *    $Date: 2003-09-22 11:29:02 $
+ *    $Date: 2003-09-24 13:07:51 $
  * $RCSfile: TTL_Autoguider.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Autoguider.java,v $
- *      $Id: TTL_Autoguider.java,v 1.2 2003-09-22 11:29:02 je Exp $
+ *      $Id: TTL_Autoguider.java,v 1.3 2003-09-24 13:07:51 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 11:29:02  je
+ *     Changed '...DemandedPosition' for '...DemandPosition'
+ *
  *     Revision 1.1  2003/09/19 16:01:09  je
  *     Initial revision
  *
