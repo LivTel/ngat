@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.15 2000-02-14 19:06:07 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.16 2000-02-22 17:30:48 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.15 $
+ * @version $Revision: 0.16 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.15 2000-02-14 19:06:07 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.16 2000-02-22 17:30:48 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -41,17 +41,22 @@ public class CCDLibrary
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_DSP_EXPOSURE_STATUS_NONE = 	0;
+	public final static int CCD_DSP_EXPOSURE_STATUS_NONE = 		0;
+	/**
+	 * DSP exposure status number, showing that the CCD is being cleared at the moment.
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_DSP_EXPOSURE_STATUS_CLEAR = 	1;
 	/**
 	 * DSP exposure status number, showing that an exposure is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_DSP_EXPOSURE_STATUS_EXPOSE = 	1;
+	public final static int CCD_DSP_EXPOSURE_STATUS_EXPOSE = 	2;
 	/**
 	 * DSP exposure status number, showing that a readout is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_DSP_EXPOSURE_STATUS_READOUT = 	2;
+	public final static int CCD_DSP_EXPOSURE_STATUS_READOUT = 	3;
 
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -933,6 +938,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.15  2000/02/14 19:06:07  cjm
+// Added Java methods for accessing more setup data.
+//
 // Revision 0.14  2000/02/02 13:54:49  cjm
 // Setup filter wheel and windowing paramater passing added.
 //
