@@ -1,45 +1,19 @@
-# Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/spec/test/Makefile,v 0.3 2002-11-15 14:19:01 je Exp $ 
+PACKAGENAME    = 
+PACKAGEDIR     = ngat/spec/test
+JAR_FILE       = ngat_spec_test.jar
 
-include		../../../Makefile.common
-include		../../Makefile.common
+SRCS           = TestSpectrographFilter.java
 
-SPEC_NAME 	= spec
-PACKAGE_DIR	= $(SPEC_NAME)/test
-BINDIR 		= $(NGAT_BIN_HOME)/$(PACKAGE_DIR)
-DOCSDIR 	= $(NGAT_DOC_HOME)/javadocs/ngat/$(PACKAGE_DIR)
-DOCFLAGS 	= -version -author -private
 
-SRCS = TestSpectrographFilter.java 
-OBJS = $(SRCS:%.java=$(BINDIR)/%.class)
-DOCS = $(SRCS:%.java=$(DOCSDIR)/%.html)
-
-top: $(OBJS) docs
-
-$(BINDIR)/%.class: %.java
-	$(JAVAC) $(JAVAC_OPTIONS) -d $(BINDIR) $<
-
-docs: $(DOCS)
-
-$(DOCSDIR)/%.html: %.java
-	$(JAVADOC) -d $(DOCSDIR) $(DOCFLAGS) $(SRCS)
-
-checkout:
-	$(CO) $(CO_OPTIONS) $(SRCS)
-
-checkin:
-	-$(CI) $(CI_OPTIONS) $(SRCS)
-
-clean: tidy
-	-$(RM) $(RM_OPTIONS) $(OBJS)
-
-tidy:
-	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
-
-backup: tidy
+include $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
+# $Header: /space/home/eng/cjm/cvs/ngat/spec/test/Makefile,v 0.4 2004-07-29 14:11:11 cjm Exp $ 
+#
 # $Log: not supported by cvs2svn $
+# Revision 0.3  2002/11/15 14:19:01  je
+# Changing Makefile structure
+#
 # Revision 0.1  2000/10/16 17:39:24  cjm
 # initial revision.
 #
