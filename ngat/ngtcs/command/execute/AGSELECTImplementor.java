@@ -8,10 +8,11 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 
 /**
+ * Select which Autoguider to use.
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AGSELECTImplementor
   extends CommandImplementor
@@ -26,7 +27,7 @@ public class AGSELECTImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGSELECTImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $" );
+    new String( "$Id: AGSELECTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
   /**
    *
@@ -92,9 +93,12 @@ public class AGSELECTImplementor
   }
 }
 /*
- *    $Date: 2003-09-19 16:10:15 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: AGSELECTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGSELECTImplementor.java,v $
- *      $Id: AGSELECTImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $
+ *      $Id: AGSELECTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:10:15  je
+ *     Initial revision
+ *
  */

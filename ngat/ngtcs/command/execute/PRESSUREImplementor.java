@@ -4,11 +4,13 @@ import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
 /**
+ * To tell the TCS the barometric pressure to use in the
+ * refractioncalculations.
  * This implementor sets the pressure in the MeteorologicalData object used by
  * the AstrometryCalculator on the specified telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PRESSUREImplementor extends CommandImplementor
 {
@@ -22,7 +24,7 @@ public class PRESSUREImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: PRESSUREImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: PRESSUREImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -69,9 +71,12 @@ public class PRESSUREImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: PRESSUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/PRESSUREImplementor.java,v $
- *      $Id: PRESSUREImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $
+ *      $Id: PRESSUREImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

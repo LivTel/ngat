@@ -7,12 +7,13 @@ import ngat.ngtcs.common.*;
 import ngat.ngtcs.command.*;
 
 /**
+ *
  * The <code>STATE</code> command returns the current
  * <code>TelescopeState</code> <code>and SoftwareState</code> of the NGTCS
  * application.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
 public class STATEImplementor extends CommandImplementor
@@ -21,7 +22,7 @@ public class STATEImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: STATEImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: STATEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
 
     public STATEImplementor( ExecutionThread eT, Telescope ts, Command c )
@@ -45,8 +46,11 @@ public class STATEImplementor extends CommandImplementor
 
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: STATEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/STATEImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

@@ -4,11 +4,12 @@ import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
 /**
+ * Set temperature used in atmospheric refraction calculations.
  * This implementor sets the temperature in the MeteorologicalData object used
  * by the AstrometryCalculator on the specified telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TEMPERATUREImplementor extends CommandImplementor
 {
@@ -22,7 +23,7 @@ public class TEMPERATUREImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: TEMPERATUREImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: TEMPERATUREImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -69,9 +70,12 @@ public class TEMPERATUREImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: TEMPERATUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TEMPERATUREImplementor.java,v $
- *      $Id: TEMPERATUREImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $
+ *      $Id: TEMPERATUREImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

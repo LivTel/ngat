@@ -8,6 +8,7 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 
 /**
+ *
  * The <code>TEST</code> command simply runs through the TRACK procedure,
  * outputting all details to the application terminal.
  * <p>
@@ -27,7 +28,7 @@ import ngat.ngtcs.subsystem.*;
  * </li></ul>
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TESTImplementor extends CommandImplementor
 {
@@ -35,7 +36,7 @@ public class TESTImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: TESTImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: TESTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
 
     /**
@@ -134,9 +135,12 @@ public class TESTImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: TESTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TESTImplementor.java,v $
- *      $Id: TESTImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $
+ *      $Id: TESTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

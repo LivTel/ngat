@@ -10,11 +10,12 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
  
 /**
+ *
  * The <code>STATUS</code> command obtains the status of the telescope and
  * all sub-systems and mechanisms.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class STATUSImplementor extends CommandImplementor 
 {
@@ -22,7 +23,7 @@ public class STATUSImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: STATUSImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: STATUSImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
     protected String mechanismName = null;
 
@@ -61,8 +62,11 @@ public class STATUSImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: STATUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/STATUSImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

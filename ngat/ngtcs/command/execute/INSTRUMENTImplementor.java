@@ -4,10 +4,13 @@ import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
 /**
+ * Configure the telescope and TCS for a particular instrument. Thiscommand
+ * will set the focal station, rotator, default focus, fold mirror position
+ * and initialise the autoguider.
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class INSTRUMENTImplementor extends CommandImplementor
 {
@@ -21,7 +24,7 @@ public class INSTRUMENTImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: INSTRUMENTImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $" );
+    new String( "$Id: INSTRUMENTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -64,9 +67,12 @@ public class INSTRUMENTImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-19 16:10:15 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: INSTRUMENTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/INSTRUMENTImplementor.java,v $
- *      $Id: INSTRUMENTImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $
+ *      $Id: INSTRUMENTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:10:15  je
+ *     Initial revision
+ *
  */

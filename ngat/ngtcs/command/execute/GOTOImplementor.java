@@ -8,6 +8,7 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 
 /**
+ * Move the telescope to a new source and track it.
  * The GOTO command is implemented by setting all necessary states and
  * variables in the <code>execute</code> method.  The thread is then started
  * and calculates the XYZMatrix position vector in the Horizon (Alt-Az)
@@ -30,7 +31,7 @@ import ngat.ngtcs.subsystem.*;
  * i.e. SLEWING or TRACKING.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class GOTOImplementor extends CommandImplementor
   implements java.lang.Runnable
@@ -39,7 +40,7 @@ public class GOTOImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: GOTOImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $" );
+    new String( "$Id: GOTOImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
   protected Target target;
 
@@ -424,10 +425,13 @@ public class GOTOImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-19 16:10:15 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: GOTOImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/GOTOImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:10:15  je
+ *     Initial revision
+ *
  *     Revision 1.1  2003/07/02 11:10:41  je
  *     Initial revision
  *

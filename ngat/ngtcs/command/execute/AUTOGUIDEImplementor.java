@@ -7,6 +7,7 @@ import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.subsystem.ags.*;
 
 /**
+ * Lock or unlock the autoguider loop.
  * This command implements the autoguiding functionality.
  * <p>
  * Autoguiding is performed by monitoring the position of a chosen object
@@ -18,7 +19,7 @@ import ngat.ngtcs.subsystem.ags.*;
  * initial guide star coordinates have been calculated.  When autoguiding is
  * stopped the pointing model corrections are removed.
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AUTOGUIDEImplementor extends CommandImplementor
   implements Runnable
@@ -33,7 +34,7 @@ public class AUTOGUIDEImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AUTOGUIDEImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $" );
+    new String( "$Id: AUTOGUIDEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -250,9 +251,12 @@ public class AUTOGUIDEImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-19 16:10:15 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: AUTOGUIDEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AUTOGUIDEImplementor.java,v $
- *      $Id: AUTOGUIDEImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $
+ *      $Id: AUTOGUIDEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:10:15  je
+ *     Initial revision
+ *
  */

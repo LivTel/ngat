@@ -5,10 +5,11 @@ import ngat.ngtcs.common.*;
 import ngat.ngtcs.command.*;
 
 /**
+ * Update a subset of the pointing coefficients in the pointing model.
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CALIBRATEImplementor
   extends CommandImplementor
@@ -24,7 +25,7 @@ public class CALIBRATEImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: CALIBRATEImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $" );
+    new String( "$Id: CALIBRATEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
   /**
    * Length of time (milliseconds) to sleep between sending back Acknowledges.
@@ -144,9 +145,12 @@ public class CALIBRATEImplementor
   }
 }
 /*
- *    $Date: 2003-09-19 16:10:15 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: CALIBRATEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/CALIBRATEImplementor.java,v $
- *      $Id: CALIBRATEImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $
+ *      $Id: CALIBRATEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:10:15  je
+ *     Initial revision
+ *
  */

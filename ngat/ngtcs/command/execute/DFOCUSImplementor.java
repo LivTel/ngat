@@ -5,10 +5,11 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 
 /**
+ * Change the focus by a specified amount.
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DFOCUSImplementor extends CommandImplementor
 {
@@ -22,7 +23,7 @@ public class DFOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: DFOCUSImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $" );
+    new String( "$Id: DFOCUSImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -98,9 +99,12 @@ public class DFOCUSImplementor extends CommandImplementor
 
 }
 /*
- *    $Date: 2003-09-19 16:10:15 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: DFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/DFOCUSImplementor.java,v $
- *      $Id: DFOCUSImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $
+ *      $Id: DFOCUSImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:10:15  je
+ *     Initial revision
+ *
  */

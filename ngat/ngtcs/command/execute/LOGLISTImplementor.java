@@ -6,10 +6,11 @@ import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
 /**
+ *
  * Returns a list of all the <code>Logger</code>s used on the telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LOGLISTImplementor extends CommandImplementor
 {
@@ -17,7 +18,7 @@ public class LOGLISTImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: LOGLISTImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: LOGLISTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
 
     /**
@@ -49,8 +50,11 @@ public class LOGLISTImplementor extends CommandImplementor
 
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: LOGLISTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/LOGLISTImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

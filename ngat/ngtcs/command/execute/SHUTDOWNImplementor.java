@@ -8,12 +8,13 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 
 /**
+ *
  * Shutsdown the specified mechanism, or the whole telescope if the specified
  * name is <code><i>the telescope system name</i></code>,
  * <code>all</code> or <code>telescope</code>.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SHUTDOWNImplementor extends CommandImplementor
 {
@@ -21,7 +22,7 @@ public class SHUTDOWNImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-        new String( "$Id: SHUTDOWNImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+        new String( "$Id: SHUTDOWNImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
 
     public SHUTDOWNImplementor( ExecutionThread eT, Telescope ts, Command c )
@@ -85,9 +86,12 @@ public class SHUTDOWNImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: SHUTDOWNImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SHUTDOWNImplementor.java,v $
- *      $Id: SHUTDOWNImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $
+ *      $Id: SHUTDOWNImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

@@ -6,11 +6,12 @@ import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
 /**
+ *
  * Returns a list of all <code>PluggableSubSystem</code> implementing objects used on
  * the telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
 public class SUBSYSTEMLISTImplementor extends CommandImplementor
@@ -19,7 +20,7 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
 
     /**
@@ -52,8 +53,11 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
 
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: SUBSYSTEMLISTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SUBSYSTEMLISTImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

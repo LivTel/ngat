@@ -9,11 +9,12 @@ import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.subsystem.amn.*;
 
 /**
+ * Set autoguider filter position.
  * This implementor will move the autoguider filter either in or out of the
  * autoguider beam.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AGFILTERImplementor
   extends CommandImplementor
@@ -28,7 +29,7 @@ public class AGFILTERImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGFILTERImplementor.java,v 1.3 2003-09-22 11:37:26 je Exp $" );
+    new String( "$Id: AGFILTERImplementor.java,v 1.4 2003-09-22 13:24:36 je Exp $" );
 
   /**
    * Timeout for this command, in milliseconds (60000).
@@ -164,11 +165,14 @@ public class AGFILTERImplementor
   }
 }
 /*
- *    $Date: 2003-09-22 11:37:26 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: AGFILTERImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFILTERImplementor.java,v $
- *      $Id: AGFILTERImplementor.java,v 1.3 2003-09-22 11:37:26 je Exp $
+ *      $Id: AGFILTERImplementor.java,v 1.4 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/22 11:37:26  je
+ *     Changed timeout message.
+ *
  *     Revision 1.2  2003/09/22 11:32:28  je
  *     Added 'TIMEOUT' and 'slept' functionality from super-class.
  *

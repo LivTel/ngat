@@ -11,6 +11,7 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 
 /**
+ *
  * Output a TPOINT test file.
  * <br>
  * This command takes an input file (currently just the RA and Dec of a target)
@@ -19,7 +20,7 @@ import ngat.ngtcs.subsystem.*;
  * and outputs the results to a file suitable for TPOINT.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TPOINTImplementor extends CommandImplementor
 {
@@ -27,7 +28,7 @@ public class TPOINTImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: TPOINTImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: TPOINTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
     private TPOINT tpoint;
     private BufferedReader reader;
@@ -241,9 +242,12 @@ public class TPOINTImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: TPOINTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TPOINTImplementor.java,v $
- *      $Id: TPOINTImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $
+ *      $Id: TPOINTImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

@@ -8,10 +8,11 @@ import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.subsystem.amn.*;
 
 /**
+ * Move autoguider probe mirror to a radial position.
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AGRADIALImplementor
   extends CommandImplementor
@@ -26,7 +27,7 @@ public class AGRADIALImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGRADIALImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $" );
+    new String( "$Id: AGRADIALImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -132,9 +133,12 @@ public class AGRADIALImplementor
   }
 }
 /*
- *    $Date: 2003-09-19 16:10:15 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: AGRADIALImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGRADIALImplementor.java,v $
- *      $Id: AGRADIALImplementor.java,v 1.1 2003-09-19 16:10:15 je Exp $
+ *      $Id: AGRADIALImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:10:15  je
+ *     Initial revision
+ *
  */

@@ -4,6 +4,10 @@ import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
 /**
+ * Enter the value of the wavelength of light used in the calculationof
+ * atmospheric refraction.
+ * Enter the value of the wavelength of light used in the calculationof
+ * atmospheric refraction.
  * This implementor sets the observing wavelength on EVERY VirtualTelescope
  * being used by a main instrument.  It will only set the wavelengths in these
  * VirtualTelescopes - any VirtualTelescopes created outside the scope of the
@@ -12,7 +16,7 @@ import ngat.ngtcs.command.*;
  * wavelength set explicitly.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class WAVELENGTHImplementor extends CommandImplementor
 {
@@ -26,7 +30,7 @@ public class WAVELENGTHImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: WAVELENGTHImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: WAVELENGTHImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -71,9 +75,12 @@ public class WAVELENGTHImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: WAVELENGTHImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/WAVELENGTHImplementor.java,v $
- *      $Id: WAVELENGTHImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $
+ *      $Id: WAVELENGTHImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */

@@ -5,10 +5,12 @@ import ngat.ngtcs.common.*;
 import ngat.ngtcs.command.*;
 
 /**
+ * Deliver Telescope and TCS status information to an RCS.Includes
+ * information necessary to build a FITS header.
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SHOWImplementor extends CommandImplementor
 {
@@ -22,7 +24,7 @@ public class SHOWImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: SHOWImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $" );
+	new String( "$Id: SHOWImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -138,9 +140,12 @@ public class SHOWImplementor extends CommandImplementor
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:55 $
+ *    $Date: 2003-09-22 13:24:36 $
  * $RCSfile: SHOWImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SHOWImplementor.java,v $
- *      $Id: SHOWImplementor.java,v 1.1 2003-07-01 10:12:55 je Exp $
+ *      $Id: SHOWImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:55  je
+ *     Initial revision
+ *
  */
