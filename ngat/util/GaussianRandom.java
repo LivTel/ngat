@@ -1,11 +1,11 @@
-package ngat.net;
+package ngat.util;
 
 /** Generates random (doubles) with a Gaussian distribution.
  * <br><br>
- * $Id: GaussianRandom.java,v 1.1 2000-12-11 14:35:56 snf Exp $
+ * $Id: GaussianRandom.java,v 1.2 2001-02-23 18:49:14 snf Exp $
  */
 public class GaussianRandom {
-
+    
     /** The standard granularity setting.*/
     public static final int DEFAULT_N = 21;
 
@@ -18,6 +18,12 @@ public class GaussianRandom {
     /** The granularity.*/
     protected double n;
 
+    /** Stores the interval.*/
+    protected double delta;
+
+    /** Stores the cumulative frequency distribution.*/
+    protected double ff[];
+
     /** Create a GaussianRandom generator. The random numbers are
      * picked from the inverse of the cumulative distribution by linear
      * interpolation. For increased accuracy a large granularity can 
@@ -26,7 +32,8 @@ public class GaussianRandom {
      * @param mean The mean of the distribution.
      * @param sdev The standard deviation.
      * @param n The granularity. The larger this is the more
-     * accurately the distribution will be generated. The default value
+     * accurately the distribution will be generated but the longer
+     * the calculations will take. The default value
      * of 21 gives a reasonable result generally.
      */
     public GaussianRandom(double mean, double sdev, int n) {
@@ -45,12 +52,12 @@ public class GaussianRandom {
 	    f = f + Math.exp(-1.0*( (xc-mean)*(xc-mean)/(sdev*sdev) ) );
 	    ff[i] = f;
 	}
-
+	
 	for (int  i = 0; i < nn; i++) {
 	    ff[i] = ff[i]/f;
 	}
     }
-
+    
     /** Create a GaussianRandom generator using the default
      * granularity setting of 21.
      * @param mean The mean of the distribution.
@@ -59,12 +66,12 @@ public class GaussianRandom {
     public GaussianRandom(double mean, double sdev) {
 	this(mean, sdev, DEFAULT_N);
     }
-
-
+    
+    
     /** @return A random number with the specified Gaussian distribution.*/
     public double random() {
 	double r = Math.random();
-	for (int  i = 0; i < nn-1; i++) {
+	for (int  i = 0; i < (n-1); i++) {
 	    if ( (ff[i] < r) && (r < ff[i+1]) ) {
 		double ip = i + (r-ff[i])/(ff[i+1]-ff[i]);
 		return ip;
@@ -75,4 +82,7 @@ public class GaussianRandom {
 
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/12/11 14:35:56  snf
+/** Initial revision
+/** */

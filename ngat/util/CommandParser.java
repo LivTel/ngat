@@ -17,7 +17,7 @@ import java.text.*;
  *
  * A typical arglist might look like: -noresize -heap 200 -stackmin 30 -stackmax 80 -verbose
  *
- * $Id: CommandParser.java,v 1.3 2000-12-19 15:12:09 snf Exp $
+ * $Id: CommandParser.java,v 1.4 2001-02-23 18:49:14 snf Exp $
  *
  */
 public class CommandParser {
@@ -25,10 +25,21 @@ public class CommandParser {
     /** Holds the list of properties.*/
     protected Properties map;
 
-    /** Create a CommandParser.*/
+    /** Holds the current command delimiter character.*/
+    protected String delim;
+
+    /** Create a CommandParser using default - character.*/
     public CommandParser() {
-	map = new Properties();
+	this("-");
     }
+
+    /** Create a CommandParser.*/
+    public CommandParser(String delim) {
+	map = new Properties();
+	this.delim = delim;
+    }
+
+    public void parse(String argList) throws ParseException { parse(argList, "enable", "disable"); }
 
     /** Parse the supplied arguments using yesVal as the option value for 'true' and 
      * noVal as the option value for false.
@@ -44,7 +55,7 @@ public class CommandParser {
 	
 	if (argList == null) throw new ParseException("No Args", 0);
 	
-	StringTokenizer st = new StringTokenizer(argList, "-");
+	StringTokenizer st = new StringTokenizer(argList, delim);
 	String token = null;
 	String name = null;
 	String value = null;
@@ -84,7 +95,7 @@ public class CommandParser {
 	if (args.length == 0) return;
 	for (int i = 0; i < args.length; i++) {
 	    //System.out.println("ARG: "+i+" : "+args[i]);
-	    if (args[i].startsWith("-")) {
+	    if (args[i].startsWith(delim)) {
 		buff.append(args[i]);
 	    } else {
 		buff.append(" ").append(args[i]);
@@ -117,6 +128,9 @@ public class CommandParser {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.3  2000/12/19 15:12:09  snf
+/** Took out debugging.
+/**
 /** Revision 1.2  2000/11/21 17:24:58  snf
 /** Changed package name to util.
 /**

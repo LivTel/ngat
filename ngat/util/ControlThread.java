@@ -1,5 +1,7 @@
 package ngat.util;
 
+import ngat.util.logging.*;
+
 /**
  * Thread model which can be stopped safely by itself or by other (parent) threads.
  * The thread is designed for one-off or repetitive activity conforming to the behavior
@@ -20,24 +22,40 @@ public abstract class ControlThread extends Thread {
     /** Object to lock on when testing/setting the control variable. */
     protected Object runLock;
 
-    /** Determines whether the Thread should run its main method once only.*/
-    protected boolean permanent;
+    /** Object to lock on when testing/setting the paused state variable.*/
+    protected Object pauseLock;
+  
+    /** Indicates whether the Thread is paused.*/
+    protected volatile boolean paused;
 
-    /** Const. Thread runs once only. */
+    /** Lock to wait on for pause.*/
+    BooleanLock pLock;
+
+    /** Determines whether the Thread should run its mainTask() method once only.*/
+    protected boolean permanence;
+
+    /** Constant. Thread runs mainTask() once only. */
     public static final boolean TRANSIENT = false;
 
-    /** Const. Thread can run mainTask method repeatedly. */
+    /** Constant. Thread can run mainTask() method repeatedly until terminate()
+     * is called by another Thread (or this one in its overridden mainTask() method). */
     public static final boolean PERMANENT = true;
 
+    /** Class Logger.*/
+    protected Logger logger;
 
     // Constructors.
 
     /** Construct a ControlThread which may be TRANSIENT or PERMANENT. */
     public ControlThread(String name, boolean permanent) {
 	super(name);
-	this.permanent = permanent;
+	this.permanence = permanent;
 	canRun = false;
-	runLock = new Object();
+	paused = false;
+	pLock = new BooleanLock();
+	runLock   = new Object();
+	pauseLock = new Object();
+	logger = LogManager.getLogger(this);
     }
 
     /** Construct a named TRANSIENT ControlThread. */
@@ -47,23 +65,40 @@ public abstract class ControlThread extends Thread {
 
     /** Construct a TRANSIENT ControlThread with unspecified name. */
     public ControlThread() {
-	super();
-	this.permanent = TRANSIENT;
-	canRun = false;
-	runLock = new Object();
+	this("ControlThread", TRANSIENT);
     }
 
     // The run() method is inherited but cannot be overridden.
     // Subclasses should override the 3 methods contained in it.
 
-    /** This method cannot be overridden. Calls initialise(), mainTask() and always
-     * calls shutdown() even if main methods fail. */
+    /** This method cannot be overridden. Calls the following methods in
+     * sequence:-
+     * <ul>
+     *  <li> <b>initialise()</b>.
+     *  <li> while (not terminated)
+     *  <ul>
+     *   <li> if paused then wait till resumed.
+     *   <li>  <b>mainTask()</b>.
+     *   <li> if TRANSIENT then terminate().
+     *  </ul>
+     *  <li> repeat
+     *  <li>  <b>shutdown(</b>). (even if main methods fail.)
+     * </ul>
+     * Each of these methods should be overridden to carry out the specific
+     * operations required of a subclass.
+     */
     public final void run() {
 	setRunnable();
 	try {
 	    initialise();
 	    while (canRun()) {
-		mainTask();
+		if (isPaused()) {
+		    try {
+			pLock.waitUntilFalse(0);
+		    } catch (InterruptedException e) {
+		    }
+		}
+		mainTask();		
 		if (isTransient()) terminate();
 	    }
 	} finally {
@@ -107,13 +142,35 @@ public abstract class ControlThread extends Thread {
 	}
     }
 
-    // Utility Methods.
+    /** Tell the Thread to go into the paused state at the end of a mainTask loop.*/
+    public final void linger() {
+	synchronized(pauseLock) {
+	    paused = true;
+	    pLock.setValue(true);
+	}
+    }
+
+    /** Tell the Thread to resume after a pause.*/
+    public final void awaken() {
+	synchronized(pauseLock) {
+	    paused = false;
+	    pLock.setValue(false);
+	}
+    }
+
+    /** Returns the paused state of the Thread.
+     * @return True if this Thread is currently paused.*/
+    public boolean isPaused() { 
+	synchronized(pauseLock) {
+	    return paused;
+	}
+    }
     
     /** Check if this Thread is capable of running its mainTask() repeatedly. */
-    protected final boolean isPermanent() { return permanent;}
+    protected final boolean isPermanent() { return permanence;}
 
     /** Check if this Thread runs its mainTask() once only. */
-    protected final boolean isTransient() { return !permanent;}
+    protected final boolean isTransient() { return !permanence;}
 
 }
 
