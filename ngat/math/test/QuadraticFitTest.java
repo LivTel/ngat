@@ -1,5 +1,5 @@
 // QuadraticFitTest.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.2 2000-08-18 17:56:20 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.3 2001-08-13 12:59:48 cjm Exp $
 
 import java.awt.event.*;
 import java.lang.*;
@@ -12,17 +12,17 @@ import ngat.OSS.utility.*;
 
 /**
  * Simple test class for QuadraticFit.
- * Puts command line arguments as y values in data list (i,args[i]).
+ * Puts command line arguments as x,y values in data list.
  * Then does a quadratic fit and prints the result out.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  */
 public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.2 2000-08-18 17:56:20 cjm Exp $");
+	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.3 2001-08-13 12:59:48 cjm Exp $");
 	private QuadraticFit quadraticFit = null;
 	private GraphPlot graphPlot = null;
 	private GraphFrame graphFrame = null;
@@ -45,23 +45,44 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 		maxX = 10;
 		minY = 0;
 		maxY = 10;
-		dataCount = args.length;
+		dataCount = 0;
+		if(args.length == 0)
+		{
+			help();
+			System.exit(0);
+		}
 		for(int i = 0;i < args.length;i++)
 		{
 			try
 			{
-				double d = Double.parseDouble(args[i]);
-				quadraticFit.addPoint((double)(i+1),d);
-				if(maxX <= (i+1))
-					maxX = (i+2);
-				if(minY >= (int)d)
-					minY = ((int)d)-1;
-				if(maxY <= (int)d)
-					maxY = ((int)d)+1;
+				if(args[i].equals("-help"))
+				{
+					help();
+					System.exit(0);
+				}
+				if((i+1) >= args.length)
+				{
+					System.err.println("Odd number of parameters detected at "+i+".");
+					System.err.println("Supply pairs of x/y positions to quadratic fit to.");
+					System.exit(1);
+				}
+				double xd = Double.parseDouble(args[i]);
+				i++;
+				double yd = Double.parseDouble(args[i]);
+				quadraticFit.addPoint(xd,yd);
+				dataCount++;
+				if(minX >= (int)xd)
+					minX = ((int)xd)-1;
+				if(maxX <= (int)xd)
+					maxX = ((int)xd)+1;
+				if(minY >= (int)yd)
+					minY = ((int)yd)-1;
+				if(maxY <= (int)yd)
+					maxY = ((int)yd)+1;
 			}
 			catch (NumberFormatException e)
 			{
-				System.err.println("Test failed for parameter i="+i+" = "+args[i]+":"+e);
+				System.err.println("Test failed for parameter i="+i+" = "+args[i]+","+args[i+1]+":"+e);
 			}
 		}
 		quadraticFit.setUpdateListener(this);
@@ -171,6 +192,15 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 	}
 
 	/**
+	 * Method to print out a help message.
+	 */
+	private void help()
+	{
+		System.out.println("java QuadraticFitTest [<x> <y>]...");
+		System.out.println("Supply pairs of x/y positions to quadratic fit to.");
+	}
+
+	/**
 	 * Class that provides an update listener for a three one degree of freedom fit.
 	 */
 	private class ChiSquaredFitOneParameterUpdate implements ChiSquaredFitUpdateListener
@@ -254,6 +284,9 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  2000/08/18 17:56:20  cjm
+// Added ngat.math import.
+//
 // Revision 0.1  2000/08/18 17:31:56  cjm
 // initial revision.
 //
