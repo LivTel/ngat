@@ -1,14 +1,14 @@
 // CCDLibraryDouble.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryDouble.java,v 0.4 1999-09-10 15:32:56 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryDouble.java,v 0.5 1999-09-13 13:56:02 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class is a simple double data type object wrapper, allowing us to return a double value from a 
  * method..
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision: 0.5 $
  */
-class CCDLibraryDouble
+public class CCDLibraryDouble
 {
 	/**
 	 * The variable used to hold the double value.
@@ -17,7 +17,7 @@ class CCDLibraryDouble
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryDouble.java,v 0.4 1999-09-10 15:32:56 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibraryDouble.java,v 0.5 1999-09-13 13:56:02 cjm Exp $");
 
 	/**
 	 * This method sets the value of the double.
@@ -40,6 +40,9 @@ class CCDLibraryDouble
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.4  1999/09/10 15:32:56  cjm
+// Changed package to ngat.ccd.
+//
 // Revision 0.3  1999/09/08 10:52:40  cjm
 // Trying to fix file permissions of these files.
 //
