@@ -12,7 +12,7 @@ import java.util.Enumeration;
  * This implementation does not provide a mechanism for 
  * removing elements.
  *
- * $Id: CircularArray.java,v 1.3 2001-02-23 18:49:14 snf Exp $
+ * $Id: CircularArray.java,v 1.4 2001-07-11 10:24:23 snf Exp $
  *
  */
 public class CircularArray {
@@ -29,28 +29,21 @@ public class CircularArray {
     /** Records the first element position in array.*/
     private int start;
     
-    /** Records the next element position in array.*/
-    private int next;
-
-    /** Records the position of the last element.*/
-    private int last;
-    
     /** Create a CircularArray of length NN-1 elements.
      * @param nn The wrap length of the Array plus 1.*/
     public CircularArray(int nn) {
 	this.nn = nn;
 	array = new Object[nn];
 	for (int  i = 0; i < nn; i++) {
-	    array[i] = new Object();
+	    array[i] = new Integer(555);
 	}
 	start = 0;
-	next  = 0;
 	count = 0;
     }
     
     /** Returns the size of the underlying array which stores
      * the objects. This is also the wrap length. */
-    public int getSize() { return nn+1;}
+    public int getSize() { return nn;}
 
     /** Returns the actual number of set elements.
      * NOTE: This may not work correctly - NEEDS TESTING ! */
@@ -61,52 +54,86 @@ public class CircularArray {
     
     /** Insert the specified object (at the end of the array). */
     public void insert(Object stuff) {
-	last = next;
-	array[next] = stuff;
-	// Always increment <next>.
-	next = (next + 1)%nn;	
 	// Increment count unless full.
-	if (count <= nn) count++;
-	// Increment <start> if <next> collides with it.
-	if (start == next) {	    
-	    start = (start + 1)%nn;
-	}	
+	if (count < nn) {
+	    count++;
+	} else {
+	    start = (start + 1) % nn;
+	}
+	array[(start + count - 1) % nn ] = stuff;	
     }
     
     /** Returns the 'first' element in the list.*/
-    public Object first() { return array[start]; }
+    public Object first() { 
+	if (count == 0 )
+	    return null;return array[start]; 
+    }
     
     /** Returns the 'last' element in the list.*/
-    public Object last() { return array[last]; }
+    public Object last() { 
+	if (count == 0 )
+	    return null;
+	return array[(start + count - 1) % nn]; 
+    }
     
     /** Returns an enumeration of the elements from start to last.*/
-    public Enumeration enumerate() { return new Enumerator();}
+    public Enumeration enumerate() { return new Enumerator(); }
     
+    /** Returns an enumeration of the last n elements.*/
+    public Enumeration reverse(int n) { return new Reverser(n); }
+
     /** Inner class to represent an Enumeration of the array's content.*/
     private class Enumerator implements Enumeration {
 	
-	private int count;
+	private int ct;
 	
-	private int temp;
-	
-	Enumerator() {count = start;}
+	Enumerator() { ct = 0; }
 	
 	public boolean hasMoreElements() {
-	    if (count == next) return false;
+	    if (ct == count) return false;
+	    return true;
+	}
+	
+	public Object nextElement() {	  
+	    ct++;
+	    return array[ (start + ct - 1) % nn ];  
+	}
+	
+    }
+    
+    /** Inner class to represent a reverse Enumeration of the array's
+     * contents over, upto a set number of elements.*/
+    private class Reverser implements Enumeration {
+     
+	private int ct;
+
+	private int n;
+	
+	Reverser(int no) { 
+	    n = no;
+	    if (no > count)
+		n = count;	    
+	    ct = count;
+	}
+	
+	public boolean hasMoreElements() {
+	    if (ct == 0) return false;
 	    return true;
 	}
 	
 	public Object nextElement() {
-	    temp = count;
-	    count = (count+1)%nn;
-	    return array[temp];
+	    int at = ct;
+	    ct--;
+	    return array[ (start + at - 1) % nn ];	    
 	}
-	
     }
-    
+
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.3  2001/02/23 18:49:14  snf
+/** *** empty log message ***
+/**
 /** Revision 1.2  2001/01/04 11:10:29  snf
 /** Modified counter.
 /**
