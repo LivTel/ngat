@@ -17,13 +17,13 @@ import java.text.*;
  *
  * A typical arglist might look like: -noresize -heap 200 -stackmin 30 -stackmax 80 -verbose
  *
- * $Id: CommandParser.java,v 1.4 2001-02-23 18:49:14 snf Exp $
+ * $Id: CommandParser.java,v 1.5 2001-07-11 10:24:23 snf Exp $
  *
  */
 public class CommandParser {
 
     /** Holds the list of properties.*/
-    protected Properties map;
+    protected ConfigurationProperties map;
 
     /** Holds the current command delimiter character.*/
     protected String delim;
@@ -35,7 +35,7 @@ public class CommandParser {
 
     /** Create a CommandParser.*/
     public CommandParser(String delim) {
-	map = new Properties();
+	map = new ConfigurationProperties();
 	this.delim = delim;
     }
 
@@ -105,7 +105,7 @@ public class CommandParser {
     }
 
     /** Returns the properties parsed from the arglist in <option : value> pairs. */
-    public Properties getMap() { return map;}
+    public ConfigurationProperties getMap() { return map;}
 
     /** Translates the map, replacing capitalized letters with dots
      * for use in Configuration files e.g.
@@ -128,6 +128,9 @@ public class CommandParser {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.4  2001/02/23 18:49:14  snf
+/** Added linger and awaken.
+/**
 /** Revision 1.3  2000/12/19 15:12:09  snf
 /** Took out debugging.
 /**
