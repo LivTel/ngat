@@ -30,15 +30,19 @@ SRCS           = Autoguider.java \
                  TTL_DataUnit.java \
                  TTL_DataValue.java \
                  TTL_Enclosure.java \
+                 TTL_EnclosureFactory.java \
                  TTL_FoldMirror.java \
+                 TTL_FoldMirrorFactory.java \
                  TTL_GenericData.java \
                  TTL_Mount.java \
                  TTL_MountFactory.java \
                  TTL_Package.java \
                  TTL_PrimaryMirror.java \
+                 TTL_PrimaryMirrorFactory.java \
                  TTL_Rotator.java \
                  TTL_RotatorFactory.java \
                  TTL_SecondaryMirror.java \
+                 TTL_SecondaryMirrorFactory.java \
                  TTL_System.java \
                  TTL_SystemCommand.java \
                  TTL_SystemException.java \
@@ -55,12 +59,15 @@ SRCS           = Autoguider.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.9 $
-#       $Id: Makefile,v 1.9 2003-11-04 16:43:45 je Exp $
-#     $Date: 2003-11-04 16:43:45 $
+# $Revision: 1.10 $
+#       $Id: Makefile,v 1.10 2003-11-05 14:41:29 je Exp $
+#     $Date: 2003-11-05 14:41:29 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.9  2003/11/04 16:43:45  je
+#      Added TTL_SystemStatus.
+#
 #      Revision 1.8  2003/10/21 12:32:42  je
 #      Added TTL_TelescopeState.
 #
