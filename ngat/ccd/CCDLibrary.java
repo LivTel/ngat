@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.34 2002-09-19 13:59:04 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.35 2002-09-23 15:11:45 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -8,14 +8,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.34 $
+ * @version $Revision: 0.35 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.34 2002-09-19 13:59:04 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.35 2002-09-23 15:11:45 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -683,8 +683,7 @@ public class CCDLibrary
 
 	/**
 	 * Method to set the amount of time, in milleseconds, 
-	 * remaining for an exposure when we stop sleeping and tell the
-	 * interface to enter readout mode. 
+	 * remaining for an exposure when we change status to READOUT, to stop RDM/TDL/WRMs affecting the readout.
 	 * @param time The time, in milliseconds. Note, because the exposure time is read every second, it is best
 	 * 	not have have this constant an exact multiple of 1000.
 	 * @see #CCD_DSP_Set_Readout_Remaining_Time
@@ -1567,6 +1566,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.34  2002/09/19 13:59:04  cjm
+// Added CCDTemperatureGetUtilityBoardADU.
+//
 // Revision 0.33  2002/09/19 11:21:50  cjm
 // Added voltage monitoring methods in ccd_setup.h.
 //
