@@ -44,6 +44,7 @@ SRCS           = Autoguider.java \
                  TTL_SystemException.java \
                  TTL_SystemRequest.java \
                  TTL_SystemState.java \
+		 TTL_TelescopeState.java \
                  Timer.java \
                  TimerFactory.java
 
@@ -53,12 +54,15 @@ SRCS           = Autoguider.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.7 $
-#       $Id: Makefile,v 1.7 2003-10-14 14:10:33 je Exp $
-#     $Date: 2003-10-14 14:10:33 $
+# $Revision: 1.8 $
+#       $Id: Makefile,v 1.8 2003-10-21 12:32:42 je Exp $
+#     $Date: 2003-10-21 12:32:42 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.7  2003/10/14 14:10:33  je
+#      Added TTL_FoldMirror.
+#
 #      Revision 1.6  2003/10/14 13:50:20  je
 #      Added TTL_PrimaryMirror.
 #
