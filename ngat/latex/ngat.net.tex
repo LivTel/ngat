@@ -1,0 +1,124 @@
+\documentclass[10pt,a4paper]{article}
+\pagestyle{plain}
+\textwidth 16cm
+\textheight 21cm
+\oddsidemargin -0.5cm
+\topmargin 0cm
+
+\title{Java Message System: ngat.net package}
+\author{C. J. Mottram}
+\date{}
+\begin{document}
+\pagenumbering{arabic}
+\thispagestyle{empty}
+\maketitle
+\begin{abstract}
+This document describes classes in the ngat.net package.
+These classes deal with sending information over the network.
+\end{abstract}
+
+\centerline{\Large History}
+\begin{center}
+\begin{tabular}{|l|l|l|p{15em}|}
+\hline
+{\bf Version} & {\bf Author} & {\bf Date} & {\bf Notes} \\
+\hline
+0.0 &              C. J. Mottram & 4/5/99 & First draft \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\section{Documentation Overview}
+\subsection{What is the ngat.net package?}
+This package is a set of Java classes that send information over a network.
+It consists of:
+\begin{itemize}
+\item The TCPServer class.
+\item The TCPServerConnectionThread class.
+\item The TCPClientConnectionThread class.
+\end{itemize}
+
+\section{Design Rationale}
+There are several different mechanisms to communicate data over a network that we considered at the design stage.
+
+\subsection{Simple Socket connection}
+This is the simplest interface. It could be written in either C or Java and would probably be the most efficient 
+communication methods with the minimum of overhead. However there would be a significant overhead in abstracting 
+the information out of objects into memory to send across the network. 
+Also, when the contents of the objects change then the code to abstract the information out of the objects would 
+also have to change: two pieces of code (at least) would have to change when the contents of a message changes.
+It would be easy for the two pieces of software not to be up to date leading to errors.
+
+\subsection{Remote Method Invocation(RMI)}
+RMI is the Java version of rpc's (remote procedure calls), where you effectively call a remote method on another 
+machine. The problem with this method of communication is that it limits the information that can be returned from 
+the remote method, and it does not allow a two way communication dialogue to be set up easily.
+
+\subsection{Object Serialization}
+This is another Java mechanism for sending Java objects over any stream interface (a socket connection being a 
+stream interface). Transferring an object simply involves one line of code as does receiving an object. 
+Serialization creates a tree of all objects referenced by the root object, simplifying the data transmission process. 
+However, care has to be taken that the classes at both ends of the connection are the same version otherwise 
+serialization can fail (this is probably a good thing). 
+
+\subsection{Mechanism Selection}
+For out first prototype we have selected Object Serialization as our mechanism for object transfer. 
+It seems to be the simplest mechanism for our needs. The simple socket connection will involve development of
+a lot of support code, which will be difficult to keep up to date. RMI is fine for simple communication, but will
+soon become too complicated when two processes need interactive two way communication.
+
+\section{Protocol}
+The protcol used is documented in the Java Message System Design Document \cite{bib:jmsdd}.
+
+Figure \ref{fig:ngatnetprotocol} shows how a transaction takes place within the system:
+\setlength{\unitlength}{1in}
+\begin{figure}[!h]
+	\begin{center}
+		\begin{picture}(5.0,5.5)(0.0,0.0)
+			\put(0,0){\special{psfile=ngat.net.protocol.eps   hscale=70 vscale=75}}
+		\end{picture}
+	\end{center}
+	\caption{\em ngat.net example transaction. }
+	\label{fig:ngatnetprotocol} 
+\end{figure}
+
+\section{Class Overview}
+These are the classes currently available that implement the protocol previously described. API documentation
+for these classes is also available \cite{bib:ngatnettree}.
+
+\subsection{The TCPServer class}
+The class implements a TCP Server. The class extends the standard Java Thread class, so that the resulting Server
+will sit on it's own thread. The thread creates a SocketServer which sits on a defined port awaiting connections. 
+When a connection is accepted, a new thread of class TCPServerConnectionThread is spawned to deal with this connection.
+This class should be sub-classed so that a process specific derivative of TCPServerConnectionThread is spawned
+to deal with the specifics of passing messages to that process.
+
+\subsection{The TCPServerConnectionThread class}
+This class implements the generic message protocol used by the message passing system. It is instantiated as a thread,
+and an object of this class is run for each connection accepted. The generic implementation involves receiving a 
+command, sending an acknowledge message back, and then sending a done message to complete the transaction. Sub-classes
+of this class should process the command passed in and perform the command, and also calculate the time to complete 
+a command.
+
+\subsection{The TCPClientConnectionThread class}
+This class implements the client end of the generic message protocol. It is instantiated as a thread,
+and an object of a sub-class of this class is run for each command to be sent. The generic implementation involves
+opening a socket connection to the server, sending a command to the server, awaiting an acknowledgement, 
+and then awaiting a done message to complete the transaction. This class is sub-classed to provide the process
+specific implementations to implement internal responses to the acknowledgement and the done message.
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{Bibliography}
+\bibitem{bib:jmsdd}{\bf Liverpool Telescope Java Message System Design Document}
+Liverpool John Moores University
+\bibitem{bib:ngatnettree}{\bf Ngat.Net Class Tree}
+Liverpool John Moores University \newline{\em http://ltobs5.livjm.ac.uk/devngatjavadocs/ngat/net/tree.html}
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,251 @@
+\documentclass[10pt,a4paper]{article}
+\pagestyle{plain}
+\textwidth 16cm
+\textheight 21cm
+\oddsidemargin -0.5cm
+\topmargin 0cm
+
+\title{ngat.net package Error Handling Mechanisms}
+\author{I. A. Steele, C. J. Mottram}
+\date{}
+\begin{document}
+\pagenumbering{arabic}
+\thispagestyle{empty}
+\maketitle
+\begin{abstract}
+This document describes various errors that can occur whilst sending messages across the network using
+ classes in the ngat.net package, and mechanisms that have/will be implemented to deal with this.
+\end{abstract}
+
+\centerline{\Large History}
+\begin{center}
+\begin{tabular}{|l|l|l|p{15em}|}
+\hline
+{\bf Version} & {\bf Author} & {\bf Date} & {\bf Notes} \\
+\hline
+0.1 &              C. J. Mottram & 17/5/99 & First draft \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+\tableofcontents
+\listoftables
+\newpage
+
+\section{Introduction}
+This document was written following various discussions about error handling when sending
+messages from one process to another over the network. These messages are currently handled
+by the ngat.net package. This uses TCP/IP sockets and Java Object Serialization to transmit
+messages across the network. 
+\subsection{What is the ngat.net package?}
+This package is a set of Java classes that send information over a network.
+It consists of:
+\begin{itemize}
+\item The TCPServer class.
+\item The TCPServerConnectionThread class.
+\item The TCPClientConnectionThread class.
+\end{itemize}
+Full documentation for the protocol can be found at \cite{bib:ngatnetlatex}. API documentation is available at
+\cite{bib:ngatnettree}. The kind of message objects we intend to pass over the system are documented at
+\cite{bib:jmsdd}.
+
+
+\section{Errors Occurring at the Server}
+\subsection{Client fails to receive an Acknowledge message}
+If the client fails to receive an acknowledge message to a command, it can assume that the command was not
+started to be processed at the server end. The server must have either crashed before it sent an
+acknowledgement, or an exception must have occurred before the acknowledgement was sent. The server sends an
+acknowledgement by calling {\em stream.writeObject(ack)} followed by {\em stream.flush()} to send the object over
+the underlying socket stream. For the {\em stream.flush()} to return the client must receive the acknowledgement
+or the {\em stream.readObject()} must have given an exception (TCP streams guarantee this). 
+The server routine that processes the command comes after an acknowledge is sent so
+we know the server cannot have changed it's state as a result of this command. 
+
+Note, currently the client will hang forever in the {\em stream.readObject()} until it receives an acknowledge
+or the routine gives an exception. This could leave the client thread hanging here if neither possibility occurs.
+We need a mechanism to check client threads for this occurrence, see Section \ref{sec:timout}.
+
+\subsection{Client receives an Acknowledge and then Done with successful == false}
+If {\em COMMAND\_DONE.successful} == false, the server has detected an error during the performance of the 
+command and knows
+something has failed. The client has also received information saying the command has failed, and also
+what error {\em COMMAND\_DONE.errorNum} and {\em COMMAND\_DONE.errorString}. The error
+recovery mechanism in this case has to be decided between the client and server. Either the server puts itself
+into a known state, or the client can issue recovery commands as a result of the error. 
+
+\subsection{Client receives an Acknowledge message but no Done message}
+If the client receives an Acknowledge message but does not receive a done message the server is in an undefined
+state, as it may or may not have started performing the commands operations before something went wrong. There
+are several problems associated with this:
+\begin{itemize}
+\item The client is left blocking in {\em stream.readObject()} waiting for a done message. Some mechanism
+must be devised to get the client out of this state, see Section \ref{sec:timout}.
+\item The client does not know what to do next, should it try to put the server mechanisms into a known state?
+\item If the server has crashed, will it return the mechanisms to a known state? 
+\item How long should the client
+wait before re-trying to establish contact with the server? Should it re-try if the first attempt fails?
+\item Should the client re-try the same operation that caused the first error, or should it assume that this
+will cause the same problem to occur and flag the whole operation as failed.
+\end{itemize}
+
+These problems probably need to be resolved on a case by case basis, as the solutions are probably
+dependent on what the individual client/server is trying to achieve.
+
+
+\section{Errors Occurring at the Client}
+\subsection{Client sends command, then dies}
+The client could start a thread that sends a command to the server, and then, before the server returns the
+Acknowledge object, the client could die. In this case, the server tries to send the Acknowledge object of the socket,
+which should cause an Exception as the other end is dead. The server thread will then terminate and writing an error to the error log, and will not go on to actually perform the command. It will be up to the client when it recovers
+to find the current server state.
+
+\subsection{Client sends command, receives Acknowledge, then dies}
+Here the client sends the command object to the server, which replies with an Acknowledge that the client receives.
+The client then dies. The server continues to process and perform the actual command, and then tries to send a 
+Done message back to the client. This fails and should throw an exception. The client will not know the
+current state of the server when it re-starts, but should be able to either query the server or force it's state
+back into a known state.
+
+\section{Multiple sub-commands problem}
+\label{sec:multiplesubcommandproblem}
+There is a problem with the protocol as it stands. It is possible that when a server receives a command
+from a client, this will cause the server to pass several sub-commands onto different sub-systems. However,
+when the server receives the command it is meant to calculate a {\em timeToComplete} and to send this back 
+to the client
+so the client knows how long to wait for the server to complete. How can the server know how long all the
+sub-commands will take to complete? One possible solution to this is given in Section \ref{sec:multipleack}
+
+
+\section{Timeout Enhancement}
+\label{sec:timout}
+\subsection{Reason for Enhancement}
+The Client thread can be left in an infinite wait state whilst waiting for an Acknowledge or Done message to
+be sent to it. We need a way to time out these operations if the server cannot send these objects (it crashed
+or threw an exception). 
+
+\subsection{Timeout lengths}
+An acknowledge should be returned as soon as a command is received by a server process,
+the only processing occurring is the calculation of command completion time {\em timeToComplete} 
+(how long the server thinks the command will
+take to execute). The client will know how long to wait for the done message to arrive, based on the time
+sent back as part of the acknowledge message. Therefore:
+\begin{itemize}
+\item The client can wait for a fixed period for an Acknowledge message to be received. We know from performance
+tests \cite{bib:ngatnetnptlatex} that transmission time should be negligible(of the order of a few seconds), 
+but calculating the time to command completion make take some time. Therefore the fixed period should be 
+reasonable, it probably could be as little as 10 seconds, but I would recommend something of the order of 1 minute.
+\item The client will receive the {\em timeToComplete} as part of the Acknowledge object. This will determine a timeout
+applied whilst waiting for the Done object to be returned. Note that at some point we have to allow for the
+underestimation of completion time. Either the server applies a scale factor or fixed length addition to it's
+calculated {\em timeToComplete}, or the client applies a similar addition.
+\end{itemize}
+
+\subsection{Timeout mechanism}
+There are two methods to implement the timeout mechanism. 
+\begin{itemize}
+\item Spawn another thread to check on the
+progress of the client thread, by calling {\em getAcknowledge} and {\em getDone} on the client thread.
+\item Set a socket timeout that will stop the blocking operation of the {\em stream.readObject()} method
+if the underlying socket stream receives nothing for a given period. This will cause {\em stream.readObject()}
+to exit with an exception, which the client thread can catch to deal with the error.
+\end{itemize}
+
+Of these two methods, the socket timeout mechanism is neater as all error recovery is done in the same thread.
+However, it needs to be prototyped to ensure the ObjectInput/OutputStream does not send some sort of {\em keep-alive}
+message across the socket (I can't see how it could do this). 
+
+\section{Multiple Acknowledgement Enhancement}
+\label{sec:multipleack}
+\subsection{Problem}
+As seen in Section \ref{sec:multiplesubcommandproblem}, a server that has to execute several sub-commands on
+different sub-systems will have difficulty calculating the {\em timeToComplete} accurately. This could be a problem
+if client threads set socket timeouts based upon this value, as the client could assume the server has died
+whilst the server is still executing sub-commands on other sub-systems. 
+
+\subsection{Solution}
+One potential solution would be to extend the protocol to allow multiple Acknowledgement objects to be sent
+back during one message transaction. For example, say the RCS sent the ISS a command to be executed, and the
+way the ISS implemented this command was to send two commands to the CCS in series. The sequence of objects
+would be as in Table \ref{tab:multipleackexample}.
+
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{|p{10em}|p{10em}|p{10em}|p{10em}|}
+\hline
+{\bf RCS} & {\bf ISS} & {\bf CCS} & {\bf Notes} \\
+\hline
+RCS sends command to ISS	&					&			& \\ \hline
+				& ISS sends ACK to RCS			&			& {\em timeToComplete} = ACK fixed time + fixed amount\\ \hline
+				& ISS sends first sub-command to CCS	&			& \\ \hline
+				&					& CCS sends ACK to ISS	& {\em timeToComplete} = time for first sub-command to complete\\ \hline
+				& ISS sends ACK\#2 to RCS		&			& {\em timeToComplete} = time for first sub-command to complete + ACK fixed time + fixed amount\\ \hline
+				&					& CCS sends DONE to ISS & \\ \hline
+				& ISS sends second sub-command to CCS	&			& \\ \hline
+				&					& CCS sends ACK to ISS	& {\em timeToComplete} = time for second sub-command to complete\\ \hline
+				& ISS sends ACK\#3 to RCS		& 			& {\em timeToComplete} = time for second sub-command to complete + ACK fixed time + fixed amount\\ \hline
+				&					& CCS sends DONE to ISS	& \\ \hline
+				& ISS sends DONE to RCS			&			& \\ \hline
+\end{tabular}
+\end{center}
+\caption{\em Multiple Acknowledgement Example Execution.}
+\label{tab:multipleackexample}
+\end{table}
+
+Hopefully, it can be seen that the RCS always knows the maximum time it has to wait before either an ACK or a DONE
+object is received by it's {\em stream.readObject()}. The RCS first waits for long enough for the ISS to get
+the {\em timeToComplete} for the CCS's first sub command. The RCS then receives this estimate from the ISS and so knows
+to wait for this long. By then the ISS should have sent the RCS the {\em timeToComplete} from the CCS's second 
+sub-command.
+The DONE message should arrive back at RCS before the last timeout expires. Effectively the two extra ACKs generated
+by the ISS are {\em keep-alives} to the RCS to stop it giving up on the ISS.
+
+\subsection{Implementation Solution}
+This new version of the protocol should be quite easy to implement. The client thread would probably look like
+the following:
+\begin{verbatim}
+Open Socket
+Send Command
+Set socket timeout to standard ack delay
+do
+    Get Reply Object
+    if(reply instanceof ACK)
+        Set socket timeout to ACK.timeToComplete
+while(!(reply instanceof DONE))
+\end{verbatim}
+
+The server end might look like the following:
+\begin{verbatim}
+Accept Socket Connection
+Get Command
+Calculate Acknowledge Time as follows:
+    if(this process is performing the command) 
+        Calculate the time to complete this command
+    if(a sub-process is performing the command)
+        Calculate the time to get the first sub-commands ACK
+Send ACK
+if(this process is performing the command)
+    Perform Command
+if(a sub-process is performing the command)
+   for each sub-command
+       Send sub-command to sub-process
+       Get ACK containing timeToComplete for sub-command
+       Send ACK back with timeToComplete for sub-command
+       Get Done for sub-command
+Send Done
+\end{verbatim}
+
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{Bibliography}
+\bibitem{bib:jmsdd}{\bf Liverpool Telescope Java Message System Design Document}
+Liverpool John Moores University
+\bibitem{bib:ngatnetlatex}{\bf Ngat.Net Documentation}
+Liverpool John Moores University \newline{\em http://ltobs5.livjm.ac.uk/devngatlatex/ngat.net.dvi}
+\bibitem{bib:ngatnettree}{\bf Ngat.Net Class Tree}
+Liverpool John Moores University \newline{\em http://ltobs5.livjm.ac.uk/devngatjavadocs/ngat/net/tree.html}
+\bibitem{bib:ngatnetnptlatex}{\bf Ngat.Net Network Performance Test}
+Liverpool John Moores University \newline{\em http://ltobs5.livjm.ac.uk/devccsnptlatex/npt.dvi}
+\end{thebibliography}
+
+\end{document}
