@@ -1,5 +1,5 @@
-// NGATProperties.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.3 2001-06-20 13:33:57 cjm Exp $
+// NGATProperties.java
+// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.4 2001-07-05 18:59:25 je Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * This class extends the ngat.util.Properties class with useful load and type
  * conversion routines.
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  * @author Jason Etherton,Chris Mottram
  */
 public class NGATProperties extends Properties
@@ -19,7 +19,7 @@ public class NGATProperties extends Properties
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: NGATProperties.java,v 0.3 2001-06-20 13:33:57 cjm Exp $");
+	public final static String RCSID = new String("$Id: NGATProperties.java,v 0.4 2001-07-05 18:59:25 je Exp $");
 
 	/**
 	 * Method to load the properties.
@@ -54,9 +54,17 @@ public class NGATProperties extends Properties
 
     public short getShort( String key ) throws NGATPropertyException
     {
+	String value = null;
+	value = getProperty( key );
+	if( value == null )
+	    {
+		throw new NGATPropertyException
+		    ( new NullPointerException(), key, "missing" );
+	    }
+
 	try
 	    {
-		return( Short.parseShort( getProperty( key ) ) );
+		return( Short.parseShort( value ) );
 	    }
 	catch( NumberFormatException nfe )
 	    {
@@ -79,9 +87,17 @@ public class NGATProperties extends Properties
 
     public int getInt( String key ) throws NGATPropertyException
     {
+	String value = null;
+	value = getProperty( key );
+	if( value == null )
+	    {
+		throw new NGATPropertyException
+		    ( new NullPointerException(), key, "missing" );
+	    }
+
 	try
 	    {
-		return( Integer.parseInt( getProperty( key ) ) );
+		return( Integer.parseInt( value ) );
 	    }
 	catch( NumberFormatException nfe )
 	    {
@@ -104,9 +120,17 @@ public class NGATProperties extends Properties
 
     public long getLong( String key ) throws NGATPropertyException
     {
+	String value = null;
+	value = getProperty( key );
+	if( value == null )
+	    {
+		throw new NGATPropertyException
+		    ( new NullPointerException(), key, "missing" );
+	    }
+
 	try
 	    {
-		return( Long.parseLong( getProperty( key ) ) );
+		return( Long.parseLong( value ) );
 	    }
 	catch( NumberFormatException nfe )
 	    {
@@ -129,9 +153,17 @@ public class NGATProperties extends Properties
 
     public double getDouble( String key ) throws NGATPropertyException
     {
+	String value = null;
+	value = getProperty( key );
+	if( value == null )
+	    {
+		throw new NGATPropertyException
+		    ( new NullPointerException(), key, "missing" );
+	    }
+
 	try
 	    {
-		return( Double.parseDouble( getProperty( key ) ) );
+		return( Double.parseDouble( value ) );
 	    }
 	catch( NumberFormatException nfe )
 	    {
@@ -175,9 +207,17 @@ public class NGATProperties extends Properties
 
     public InetAddress getInetAddress( String key ) throws NGATPropertyException
     {
+	String value = null;
+	value = getProperty( key );
+	if( value == null )
+	    {
+		throw new NGATPropertyException
+		    ( new NullPointerException(), key, "missing" );
+	    }
+
 	try
 	    {
-		return( InetAddress.getByName( getProperty( key ) ) );
+		return( InetAddress.getByName( value ) );
 	    }
 	catch( UnknownHostException uhe )
 	    {
@@ -241,6 +281,9 @@ public class NGATProperties extends Properties
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2001/06/20 13:33:57  cjm
+// Fixed javadoc error.
+//
 // Revision 0.2  2001/03/05 20:04:15  cjm
 // Added some load methods.
 //
