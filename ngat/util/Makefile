@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.28 2001-07-31 09:46:26 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.29 2002-09-25 11:11:23 snf Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -21,12 +21,12 @@ JAVACFLAGS 	=-d $(LIBDIR) -sourcepath ../..
 DOCSDIR 	=$(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS 	=-version -author -private
 SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java CircularList.java \
-		CPUScheduler.java ExecuteCommand.java StringUtilities.java \
+		CPUScheduler.java ExecuteCommand.java StringUtilities.java SphereFrame.java SpherePlot.java\
 		NGATProperties.java NGATPropertyException.java CircularArray.java \
-		GraphParameterizer.java QueuedSynchFlag.java \
+		GraphParameterizer.java QueuedSynchFlag.java QueuedSynchFlag2.java DateParser.java\
 		SharedStore.java StoreEmptyException.java GraphPlot.java GraphFrame.java HistogramPlot.java \
-		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java \
-		CommandParser.java ConfigurationCache.java ConfigurationProperties.java \
+		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java Tabulator.java \
+		CommandParser.java ConfigurationCache.java ConfigurationProperties.java BlockingQueue.java \
 		GaussianRandom.java BooleanLock.java Predictor.java PredictorSample.java StandardPredictor.java \
 		StatisticalPredictor.java SMTPMailer.java Queue.java QueueEmptyException.java LinkedQueue.java\
 		ICSDCommand.java ICSDRebootCommand.java ICSDShutdownCommand.java \
@@ -92,6 +92,10 @@ backup: tidy
 
 
 # $Log: not supported by cvs2svn $
+# Revision 1.28  2001/07/31 09:46:26  cjm
+# OK, so I can't spell Jason....
+# I've decided to change FileUtilites to FileUtilities as well ;-)
+#
 # Revision 1.27  2001/07/24 15:42:32  je
 # modified StringUtilites to StringUtilities - nice one Chris!
 #
