@@ -1,5 +1,5 @@
 // TestSpectrographFilter.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/test/TestSpectrographFilter.java,v 0.2 2000-10-19 13:48:27 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/test/TestSpectrographFilter.java,v 0.3 2002-02-14 18:05:46 cjm Exp $
 
 import java.lang.*;
 
@@ -8,14 +8,14 @@ import ngat.spec.*;
 /**
  * Simple test of ngat.spec library.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  */
 public class TestSpectrographFilter
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TestSpectrographFilter.java,v 0.2 2000-10-19 13:48:27 cjm Exp $");
+	public final static String RCSID = new String("$Id: TestSpectrographFilter.java,v 0.3 2002-02-14 18:05:46 cjm Exp $");
 
 	/**
 	 * Run method. 
@@ -32,7 +32,7 @@ public class TestSpectrographFilter
 	 */
 	public void run()
 	{
-		int ncols,nrows,hbin,vbin;
+		int ncols,nrows,hbin,vbin,startx,starty;
 
 		try
 		{
@@ -46,11 +46,13 @@ public class TestSpectrographFilter
 			SpecLibrary.filterSetPosition(0);
 
 			SpecLibrary.cameraSetupStartup(false,false);
+			startx = SpecLibrary.cameraSetupGetStartColumn();
+			starty = SpecLibrary.cameraSetupGetStartRow();
 			ncols = SpecLibrary.cameraSetupGetNumberCols();
 			nrows = SpecLibrary.cameraSetupGetNumberRows();
 			hbin = SpecLibrary.cameraSetupGetHorizontalBinning();
 			vbin = SpecLibrary.cameraSetupGetVerticalBinning();
-			SpecLibrary.cameraSetupDimensions(ncols,nrows,hbin,vbin);
+			SpecLibrary.cameraSetupDimensions(startx,starty,ncols,nrows,hbin,vbin);
 
 			SpecLibrary.cameraTemperatureSet(-20.0);
 			SpecLibrary.cameraExpose(10000,"test.fits");
@@ -79,6 +81,9 @@ public class TestSpectrographFilter
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  2000/10/19 13:48:27  cjm
+// initial test program.
+//
 // Revision 0.1  2000/10/16 17:39:24  cjm
 // initial revision.
 //
