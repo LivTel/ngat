@@ -1,19 +1,19 @@
 // SpecLibrary.java -*- mode: Fundamental;-*-
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.2 2000-10-19 13:48:14 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.3 2000-10-23 09:23:54 cjm Exp $
 package ngat.spec;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.2 2000-10-19 13:48:14 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.3 2000-10-23 09:23:54 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -36,6 +36,17 @@ public class SpecLibrary
 	 * @see #open
 	 */
 	public final static int SPEC_OPEN_ALL_BIT			= (SPEC_OPEN_DAIO_BIT|SPEC_OPEN_APOGEE_BIT);
+// filter constants
+	/**
+	 * Number of position a filter slide with positions has. Position arguments can take
+	 * an integer between zero and one less than this number.
+	 * This value should be kept the same as that in libspec, spec_filter.h.
+	 * @see #filterConfigurePosition
+	 * @see #filterGetPositionADCount
+	 * @see #filterSetPosition
+	 * @see #filterGetPosition
+	 */
+	public final static int SPEC_FILTER_COUNT			= 4;
 // camera exposure constants
 	/**
 	 * Value returned from cameraExposeGetStatus, specifying the status of a camera exposure.
@@ -73,7 +84,6 @@ public class SpecLibrary
 	 * @see #cameraExposeGetStatus
 	 */
 	public final static int SPEC_EXPOSURE_STATUS_SAVE		= 4;
-
 // daio constants
 	/**
 	 * Enumerated constant, used to select which Digital Analogue IO card to
@@ -924,6 +934,9 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  2000/10/19 13:48:14  cjm
+// initial revision.
+//
 // Revision 0.1  2000/10/16 17:37:13  cjm
 // initial revision.
 //
