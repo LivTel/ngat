@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.37 2002-12-16 19:50:49 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.38 2003-01-28 16:25:35 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -8,14 +8,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.37 $
+ * @version $Revision: 0.38 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.37 2002-12-16 19:50:49 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.38 2003-01-28 16:25:35 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -365,13 +365,10 @@ public class CCDLibrary
 	 */
 	private native int CCD_Filter_Wheel_Get_Position(int wheel_number) throws CCDLibraryNativeException;
 	/**
-	 * Native wrapper to libccd routine that sets the filter wheel speed.
+	 * Native wrapper to libccd routine that sets amount of time out of a filter wheel we turn on detent
+	 * checking (filter wheel move de-bouncing).
 	 */
-	private native void CCD_Filter_Wheel_Set_Milliseconds_Per_Step(int ms) throws CCDLibraryNativeException;
-	/**
-	 * Native wrapper to libccd routine that sets the de-bounce step count.
-	 */
-	private native void CCD_Filter_Wheel_Set_De_Bounce_Step_Count(int count) throws CCDLibraryNativeException;
+	private native void CCD_Filter_Wheel_Set_De_Bounce_Milliseconds(int ms) throws CCDLibraryNativeException;
 
 // ccd_global.h
 	/**
@@ -978,34 +975,20 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Routine to set how long between each step sent to the filter wheel. This allows us to control the
-	 * speed of the wheel.
-	 * @param ms The time, in milliseconds, between each wheel step. This should be greater than about 40.
-	 * @exception CCDLibraryNativeException Thrown if an error occurs (the parameter is out of range,
-	 * 	or we could not write to the controller).
-	 * @see #CCD_Filter_Wheel_Set_Milliseconds_Per_Step
-	 */
-	public void CCDFilterWheelSetMsPerStep(int ms) throws CCDLibraryNativeException
-	{
-		CCD_Filter_Wheel_Set_Milliseconds_Per_Step(ms);
-	}
-
-
-	/**
-	 * A method to set the number of steps of the stepper motors we make when driving the wheel out of
-	 * a detent position before checking detent inputs, during a filter wheel move. This 'de-bounces'
+	 * A method to set the how long after driving the wheel out of
+	 * a detent position we start checking detent inputs, during a filter wheel move. This 'de-bounces'
 	 * the detent inputs when driving the filter wheel out of a detent.
-	 * @param count The number of steps. This should be at least one, and less than the maximum DSP
-	 * 	integer. Ideally it should be 40-50 on a seven position wheel (where 1 position is ~57 steps),
-	 * 	and less than 80 on a five position wheel (where 1 position is 80 steps).
+	 * @param ms The time, in milliseconds, before we start detent checking. This must be less than
+	 * 	about 1.3 seconds (1300) for 7 position filter wheels.
 	 * @exception CCDLibraryNativeException Thrown if an error occurs (the parameter is out of range,
 	 * 	or we could not write to the controller).
-	 * @see #CCD_Filter_Wheel_Set_De_Bounce_Step_Count
+	 * @see #CCD_Filter_Wheel_Set_De_Bounce_Milliseconds
 	 */
-	public void CCDFilterWheelSetDeBounceStepCount(int count) throws CCDLibraryNativeException
+	public void CCDFilterWheelSetDeBounceMs(int ms) throws CCDLibraryNativeException
 	{
-		CCD_Filter_Wheel_Set_De_Bounce_Step_Count(count);
+		CCD_Filter_Wheel_Set_De_Bounce_Milliseconds(ms);
 	}
+
 
 // ccd_global.h
 	/**
@@ -1613,6 +1596,10 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.37  2002/12/16 19:50:49  cjm
+// Changed Abort prototypes, thay can now return exceptions.
+// Changed some CCDDSP methods to CCDExposure, to match libccd.
+//
 // Revision 0.36  2002/12/03 17:47:42  cjm
 // Added CCDSetupGetVacuumGaugeADU and CCDSetupGetVacuumGaugeMBar.
 //
