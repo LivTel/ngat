@@ -1,19 +1,19 @@
 // SpecLibrary.java -*- mode: Fundamental;-*-
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.5 2001-02-15 15:34:21 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.6 2001-05-08 18:34:18 cjm Exp $
 package ngat.spec;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.5 $
+ * @version $Revision: 0.6 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.5 2001-02-15 15:34:21 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.6 2001-05-08 18:34:18 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -96,6 +96,7 @@ public class SpecLibrary
 	public final static int DAIO_INTERFACE_DEVICE_TEXT 		= 1;
 	public final static int DAIO_INTERFACE_DEVICE_DAS08JR 		= 2;
 	public final static int DAIO_INTERFACE_DEVICE_PC104_DAS08 	= 3;
+	public final static int DAIO_INTERFACE_DEVICE_FILTER_EMULATE 	= 4;
 
 // general native methods
 	/**
@@ -944,13 +945,14 @@ public class SpecLibrary
 	 * Should be called before open method.
 	 * @param deviceNumber A number specifying which IO device to talk to. One of:
 	 * 	DAIO_INTERFACE_DEVICE_NONE, DAIO_INTERFACE_DEVICE_TEXT, DAIO_INTERFACE_DEVICE_DAS08JR,
-	 * 	DAIO_INTERFACE_DEVICE_PC104_DAS08.
+	 * 	DAIO_INTERFACE_DEVICE_PC104_DAS08, DAIO_INTERFACE_DEVICE_FILTER_EMULATE.
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_DAIO_Select_Device
 	 * @see #DAIO_INTERFACE_DEVICE_NONE
 	 * @see #DAIO_INTERFACE_DEVICE_TEXT
 	 * @see #DAIO_INTERFACE_DEVICE_DAS08JR
 	 * @see #DAIO_INTERFACE_DEVICE_PC104_DAS08
+	 * @see #DAIO_INTERFACE_DEVICE_FILTER_EMULATE
 	 * @see #open
 	 */
 	public static void selectIODevice(int deviceNumber) throws SpecNativeException
@@ -961,6 +963,9 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.5  2001/02/15 15:34:21  cjm
+// removed readout_ccd boolean from exposure method.
+//
 // Revision 0.4  2000/11/20 16:40:09  cjm
 // Added cameraExposeGetLength and cameraExposeGetStartTime.
 //
