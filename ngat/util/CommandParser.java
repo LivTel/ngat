@@ -1,4 +1,4 @@
-package ngat.utility;
+package ngat.util;
 
 import java.util.*;
 import java.text.*;
@@ -17,7 +17,7 @@ import java.text.*;
  *
  * A typical arglist might look like: -noresize -heap 200 -stackmin 30 -stackmax 80 -verbose
  *
- * $Id: CommandParser.java,v 1.1 2000-11-21 16:37:10 snf Exp $
+ * $Id: CommandParser.java,v 1.2 2000-11-21 17:24:58 snf Exp $
  *
  */
 public class CommandParser {
@@ -116,4 +116,7 @@ public class CommandParser {
 
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 16:37:10  snf
+/** Initial revision
+/** */
