@@ -1,12 +1,12 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.2 1999-09-15 16:10:30 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.3 1999-11-22 16:14:35 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
 
 PACKAGEDIR = ngat/ccd
 PACKAGENAME = ngat.ccd
-JAVACFLAGS = -d $(LIBDIR) -classpath $(LIBDIR):$(CLASSPATH)
+JAVACFLAGS = -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
 DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS = -version -author -private
 SRCS = CCDLibraryDouble.java CCDLibraryFormatException.java CCDLibraryNativeException.java CCDLibrary.java
@@ -37,6 +37,9 @@ tidy:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.2  1999/09/15 16:10:30  cjm
+# Added CCDLibraryNativeException.java source file.
+#
 # Revision 1.1  1999/09/15 15:41:02  cjm
 # Initial revision
 #
