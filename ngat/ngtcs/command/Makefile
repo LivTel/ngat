@@ -45,7 +45,17 @@ SRCS           = AGCENTROID.java \
                  RESET.java \
                  ROTATOR.java \
                  SHOW.java \
-                 SHOWDone.java \
+		 SHOW_ASTROMETRY_Done.java \
+		 SHOW_AUTOGUIDER_Done.java \
+		 SHOW_CALIBRATE_Done.java \
+		 SHOW_FOCAL_STATION_Done.java \
+		 SHOW_LIMITS_Done.java \
+		 SHOW_MECHANISMS_Done.java \
+		 SHOW_METEOROLOGY_Done.java \
+		 SHOW_SOURCE_Done.java \
+		 SHOW_STATE_Done.java \
+		 SHOW_TIME_Done.java \
+		 SHOW_VERSION_Done.java \
                  SHUTDOWN.java \
                  STATE.java \
                  STATUS.java \
@@ -65,12 +75,15 @@ SRCS           = AGCENTROID.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.7 $
-#       $Id: Makefile,v 1.7 2003-11-11 11:57:52 je Exp $
-#     $Date: 2003-11-11 11:57:52 $
+# $Revision: 1.8 $
+#       $Id: Makefile,v 1.8 2003-11-12 12:27:58 je Exp $
+#     $Date: 2003-11-12 12:27:58 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.7  2003/11/11 11:57:52  je
+#      Added POLE command.
+#
 #      Revision 1.6  2003/09/22 14:58:56  je
 #      Added AGMOVE using make_makefile.csh
 #
