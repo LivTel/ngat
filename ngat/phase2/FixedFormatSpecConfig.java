@@ -10,7 +10,8 @@ import java.util.*;
 import java.io.*;
 
 /**
- * NuViewII Spec.
+ * Fixed Format Spectrograph Config, for a spectrograpg which cannot configure it's wavelength range.
+ * Currently used for FTNSpec and FTSSpec.
  */
 public class FixedFormatSpecConfig extends SpecConfig implements Serializable {
 
