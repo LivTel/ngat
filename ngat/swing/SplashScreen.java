@@ -1,5 +1,5 @@
 // SplashScreen.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/SplashScreen.java,v 0.2 1999-12-14 12:29:34 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/SplashScreen.java,v 0.3 1999-12-14 14:33:29 cjm Exp $
 package ngat.swing;
 
 import java.awt.*;
@@ -12,14 +12,18 @@ import javax.swing.border.Border;
  * The splash screen stays up for a user definable length of time.
  * Clicking the mouse on the splash screen unmanages it.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  */
 public class SplashScreen implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SplashScreen.java,v 0.2 1999-12-14 12:29:34 cjm Exp $");
+	public final static String RCSID = new String("$Id: SplashScreen.java,v 0.3 1999-12-14 14:33:29 cjm Exp $");
+	/**
+	 * Amount of time the run method sleeps between calls to toFront.
+	 */
+	public final static int SLEEP_TIME = 100;
 	/**
 	 * The window the splash screen appears in.
 	 */
@@ -166,19 +170,29 @@ public class SplashScreen implements Runnable
 
 	/**
 	 * Run method, called from show method to actually display the splash (in a separate thread).
-	 * Sets the splashWindow visible, sleeps for a duration and then makes it non-visible.
+	 * Sets the splashWindow visible.
+	 * Keeps sleeping for a little time.
+	 * After the total time slept is greater than the duration, it then makes the splash screen non-visible.
 	 * @see #splashWindow
 	 * @see #duration
+	 * @see #SLEEP_TIME
 	 */
 	public void run()
 	{
+		int time = 0;
+
 		splashWindow.setVisible(true);
-		try
+		time = 0;
+		while((time < duration)&&(splashWindow.isVisible()))
 		{
-			Thread.sleep(duration);
-		}
-		catch(Exception e)
-		{
+			try
+			{
+				Thread.sleep(SLEEP_TIME);
+			}
+			catch(Exception e)
+			{
+			}
+			time += SLEEP_TIME;
 		}
 		splashWindow.setVisible(false);
 	}
@@ -202,6 +216,9 @@ public class SplashScreen implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  1999/12/14 12:29:34  cjm
+// Added mouse click handling.
+//
 // Revision 0.1  1999/12/14 11:58:36  cjm
 // initial revision.
 //
