@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.25 2001-06-19 10:46:19 snf Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.26 2001-06-20 15:41:46 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -29,7 +29,8 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		CommandParser.java ConfigurationCache.java ConfigurationProperties.java \
 		GaussianRandom.java BooleanLock.java Predictor.java PredictorSample.java StandardPredictor.java \
 		StatisticalPredictor.java SMTPMailer.java Queue.java QueueEmptyException.java LinkedQueue.java\
-		ICSDCommand.java ICSDRebootCommand.java ICSDShutdownCommand.java
+		ICSDCommand.java ICSDRebootCommand.java ICSDShutdownCommand.java \
+		FileUtilites.java FileUtilitesNativeException.java LockFile.java PersistentUniqueInteger.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
@@ -91,6 +92,9 @@ backup: tidy
 
 
 # $Log: not supported by cvs2svn $
+# Revision 1.25  2001/06/19 10:46:19  snf
+# Updated logging.
+#
 # Revision 1.24  2001/05/14 19:01:46  cjm
 # Added ICSDCommand.java ICSDRebootCommand.java ICSDShutdownCommand.java.
 #
