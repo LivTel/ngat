@@ -5,16 +5,21 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Enumeration;
+import java.text.*;
 
 /**
  * A generic panel for drawing graphical output in 2D. Multiple channels can be defined
  * and symbol-type, size and color set for each channel. Subclasses should redefine the
- * paint() and putPoint() methods to carry out any additional processing.
+ * paint() and putPoint() methods to carry out any additional processing. 
+ * This class is now deprecated - Use the ngat.util.charting API instead.
  *
- * $Id: GraphPlot.java,v 1.2 2001-07-11 10:24:23 snf Exp $
- *
+ * $Id: GraphPlot.java,v 1.3 2002-09-25 10:45:13 snf Exp $
  */ 
 public class GraphPlot extends JPanel {
+
+    public static final Color PLOT_COLOR = new Color(62,208,200);
+    
+    public static final Color BOUNDARY_COLOR = new Color(32,178,170);
    
     /** Low limit of X axis in user units.*/
     protected float xLo;
@@ -36,9 +41,6 @@ public class GraphPlot extends JPanel {
 
     /** Records the points to plot.*/
     protected CircularList pts[];
-
-    /** Number of points recorded in each channel.*/
-    protected int nPts[];
 
     /** Mark set per channel.*/
     protected int mark[];
@@ -66,6 +68,17 @@ public class GraphPlot extends JPanel {
 
     /** Number of annotations.*/
     protected int nAnn;
+
+    /** Graph title.*/
+    protected String graphTitle;
+
+    /** X-axis label.*/
+    protected String xTitle;
+
+    /** Y-axis label.*/
+    protected String yTitle;
+
+    protected NumberFormat nf = NumberFormat.getInstance();
 
     /** Standard number of points to plot if unspecified.*/
     public static final int MAX_PTS = 100;
@@ -96,12 +109,11 @@ public class GraphPlot extends JPanel {
 	yLo = y1;
 	yHi = y2;
 	
-	deltaX = 20.0F;
-	deltaY = 20.0F;
+	deltaX = 50.0F;
+	deltaY = 50.0F;
 	
 	level = 1;
 
-	nPts = new int[5];
 	pts = new CircularList[5];
 	mark = new int[5];
 	markSize = new int[5];
@@ -163,19 +175,25 @@ public class GraphPlot extends JPanel {
     /** Clear all channels.*/
     public void clear() {
 	for (int k = 0; k < 5; k++) {
-	    nPts[k]=0;
+	    pts[k].clear();
 	}
     }
 
     /** Clear out specified channel.*/
     public void clear(int chan) {
-	nPts[chan] = 0;
+	pts[chan].clear();
     }
 
     /** Clears the annotation.*/
     public void clearAnnotation() {
 	nAnn = 0;
     }
+
+    public void setGraphTitle(String title) { this.graphTitle = title;}
+    
+    public void setXTitle(String title) { this.xTitle = title;}
+    
+    public void setYTitle(String title) { this.yTitle = title;}
 
     /** Set the symbol type for the specified channel.
      * @param chan The channel.
@@ -228,7 +246,7 @@ public class GraphPlot extends JPanel {
       int nTicks = 0;
       int m1 = 0;
       int m2 = 0;
-      int xTickPwr = (int)(Math.log((double)(xHi - xLo))/Math.log(10));
+      int xTickPwr = (int)(Math.log((double)(xHi - xLo))/Math.log(10.0));
       float xTickInt = (float)Math.pow(10, xTickPwr);
       
       while (nTicks < 6) {
@@ -239,28 +257,32 @@ public class GraphPlot extends JPanel {
       }
 
       // Calculate vertical grid end points.
-
       int yMin = (int)getScreenY(yLo);
       int yMax = (int)getScreenY(yHi);
-
+      g.setColor(Color.yellow);
+      if (xTickInt < 1.0f) {
+	  int xFltPlaces = (int)(Math.log((double)xTickInt)/Math.log(10.0));
+	  xFltPlaces = 3 - xFltPlaces;
+	  nf.setMaximumFractionDigits(xFltPlaces);
+	  nf.setMinimumFractionDigits(1);
+      }
       for (int i = m1; i <= m2; i++) {
-	int xLabel = (int)(i * xTickInt);
-	int xScreen = (int)getScreenX((float)xLabel);
-	int yScreen = (int)getScreenY(yLo);
-	g.drawLine(xScreen, yScreen, xScreen, yScreen + 5); // Tick.
-	g.drawString("" + xLabel, xScreen - 5, yScreen + 15); // Label	
-	g.drawLine(xScreen, yMin, xScreen, yMax); // Vert. grid
+	  float xLabel = (i * xTickInt);
+	  int xScreen = (int)getScreenX(i * xTickInt);
+	  int yScreen = (int)getScreenY(yLo);
+	  g.drawLine(xScreen, yScreen, xScreen, yScreen + 5); // Tick.
+	  g.drawString(nf.format(xLabel), xScreen - 5, yScreen + 15); // Label	
+	  g.drawLine(xScreen, yMin, xScreen, yMax); // Vert. grid
       }
 
       // Minor tick marks.
-
       xTickInt /= 5;
       m1 = (int)((float)(xLo/xTickInt) + 1);
       m2 = (int)((float)(xHi/xTickInt));
       nTicks = m2 - m1 + 1;
       for (int i = m1; i <= m2; i++) {
 	int xLabel = (int)(i * xTickInt);
-	int xScreen = (int)getScreenX((float)xLabel);
+	int xScreen = (int)getScreenX(i * xTickInt);
 	int yScreen = (int)getScreenY(yLo);
 	g.drawLine(xScreen, yScreen, xScreen, yScreen + 2);
       }
@@ -283,13 +305,12 @@ public class GraphPlot extends JPanel {
 	}
 
 	// Calculate Horizontal grid endpoints.
-
 	int xMin = (int)getScreenX(xLo);
 	int xMax = (int)getScreenX(xHi);
-
+	g.setColor(Color.yellow);
 	for (int i = m1; i <= m2; i++) {
 	    int yLabel = (int)(i * yTickInt);
-	    int yScreen = (int)getScreenY((float)yLabel);
+	    int yScreen = (int)getScreenY(i * yTickInt);
 	    int xScreen = (int)getScreenX(xLo);
 	    g.drawLine(xScreen, yScreen, xScreen - 5, yScreen);
 	    g.drawString("" + yLabel, xScreen - 15, yScreen);
@@ -297,14 +318,13 @@ public class GraphPlot extends JPanel {
 	} 
 
 	// Minor tick marks.
-
 	yTickInt /= 5;
 	m1 = (int)((float)(yLo/yTickInt) + 1);
 	m2 = (int)((float)(yHi/yTickInt));
 	nTicks = m2 - m1 + 1;
 	for (int i = m1; i <= m2; i++) {
 	    int yLabel = (int)(i * yTickInt);
-	    int yScreen = (int)getScreenY((float)yLabel);
+	    int yScreen = (int)getScreenY(i * yTickInt);
 	    int xScreen = (int)getScreenX(xLo);
 	    g.drawLine(xScreen, yScreen, xScreen - 2, yScreen);
 	}
@@ -320,16 +340,32 @@ public class GraphPlot extends JPanel {
 	int  y1 = (int)getScreenY(yLo);
 	int  y2 = (int)getScreenY(yHi);
 	
+	g.setColor(BOUNDARY_COLOR);
+	g.fillRect(0, 0, getSize().width, getSize().height);
+	g.setColor(PLOT_COLOR);
+	g.fillRect(x1, y2, (x2-x1), (y1-y2));
+	g.setColor(Color.black);
 	g.drawLine(x1, y1, x2, y1);
 	g.drawLine(x2, y1, x2, y2);
 	g.drawLine(x1, y1, x1, y2);
 	g.drawLine(x1, y2, x2, y2);
+	
+	if (graphTitle != null)
+	    g.drawString(graphTitle, 50, 10);
+
+	if (xTitle != null)
+	    g.drawString(xTitle, 50, getSize().height-20);
+
+	if (yTitle != null)
+	    g.drawString(yTitle, 10, 10);
+	
     }
 
 
     /** Draw the annotation text. */    
     protected void drawAnnotation(Graphics g) {
 	if (nAnn < 1) return;
+	g.setColor(Color.yellow);
 	for (int i = 0; i < nAnn; i++) {
 	    int x = (int)getScreenX(annotateX[i]);
 	    int y = (int)getScreenY(annotateY[i]);
@@ -453,6 +489,12 @@ public class GraphPlot extends JPanel {
 	    }
 	}
 	
+	/** Clear this list (hopefully).*/
+	public void clear() {
+	    start = nn-1;
+	    next = 0;
+	}
+
 	public Enumeration enumerate() { return new Enumerator();}
 
 	private class Enumerator implements Enumeration {
@@ -494,6 +536,9 @@ public class GraphPlot extends JPanel {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2001/07/11 10:24:23  snf
+/** backup.
+/**
 /** Revision 1.1  2000/11/21 16:24:33  snf
 /** Initial revision
 /** */
