@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/math/test/Makefile,v 0.1 2000-09-01 15:31:21 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/math/test/Makefile,v 0.2 2001-08-13 13:13:10 cjm Exp $ 
 
 include ../../../Makefile.common
 include ../../Makefile.common
@@ -12,18 +12,15 @@ SRCS 		= QuadraticFitTest.java QuadraticFitTest2.java
 OBJS 		= $(SRCS:%.java=$(BINDIR)/%.class)
 DOCS 		= $(SRCS:%.java=$(DOCSDIR)/%.html)
 
-# We need ngat.OSS.utility.* for the graph frames.
-CLASSPATH_OPTIONS = -classpath ".:$(CLASSPATH):/space/home/snf/BETA/src"
-
 top: $(OBJS) docs
 
 $(BINDIR)/%.class:%.java
-	$(JAVAC) $(JAVAC_OPTIONS) $(CLASSPATH_OPTIONS) -d $(BINDIR) $<
+	$(JAVAC) $(JAVAC_OPTIONS) -d $(BINDIR) $<
 
 docs: $(DOCS)
 
 $(DOCS): $(SRCS)
-	$(JAVADOC) $(CLASSPATH_OPTIONS) -d $(DOCSDIR) $(DOCFLAGS) $(SRCS)
+	$(JAVADOC) -d $(DOCSDIR) $(DOCFLAGS) $(SRCS)
 
 checkout:
 	$(CO) $(CO_OPTIONS) $(SRCS)
@@ -41,4 +38,7 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.1  2000/09/01 15:31:21  cjm
+# initial revision.
+#
 #
