@@ -11,7 +11,7 @@ package ngat.util;
  * </pre>
  * 
  * @author $Author: je $ 
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  *
  */
 public class NGATPropertyException extends Exception
@@ -19,7 +19,7 @@ public class NGATPropertyException extends Exception
     /**
      * Revision Control System id string, showing the version of the Class.
      */
-    public final static String RCSID = new String("$Id: NGATPropertyException.java,v 0.2 2002-09-27 12:59:56 je Exp $");
+    public final static String RCSID = new String("$Id: NGATPropertyException.java,v 0.3 2002-10-23 09:57:27 je Exp $");
 
     /**
      * The basic Constructor.
@@ -37,14 +37,17 @@ public class NGATPropertyException extends Exception
      */
     public NGATPropertyException( Exception e, String a, String b )
     {
-	super( "NGATProperty : "+e+" on key ["+a+"] and value ["+b+"]" );
+	super( e+" on key ["+a+"] and value ["+b+"]" );
     }
 }
 /*
- * $Date: 2002-09-27 12:59:56 $
+ * $Date: 2002-10-23 09:57:27 $
  * $RCSfile: NGATPropertyException.java,v $
  * $Source: /space/home/eng/cjm/cvs/ngat/util/NGATPropertyException.java,v $
  * $Log: not supported by cvs2svn $
+ * Revision 0.2  2002/09/27 12:59:56  je
+ * Documentation added.
+ *
  * Revision 0.1  2000/09/06 13:13:07  cjm
  * initial revision.
  *
