@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.18 2000-03-02 17:17:09 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.19 2000-03-03 10:32:03 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.18 $
+ * @version $Revision: 0.19 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.18 2000-03-02 17:17:09 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.19 2000-03-03 10:32:03 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -169,6 +169,10 @@ public class CCDLibrary
 	public final static int CCD_TEXT_PRINT_LEVEL_ALL = 			3;
 
 // ccd_dsp.h
+	/**
+	 * Native wrapper to libccd routine that aborts DSP commands.
+	 */
+	private native void CCD_DSP_Abort();
 	/**
 	 * Native wrapper to libccd routine thats returns whether an exposure is currently in progress.
 	 */
@@ -351,6 +355,15 @@ public class CCDLibrary
 	}
 
 // ccd_dsp.h
+	/**
+	 * Method to abort processing of a DSP command.
+	 * @see #CCD_DSP_Abort
+	 */
+	public void CCDDSPAbort()
+	{
+		CCD_DSP_Abort();
+	}
+
 	/**
 	 * Returns whether an exposure is currently in progress. The library keeps track of whether a call to
 	 * <a href="#CCDExposureExpose">CCDExposureExpose</a> is in progress, and whether it is exposing or reading out
@@ -986,6 +999,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.18  2000/03/02 17:17:09  cjm
+// Added CCDSetupHardwareTest.
+//
 // Revision 0.17  2000/02/28 19:13:47  cjm
 // Backup.
 //
