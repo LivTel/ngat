@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.41 2003-12-08 15:07:41 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.42 2004-03-03 15:45:19 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.41 $
+ * @version $Revision: 0.42 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.41 2003-12-08 15:07:41 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.42 2004-03-03 15:45:19 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -1577,7 +1577,7 @@ public class CCDLibrary
 // ccd_temperature.h
 	/**
 	 * Routine to get the current CCD temperature.
-	 * @param temperature A double wrapper in which the current temperature is returned.
+	 * @param temperature A double wrapper in which the current temperature is returned, in degrees centigrade.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 * @see CCDLibraryDouble
 	 * @see #CCD_Temperature_Get
@@ -1687,6 +1687,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.41  2003/12/08 15:07:41  cjm
+// Fixed references to CCDDSPGetExposureStatus, changed to CCDExposureGetExposureStatus.
+//
 // Revision 0.40  2003/12/08 15:03:47  cjm
 // EXPOSURE_STATUS_WAIT_START added.
 //
