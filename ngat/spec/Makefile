@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/spec/Makefile,v 0.1 2000-10-16 17:37:13 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/spec/Makefile,v 0.2 2000-10-19 13:48:34 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -13,7 +13,7 @@ JAVACFLAGS = -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
 DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS = -version -author -private
 
-SRCS = SPECNativeException.java SpecDoubleRange.java SpecIntRange.java SpecLibrary.java
+SRCS = SpecNativeException.java SpecDoubleRange.java SpecIntRange.java SpecLibrary.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
@@ -73,4 +73,7 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.1  2000/10/16 17:37:13  cjm
+# initial revision.
+#
 #
