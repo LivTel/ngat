@@ -1,5 +1,5 @@
-// GUITextAppender.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUITextAppender.java,v 0.4 1999-12-14 15:16:33 cjm Exp $
+// GUITextAppender.java
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUITextAppender.java,v 0.5 2003-08-14 16:40:56 cjm Exp $
 package ngat.swing;
 
 import java.lang.*;
@@ -14,7 +14,7 @@ import javax.swing.text.BadLocationException;
  * It appends some passed in text to the JTextArea. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision: 0.5 $
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUITextAppender implements Runnable
@@ -22,7 +22,7 @@ public class GUITextAppender implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUITextAppender.java,v 0.4 1999-12-14 15:16:33 cjm Exp $");
+	public final static String RCSID = new String("$Id: GUITextAppender.java,v 0.5 2003-08-14 16:40:56 cjm Exp $");
 	/**
 	 * The Swing JTextAreacomponent to append to.
 	 */
@@ -81,6 +81,9 @@ public class GUITextAppender implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.4  1999/12/14 15:16:33  cjm
+// Added scroll to end technology.
+//
 // Revision 0.3  1999/11/29 11:46:03  cjm
 // Changed package to ngat.swing.
 //
