@@ -1,5 +1,5 @@
 // LockFile.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/LockFile.java,v 1.1 2001-06-20 15:40:12 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/LockFile.java,v 1.2 2001-07-31 10:56:42 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -17,8 +17,8 @@ import java.lang.*;
  * methods (getData and setData) that allow us to change this data. Note the setData method has to create
  * new link, and them move it over the last one. This makes the LockFile class more complicated, as there
  * are now potentially two lock files on the filesystem.
- * @see FileUtilites
- * @version $Revision: 1.1 $
+ * @see FileUtilities
+ * @version $Revision: 1.2 $
  * @author Chris Mottram
  */
 public class LockFile
@@ -26,7 +26,7 @@ public class LockFile
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LockFile.java,v 1.1 2001-06-20 15:40:12 cjm Exp $");
+	public final static String RCSID = new String("$Id: LockFile.java,v 1.2 2001-07-31 10:56:42 cjm Exp $");
 	/**
 	 * Default name of the lock file.
 	 */
@@ -90,11 +90,11 @@ public class LockFile
 	/**
 	 * lock the file. No data is encoded into the lock.
 	 * @see #lock(java.lang.String)
-	 * @exception FileUtilitesNativeException Thrown if creating the symbolic link fails.
+	 * @exception FileUtilitiesNativeException Thrown if creating the symbolic link fails.
 	 * @exception Exception Thrown if the lock operation fails. This can occur if the lock file, or the
 	 * 	temporary lock file, exist.
 	 */
-	public synchronized void lock() throws FileUtilitesNativeException, Exception
+	public synchronized void lock() throws FileUtilitiesNativeException, Exception
 	{
 		lock(null);
 	}
@@ -103,18 +103,18 @@ public class LockFile
 	 * Lock the file. If the file or the temporary file exist the operation fails as the file is already
 	 * locked. Otherwise a lock file is created using createSymbolicLink.
 	 * @param data A string that is encoded into the lock file so that it can retrieved at a later date.
-	 * @exception FileUtilitesNativeException Thrown if creating the symbolic link fails.
+	 * @exception FileUtilitiesNativeException Thrown if creating the symbolic link fails.
 	 * @exception Exception Thrown if the lock operation fails. This can occur if the lock file, or the
 	 * 	temporary lock file, exist.
-	 * @see FileUtilites#createSymbolicLink
+	 * @see FileUtilities#createSymbolicLink
 	 */
-	public synchronized void lock(String data) throws FileUtilitesNativeException, Exception
+	public synchronized void lock(String data) throws FileUtilitiesNativeException, Exception
 	{
-		if(FileUtilites.symbolicLinkExists(file))
+		if(FileUtilities.symbolicLinkExists(file))
 			throw new Exception("File "+file+" already exists.");
-		if(FileUtilites.symbolicLinkExists(otherFile))
+		if(FileUtilities.symbolicLinkExists(otherFile))
 			throw new Exception("File "+otherFile+" already exists.");
-		FileUtilites.createSymbolicLink(name+":"+data,file);
+		FileUtilities.createSymbolicLink(name+":"+data,file);
 	}
 
 	/**
@@ -128,13 +128,13 @@ public class LockFile
 	{
 		boolean fileDeleted = false;
 
-		if(FileUtilites.symbolicLinkExists(file))
+		if(FileUtilities.symbolicLinkExists(file))
 		{
 			if(file.delete() == false)
 				throw new Exception("Failed to unlock:Failed to delete:"+file);
 			fileDeleted = true;
 		}
-		if(FileUtilites.symbolicLinkExists(otherFile))
+		if(FileUtilities.symbolicLinkExists(otherFile))
 		{
 			if(otherFile.delete() == false)
 				throw new Exception("Failed to unlock:Failed to delete:"+otherFile);
@@ -155,25 +155,25 @@ public class LockFile
 	 */
 	public synchronized boolean isLocked()
 	{
-		return (FileUtilites.symbolicLinkExists(file)||FileUtilites.symbolicLinkExists(otherFile));
+		return (FileUtilities.symbolicLinkExists(file)||FileUtilities.symbolicLinkExists(otherFile));
 	}
 
 	/**
 	 * Try to change the data set in the sybolic link used for the lock file.
 	 * @param data The new data to set.
-	 * @exception FileUtilitesNativeException Thrown if readSymbolicLink fails.
+	 * @exception FileUtilitiesNativeException Thrown if readSymbolicLink fails.
 	 * @exception Exception Thrown if a file delete or rename operation fails.
 	 */
-	public synchronized void setData(String data) throws FileUtilitesNativeException, Exception
+	public synchronized void setData(String data) throws FileUtilitiesNativeException, Exception
 	{
-		if(FileUtilites.symbolicLinkExists(file))
+		if(FileUtilities.symbolicLinkExists(file))
 		{
 		// Note we don't delete otherFile before renaming file to otherFile.
 			if(file.renameTo(otherFile) == false)
 				throw new Exception ("setData:Rename "+file+" to "+otherFile+" failed.");
 		}
-		FileUtilites.createSymbolicLink(name+":"+data,file);
-		if(FileUtilites.symbolicLinkExists(otherFile))
+		FileUtilities.createSymbolicLink(name+":"+data,file);
+		if(FileUtilities.symbolicLinkExists(otherFile))
 		{
 			if(otherFile.delete() == false)
 				throw new Exception ("setData:Deleting "+otherFile+" failed.");
@@ -187,18 +187,18 @@ public class LockFile
 	 * link contents.
 	 * @return The data string in the lock file.
 	 * @exception Exception Thrown if getDataFromLinkContents fails.
-	 * @exception FileUtilitesNativeException Thrown if readSymbolicLink fails.
-	 * @see FileUtilites#readSymbolicLink
+	 * @exception FileUtilitiesNativeException Thrown if readSymbolicLink fails.
+	 * @see FileUtilities#readSymbolicLink
 	 * @see #getDataFromLinkContents
 	 */
-	public synchronized String getData() throws FileUtilitesNativeException, Exception
+	public synchronized String getData() throws FileUtilitiesNativeException, Exception
 	{
 		String linkContents = null;
 
-		if(FileUtilites.symbolicLinkExists(file))
-			linkContents = FileUtilites.readSymbolicLink(file);
-		else if(FileUtilites.symbolicLinkExists(otherFile))
-			linkContents = FileUtilites.readSymbolicLink(otherFile);
+		if(FileUtilities.symbolicLinkExists(file))
+			linkContents = FileUtilities.readSymbolicLink(file);
+		else if(FileUtilities.symbolicLinkExists(otherFile))
+			linkContents = FileUtilities.readSymbolicLink(otherFile);
 		return getDataFromLinkContents(linkContents);
 	}
 
@@ -297,4 +297,7 @@ public class LockFile
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2001/06/20 15:40:12  cjm
+// Initial revision
+//
 //

@@ -1,5 +1,5 @@
-// FileUtilites.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/FileUtilities.java,v 1.1 2001-07-31 09:47:10 cjm Exp $
+// FileUtilities.java -*- mode: Fundamental;-*-
+// $Header: /space/home/eng/cjm/cvs/ngat/util/FileUtilities.java,v 1.2 2001-07-31 10:56:24 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -8,15 +8,15 @@ import java.lang.*;
 /**
  * Some useful file routines.
  * There are methods to create/read/test existence of symbolic links.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Chris Mottram
  */
-public class FileUtilites
+public class FileUtilities
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FileUtilities.java,v 1.1 2001-07-31 09:47:10 cjm Exp $");
+	public final static String RCSID = new String("$Id: FileUtilities.java,v 1.2 2001-07-31 10:56:24 cjm Exp $");
 	/**
 	 * Default size of a buffer to read the contents of symbolic link into.
 	 */
@@ -38,9 +38,10 @@ public class FileUtilites
 	 * 	link. Normally this is another pathname to a file, but a <i>dangling link</i>
 	 * 	can also be created, where the link just contains data.
 	 * @param linkFilename A string representing a valid filename.
-	 * @exception FileUtilitesNativeException Thrown if an error occurs whilst creating the symbolic link.
+	 * @exception FileUtilitiesNativeException Thrown if an error occurs whilst creating the symbolic link.
 	 */
-	private static native void symlink(String linkContents,String linkFilename) throws FileUtilitesNativeException;
+	private static native void symlink(String linkContents,String linkFilename) 
+		throws FileUtilitiesNativeException;
 	/**
 	 * Internal native method. The Java JNI interface to the C code that
 	 * actually calls the C readlink routine.
@@ -48,9 +49,10 @@ public class FileUtilites
 	 * @param bufferLength The length of buffer to allocate in the C routine, which must be long enough
 	 * 	to receive the contents of the link (what pathname/data it points to).
 	 * @return A String is returned. It contains the current contents of the link.
-	 * @exception FileUtilitesNativeException Thrown if an error occurs whilst the link is read.
+	 * @exception FileUtilitiesNativeException Thrown if an error occurs whilst the link is read.
 	 */
-	private static native String readlink(String linkFilename,int bufferLength) throws FileUtilitesNativeException;
+	private static native String readlink(String linkFilename,int bufferLength) 
+		throws FileUtilitiesNativeException;
 	/**
 	 * Internal native method. The Java JNI interface to the C code that
 	 * actually calls the C readlink routine.
@@ -65,11 +67,11 @@ public class FileUtilites
 	 * 	link. Normally this is another pathname to a file, but a <i>dangling link</i>
 	 * 	can also be created, where the link just contains data.
 	 * @param linkFilename A string representing a valid filename.
-	 * @exception FileUtilitesNativeException Thrown if an error occurs in symlink.
+	 * @exception FileUtilitiesNativeException Thrown if an error occurs in symlink.
 	 * @see #symlink
 	 */
 	public static void createSymbolicLink(String linkContents,String linkFilename) 
-		throws FileUtilitesNativeException
+		throws FileUtilitiesNativeException
 	{
 		symlink(linkContents,linkFilename);
 	}
@@ -81,10 +83,10 @@ public class FileUtilites
 	 * 	link. Normally this is another pathname to a file, but a <i>dangling link</i>
 	 * 	can also be created, where the link just contains data.
 	 * @param linkFilename An instance of File representing a valid filename.
-	 * @exception FileUtilitesNativeException Thrown if an error occurs in symlink.
+	 * @exception FileUtilitiesNativeException Thrown if an error occurs in symlink.
 	 * @see #symlink
 	 */
-	public static void createSymbolicLink(String linkContents,File link) throws FileUtilitesNativeException
+	public static void createSymbolicLink(String linkContents,File link) throws FileUtilitiesNativeException
 	{
 		symlink(linkContents,link.getAbsolutePath());
 	}
@@ -93,11 +95,11 @@ public class FileUtilites
 	 * Method to read the contents of a symbolic link.
 	 * @param linkFilename A string representing a valid filename.
 	 * @return The current contents of the link are returned.
-	 * @exception FileUtilitesNativeException Thrown if an error occurs in readlink.
+	 * @exception FileUtilitiesNativeException Thrown if an error occurs in readlink.
 	 * @see #readlink
 	 * @see #DEFAULT_READ_LINK_BUFFER_SIZE
 	 */
-	public static String readSymbolicLink(String linkFilename) throws FileUtilitesNativeException
+	public static String readSymbolicLink(String linkFilename) throws FileUtilitiesNativeException
 	{
 		String retval = null;
 
@@ -109,11 +111,11 @@ public class FileUtilites
 	 * Method to read the contents of a symbolic link.
 	 * @param link An instance of File representing a valid filename.
 	 * @return The current contents of the link are returned.
-	 * @exception FileUtilitesNativeException Thrown if an error occurs in readlink.
+	 * @exception FileUtilitiesNativeException Thrown if an error occurs in readlink.
 	 * @see #readlink
 	 * @see #DEFAULT_READ_LINK_BUFFER_SIZE
 	 */
-	public static String readSymbolicLink(File link) throws FileUtilitesNativeException
+	public static String readSymbolicLink(File link) throws FileUtilitiesNativeException
 	{
 		String retval = null;
 
@@ -148,7 +150,7 @@ public class FileUtilites
 	/**
 	 * Test main program. Call as follows:
 	 * <pre>
-	 * java ngat.util.FileUtilites &lt;file&gt; &lt;createsymlink &lt;to&gt;|readsymlink&gt;
+	 * java ngat.util.FileUtilities &lt;file&gt; &lt;createsymlink &lt;to&gt;|readsymlink&gt;
 	 * </pre>
 	 * @param args The argument list.
 	 */
@@ -159,7 +161,7 @@ public class FileUtilites
 
 		if(args.length < 2)
 		{
-			System.err.println("java ngat.util.FileUtilites <file> "+
+			System.err.println("java ngat.util.FileUtilities <file> "+
 				"<createsymlink <to>|readsymlink|symlinkexists>");
 			System.exit(1);
 		}
@@ -190,7 +192,7 @@ public class FileUtilites
 			}
 			else
 			{
-				System.err.println("java ngat.util.FileUtilites <file> "+
+				System.err.println("java ngat.util.FileUtilities <file> "+
 						"<createsymlink <to>|readsymlink|symlinkexists>");
 				System.exit(1);
 			}
@@ -205,6 +207,9 @@ public class FileUtilites
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2001/07/31 09:47:10  cjm
+// Initial revision
+//
 // Revision 1.1  2001/06/20 15:40:12  cjm
 // Initial revision
 //

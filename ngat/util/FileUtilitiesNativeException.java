@@ -1,5 +1,5 @@
-// FileUtilitesNativeException.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/FileUtilitiesNativeException.java,v 1.1 2001-07-31 09:57:02 cjm Exp $
+// FileUtilitiesNativeException.java -*- mode: Fundamental;-*-
+// $Header: /space/home/eng/cjm/cvs/ngat/util/FileUtilitiesNativeException.java,v 1.2 2001-07-31 10:56:34 cjm Exp $
 package ngat.util;
 
 /**
@@ -7,14 +7,14 @@ package ngat.util;
  * produces an error. 
  * The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class FileUtilitesNativeException extends Exception
+public class FileUtilitiesNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: FileUtilitiesNativeException.java,v 1.1 2001-07-31 09:57:02 cjm Exp $");
+	public final static String RCSID = new String("$Id: FileUtilitiesNativeException.java,v 1.2 2001-07-31 10:56:34 cjm Exp $");
 	/**
 	 * The function name supplied to the exception.
 	 */
@@ -32,7 +32,7 @@ public class FileUtilitesNativeException extends Exception
 	 * Constructor for the exception.
 	 * @param errorString The error string.
 	 */
-	public FileUtilitesNativeException(String errorString)
+	public FileUtilitiesNativeException(String errorString)
 	{
 		super(errorString);
 		this.functionName = null;
@@ -49,7 +49,7 @@ public class FileUtilitesNativeException extends Exception
 	 * @see #errorString
 	 * @see #errorNumber
 	 */
-	public FileUtilitesNativeException(String functionName,int errorNumber,String errorString)
+	public FileUtilitiesNativeException(String functionName,int errorNumber,String errorString)
 	{
 		super(errorString);
 		this.functionName = functionName;
@@ -102,6 +102,9 @@ public class FileUtilitesNativeException extends Exception
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2001/07/31 09:57:02  cjm
+// Initial revision
+//
 // Revision 1.1  2001/06/20 15:40:12  cjm
 // Initial revision
 //

@@ -1,5 +1,5 @@
 // PersistentUniqueInteger.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/PersistentUniqueInteger.java,v 1.1 2001-06-20 15:40:12 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/PersistentUniqueInteger.java,v 1.2 2001-07-31 10:56:49 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -21,7 +21,7 @@ import java.lang.*;
  * persistent integer.
  * @see LockFile
  * @see LockFile#unLock
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Chris Mottram
  */
 public class PersistentUniqueInteger
@@ -29,7 +29,7 @@ public class PersistentUniqueInteger
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PersistentUniqueInteger.java,v 1.1 2001-06-20 15:40:12 cjm Exp $");
+	public final static String RCSID = new String("$Id: PersistentUniqueInteger.java,v 1.2 2001-07-31 10:56:49 cjm Exp $");
 	/**
 	 * Default name used for the lock file name paramater.
 	 * This is embeddded into the symbolic link. 
@@ -68,10 +68,10 @@ public class PersistentUniqueInteger
 	 * is to be used.
 	 * @param n The value to set the persistent unique integer to.
 	 * @see LockFile#setData
-	 * @exception FileUtilitesNativeException Thrown in LockFile.setData() fails.
+	 * @exception FileUtilitiesNativeException Thrown in LockFile.setData() fails.
 	 * @exception Exception Thrown if LockFile.setData() fails.
 	 */
-	public synchronized void set(int n) throws FileUtilitesNativeException, Exception
+	public synchronized void set(int n) throws FileUtilitiesNativeException, Exception
 	{
 		lockFile.setData(""+n);
 	}
@@ -84,11 +84,11 @@ public class PersistentUniqueInteger
 	 * @return The incremented persistent unique integer value.
 	 * @see #get
 	 * @see LockFile#setData
-	 * @exception FileUtilitesNativeException Thrown in LockFile.setData/get fails.
+	 * @exception FileUtilitiesNativeException Thrown in LockFile.setData/get fails.
 	 * @exception NumberFormatException Thrown if get() fails.
 	 * @exception Exception Thrown if LockFile.setData()/get() fails.
 	 */
-	public synchronized int increment() throws FileUtilitesNativeException, NumberFormatException, Exception
+	public synchronized int increment() throws FileUtilitiesNativeException, NumberFormatException, Exception
 	{
 		int currentNumber;
 
@@ -103,7 +103,7 @@ public class PersistentUniqueInteger
 	 * If the lock file does not exist it is created with data '0'.
 	 * The lock file's data is then read, and parsed into an integer, which is returned.
 	 * @return The current persistent unique integer value.
-	 * @exception FileUtilitesNativeException Thrown in LockFile.setData()/LockFile.getData() fails.
+	 * @exception FileUtilitiesNativeException Thrown in LockFile.setData()/LockFile.getData() fails.
 	 * @exception NumberFormatException Thrown if Integer.parseInt() fails.
 	 * @exception Exception Thrown if LockFile.setData()/LockFile.getData() fails.
 	 * @see #lockFile
@@ -112,7 +112,7 @@ public class PersistentUniqueInteger
 	 * @see LockFile#getData
 	 * @see java.lang.Integer#parseInt
 	 */
-	public synchronized int get() throws FileUtilitesNativeException, NumberFormatException, Exception
+	public synchronized int get() throws FileUtilitiesNativeException, NumberFormatException, Exception
 	{
 		String currentString;
 		int currentNumber;
@@ -195,4 +195,7 @@ public class PersistentUniqueInteger
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2001/06/20 15:40:12  cjm
+// Initial revision
+//
 //
