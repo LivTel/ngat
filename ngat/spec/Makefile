@@ -1,13 +1,14 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/spec/Makefile,v 0.2 2000-10-19 13:48:34 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/spec/Makefile,v 0.3 2000-11-21 14:27:05 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
 
-SPEC_NAME = spec
-PACKAGEDIR = $(NGAT_HOME)/$(SPEC_NAME)
-PACKAGENAME = $(NGAT_HOME).$(SPEC_NAME)
-JAR_FILE = $(NGAT_HOME)_$(SPEC_NAME).jar
+SPEC_NAME 	= spec
+PACKAGEDIR 	= $(NGAT_HOME)/$(SPEC_NAME)
+PACKAGENAME 	= $(NGAT_HOME).$(SPEC_NAME)
+JAR_FILE 	= $(NGAT_HOME)_$(SPEC_NAME).jar
+LIBDIR		= lib
 DIRS = test
 JAVACFLAGS = -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
 DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
@@ -17,7 +18,7 @@ SRCS = SpecNativeException.java SpecDoubleRange.java SpecIntRange.java SpecLibra
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
-top: $(OBJS) jar docs
+top: jar docs
 	@for i in $(DIRS); \
 	do \
 		(echo making in $$i...; cd $$i; $(MAKE) ); \
@@ -29,7 +30,7 @@ $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 jar: $(JARLIBDIR)/$(JAR_FILE)
 
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
-	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(LIBDIR)/$(JAR_FILE) $(JARLIBDIR))
+	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
 docs: $(DOCS)
 
@@ -73,6 +74,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.2  2000/10/19 13:48:34  cjm
+# Added LaTeX directory
+#
 # Revision 0.1  2000/10/16 17:37:13  cjm
 # initial revision.
 #
