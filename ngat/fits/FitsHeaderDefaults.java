@@ -1,5 +1,5 @@
 // FitsHeaderDefaults.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderDefaults.java,v 0.1 2000-05-30 14:37:28 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderDefaults.java,v 0.2 2000-07-13 09:10:24 cjm Exp $
 package ngat.fits;
 
 import java.io.*;
@@ -20,14 +20,14 @@ import java.util.*;
  *     the FITS header, which is important for mandatory keywords. - <b>ngat.fits.order_number</b>.
  * </ul>
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  */
 public class FitsHeaderDefaults
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderDefaults.java,v 0.1 2000-05-30 14:37:28 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeaderDefaults.java,v 0.2 2000-07-13 09:10:24 cjm Exp $");
 	/**
 	 * Default value to put in the FITS header, against the OBSTYPE keyword, when the
 	 * image is an Arc.
@@ -192,6 +192,42 @@ public class FitsHeaderDefaults
  	}
 
 	/**
+	 * Method to get the default integer value for a specified FITS keyword. The VALUE_TYPE_PROPERTY_PREFIX
+	 * is used to determine the default value is of the right type. 
+	 * The VALUE_PROPERTY_PREFIX is used to get the string to pass into the parseInt routine
+	 * Note this method will throw an exception if the keyword has no default value (a lot don't).
+	 * @param keyword The FITS keyword string.
+	 * @return The default integer value for this keyword.
+	 * @exception FitsHeaderException Thrown if the value type or value defaults are not found.
+	 * @exception NumberFormatException Thrown if the value is not a valid integer.
+	 * @see #VALUE_TYPE_PROPERTY_PREFIX
+	 * @see #VALUE_PROPERTY_PREFIX
+	 */
+	public int getValueInteger(String keyword) throws FitsHeaderException, NumberFormatException
+	{
+		String valueTypeString = null;
+		String valueString = null;
+		int value = 0;
+
+	// get value type string
+		valueTypeString = properties.getProperty(VALUE_TYPE_PROPERTY_PREFIX+keyword);
+		if(valueTypeString == null)
+			throw new FitsHeaderException(keyword,"Default value type not found.");
+		if(valueTypeString.equals("java.lang.Integer") == false)
+			throw new FitsHeaderException(keyword,"Default value type is not an integer.");
+	// get value string
+		valueString = properties.getProperty(VALUE_PROPERTY_PREFIX+keyword);
+		if(valueString == null)
+			throw new FitsHeaderException(keyword,"Default value not found.");
+		if(valueString.equals(""))
+			throw new FitsHeaderException(keyword,"Default value is empty.");
+	// parse value string
+		value = Integer.parseInt(valueString);
+	// return value
+		return value;
+ 	}
+
+	/**
 	 * Method to get the default comment for a FITS keyword. The COMMENT_PROPERTY_PREFIX is prepended to
 	 * the keyword, and the resulting property queried to get the default comment.
 	 * @param keyword The FITS keyword.
@@ -243,4 +279,7 @@ public class FitsHeaderDefaults
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/05/30 14:37:28  cjm
+// initial revision.
+//
 //
