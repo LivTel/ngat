@@ -2,13 +2,14 @@ package ngat.ngtcs.command.execute;
 
 import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
+import ngat.ngtcs.subsystem.*;
 
 /**
  * Open/close the enclosure.
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ENCLOSUREImplementor extends CommandImplementor
 {
@@ -22,7 +23,7 @@ public class ENCLOSUREImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ENCLOSUREImplementor.java,v 1.4 2003-09-29 14:03:05 je Exp $" );
+    new String( "$Id: ENCLOSUREImplementor.java,v 1.5 2003-10-02 16:57:58 je Exp $" );
 
   /**
    * The timeout for the ENCLOSURE command (600 seconds), in milliseconds.
@@ -108,11 +109,14 @@ public class ENCLOSUREImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 14:03:05 $
+ *    $Date: 2003-10-02 16:57:58 $
  * $RCSfile: ENCLOSUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/ENCLOSUREImplementor.java,v $
- *      $Id: ENCLOSUREImplementor.java,v 1.4 2003-09-29 14:03:05 je Exp $
+ *      $Id: ENCLOSUREImplementor.java,v 1.5 2003-10-02 16:57:58 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/29 14:03:05  je
+ *     Added execute documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *
