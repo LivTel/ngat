@@ -1,16 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.9 1999-09-09 10:13:07 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.10 1999-09-10 15:33:42 cjm Exp $
+package ngat.ccd;
+
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.9 $
+ * @version $Revision: 0.10 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.9 1999-09-09 10:13:07 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.10 1999-09-10 15:33:42 cjm Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -777,6 +779,9 @@ class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.9  1999/09/09 10:13:07  cjm
+// Added CCDExposureBias call to library.
+//
 // Revision 0.8  1999/09/08 10:52:40  cjm
 // Trying to fix file permissions of these files.
 //
