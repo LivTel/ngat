@@ -1,5 +1,5 @@
 // StringUtilities.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.5 2002-10-09 10:54:30 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.6 2002-10-09 11:13:24 je Exp $
 package ngat.util;
 
 import java.io.*;
@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @author Chris Mottram
  */
 public class StringUtilities
@@ -15,7 +15,7 @@ public class StringUtilities
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.5 2002-10-09 10:54:30 je Exp $");
+	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.6 2002-10-09 11:13:24 je Exp $");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.
@@ -243,25 +243,21 @@ public class StringUtilities
 	}
 
 	/**
-	 * Method to get the last (leaf) element of a path. The path is
-	 * separated by <b>separator</b>s. e.g. getLeaf("java.lang.Object",'.')
-	 * returns "Object".
+	 * Method to get the last (leaf) element of a path. The path is separated by <b>separator</b>s.
+	 * e.g. getLeaf("java.lang.Object",'.') returns "Object".
 	 * @param s The string to search.
 	 * @param separator The separator character.
-	 * @return the leaf of the string.
-	 * <p><b>NB</b>
-	 * <br>If no separator's are found the string itself is returned. If
-	 * one or more separator's are found, the string after the last of the 
-	 * separators is returned.
+	 * @return A string. If no separator's are found the string itself is returned. If one or more
+	 * 	separator's are found, the string after the last of the separator's is returned.
 	 */
-	public static String getLeaf( String s, char separator )
+	public static String getLeaf(String s,char separator)
 	{
-	    int lastIndex;
+		int lastIndex;
 
-	    lastIndex = s.lastIndexOf( separator );
-	    if( lastIndex < 0 )
-		return s;
-	    return s.substring( lastIndex + 1 );
+		lastIndex = s.lastIndexOf(separator);
+		if(lastIndex < 0)
+			return s;
+		return s.substring(lastIndex+1);
 	}
 
 
@@ -282,15 +278,18 @@ public class StringUtilities
      */
     public static String getRoot( String s, char separator )
     {
-	int lastIndex = s.lastIndexOf( separator );
-	if( lastIndex < 0 )
-	    return s;
+        int lastIndex = s.lastIndexOf( separator );
+        if( lastIndex < 0 )
+            return s;
 
-	return s.substring( 0, lastIndex - 1 );
+        return s.substring( 0, lastIndex );
     }
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.4.1.1  2002/10/09 11:07:34  je
+// Added getRoot - the opposite of getLeaf
+//
 // Revision 1.4  2002/06/20 15:25:37  je
 // Debugged getLeaf
 //
