@@ -1,5 +1,5 @@
 // NGATProperties.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.6 2002-09-25 12:21:47 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.7 2002-09-25 12:53:31 je Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.util.*;
  * For all methods taking a default value, the default value is returned if
  * parsing of the value returned on the key search fails.
  *
- * @version $Revision: 0.6 $
+ * @version $Revision: 0.7 $
  * @author Jason Etherton,Chris Mottram
  */
 public class NGATProperties extends Properties
@@ -24,7 +24,7 @@ public class NGATProperties extends Properties
      * Revision Control System id string, showing the version of the Class.
      */
     public final static String RCSID = new String
-	("$Id: NGATProperties.java,v 0.6 2002-09-25 12:21:47 je Exp $");
+	("$Id: NGATProperties.java,v 0.7 2002-09-25 12:53:31 je Exp $");
 
     /**
      * Method to load the properties.
@@ -92,7 +92,7 @@ public class NGATProperties extends Properties
     }
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>short</code> from the Properties.
      * @param key the name of the property
      * @return the <code>short</code> value
      */
@@ -118,7 +118,7 @@ public class NGATProperties extends Properties
     }
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>short</code> from the Properties.
      * @param key the name of the property
      * @return the <code>short</code> value or the default value specified
      */
@@ -137,7 +137,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>int</code> from the Properties.
      * @param key the name of the property
      * @return the <code>int</code> value
      */
@@ -164,7 +164,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>int</code> from the Properties.
      * @param key the name of the property
      * @return the <code>int</code> value or the default value specified
      */
@@ -183,7 +183,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>long</code> from the Properties.
      * @param key the name of the property
      * @return the <code>long</code> value
      */
@@ -210,7 +210,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>long</code> from the Properties.
      * @param key the name of the property
      * @return the <code>long</code> value or the default value specified
      */
@@ -229,7 +229,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>double</code> from the Properties.
      * @param key the name of the property
      * @return the <code>double</code> value
      */
@@ -256,7 +256,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>double</code> from the Properties.
      * @param key the name of the property
      * @return the <code>double</code> value or the default value specified
      */
@@ -275,7 +275,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>boolean</code> from the Properties.
      * @param key the name of the property
      * @return the <code>boolean</code> value
      */
@@ -286,7 +286,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>boolean</code> from the Properties.
      * @param key the name of the property
      * @return the <code>boolean</code> value or the default value specified
      */
@@ -308,7 +308,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>InetAddress</code> from the Properties.
      * @param key the name of the property
      * @return the <code>InetAddress</code> value
      */
@@ -336,7 +336,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>InetAddress</code> from the Properties.
      * @param key the name of the property
      * @return the <code>InetAddress</code> value or the default value specified
      */
@@ -355,7 +355,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>Color</code> from the Properties.
      * @param key the name of the property
      * @return the <code>Color</code> value
      */
@@ -387,7 +387,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>Color</code> from the Properties.
      * @param key the name of the property
      * @return the <code>Color</code> value or the default value specified
      */
@@ -407,7 +407,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>Class</code> from the Properties.
      * @param key the name of the property
      * @return the <code>Class</code> value
      */
@@ -435,7 +435,7 @@ public class NGATProperties extends Properties
 
 
     /**
-     * Method to retrieve a <code></code> from the Properties.
+     * Method to retrieve a <code>Class</code> from the Properties.
      * @param key the name of the property
      * @return the <code>Class</code> value or the default value specified
      */
@@ -467,6 +467,9 @@ public class NGATProperties extends Properties
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.6  2002/09/25 12:21:47  je
+// Added getClass methods.
+//
 // Revision 0.5  2001/08/16 13:55:51  cjm
 // Added save methods.
 //
