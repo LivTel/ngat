@@ -13,7 +13,7 @@ import ngat.ngtcs.common.*;
  * static method <code>getReference</code>.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BasicSingletonMechanism
     extends ngat.ngtcs.subsystem.BasicMechanism
@@ -28,7 +28,7 @@ public class BasicSingletonMechanism
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: BasicSingletonMechanism.java,v 1.1 2003-07-01 10:13:46 je Exp $" );
+	new String( "$Id: BasicSingletonMechanism.java,v 1.2 2003-07-02 14:10:37 je Exp $" );
 
     /**
      * The <b>ONLY</b> instance of this class.
@@ -82,7 +82,7 @@ public class BasicSingletonMechanism
    * NULL, then construct the instance first.
    * @return the ONLY instnce of this class
    */
-  public static BasicSingletonMechanism getInstance()
+  public static PluggableSubSystem getInstance()
   {
     if( instance == null )
     {
@@ -107,9 +107,12 @@ public class BasicSingletonMechanism
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:46 $
+ *    $Date: 2003-07-02 14:10:37 $
  * $RCSfile: BasicSingletonMechanism.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/BasicSingletonMechanism.java,v $
- *      $Id: BasicSingletonMechanism.java,v 1.1 2003-07-01 10:13:46 je Exp $
+ *      $Id: BasicSingletonMechanism.java,v 1.2 2003-07-02 14:10:37 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:46  je
+ *     Initial revision
+ *
  */
