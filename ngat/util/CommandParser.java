@@ -17,7 +17,7 @@ import java.text.*;
  *
  * A typical arglist might look like: -noresize -heap 200 -stackmin 30 -stackmax 80 -verbose
  *
- * $Id: CommandParser.java,v 1.2 2000-11-21 17:24:58 snf Exp $
+ * $Id: CommandParser.java,v 1.3 2000-12-19 15:12:09 snf Exp $
  *
  */
 public class CommandParser {
@@ -51,9 +51,9 @@ public class CommandParser {
 	int pos = 0;
 	while (st.hasMoreTokens()) {
 	    token = st.nextToken().trim(); // loose any trailing spaces.
-	    System.out.println("TOKEN: "+token);
+	    //System.out.println("TOKEN: "+token);
 	    pos = token.indexOf(" ");
-	    System.out.println("POS: "+pos);
+	    //System.out.println("POS: "+pos);
 	    if (pos != -1) {
 		// type 1.
 		name = token.substring(0, pos);
@@ -79,11 +79,11 @@ public class CommandParser {
     /** Parse the supplied arguments using the default values of "true" and "false".*/
     public void parse(String[] args) throws ParseException {
 	StringBuffer buff = new StringBuffer();
-	System.out.println("ARRAY VERSION");
+	//System.out.println("ARRAY VERSION");
 	if (args == null) return;
 	if (args.length == 0) return;
 	for (int i = 0; i < args.length; i++) {
-	    System.out.println("ARG: "+i+" : "+args[i]);
+	    //System.out.println("ARG: "+i+" : "+args[i]);
 	    if (args[i].startsWith("-")) {
 		buff.append(args[i]);
 	    } else {
@@ -117,6 +117,9 @@ public class CommandParser {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2000/11/21 17:24:58  snf
+/** Changed package name to util.
+/**
 /** Revision 1.1  2000/11/21 16:37:10  snf
 /** Initial revision
 /** */
