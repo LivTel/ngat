@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.25 2000-05-26 10:05:29 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.26 2000-06-13 17:29:17 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.25 $
+ * @version $Revision: 0.26 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.25 2000-05-26 10:05:29 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.26 2000-06-13 17:29:17 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -35,6 +35,23 @@ public class CCDLibrary
 	 * @see #CCDSetupStartup
 	 */
 	public final static int CCD_DSP_GAIN_NINE = 			0xa;
+
+	/* These constants should be the same as those in ccd_dsp.h */
+	/**
+	 * Set Output Source parameter, to make the controller read out images from the left amplifier.
+	 * @see #CCDSetupDimensions
+	 */
+	public final static int CCD_DSP_AMPLIFIER_LEFT 	=		0x5f5f4c;
+	/**
+	 * Set Output Source parameter, to make the controller read out images from the right amplifier.
+	 * @see #CCDSetupDimensions
+	 */
+	public final static int CCD_DSP_AMPLIFIER_RIGHT	=		0x5f5f52;
+	/**
+	 * Set Output Source parameter, to make the controller read out images from both amplifiers.
+	 * @see #CCDSetupDimensions
+	 */
+	public final static int CCD_DSP_AMPLIFIER_BOTH 	=		0x5f4c52;
 
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -138,16 +155,23 @@ public class CCDLibrary
 
 	/* These constants should be the same as those in ccd_setup.h */
 	/**
+	 * Setup Load Type passed to CCDSetupStartup as a load_type parameter. This makes CCDSetupStartup do
+	 * nothing for the DSP code for the relevant board, as it assumes the DSP code was loaded from ROM
+	 * at bootup.
+	 * @see #CCDSetupStartup
+	 */
+	public final static int CCD_SETUP_LOAD_ROM = 			0;
+	/**
 	 * Setup Load Type passed to CCDSetupStartup as a load_type parameter, to load DSP application code from 
 	 * EEPROM.
 	 * @see #CCDSetupStartup
 	 */
-	public final static int CCD_SETUP_LOAD_APPLICATION = 		0;
+	public final static int CCD_SETUP_LOAD_APPLICATION = 		1;
 	/**
 	 * Setup flag passed to CCDSetupStartup as a load_type parameter, to load DSP application code from a file.
 	 * @see #CCDSetupStartup
 	 */
-	public final static int CCD_SETUP_LOAD_FILENAME = 		1;
+	public final static int CCD_SETUP_LOAD_FILENAME = 		2;
 
 // ccd_text.h
 	/* These constants should be the same as those in ccd_text.h */
@@ -209,6 +233,28 @@ public class CCDLibrary
 	 * Native wrapper to return ccd_dsp's error number.
 	 */
 	private native int CCD_DSP_Get_Error_Number();
+	/**
+	 * Native wrapper to libccd routine that allows us to set how many seconds before the exposure
+	 * is due to start we send the CLEAR_ARRAY command to the controller.
+	 * @param time The time in seconds. This should be greater than the time the CLEAR_ARRAY command takes to
+	 * 	clock all accumulated charge off the CCD (approx 5 seconds for a 2kx2k EEV42-40).
+	 */
+	private native void CCD_DSP_Set_Start_Exposure_Clear_Time(int time);
+	/**
+	 * Native wrapper to libccd routine to set the amount of time, in milliseconds, 
+	 * before the desired start of exposure that we should send the
+	 * START_EXPOSURE command, to allow for transmission delay.
+	 * @param time The time, in milliseconds.
+	 */
+	private native void CCD_DSP_Set_Start_Exposure_Offset_Time(int time);
+	/**
+	 * Native wrapper to libccd routine to set the amount of time, in milleseconds, 
+	 * remaining for an exposure when we stop sleeping and tell the
+	 * interface to enter readout mode. 
+	 * @param time The time, in milliseconds. Note, because the exposure time is read every second, it is best
+	 * 	not have have this constant an exact multiple of 1000.
+	 */
+	private native void CCD_DSP_Set_Readout_Remaining_Time(int time);
 
 // ccd_exposure.h
 	/**
@@ -271,7 +317,7 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that does the CCD setup.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native void CCD_Setup_Startup(
+	private native void CCD_Setup_Startup(int pci_load_type, String pci_filename,
 		int timing_load_type,int timing_application_number,String timing_filename,
 		int utility_load_type,int utility_application_number,String utility_filename,
 		double target_temperature,int gain,boolean gain_speed,boolean idle) throws CCDLibraryNativeException;
@@ -285,7 +331,7 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
 	private native void CCD_Setup_Dimensions(int ncols,int nrows,int nsbin,int npbin,
-		int deinterlace_setting,int window_flags,
+		int amplifier,int deinterlace_setting,int window_flags,
 		CCDLibrarySetupWindow window_list[]) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that does the filter wheel setup.
@@ -432,6 +478,7 @@ public class CCDLibrary
 	 * 	<a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a> and 
 	 *	<a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a>.
 	 * @see #CCDExposureExpose
+	 * @see #CCD_DSP_Get_Exposure_Status
 	 */
 	public int CCDDSPGetExposureStatus()
 	{
@@ -441,6 +488,7 @@ public class CCDLibrary
 	/**
 	 * Method to get the exposure length the controller was last set to.
 	 * @return The exposure length.
+	 * @see #CCD_DSP_Get_Exposure_Length
 	 */
 	public int CCDDSPGetExposureLength()
 	{
@@ -450,6 +498,7 @@ public class CCDLibrary
 	/**
 	 * Method to get number of milliseconds since the EPOCH to the exposure start time.
 	 * @return A long, in milliseconds.
+	 * @see #CCD_DSP_Get_Exposure_Start_Time
 	 */
 	public long CCDDSPGetExposureStartTime()
 	{
@@ -459,10 +508,48 @@ public class CCDLibrary
 	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
+	 * @see #CCD_DSP_Get_Error_Number
 	 */
 	public int CCDDSPGetErrorNumber()
 	{
 		return CCD_DSP_Get_Error_Number();
+	}
+
+	/**
+	 * Method to set how many seconds before the exposure
+	 * is due to start we send the CLEAR_ARRAY command to the controller.
+	 * @param time The time in seconds. This should be greater than the time the CLEAR_ARRAY command takes to
+	 * 	clock all accumulated charge off the CCD (approx 5 seconds for a 2kx2k EEV42-40).
+	 * @see #CCD_DSP_Set_Start_Exposure_Clear_Time
+	 */
+	public void CCDDSPSetStartExposureClearTime(int time)
+	{
+		CCD_DSP_Set_Start_Exposure_Clear_Time(time);
+	}
+
+	/**
+	 * Method to set the amount of time, in milliseconds, 
+	 * before the desired start of exposure that we should send the
+	 * START_EXPOSURE command, to allow for transmission delay.
+	 * @param time The time, in milliseconds.
+	 * @see #CCD_DSP_Set_Start_Exposure_Offset_Time
+	 */
+	public void CCDDSPSetStartExposureOffsetTime(int time)
+	{
+		CCD_DSP_Set_Start_Exposure_Offset_Time(time);
+	}
+
+	/**
+	 * Method to set the amount of time, in milleseconds, 
+	 * remaining for an exposure when we stop sleeping and tell the
+	 * interface to enter readout mode. 
+	 * @param time The time, in milliseconds. Note, because the exposure time is read every second, it is best
+	 * 	not have have this constant an exact multiple of 1000.
+	 * @see #CCD_DSP_Set_Readout_Remaining_Time
+	 */
+	public void CCDDSPSetReadoutRemainingTime(int time)
+	{
+		CCD_DSP_Set_Readout_Remaining_Time(time);
 	}
 
 	/**
@@ -489,6 +576,29 @@ public class CCDLibrary
 		if(s.equals("CCD_DSP_GAIN_NINE"))
 			return CCD_DSP_GAIN_NINE;
 		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDDSPGainFromString",s);
+	}
+
+	/**
+	 * Routine to parse an amplifier string and return a amplifier number suitable for input into
+	 * <a href="#CCDSetupDimensions">CCDSetupDimensions</a>, or a DSP Set Output Source (SOS) command. 
+	 * @param s The string to parse.
+	 * @return The amplifier number, one of:
+	 * 	<ul>
+	 * 	<li><a href="#CCD_DSP_AMPLIFIER_LEFT">CCD_DSP_AMPLIFIER_LEFT</a>
+	 * 	<li><a href="#CCD_DSP_AMPLIFIER_RIGHT">CCD_DSP_AMPLIFIER_RIGHT</a>
+	 * 	<li><a href="#CCD_DSP_AMPLIFIER_BOTH">CCD_DSP_AMPLIFIER_BOTH</a>
+	 * 	</ul>.
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDDSPAmplifierFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_DSP_AMPLIFIER_LEFT"))
+			return CCD_DSP_AMPLIFIER_LEFT;
+		if(s.equals("CCD_DSP_AMPLIFIER_RIGHT"))
+			return CCD_DSP_AMPLIFIER_RIGHT;
+		if(s.equals("CCD_DSP_AMPLIFIER_BOTH"))
+			return CCD_DSP_AMPLIFIER_BOTH;
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDDSPAmplifierFromString",s);
 	}
 
 	/**
@@ -530,6 +640,7 @@ public class CCDLibrary
 	 * @param filename The filename to save the exposure into.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if 
 	 * CCD_Exposure_Expose  failed.
+	 * @see #CCD_Exposure_Expose
 	 */
 	public void CCDExposureExpose(boolean open_shutter,boolean readout_ccd,
 		long startTime,int exposureTime,String filename) 
@@ -545,6 +656,7 @@ public class CCDLibrary
 	 * exposure time.
 	 * @param filename The filename to save the read out data into.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
+	 * @see #CCD_Exposure_Bias
 	 */
 	public void CCDExposureBias(String filename) throws CCDLibraryNativeException
 	{
@@ -555,6 +667,7 @@ public class CCDLibrary
 	 * Routine to readout data on the CCD to a file.
 	 * @param filename The filename to save the read out data into.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
+	 * @see #CCD_Exposure_Read_Out_CCD
 	 */
 	public void CCDExposureReadOutCCD(String filename) throws CCDLibraryNativeException
 	{
@@ -570,6 +683,7 @@ public class CCDLibrary
 	 * @see #CCDDSPGetExposureStatus 
 	 * @see #CCDExposureExpose 
 	 * @see #CCDExposureAbortReadout
+	 * @see #CCD_Exposure_Abort
 	 */
 	public void CCDExposureAbort()
 	{
@@ -585,6 +699,7 @@ public class CCDLibrary
 	 * @see #CCDDSPGetExposureStatus 
 	 * @see #CCDExposureExpose 
 	 * @see #CCDExposureAbort
+	 * @see #CCD_Exposure_Abort_Readout
 	 */
 	public void CCDExposureAbortReadout()
 	{
@@ -594,6 +709,7 @@ public class CCDLibrary
 	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
+	 * @see #CCD_Exposure_Get_Error_Number
 	 */
 	public int CCDExposureGetErrorNumber()
 	{
@@ -609,6 +725,7 @@ public class CCDLibrary
 	 * <a href="#CCD_INTERFACE_DEVICE_NONE">CCD_INTERFACE_DEVICE_NONE</a>,
 	 * <a href="#CCD_INTERFACE_DEVICE_TEXT">CCD_INTERFACE_DEVICE_TEXT</a>,
 	 * <a href="#CCD_INTERFACE_DEVICE_PCI">CCD_INTERFACE_DEVICE_PCI</a>.
+	 * @see #CCD_Global_Initialise
 	 */
 	public void CCDInitialise(int interface_device)
 	{
@@ -622,6 +739,7 @@ public class CCDLibrary
 	 * <b>Note</b> you cannot call both CCDError and CCDErrorString to print the error string and 
 	 * get a string copy of it, only one of the error routines can be called after libccd has generated an error.
 	 * A second call to one of these methods will generate a libccd 'Error not found' error!.
+	 * @see #CCD_Global_Error
 	 */
 	public void CCDError()
 	{
@@ -636,6 +754,7 @@ public class CCDLibrary
 	 * get a string copy of it, only one of the error routines can be called after libccd has generated an error.
 	 * A second call to one of these methods will generate a libccd 'Error not found' error!.
 	 * @return Returns the error string generated by libccd.
+	 * @see #CCD_Global_Error_String
 	 */
 	public String CCDErrorString()
 	{
@@ -651,6 +770,7 @@ public class CCDLibrary
 	 * 	not be opened.
 	 * @see #CCDInitialise
 	 * @see #CCDInterfaceClose
+	 * @see #CCD_Interface_Open
 	 */
 	public void CCDInterfaceOpen() throws CCDLibraryNativeException
 	{
@@ -666,6 +786,7 @@ public class CCDLibrary
 	 * 	not be closed.
 	 * @see #CCDInitialise
 	 * @see #CCDInterfaceOpen
+	 * @see #CCD_Interface_Close
 	 */
 	public void CCDInterfaceClose() throws CCDLibraryNativeException
 	{
@@ -707,8 +828,9 @@ public class CCDLibrary
 	 * <li>Resets setup completion flags.</li>
 	 * <li>Resets the SDSU CCD Controller.</li>
 	 * <li>Does a hardware test on the data links to each board in the controller.</li>
-	 * <li>Loads a timing board application from ROM/file.</li>
-	 * <li>Loads a utility board application from ROM/file.</li>
+	 * <li>Loads a PCI interface board DSP program from ROM/file.</li>
+	 * <li>Loads a timing board DSP program from ROM/application/file.</li>
+	 * <li>Loads a utility board DSP program from ROM/application/file.</li>
 	 * <li>Switches the boards analogue power on.</li>
 	 * <li>Sets the arrays target temperature.</li>
 	 * <li>Setup the array's gain and readout speed.</li>
@@ -716,7 +838,14 @@ public class CCDLibrary
 	 * </ul>
 	 * Array dimension information also needs to be setup before the controller can take exposures.
 	 * This routine can be aborted with CCDSetupAbort.
+	 * @param pci_load_type Where to load the PCI DSP program code from. Acceptable values are
+	 * 	<a href="#CCD_SETUP_LOAD_ROM">CCD_SETUP_LOAD_ROM</a>,
+	 * 	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> and
+	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
+	 * @param pci_filename If pci_load_type is
+	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a> this specifies which file to load from.
 	 * @param timing_load_type Where to load the Timing application DSP code from. Acceptable values are
+	 * 	<a href="#CCD_SETUP_LOAD_ROM">CCD_SETUP_LOAD_ROM</a>,
 	 * 	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> and
 	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
 	 * @param timing_application_number If timing_load_type is
@@ -725,6 +854,7 @@ public class CCDLibrary
 	 * @param timing_filename If timing_load_type is
 	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a> this specifies which file to load from.
 	 * @param utility_load_type Where to load the Utility application DSP code from. Acceptable values are
+	 * 	<a href="#CCD_SETUP_LOAD_ROM">CCD_SETUP_LOAD_ROM</a>,
 	 * 	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> and
 	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
 	 * @param utility_application_number If utility_load_type is
@@ -743,12 +873,15 @@ public class CCDLibrary
 	 * 	command is not executing.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
 	 * @see #CCDSetupAbort
+	 * @see #CCD_Setup_Startup
 	 */
-	public void CCDSetupStartup(int timing_load_type,int timing_application_number,String timing_filename,
+	public void CCDSetupStartup(int pci_load_type, String pci_filename,
+		int timing_load_type,int timing_application_number,String timing_filename,
 		int utility_load_type,int utility_application_number,String utility_filename,
 		double target_temperature,int gain,boolean gain_speed,boolean idle) throws CCDLibraryNativeException
 	{
-		CCD_Setup_Startup(timing_load_type,timing_application_number,timing_filename,
+		CCD_Setup_Startup(pci_load_type,pci_filename,
+				timing_load_type,timing_application_number,timing_filename,
 				utility_load_type,utility_application_number,utility_filename,
 				target_temperature,gain,gain_speed,idle);
 	}
@@ -764,6 +897,7 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the shutdown failed.
 	 * @see #CCDSetupStartup
 	 * @see #CCDSetupAbort
+	 * @see #CCD_Setup_Shutdown
 	 */
 	public void CCDSetupShutdown() throws CCDLibraryNativeException
 	{
@@ -780,6 +914,10 @@ public class CCDLibrary
 	 *	ncols.
 	 * @param npbin The amount of binning applied to pixels in rows.This parameter will change internally
 	 *	nrows.
+	 * @param amplifier The amplifier to use when reading out CCD data. One of:
+	 * 	<a href="#CCD_DSP_AMPLIFIER_LEFT">CCD_DSP_AMPLIFIER_LEFT</a>,
+	 * 	<a href="#CCD_DSP_AMPLIFIER_RIGHT">CCD_DSP_AMPLIFIER_RIGHT</a> or
+	 * 	<a href="#CCD_DSP_AMPLIFIER_BOTH">CCD_DSP_AMPLIFIER_BOTH</a>.
 	 * @param deinterlaceSetting The algorithm to use for deinterlacing the resulting data. The data needs to be
 	 * 	deinterlaced if the CCD is read out from multiple readouts.One of:
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>,
@@ -795,12 +933,13 @@ public class CCDLibrary
 	 * 	This list should have <b>four</b> items in it.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
 	 * @see #CCDSetupAbort
+	 * @see #CCD_Setup_Dimensions
 	 */
 	public void CCDSetupDimensions(int ncols,int nrows,int nsbin,int npbin,
-		int deinterlaceSetting,int windowFlags,
-		CCDLibrarySetupWindow windowList[]) throws CCDLibraryNativeException
+		int amplifier,int deinterlaceSetting,
+		int windowFlags,CCDLibrarySetupWindow windowList[]) throws CCDLibraryNativeException
 	{
-		CCD_Setup_Dimensions(ncols,nrows,nsbin,npbin,deinterlaceSetting,windowFlags,windowList);
+		CCD_Setup_Dimensions(ncols,nrows,nsbin,npbin,amplifier,deinterlaceSetting,windowFlags,windowList);
 	}
 
 	/**
@@ -810,6 +949,7 @@ public class CCDLibrary
 	 * @param positionTwo The position the second filter wheel has to attain.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
 	 * @see #CCDSetupAbort
+	 * @see #CCD_Setup_Filter_Wheel
 	 */
 	public void CCDSetupFilterWheel(int positionOne,int positionTwo) throws CCDLibraryNativeException
 	{
@@ -823,6 +963,7 @@ public class CCDLibrary
 	 * @param testCount The number of times to test each board.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the test failed.
 	 * @see #CCDSetupAbort
+	 * @see #CCD_Setup_Hardware_Test
 	 */
 	public void CCDSetupHardwareTest(int testCount) throws CCDLibraryNativeException
 	{
@@ -833,6 +974,7 @@ public class CCDLibrary
 	 * Routine to abort a setup that is underway.
 	 * @see #CCDSetupStartup
 	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Abort
 	 */
 	public void CCDSetupAbort()
 	{
@@ -944,6 +1086,7 @@ public class CCDLibrary
 	 * @return A new instance of CCDLibrarySetupWindow with the window paramaters.
 	 * @exception CCDLibraryNativeException Thrown if the windowIndex is out of range.
 	 * @see #CCDSetupGetWindowFlags
+	 * @see #CCD_Setup_Get_Window
 	 */
 	public CCDLibrarySetupWindow CCDSetupGetWindow(int windowIndex) throws CCDLibraryNativeException
 	{
@@ -971,6 +1114,7 @@ public class CCDLibrary
 	 * @return Returns true if a setup has been completed otherwise false.
 	 * @see #CCDSetupStartup
 	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_Setup_Complete
 	 */
 	public boolean CCDSetupGetSetupComplete()
 	{
@@ -981,6 +1125,7 @@ public class CCDLibrary
 	 * Routine to detect whether a setup operation is underway.
 	 * @return Returns true is a setup is in progress otherwise false.
 	 * @see #CCDSetupStartup
+	 * @see #CCD_Setup_Get_Setup_In_Progress
 	 */
 	public boolean CCDSetupGetSetupInProgress()
 	{
@@ -990,6 +1135,7 @@ public class CCDLibrary
 	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
+	 * @see #CCD_Setup_Get_Error_Number
 	 */
 	public int CCDSetupGetErrorNumber()
 	{
@@ -1000,12 +1146,15 @@ public class CCDLibrary
 	 * Routine to parse a setup load type string and return a setup load type to pass into
 	 * <a href="#CCDSetupStartup">CCDSetupStartup</a>. 
 	 * @param s The string to parse.
-	 * @return The load type, either <a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> or
+	 * @return The load type, either <a href="#CCD_SETUP_LOAD_ROM">CCD_SETUP_LOAD_ROM</a>, 
+	 * 	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> or
 	 * 	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
 	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
 	 */
 	public int CCDSetupLoadTypeFromString(String s) throws CCDLibraryFormatException
 	{
+		if(s.equals("CCD_SETUP_LOAD_ROM"))
+			return CCD_SETUP_LOAD_ROM;
 		if(s.equals("CCD_SETUP_LOAD_APPLICATION"))
 			return CCD_SETUP_LOAD_APPLICATION;
 		if(s.equals("CCD_SETUP_LOAD_FILENAME"))
@@ -1019,6 +1168,7 @@ public class CCDLibrary
 	 * @param temperature A double wrapper in which the current temperature is returned.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 * @see CCDLibraryDouble
+	 * @see #CCD_Temperature_Get
 	 */
 	public void CCDTemperatureGet(CCDLibraryDouble temperature) throws CCDLibraryNativeException
 	{
@@ -1029,6 +1179,7 @@ public class CCDLibrary
 	 * Routine to set the temperature of the CCD.
 	 * @param target_temperature The temperature in degrees centigrade required for the CCD.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Temperature_Set
 	 */
 	public void CCDTemperatureSet(double target_temperature) throws CCDLibraryNativeException
 	{
@@ -1038,6 +1189,7 @@ public class CCDLibrary
 	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
+	 * @see #CCD_Temperature_Get_Error_Number
 	 */
 	public int CCDTemperatureGetErrorNumber()
 	{
@@ -1053,6 +1205,7 @@ public class CCDLibrary
 	 * <a href="#CCD_TEXT_PRINT_LEVEL_REPLIES">CCD_TEXT_PRINT_LEVEL_REPLIES</a>,
 	 * <a href="#CCD_TEXT_PRINT_LEVEL_VALUES">CCD_TEXT_PRINT_LEVEL_VALUES</a> and
 	 * <a href="#CCD_TEXT_PRINT_LEVEL_ALL">CCD_TEXT_PRINT_LEVEL_ALL</a>.
+	 * @see #CCD_Text_Set_Print_Level
 	 */
 	public void CCDTextSetPrintLevel(int level)
 	{
@@ -1090,6 +1243,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.25  2000/05/26 10:05:29  cjm
+// Added CCD_SETUP_WINDOW_COUNT constant.
+//
 // Revision 0.24  2000/05/26 09:56:48  cjm
 // Added CCDSetupGetWindow method.
 //
