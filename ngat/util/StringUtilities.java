@@ -1,5 +1,5 @@
 // StringUtilities.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.1 2001-07-24 15:41:05 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.2 2001-07-31 09:37:39 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Chris Mottram
  */
 public class StringUtilities
@@ -15,7 +15,7 @@ public class StringUtilities
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.1 2001-07-24 15:41:05 je Exp $");
+	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.2 2001-07-31 09:37:39 cjm Exp $");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.
@@ -216,7 +216,7 @@ public class StringUtilities
 
 		if(stringArray.length != lengthArray.length)
 		{
-			throw new IllegalArgumentException("StringUtilites:tabulate:"+
+			throw new IllegalArgumentException("StringUtilities:tabulate:"+
 				"stringArray length ["+stringArray.length+
 				"] and lengthArray length ["+lengthArray.length+"] don't match.");
 		}
@@ -251,6 +251,9 @@ public class StringUtilities
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2001/07/24 15:41:05  je
+// Initial revision
+//
 // Revision 0.3  2001/07/10 16:55:40  cjm
 // Added string replacement utility.
 //
