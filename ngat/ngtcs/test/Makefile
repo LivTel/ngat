@@ -15,19 +15,23 @@ SRCS           = AltPanel.java \
                  NGAT_NET_Communicator.java \
                  RoundTest.java \
                  SerialFileReader.java \
-                 TestCommandDone.java \
-                 TestCommand.java \
                  TestExecutionThread.java \
                  VTTests.java
+
+#                 TestCommandDone.java \
+#                 TestCommand.java \
 
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2003-07-01 10:14:01 je Exp $
-#     $Date: 2003-07-01 10:14:01 $
+# $Revision: 1.2 $
+#       $Id: Makefile,v 1.2 2003-09-19 16:10:27 je Exp $
+#     $Date: 2003-09-19 16:10:27 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.1  2003/07/01 10:14:01  je
+#      Initial revision
+#
 #
