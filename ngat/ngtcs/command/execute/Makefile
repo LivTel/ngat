@@ -5,8 +5,8 @@
 PACKAGENAME    = ngat.ngtcs.command.execute
 PACKAGEDIR     = ngat/ngtcs/command/execute
 JAR_FILE       = ngat_ngtcs_command_execute.jar
-DIRS           = temp
-DIRS_TARGET    = dirs
+DIRS           = 
+DIRS_TARGET    = 
 
 SRCS           = AGCENTROIDImplementor.java \
                  AGFILTERImplementor.java \
@@ -50,10 +50,13 @@ SRCS           = AGCENTROIDImplementor.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.6 $
-#       $Id: Makefile,v 1.6 2003-09-22 10:09:28 je Exp $
-#     $Date: 2003-09-22 10:09:28 $
+# $Revision: 1.7 $
+#       $Id: Makefile,v 1.7 2003-09-22 10:10:49 je Exp $
+#     $Date: 2003-09-22 10:10:49 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.6  2003/09/22 10:09:28  je
+#      Revising command list - no TRACKImplementor
+#
 #
