@@ -1,5 +1,5 @@
 // ThreadMonitorFrame.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/ThreadMonitorFrame.java,v 1.1 1999-03-25 14:00:34 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/ThreadMonitorFrame.java,v 1.2 1999-05-20 16:38:35 dev Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -7,6 +7,8 @@ import java.awt.event.*;
 
 /**
  * This class uses the ThreadMonitor thread to display the currently executing threads in a box
+ * @author Chris Mottram
+ * @version $Revision: 1.2 $
  */
 public class ThreadMonitorFrame extends Frame implements ActionListener
 {
@@ -101,3 +103,6 @@ public class ThreadMonitorFrame extends Frame implements ActionListener
 	}
 }
 // $Log: not supported by cvs2svn $
+// Revision 1.1  1999/03/25 14:00:34  dev
+// Backup
+//

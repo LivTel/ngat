@@ -1,5 +1,5 @@
 // ThreadMonitor.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/ThreadMonitor.java,v 1.2 1999-03-25 14:00:34 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/ThreadMonitor.java,v 1.3 1999-05-20 16:38:35 dev Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -8,6 +8,8 @@ import java.awt.*;
  * This class extends Thread, and tries to monitor the threads currently executing in this JVM. A list is passed in
  * to display the threads in. It monitors all the the active threads in the group and sub-groups of this threads'
  * group.
+ * @author Chris Mottram
+ * @version $Revision: 1.3 $
  */
 public class ThreadMonitor extends Thread
 {
@@ -97,6 +99,9 @@ public class ThreadMonitor extends Thread
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.2  1999/03/25 14:00:34  dev
+// Backup
+//
 // Revision 1.1  1999/03/19 16:22:07  dev
 // Backup
 //
