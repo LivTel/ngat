@@ -1,16 +1,16 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.5 1999-05-28 09:54:18 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.6 1999-06-07 16:56:41 dev Exp $
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.5 $
+ * @version $Revision: 0.6 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.5 1999-05-28 09:54:18 dev Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.6 1999-06-07 16:56:41 dev Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -353,8 +353,8 @@ class CCDLibrary
 	 * Routine to abort an exposure that is underway. You can see if an exposure is in progress using 
 	 * <a href="#CCDDSPGetExposureStatus">CCDDSPGetExposureStatus</a> which should return
 	 * <a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a>. If the return value is 
-	 * <a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a> then the CCD is reading out and
-	 * <a href="#CCDExposureAbortReadout">CCDExposureAbortReadout</a> should be called instead.
+	 * <a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a> then the CCD is reading out 
+	 * and <a href="#CCDExposureAbortReadout">CCDExposureAbortReadout</a> should be called instead.
 	 * @see #CCDDSPGetExposureStatus 
 	 * @see #CCDExposureExpose 
 	 * @see #CCDExposureAbortReadout
@@ -459,6 +459,38 @@ class CCDLibrary
 		return (boolean)CCD_Interface_Close();
 	}
 
+	/**
+	 * Routine to get an interface device number from a string representation of the device. Used for
+	 * getting a device number from a string in a properties file.
+	 * @param s A string representing a device number, one of:
+	 * 	<ul>
+	 * 	<li>CCD_INTERFACE_DEVICE_NONE,
+	 * 	<li>CCD_INTERFACE_DEVICE_TEXT,
+	 * 	<li>CCD_INTERFACE_DEVICE_SBUS,
+	 * 	<li>CCD_INTERFACE_DEVICE_PCI,
+	 * 	</ul>.
+	 * @return An interface device number, one of:
+	 * 	<ul>
+	 * 	<li><a href="#CCD_INTERFACE_DEVICE_NONE">CCD_INTERFACE_DEVICE_NONE</a>,
+	 * 	<li><a href="#CCD_INTERFACE_DEVICE_TEXT">CCD_INTERFACE_DEVICE_TEXT</a>,
+	 * 	<li><a href="#CCD_INTERFACE_DEVICE_SBUS">CCD_INTERFACE_DEVICE_SBUS</a>,
+	 * 	<li><a href="#CCD_INTERFACE_DEVICE_PCI">CCD_INTERFACE_DEVICE_PCI</a>,
+	 * 	</ul>. 
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDInterfaceDeviceFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_INTERFACE_DEVICE_NONE"))
+			return CCD_INTERFACE_DEVICE_NONE;
+		if(s.equals("CCD_INTERFACE_DEVICE_TEXT"))
+			return CCD_INTERFACE_DEVICE_TEXT;
+		if(s.equals("CCD_INTERFACE_DEVICE_SBUS"))
+			return CCD_INTERFACE_DEVICE_SBUS;
+		if(s.equals("CCD_INTERFACE_DEVICE_PCI"))
+			return CCD_INTERFACE_DEVICE_PCI;
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDInterfaceDeviceFromString",s);
+	}
+
 // ccd_setup.h
 	/**
 	 * This routine sets up the SDSU CCD Controller ready to do exposures.
@@ -544,6 +576,75 @@ class CCDLibrary
 		return CCD_Setup_Get_Error_Number();
 	}
 
+	/**
+	 * Routine to parse a setup load type string and return a setup load type to pass into
+	 * <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>. 
+	 * @param s The string to parse.
+	 * @return The load type, either <a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> or
+	 * 	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDSetupLoadTypeFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_SETUP_LOAD_APPLICATION"))
+			return CCD_SETUP_LOAD_APPLICATION;
+		if(s.equals("CCD_SETUP_LOAD_FILENAME"))
+			return CCD_SETUP_LOAD_FILENAME;
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDSetupLoadTypeFromString",s);
+	}
+
+	/**
+	 * Routine to parse a gain string and return a gain number suitable for input into
+	 * <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>. 
+	 * @param s The string to parse.
+	 * @return The gain number, one of:
+	 * 	<ul>
+	 * 	<li><a href="#CCD_SETUP_GAIN_ONE">CCD_SETUP_GAIN_ONE</a>
+	 * 	<li><a href="#CCD_SETUP_GAIN_TWO">CCD_SETUP_GAIN_TWO</a>
+	 * 	<li><a href="#CCD_SETUP_GAIN_FOUR">CCD_SETUP_GAIN_FOUR</a>
+	 * 	<li><a href="#CCD_SETUP_GAIN_NINE">CCD_SETUP_GAIN_NINE</a>
+	 * 	</ul>.
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDSetupGainFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_SETUP_GAIN_ONE"))
+			return CCD_SETUP_GAIN_ONE;
+		if(s.equals("CCD_SETUP_GAIN_TWO"))
+			return CCD_SETUP_GAIN_TWO;
+		if(s.equals("CCD_SETUP_GAIN_FOUR"))
+			return CCD_SETUP_GAIN_FOUR;
+		if(s.equals("CCD_SETUP_GAIN_NINE"))
+			return CCD_SETUP_GAIN_NINE;
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDSetupGainFromString",s);
+	}
+
+	/**
+	 * Routine to parse a string containing a representation of a valid deinterlace type and to return
+	 * the numeric value of that type, suitable for passing into <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>.
+	 * @param s The string to parse.
+	 * @return The deinterlace type number, one of:
+	 * 	<ul>
+	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SINGLE">CCD_SETUP_DEINTERLACE_SINGLE</a>
+	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL">CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL</a>
+	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SPLIT_SERIAL">CCD_SETUP_DEINTERLACE_SPLIT_SERIAL</a>
+	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SPLIT_QUAD">CCD_SETUP_DEINTERLACE_SPLIT_QUAD</a>
+	 * 	</ul>.
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDSetupDeinterlaceFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_SETUP_DEINTERLACE_SINGLE"))
+			return CCD_SETUP_DEINTERLACE_SINGLE;
+		if(s.equals("CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL"))
+			return CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL;
+		if(s.equals("CCD_SETUP_DEINTERLACE_SPLIT_SERIAL"))
+			return CCD_SETUP_DEINTERLACE_SPLIT_SERIAL;
+		if(s.equals("CCD_SETUP_DEINTERLACE_SPLIT_QUAD"))
+			return CCD_SETUP_DEINTERLACE_SPLIT_QUAD;
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDSetupDeinterlaceFromString",s);
+	}
+
 // ccd_temperature.h
 	/**
 	 * Routine to get the current CCD temperature
@@ -593,10 +694,43 @@ class CCDLibrary
 		CCD_Text_Set_Print_Level(level);
 	}
 
+	/**
+	 * Routine to parse a string version of a text print level and to return
+	 * the numeric value of that level, suitable for passing into 
+	 * <a href="#CCDTextSetPrintLevel">CCDTextSetPrintLevel</a>.
+	 * @param s The string to parse.
+	 * @return The printlevel number, one of:
+	 * 	<ul>
+	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_COMMANDS">CCD_TEXT_PRINT_LEVEL_COMMANDS</a>,
+	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_REPLIES">CCD_TEXT_PRINT_LEVEL_REPLIES</a>,
+	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_HEADERS">CCD_TEXT_PRINT_LEVEL_HEADERS</a>,
+	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_BUFFERS">CCD_TEXT_PRINT_LEVEL_BUFFERS</a> and
+	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_ALL">CCD_TEXT_PRINT_LEVEL_ALL</a>.
+	 * 	</ul>.
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDTextPrintLevelFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_TEXT_PRINT_LEVEL_COMMANDS"))
+			return CCD_TEXT_PRINT_LEVEL_COMMANDS;
+		if(s.equals("CCD_TEXT_PRINT_LEVEL_REPLIES"))
+			return CCD_TEXT_PRINT_LEVEL_REPLIES;
+		if(s.equals("CCD_TEXT_PRINT_LEVEL_HEADERS"))
+			return CCD_TEXT_PRINT_LEVEL_HEADERS;
+		if(s.equals("CCD_TEXT_PRINT_LEVEL_BUFFERS"))
+			return CCD_TEXT_PRINT_LEVEL_BUFFERS;
+		if(s.equals("CCD_TEXT_PRINT_LEVEL_ALL"))
+			return CCD_TEXT_PRINT_LEVEL_ALL;
+
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDTextPrintLevelFromString",s);
+	}
 }
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.5  1999/05/28 09:54:18  dev
+// "Name
+//
 // Revision 0.4  1999/03/25 14:02:01  dev
 // Backup
 //
