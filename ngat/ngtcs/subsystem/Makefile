@@ -27,6 +27,11 @@ SRCS           = Autoguider.java \
                  TTL_Autoguider.java \
                  TTL_AutoguiderCentroid.java \
                  TTL_AutoguiderFactory.java \
+		 TTL_CIL.java \
+		 TTL_CIL_GenericService.java \
+		 TTL_CIL_MessageClass.java \
+		 TTL_CIL_Node.java \
+		 TTL_CIL_ObjectValue.java \
                  TTL_DataType.java \
                  TTL_DataUnit.java \
                  TTL_DataValue.java \
@@ -60,12 +65,15 @@ SRCS           = Autoguider.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.11 $
-#       $Id: Makefile,v 1.11 2003-11-10 13:31:32 je Exp $
-#     $Date: 2003-11-10 13:31:32 $
+# $Revision: 1.12 $
+#       $Id: Makefile,v 1.12 2003-11-13 11:29:59 je Exp $
+#     $Date: 2003-11-13 11:29:59 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.11  2003/11/10 13:31:32  je
+#      Added SystemException.
+#
 #      Revision 1.10  2003/11/05 14:41:29  je
 #      Added some TTL_"subsystem"Factory classes.
 #
