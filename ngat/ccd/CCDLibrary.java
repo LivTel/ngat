@@ -1,5 +1,5 @@
-// CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.32 2001-07-13 10:10:23 cjm Exp $
+// CCDLibrary.java
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.33 2002-09-19 11:21:50 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -9,14 +9,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.32 $
+ * @version $Revision: 0.33 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.32 2001-07-13 10:10:23 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.33 2002-09-19 11:21:50 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -84,22 +84,22 @@ public class CCDLibrary
 	 * De-interlace type. This setting does no deinterlacing, as the CCD was read out from a single readout.
 	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_DSP_DEINTERLACE_SINGLE = 			0;
+	public final static int CCD_DSP_DEINTERLACE_SINGLE = 		0;
 	/**
 	 * De-interlace type. This setting deinterlaces split parallel readout.
 	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_DSP_DEINTERLACE_SPLIT_PARALLEL = 		1;
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_PARALLEL = 	1;
 	/**
 	 * De-interlace type. This setting deinterlaces split serial readout.
 	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_DSP_DEINTERLACE_SPLIT_SERIAL = 		2;
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_SERIAL =  	2;
 	/**
 	 * De-interlace type. This setting deinterlaces split quad readout.
 	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_DSP_DEINTERLACE_SPLIT_QUAD = 		3;
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_QUAD = 	3;
 
 // ccd_filter_wheel.h
 	/* These constants should be the same as those in ccd_filter_wheel.h */
@@ -113,19 +113,19 @@ public class CCDLibrary
 	 * underway at the present moment.
 	 * @see #CCDFilterWheelGetStatus
 	 */
-	public final static int CCD_FILTER_WHEEL_STATUS_MOVING = 		1;
+	public final static int CCD_FILTER_WHEEL_STATUS_MOVING =  	1;
 	/**
 	 * Filter wheel status number, showing that a filter wheel reset operation is 
 	 * underway at the present moment.
 	 * @see #CCDFilterWheelGetStatus
 	 */
-	public final static int CCD_FILTER_WHEEL_STATUS_RESETING = 		2;
+	public final static int CCD_FILTER_WHEEL_STATUS_RESETING =   	2;
 	/**
 	 * Filter wheel status number, showing that a filter wheel abort operation is 
 	 * pending at the present moment.
 	 * @see #CCDFilterWheelGetStatus
 	 */
-	public final static int CCD_FILTER_WHEEL_STATUS_ABORTED = 		3;
+	public final static int CCD_FILTER_WHEEL_STATUS_ABORTED =  	3;
 
 // ccd_interface.h
 	/* These constants should be the same as those in ccd_interface.h */
@@ -210,22 +210,22 @@ public class CCDLibrary
 	 * Level number passed to CCDTextSetPrintLevel, to print out commands only.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_COMMANDS = 		0;
+	public final static int CCD_TEXT_PRINT_LEVEL_COMMANDS =   	0;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out commands replies as well.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_REPLIES = 			1;
+	public final static int CCD_TEXT_PRINT_LEVEL_REPLIES = 	  	1;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out parameter value information as well.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_VALUES = 			2;
+	public final static int CCD_TEXT_PRINT_LEVEL_VALUES = 	     	2;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out everything.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_ALL = 			3;
+	public final static int CCD_TEXT_PRINT_LEVEL_ALL = 		3;
 
 // ccd_dsp.h
 	/**
@@ -465,6 +465,21 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that gets whether a setup operation is in progress.
 	 */
 	private native boolean CCD_Setup_Get_Setup_In_Progress();
+	/**
+	 * Native wrapper to libccd routine that gets the current analogue high voltage ADU counts.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native int CCD_Setup_Get_High_Voltage_Analogue_ADU() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the current analogue low voltage ADU counts.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native int CCD_Setup_Get_Low_Voltage_Analogue_ADU() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the current analogue minus low voltage ADU counts.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native int CCD_Setup_Get_Minus_Low_Voltage_Analogue_ADU() throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to return ccd_setup's error number.
 	 */
@@ -1373,6 +1388,39 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Routine to get the current High Voltage (+36v) Analogue to Digital count, a measure of 
+	 * the actual voltage being supplied to the SDSU board.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Setup_Get_High_Voltage_Analogue_ADU
+	 */
+	public int CCDSetupGetHighVoltageAnalogueADU() throws CCDLibraryNativeException
+	{
+		return CCD_Setup_Get_High_Voltage_Analogue_ADU();
+	}
+
+	/**
+	 * Routine to get the current Low Voltage (+15v) Analogue to Digital count, a measure of 
+	 * the actual voltage being supplied to the SDSU board.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Setup_Get_Low_Voltage_Analogue_ADU
+	 */
+	public int CCDSetupGetLowVoltageAnalogueADU() throws CCDLibraryNativeException
+	{
+		return CCD_Setup_Get_Low_Voltage_Analogue_ADU();
+	}
+
+	/**
+	 * Routine to get the current Negative Low Voltage (-15v) Analogue to Digital count, a measure of 
+	 * the actual voltage being supplied to the SDSU board.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Setup_Get_Minus_Low_Voltage_Analogue_ADU
+	 */
+	public int CCDSetupGetMinusLowVoltageAnalogueADU() throws CCDLibraryNativeException
+	{
+		return CCD_Setup_Get_Minus_Low_Voltage_Analogue_ADU();
+	}
+
+	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
 	 * @see #CCD_Setup_Get_Error_Number
@@ -1504,6 +1552,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.32  2001/07/13 10:10:23  cjm
+// Added CCDTemperatureGetHeaterADU.
+//
 // Revision 0.31  2001/04/05 16:49:36  cjm
 // Added logging back from C to Logger.
 // Added more native interfaces for getting error numbers.
