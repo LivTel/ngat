@@ -1,19 +1,19 @@
 // SpecLibrary.java -*- mode: Fundamental;-*-
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.7 2001-05-17 15:23:53 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.8 2002-02-14 18:05:35 cjm Exp $
 package ngat.spec;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.7 $
+ * @version $Revision: 0.8 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.7 2001-05-17 15:23:53 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.8 2002-02-14 18:05:35 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -328,12 +328,20 @@ public class SpecLibrary
 	 * Native wrapper to libspec SPEC_Setup_Dimensions routine.
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Setup_Dimensions(int ncols,int nrows,int hbin,int vbin)  
+	private static native void SPEC_Setup_Dimensions(int startx,int starty,int ncols,int nrows,int hbin,int vbin)  
 		throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Setup_Abort routine.
 	 */
 	private static native void SPEC_Setup_Abort();
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Get_Start_X routine.
+	 */
+	private static native int SPEC_Setup_Get_Start_X();
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Get_Start_Y routine.
+	 */
+	private static native int SPEC_Setup_Get_Start_Y();
 	/**
 	 * Native wrapper to libspec SPEC_Setup_Get_NCols routine.
 	 */
@@ -795,6 +803,8 @@ public class SpecLibrary
 
 	/**
 	 * This method sets the apogee camera dimensions.
+	 * @param startx The start column of readout.
+	 * @param starty The start row of readout.
 	 * @param ncols Total number of image columns.
 	 * @param nrows Total number of image rows.
 	 * @param hbin The horizontal binning factor.
@@ -802,9 +812,10 @@ public class SpecLibrary
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Setup_Dimensions
 	 */
-	public static void cameraSetupDimensions(int ncols,int nrows,int hbin, int vbin) throws SpecNativeException
+	public static void cameraSetupDimensions(int startx,int starty,int ncols,int nrows,
+		int hbin, int vbin) throws SpecNativeException
 	{
- 		SPEC_Setup_Dimensions(ncols,nrows,hbin,vbin);
+ 		SPEC_Setup_Dimensions(startx,starty,ncols,nrows,hbin,vbin);
 	}
 
 	/**
@@ -814,6 +825,26 @@ public class SpecLibrary
 	public static void cameraSetupAbort()
 	{
 		SPEC_Setup_Abort();
+	}
+
+	/**
+	 * Method to get the start column for readout currently configured for the Apogee camera.
+	 * @return The currently configured column.
+	 * @see #SPEC_Setup_Get_Start_X
+	 */
+	public static int cameraSetupGetStartColumn()
+	{
+		return SPEC_Setup_Get_Start_X();
+	}
+
+	/**
+	 * Method to get the start row for readout currently configured for the Apogee camera.
+	 * @return The currently configured row.
+	 * @see #SPEC_Setup_Get_Start_Y
+	 */
+	public static int cameraSetupGetStartRow()
+	{
+		return SPEC_Setup_Get_Start_Y();
 	}
 
 	/**
@@ -1081,6 +1112,10 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.7  2001/05/17 15:23:53  cjm
+// Added cameraTemperatureGetStatusString, cameraTemperatureGetStatus and
+// SPEC_TEMP_STATUS_* constants.
+//
 // Revision 0.6  2001/05/08 18:34:18  cjm
 // Added DAIO_INTERFACE_DEVICE_FILTER_EMULATE.
 //
