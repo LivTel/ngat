@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.35 2002-09-23 15:11:45 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.36 2002-12-03 17:47:42 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -8,14 +8,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.35 $
+ * @version $Revision: 0.36 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.35 2002-09-23 15:11:45 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.36 2002-12-03 17:47:42 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -479,6 +479,16 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
 	private native int CCD_Setup_Get_Minus_Low_Voltage_Analogue_ADU() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the ADU counts from the dewar vacuum gauge.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native int CCD_Setup_Get_Vacuum_Gauge_ADU() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the dewar pressure from the vacuum gauge, in mbar.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native double CCD_Setup_Get_Vacuum_Gauge_MBar() throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to return ccd_setup's error number.
 	 */
@@ -1424,6 +1434,28 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Routine to get the current ADU count from the vacuum pressure gauge on the dewar.
+	 * @return The ADU count from the dewar vacuum pressure gauge.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Setup_Get_Vacuum_Gauge_ADU
+	 */
+	public int CCDSetupGetVacuumGaugeADU() throws CCDLibraryNativeException
+	{
+		return CCD_Setup_Get_Vacuum_Gauge_ADU();
+	}
+
+	/**
+	 * Routine to get the current pressure in the dewar in mbar, using the vacuum pressure gauge.
+	 * @return The dewar pressure, in mbar.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Setup_Get_Vacuum_Gauge_ADU
+	 */
+	public double CCDSetupGetVacuumGaugeMBar() throws CCDLibraryNativeException
+	{
+		return CCD_Setup_Get_Vacuum_Gauge_MBar();
+	}
+
+	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
 	 * @see #CCD_Setup_Get_Error_Number
@@ -1566,6 +1598,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.35  2002/09/23 15:11:45  cjm
+// Comment change.
+//
 // Revision 0.34  2002/09/19 13:59:04  cjm
 // Added CCDTemperatureGetUtilityBoardADU.
 //
