@@ -15,7 +15,7 @@ import ngat.ngtcs.subsystem.ags.*;
  * magnitude.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AGCENTROIDImplementor
   extends CommandImplementor
@@ -30,7 +30,7 @@ public class AGCENTROIDImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGCENTROIDImplementor.java,v 1.3 2003-09-22 13:24:36 je Exp $" );
+    new String( "$Id: AGCENTROIDImplementor.java,v 1.4 2003-09-22 13:33:22 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -38,6 +38,10 @@ public class AGCENTROIDImplementor
   /*                                                                       */
   /*=======================================================================*/
 
+  /**
+   * Timeout for this command, in milliseconds (120s).
+   */
+  public final int TIMEOUT = 120000;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -96,11 +100,14 @@ public class AGCENTROIDImplementor
   }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-22 13:33:22 $
  * $RCSfile: AGCENTROIDImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGCENTROIDImplementor.java,v $
- *      $Id: AGCENTROIDImplementor.java,v 1.3 2003-09-22 13:24:36 je Exp $
+ *      $Id: AGCENTROIDImplementor.java,v 1.4 2003-09-22 13:33:22 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.2  2003/09/22 10:27:24  je
  *     Added debug logging and documentation.
  *
