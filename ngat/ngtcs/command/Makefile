@@ -12,6 +12,7 @@ SRCS           = AGCENTROID.java \
                  AGCENTROIDDone.java \
                  AGFILTER.java \
                  AGFOCUS.java \
+                 AGMOVE.java \
                  AGRADIAL.java \
                  AGSELECT.java \
                  AGWAVELENGTH.java \
@@ -33,6 +34,7 @@ SRCS           = AGCENTROID.java \
                  LOGLIST.java \
                  MIRROR_COVER.java \
                  MOVE_FOLD.java \
+                 Message.java \
                  OFFBY.java \
                  OPERATIONAL.java \
                  OffsetMode.java \
@@ -58,14 +60,13 @@ SRCS           = AGCENTROID.java \
                  UNWRAP.java \
                  WAVELENGTH.java
 
-#                 Message.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.5 $
-#       $Id: Makefile,v 1.5 2003-09-19 16:10:26 je Exp $
-#     $Date: 2003-09-19 16:10:26 $
+# $Revision: 1.6 $
+#       $Id: Makefile,v 1.6 2003-09-22 14:58:56 je Exp $
+#     $Date: 2003-09-22 14:58:56 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Makefile,v $
 #      $Log: not supported by cvs2svn $
