@@ -1,5 +1,5 @@
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.2 2003-06-06 16:52:15 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.3 2005-03-31 13:16:20 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -23,14 +23,34 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.2 2003-06-06 16:52:15 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.3 2005-03-31 13:16:20 cjm Exp $");
+	/**
+	 * Instrument code constant - RATCAM/Dillcam N/S.
+	 */
+	public final static char INSTRUMENT_CODE_CCD_CAMERA 		= 'c';
+	/**
+	 * Instrument code constant - NuView.
+	 */
+	public final static char INSTRUMENT_CODE_NUVIEW 		= 'n';
+	/**
+	 * Instrument code constant - MES.
+	 */
+	public final static char INSTRUMENT_CODE_MES 		        = 'm';
+	/**
+	 * Instrument code constant - SupIRCam.
+	 */
+	public final static char INSTRUMENT_CODE_SUPIRCAM        	= 's';
+	/**
+	 * Instrument code constant - FTSpec.
+	 */
+	public final static char INSTRUMENT_CODE_FTSPEC        	        = 'f';
 	/**
 	 * Exposure code constant - for an exposure.
 	 */
@@ -72,19 +92,54 @@ public class FitsFilename
 	 */
 	public final static String PIPELINE_PROCESSING_FLAG_OFF_LINE 	= "2";
 	/**
+	 * Internal constant. The firsat element of a FitsFilename tokenized on '_.' will
+	 * be the instrument code.
+	 */
+	private final static int INSTRUMENT_TOKEN_NUMBER 		= 1;
+	/**
+	 * Internal constant. The second element of a FitsFilename tokenized on '_.' will
+	 * be the exposure code.
+	 */
+	private final static int EXPOSE_CODE_TOKEN_NUMBER 		= 2;
+	/**
+	 * Internal constant. The third element of a FitsFilename tokenized on '_.' will
+	 * be the date in the format yyyymmdd.
+	 */
+	private final static int DATE_TOKEN_NUMBER 		        = 3;
+	/**
 	 * Internal constant. The fourth element of a FitsFilename tokenized on '_.' will
 	 * be the MULTRUN number.
 	 */
 	private final static int MULTRUN_TOKEN_NUMBER 			= 4;
-
+	/**
+	 * Internal constant. The fifth element of a FitsFilename tokenized on '_.' will
+	 * be the RUN number within a multrun.
+	 */
+	private final static int RUN_TOKEN_NUMBER 			= 5;
+	/**
+	 * Internal constant. The sixth element of a FitsFilename tokenized on '_.' will
+	 * be the Window number.
+	 */
+	private final static int WINDOW_TOKEN_NUMBER 			= 6;
+	/**
+	 * Internal constant. The seventh element of a FitsFilename tokenized on '_.' will
+	 * be the pipeline processing.
+	 */
+	private final static int PIPELINE_PROCESSING_TOKEN_NUMBER      	= 7;
+	/**
+	 * Internal constant. The eighth element of a FitsFilename tokenized on '_.' will
+	 * be the file extension.
+	 */
+	private final static int FILE_EXTENSION_TOKEN_NUMBER 		= 8;
 	/**
 	 * Directory string to be pre-pended to the filename..
 	 */
 	private String directory = new String("./");
 	/**
 	 * Instrument code describing the instrument the exposure was taken with.
+	 * @see #INSTRUMENT_CODE_CCD_CAMERA
 	 */
-	private String instrumentCode = null;
+	private char instrumentCode = INSTRUMENT_CODE_CCD_CAMERA;
 	/**
 	 * Exposure code saying what type of exposure was taken.
 	 */
@@ -101,6 +156,10 @@ public class FitsFilename
 	 * Todays date.
 	 */
 	private Date date = null;
+	/**
+	 * String representation of the date.
+	 */
+	private String dateString = null;
 	/**
 	 * Multrun number - start at 1 each night and is incremented for each SET of exposures (1..n).
 	 * It is initialsed to zero, bacause nextMultRunNumber should be called before the first getFilename.
@@ -123,53 +182,37 @@ public class FitsFilename
 	 * Currently defaults to 'fits'.
 	 */
 	private String fileExtension = new String("fits");
+	/**
+	 * Boolean, if true, indicates filename is a temporary one of the form: telFocus<n>[_1].fits
+	 */
+	private boolean isTelfocus = false;
+	/**
+	 * Boolean, if true, indicates filename is a temporary one of the form: twilight_calibrate[_1].fits
+	 */
+	private boolean isTwilightCalibrate = false;
 
 	/**
 	 * Constructor for FitsFilename. Sets up default values for fields. Also sets numberFormat to print
 	 * out 2 digit integers (for month/date string creation). 
+	 * @see #getDateString
 	 */
 	public FitsFilename()
 	{
 		directory = new String("./");
-		instrumentCode = null;
+		instrumentCode = INSTRUMENT_CODE_CCD_CAMERA;
 		exposureCode = EXPOSURE_CODE_EXPOSURE;
 		calendar = Calendar.getInstance();
 		numberFormat = NumberFormat.getInstance();
 		numberFormat.setMinimumIntegerDigits(2);
 		date = new Date();
+		dateString = getDateString();
 		multRunNumber = 0;
 		runNumber = 0;
 		windowNumber = 1;
 		pipelineProcessing = PIPELINE_PROCESSING_FLAG_NONE;
 		fileExtension = new String("fits");
-	}
-
-	/**
-	 * Set routine for the instrument code.
-	 * @param code The code to set to.
-	 * @see #instrumentCode
-	 */
-	public void setInstrumentCode(String code)
-	{
-		if(code != null)
-			instrumentCode = new String(code);
-	}
-
-	/**
-	 * Set routine for the directory. If the directory is not terminated with a file separator,
-	 * one is added.
-	 * @param d The directory string.
-	 * @see #directory
-	 */
-	public void setDirectory(String d)
-	{
-		if(d != null)
-		{
-			directory = new String(d);
-			// ensure directory ends with a separator
-			if(directory.endsWith(System.getProperty("file.separator")) == false)
-				directory = directory.concat(System.getProperty("file.separator"));
-		}
+		isTelfocus = false;
+		isTwilightCalibrate = false;
 	}
 
 	/**
@@ -190,7 +233,6 @@ public class FitsFilename
 	{
 		StringTokenizer stringTokenizer = null;
 		String directoryList[] = null;
-		String dateString = null;
 		File file = null;
 		int tokenNumber,testMultRunNumber;
 
@@ -242,50 +284,323 @@ public class FitsFilename
 	}
 
 	/**
+	 * This method should be called after the object has been constructed and the directory path has been set.
+	 * This method parses an already existing filename string into it's omponent parts and sets the fields
+	 * in this object accordingly.
+	 * @exception Exception Thrown if the specified directory cannot be found, or an error occurs
+	 * 	during the parsing.
+	 * @see #multRunNumber
+	 * @see #runNumber
+	 * @see #windowNumber
+	 * @see #isTelfocus
+	 * @see #isTwilightCalibrate
+	 */
+	public void parse(String filename) throws Exception
+	{
+		StringTokenizer stringTokenizer = null;
+		File file = null;
+		String s = null;
+		int tokenNumber,directoryIndex,eIndex;
+
+		// handle directory.
+		directoryIndex = filename.lastIndexOf(System.getProperty("file.separator"));
+		if(directoryIndex < 0)
+		{
+			setDirectory("");
+		}
+		else
+		{
+			setDirectory(filename.substring(0,directoryIndex+1));
+			filename = filename.substring(directoryIndex+1,filename.length());
+		}
+		// check telFocus, twilight_calibrate filenames
+		if(filename.startsWith("telFocus"))
+		{
+			isTelfocus = true;
+			eIndex = filename.indexOf('.');
+			if((filename.indexOf('_') > -1) && (filename.indexOf('_') < eIndex))
+			{
+				eIndex = filename.indexOf('_');
+				setPipelineProcessing(PIPELINE_PROCESSING_FLAG_REAL_TIME);
+			}
+			else
+				setPipelineProcessing(PIPELINE_PROCESSING_FLAG_NONE);
+			// run number
+			s = filename.substring("telFocus".length(),eIndex);
+			try
+			{
+				runNumber = Integer.parseInt(s);
+			}
+			catch(NumberFormatException e)
+			{
+				throw new Exception(this.getClass().getName()+
+						    ":parse: Failed to parse run number "+s+
+						    " in filename "+filename+" : "+e);
+			}
+			instrumentCode = INSTRUMENT_CODE_CCD_CAMERA;
+			exposureCode = EXPOSURE_CODE_EXPOSURE;
+			dateString = getDateString();
+		}
+		else
+			isTelfocus = false;
+		if(filename.startsWith("twilight_calibrate"))
+		{
+			isTwilightCalibrate = true;
+			eIndex = filename.indexOf('.');
+			if((filename.lastIndexOf('_') > -1) && (filename.lastIndexOf('_') < eIndex) &&
+			   (filename.lastIndexOf('_') != filename.indexOf('_')))
+			{
+				eIndex = filename.lastIndexOf('_');
+				setPipelineProcessing(PIPELINE_PROCESSING_FLAG_REAL_TIME);
+			}
+			else
+				setPipelineProcessing(PIPELINE_PROCESSING_FLAG_NONE);
+			// run number
+			runNumber = 1;
+			instrumentCode = INSTRUMENT_CODE_CCD_CAMERA;
+			exposureCode = EXPOSURE_CODE_SKY_FLAT;
+			dateString = getDateString();
+		}
+		else
+			isTwilightCalibrate = false;
+		// tokenize each filename by '_.' and look through tokens.
+       		stringTokenizer = new StringTokenizer(filename,"_.");
+	       	tokenNumber = 0;
+		while(stringTokenizer.hasMoreTokens())
+		{
+		       	String tokenString = stringTokenizer.nextToken();
+			tokenNumber++; // Note therefore tokens start at ONE.
+
+			switch(tokenNumber)
+			{
+				case INSTRUMENT_TOKEN_NUMBER:
+					setInstrumentCode(tokenString);
+					break;
+				case EXPOSE_CODE_TOKEN_NUMBER:
+					setExposureCode(tokenString);
+					break;
+				case DATE_TOKEN_NUMBER:
+					dateString = tokenString;
+					break;
+				case MULTRUN_TOKEN_NUMBER:
+					try
+					{
+						multRunNumber = Integer.parseInt(tokenString);
+					}
+					catch(NumberFormatException e)
+					{
+						throw new Exception(this.getClass().getName()+
+							       ":parse: Failed to parse multrun number "+tokenString+
+								    " in filename "+filename+" : "+e);
+					}
+					break;
+				case RUN_TOKEN_NUMBER:
+					try
+					{
+						runNumber = Integer.parseInt(tokenString);
+					}
+					catch(NumberFormatException e)
+					{
+						throw new Exception(this.getClass().getName()+
+							       ":parse: Failed to parse run number "+tokenString+
+								    " in filename "+filename+" : "+e);
+					}
+					break;
+				case WINDOW_TOKEN_NUMBER:
+					try
+					{
+						windowNumber = Integer.parseInt(tokenString);
+					}
+					catch(NumberFormatException e)
+					{
+						throw new Exception(this.getClass().getName()+
+							       ":parse: Failed to parse window number "+tokenString+
+								    " in filename "+filename+" : "+e);
+					}
+					break;
+				case PIPELINE_PROCESSING_TOKEN_NUMBER:
+					setPipelineProcessing(tokenString);
+					break;
+				case FILE_EXTENSION_TOKEN_NUMBER:
+					setFileExtension(tokenString);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	/**
+	 * Set routine for the instrument code.
+	 * @param code The code to set to.
+	 * @see #instrumentCode
+	 * @exception Exception Thrown if code is NULL, is not of length 1 or is not a valid instrument code.
+	 * @see #INSTRUMENT_CODE_CCD_CAMERA
+	 * @see #INSTRUMENT_CODE_SUPIRCAM
+	 * @see #INSTRUMENT_CODE_MES
+	 * @see #INSTRUMENT_CODE_NUVIEW
+	 * @see #INSTRUMENT_CODE_FTSPEC
+	 */
+	public void setInstrumentCode(String code) throws Exception
+	{
+		char ch;
+
+		if(code == null)
+		{
+			throw new Exception(this.getClass().getName()+":setInstrumentCode:Code was NULL.");
+		}
+		if(code.length() != 1)
+		{
+			throw new Exception(this.getClass().getName()+
+					    ":setInstrumentCode:Illegal instrument code length"+
+					    code+" with length "+code.length()+".");
+		}
+		ch = code.charAt(0);
+		if((ch != INSTRUMENT_CODE_CCD_CAMERA) && (ch != INSTRUMENT_CODE_SUPIRCAM) && 
+		   (ch != INSTRUMENT_CODE_MES) && (ch != INSTRUMENT_CODE_NUVIEW) && (ch != INSTRUMENT_CODE_FTSPEC))
+		{
+			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
+					    ch+".");
+		}
+		instrumentCode = ch;
+	}
+
+	/**
+	 * Set routine for the directory. If the directory is not terminated with a file separator,
+	 * one is added.
+	 * @param d The directory string.
+	 * @see #directory
+	 */
+	public void setDirectory(String d)
+	{
+		if(d != null)
+		{
+			directory = new String(d);
+			// ensure directory ends with a separator
+			if(directory.endsWith(System.getProperty("file.separator")) == false)
+				directory = directory.concat(System.getProperty("file.separator"));
+		}
+	}
+
+	/**
 	 * Set routine for the exposure code.
 	 * @param code The code to set to.
 	 * @see #exposureCode
+	 * @exception Exception Thrown if codeString is NULL, is not of length 1 or is not a valid exposure code.
+	 * @see #EXPOSURE_CODE_EXPOSURE
+	 * @see #EXPOSURE_CODE_STANDARD
+	 * @see #EXPOSURE_CODE_BIAS
+	 * @see #EXPOSURE_CODE_SKY_FLAT
+	 * @see #EXPOSURE_CODE_LAMP_FLAT
+	 * @see #EXPOSURE_CODE_ARC
+	 * @see #EXPOSURE_CODE_DARK
 	 */
-	public void setExposureCode(char code)
+	public void setExposureCode(String codeString) throws Exception
 	{
+		char code;
+
+		if(codeString == null)
+		{
+			throw new Exception(this.getClass().getName()+":setExposureCode:Code was NULL.");
+		}
+		if(codeString.length() != 1)
+		{
+			throw new Exception(this.getClass().getName()+
+					    ":setExposureCode:Illegal instrument code length"+
+					    codeString+" with length "+codeString.length()+".");
+		}
+		code = codeString.charAt(0);
+		if((code != EXPOSURE_CODE_EXPOSURE) && (code != EXPOSURE_CODE_STANDARD) && 
+		   (code != EXPOSURE_CODE_BIAS) && (code != EXPOSURE_CODE_SKY_FLAT) && 
+		   (code != EXPOSURE_CODE_LAMP_FLAT) && (code != EXPOSURE_CODE_ARC) && (code != EXPOSURE_CODE_DARK))
+		{
+			throw new Exception(this.getClass().getName()+":setExposureCode:Illegal exposure code "+
+					    code+".");
+		}
+		exposureCode = code;
+	}
+
+	/**
+	 * Set routine for the exposure code.
+	 * @param code The code to set to.
+	 * @exception Exception Thrown if code is not a valid exposure code.
+	 * @see #exposureCode
+	 * @see #EXPOSURE_CODE_EXPOSURE
+	 * @see #EXPOSURE_CODE_STANDARD
+	 * @see #EXPOSURE_CODE_BIAS
+	 * @see #EXPOSURE_CODE_SKY_FLAT
+	 * @see #EXPOSURE_CODE_LAMP_FLAT
+	 * @see #EXPOSURE_CODE_ARC
+	 * @see #EXPOSURE_CODE_DARK
+	 */
+	public void setExposureCode(char code) throws Exception
+	{
+		if((code != EXPOSURE_CODE_EXPOSURE) && (code != EXPOSURE_CODE_STANDARD) && 
+		   (code != EXPOSURE_CODE_BIAS) && (code != EXPOSURE_CODE_SKY_FLAT) && 
+		   (code != EXPOSURE_CODE_LAMP_FLAT) && (code != EXPOSURE_CODE_ARC) && (code != EXPOSURE_CODE_DARK))
+		{
+			throw new Exception(this.getClass().getName()+":setExposureCode:Illegal exposure code "+
+					    code+".");
+		}
 		exposureCode = code;
 	}
 
 	/**
 	 * Setup the next multi run. Should be called at the start of a multirun to increment the
 	 * multirun number and reset the run number within a multirun. Also resets the window number to 1.
+	 * And resets dateString.
 	 * @see #multRunNumber
 	 * @see #runNumber
 	 * @see #windowNumber
+	 * @see #dateString
+	 * @see #getDateString
 	 */
 	public void nextMultRunNumber()
 	{
 		multRunNumber++;
 		runNumber = 0;
 		windowNumber = 1;
+		dateString = getDateString();
 	}
 
 	/**
 	 * Setup the next run. Should be called just before each frames' first getFilename to increment the
 	 * run number. Note the window number is reset to 1.
+	 * And resets dateString.
 	 * @see #getFilename
 	 * @see #runNumber
 	 * @see #windowNumber
+	 * @see #dateString
+	 * @see #getDateString
 	 */
 	public void nextRunNumber()
 	{
 		runNumber++;
 		windowNumber = 1;
+		dateString = getDateString();
 	}
 
 	/**
 	 * Set routine for the pipeline processing string.
 	 * @param s The string to set pipeline processing to.
+	 * @exception Exception Thrown if string s is not a valid pipeline processing flag.
+	 * @see #PIPELINE_PROCESSING_FLAG_NONE
+	 * @see #PIPELINE_PROCESSING_FLAG_REAL_TIME
+	 * @see #PIPELINE_PROCESSING_FLAG_OFF_LINE
 	 */
-	public void setPipelineProcessing(String s)
+	public void setPipelineProcessing(String s) throws Exception
 	{
-		if(s != null)
-			pipelineProcessing = new String(s);
+		if(s == null)
+		{
+			throw new Exception(this.getClass().getName()+":setPipelineProcessing:Flag was NULL. ");
+		}
+		if((s != PIPELINE_PROCESSING_FLAG_NONE) && (s != PIPELINE_PROCESSING_FLAG_REAL_TIME) && 
+		   (s != PIPELINE_PROCESSING_FLAG_OFF_LINE))
+		{
+			throw new Exception(this.getClass().getName()+":setPipelineProcessing:Illegal pipeline flag "+
+					    s+".");
+		}
+		pipelineProcessing = new String(s);
 	}
 
 	/**
@@ -318,15 +633,42 @@ public class FitsFilename
 	 * @return The filename to put the next exposure into.
 	 * @see #nextMultRunNumber
 	 * @see #nextRunNumber
+	 * @see #directory
+	 * @see #instrumentCode
+	 * @see #exposureCode
+	 * @see #dateString
+	 * @see #multRunNumber
+	 * @see #runNumber
+	 * @see #windowNumber
+	 * @see #pipelineProcessing
+	 * @see #fileExtension
+	 * @see #isTelfocus
+	 * @see #isTwilightCalibrate
 	 */
 	public String getFilename()
 	{
 		String resultString = null;
-		String dateString = null;
 
-		dateString = getDateString();
-		resultString = new String(directory+instrumentCode+"_"+exposureCode+"_"+dateString+"_"+multRunNumber+
-			"_"+runNumber+"_"+windowNumber+"_"+pipelineProcessing+"."+fileExtension);
+		if(isTelfocus)
+		{
+			resultString = new String(directory+"telFocus"+runNumber);
+			if(pipelineProcessing.equals(PIPELINE_PROCESSING_FLAG_NONE) == false)
+				resultString = new String(resultString+"_"+pipelineProcessing);
+			resultString = new String(resultString+"."+fileExtension);
+		}
+		else if(isTwilightCalibrate)
+		{
+			resultString = new String(directory+"twilight_calibrate");
+			if(pipelineProcessing.equals(PIPELINE_PROCESSING_FLAG_NONE) == false)
+				resultString = new String(resultString+"_"+pipelineProcessing);
+			resultString = new String(resultString+"."+fileExtension);
+		}
+		else
+		{
+			resultString = new String(directory+instrumentCode+"_"+exposureCode+"_"+dateString+"_"+
+						  multRunNumber+"_"+runNumber+"_"+windowNumber+"_"+
+						  pipelineProcessing+"."+fileExtension);
+		}
 		return resultString;
 	}
 
@@ -419,6 +761,9 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2003/06/06 16:52:15  cjm
+// Windowing implementation.
+//
 // Revision 1.1  2001/06/21 11:06:27  cjm
 // Initial revision
 //
