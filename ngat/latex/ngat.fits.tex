@@ -1,0 +1,219 @@
+\documentclass[10pt,a4paper]{article}
+\pagestyle{plain}
+\textwidth 16cm
+\textheight 21cm
+\oddsidemargin -0.5cm
+\topmargin 0cm
+
+\title{ngat.fits package}
+\author{C. J. Mottram}
+\date{}
+\begin{document}
+\pagenumbering{arabic}
+\thispagestyle{empty}
+\maketitle
+\begin{abstract}
+This document describes classes in the ngat.fits package.
+These classes allow writing to FITS format files, via the CFITSIO library.
+\end{abstract}
+
+\centerline{\Large History}
+\begin{center}
+\begin{tabular}{|l|l|l|p{15em}|}
+\hline
+{\bf Version} & {\bf Author} & {\bf Date} & {\bf Notes} \\
+\hline
+0.1 &              C. J. Mottram & 26/05/00 & First draft \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\section{Documentation Overview}
+\subsection{What is the ngat.fits package?}
+These classes wrap the {\em CFITSIO} library, using the JNI interface to communicate with the C routines.
+The classes allow programs to write keywords and their associated values to a FITS header. 
+The classes allow programs to impose ordering of keywords within the header, and allow default values to
+be specified in a configuration file for keyword values, comments, unit strings and ordering. The classes
+only deal with writing the headers to disk, image data is written in the Ccs by using the {\em libccd}
+library.
+
+The ngat.fits library consists of:
+\begin{itemize}
+\item The FitsHeader class.
+\item The FitsHeaderCardImage class.
+\item The FitsHeaderCardImageOrderNumberComparator class.
+\item The FitsHeaderDefaults class.
+\item The FitsHeaderException class.
+\end{itemize}
+ 
+\section{Class Overview}
+API documentation for these classes is available at \cite{bib:ngatfitsapi}.
+
+\subsection{The FitsHeader class}
+This is class is the main part of the package. It performs two primary functions. It maintains a list
+of FITS card images (keyword/value combinations), that can be cleared, added to and sorted. It
+provides an interface, via the Java Native Interface, to C routines in the CFITSIO library that
+allow the headers to be written to a FITS file on disk.
+
+\subsection{The FitsHeaderCardImage class}
+This class holds the data relevant to one card image in the header, and has get and set methods for each
+element. The {\em FitsHeader} class maintains a list of instances of this object. The following data
+is held :
+\begin{itemize}
+\item {\bf Keyword}.
+\item {\bf Value}. This is held as an object reference, as different keywords have different types of values.
+	Th {\em FitsHeader} class only allows a limited sub-set of sub-classes of Object to be valid value classes.
+\item {\bf Comment}. FITS headers allow a comment field. This string is the comment, or it can be null.
+\item {\bf Units}. CFITSIO allows the comment to contain a units field. This string is that field, or it can
+	be null.
+\item {\bf Order Number}. This is a number that is used to sort a list of {\em FitsHeaderCardImage} instances,
+	so that they appear in the required order in the FITS header.
+\end{itemize}
+
+Note this class redefines it's {\em equals} method. Two instances of this class are equal if their
+keywords match. This allows us to find and update instances of this class in {\em FitsHeader} easily,
+using {\em java.util.List}'s {\em indexOf} method to find instances in the list by keyword.
+
+\subsection{The FitsHeaderCardImageOrderNumberComparator class}
+An instance of this class is used internally in the {\em FitsHeader} class. This is a comparator that
+compares FitsHeaderCardImage instances by the orderNumber. It is used to
+order the cardImageList by orderNumbers of the card images in it, so that
+FITS header keywords are written in the right order.
+
+\subsection{The FitsHeaderDefaults class}
+\label{sec:fitsheaderdefaultsclass}
+This class holds default data relating to the list of FITS header card images that makes up one FITS file. 
+The defaults are read from a Java property file. See Section \ref{sec:configfile} for the format of the 
+property file. 
+
+The Java property file contains information on the following FITS card image attributes: 
+\begin{itemize}
+\item Types of values for keywords. 
+\item Default values for keywords with constant values (over the execution of a program). 
+\item Default comments for keywords. 
+\item Default units for keywords. 
+\item Default orderNumber for keywords. This determines where the keywords are placed in the FITS header, 
+	which is important for mandatory keywords. 
+\end{itemize}
+
+After creating an instance of this class, one of the {\em load} methods is called to load the defaults from a 
+Java property file. 
+There are methods to get the defaults. Note the method to get the default value is quite complicated, as it
+uses Java language reflection to construct an instance of a Java class from the type and value fields.
+
+\subsection{The FitsHeaderException class}
+This class is a sub-class of Exception. It is thrown from various methods in {\em FitsHeader} and
+{\em FitsHeaderDefaults} when errors occur.
+
+\section{JNI shared library}
+The JNI shared library is generated from the source code in the {\em c} sub-directory. It is basically a 
+set of procedure stubs that convert native methods in the {\em FitsHeader} class into CFITSIO function calls.
+The procedures are declared in {\em include/ngat\_fits\_FitsHeader.h} and defined in {\em c/ngat\_fits\_FitsHeader.c}.
+The API of the shared library is documented at \cite{bib:ngatfitsjniapi}.
+
+In most cases, a native method in {\em FitsHeader} is implemented as follows:
+\begin{itemize}
+\item Convert Java parameter types into equivalent C types.
+\item Call CFITSIO routine(s) to perform the requested operation.
+\item Package up and returned values into Java types.
+\item If an error occurs, throw an exception.
+\end{itemize}
+
+The writing of float/double values in FITS header keywords deserves note. Most keyword insert/updates are done
+with {\em fits\_update\_key}. However, keywords of type float/double that are updated with this function
+always use exponent mantissa form which is not what is required. Therefore this is only called if
+the double value is larger than {\em FITS\_HEADER\_MIN\_EXPONENT\_NUMBER}, otherwise 
+{\em fits\_update\_key\_fix[flt|dbl]} is called which puts the value into the header with {\em FITS\_HEADER\_DECIMALS}
+decimal places.
+
+\section{Configuration File}
+\label{sec:configfile}
+The configuration file is used by the {\em FitsHeaderDefaults} class (see Section \ref{sec:fitsheaderdefaultsclass}) 
+to get defaults for fields that make up card images in the FITS header (fields in {\em FitsHeaderCardImage}).
+This class recognizes properties with the key prefixes described in Table \ref{tab:defaultkeyprefix}.
+These keys are all suffixed with the keyword string of the card image the defaults are queried for.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|l|p{12em}|l|p{17em}|}
+\hline
+{\bf Default} 			& {\bf Key prefix} 	& {\bf Notes} \\ \hline
+Types of values for keywords	& ngat.fits.value.type. & This must be fully qualified valid Java class name. \\ \hline
+Default values 			& ngat.fits.value. 	& The value of keywords of this type must be able to be 
+					passed into a String constructor for the value type defined above. \\ \hline
+Default comments 		& ngat.fits.comment. 	& The value can be left blank, 
+							if no comment is required. \\ \hline
+Default units 			& ngat.fits.units. 	& The value can be left blank, 
+							if no comment is required. \\ \hline
+Default orderNumber 		& ngat.fits.order\_number. & This should be an integer value. \\ \hline
+\end{tabular}
+\end{center}
+\caption{\em Key prefixes in the defaults property file.}
+\label{tab:defaultkeyprefix} 
+\end{table}
+
+Here is an example configuration file, showing the mandatory keywords in a FITS file:
+
+\begin{verbatim}
+# SIMPLE keyword
+ngat.fits.value.type.SIMPLE 	=java.lang.Boolean
+ngat.fits.value.SIMPLE 		=true
+ngat.fits.comment.SIMPLE	=A valid FITS file
+ngat.fits.units.SIMPLE		=
+ngat.fits.order_number.SIMPLE	=0
+
+# BITPIX keyword
+ngat.fits.value.type.BITPIX	=java.lang.Integer
+ngat.fits.value.BITPIX 		=16
+ngat.fits.comment.BITPIX	=Bits per pixel
+ngat.fits.units.BITPIX		=bits
+ngat.fits.order_number.BITPIX	=1
+
+# NAXIS keyword
+ngat.fits.value.type.NAXIS	=java.lang.Integer
+ngat.fits.value.NAXIS 		=2
+ngat.fits.comment.NAXIS		=Number of axes
+ngat.fits.units.NAXIS		=
+ngat.fits.order_number.NAXIS	=2
+
+# NAXIS1 keyword
+ngat.fits.value.type.NAXIS1 	=java.lang.Integer
+ngat.fits.value.NAXIS1 		=
+ngat.fits.comment.NAXIS1	=
+ngat.fits.units.NAXIS1		=pixels
+ngat.fits.order_number.NAXIS1	=3
+
+# NAXIS2 keyword
+ngat.fits.value.type.NAXIS2 	=java.lang.Integer
+ngat.fits.value.NAXIS2		=
+ngat.fits.comment.NAXIS2	=
+ngat.fits.units.NAXIS2		=pixels
+ngat.fits.order_number.NAXIS2	=4
+\end{verbatim}
+
+\section{Conventions/Abbreviations}
+\begin{itemize}
+\item API - Application Programming Interface. The set of routines the library provides.
+\item FITS - Flexible Image Transport System. The file format used to store images taken by instruments
+	on the telescope.
+\item JNI - Java Native Interface. A Java mechanism for communicating with shared C libraries.
+\item JVM - Java Virtual Machine. A program to actually run the Java program.
+\item RCS - Revision Control System. A set of operating system commands for controlling developer access to
+source files. Type {\em man rcsintro} for details.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{Bibliography}
+\bibitem{bib:ngatfitsapi}{\bf Ngat.FITS Generated API Documentation}
+Liverpool John Moores University \newline{\em http://ltccd1.livjm.ac.uk/\verb'~'dev/ngat/javadocs/ngat/fits/index.html}
+\bibitem{bib:ngatfitsjniapi}{\bf Ngat.FITS JNI C API Documentation}
+Liverpool John Moores University \newline{\em http://ltccd1.livjm.ac.uk/\verb'~'dev/ngat/cdocs/ngat/fits/index.html}
+\end{thebibliography}
+
+\end{document}
