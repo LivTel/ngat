@@ -1,24 +1,51 @@
-// NGATPropertyException.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATPropertyException.java,v 0.1 2000-09-06 13:13:07 cjm Exp $
 package ngat.util;
 
+/**
+ * This Exception is thrown when parsing of an <code>NGATProperties</code>
+ * propertyfails, either through the value for the property key does not exist
+ * (value = <code>null</code>), or the type expected cannot be parsed from the
+ * <code>String</code> value e.g.
+ * <br>
+ * <pre>
+ * int i = Integer.parseInt( "not a String representation of an int" );
+ * </pre>
+ * 
+ * @author $Author: je $ 
+ * @version $Revision: 0.2 $
+ *
+ */
 public class NGATPropertyException extends Exception
 {
-	/**
-	 * Revision Control System id string, showing the version of the Class.
-	 */
-	public final static String RCSID = new String("$Id: NGATPropertyException.java,v 0.1 2000-09-06 13:13:07 cjm Exp $");
+    /**
+     * Revision Control System id string, showing the version of the Class.
+     */
+    public final static String RCSID = new String("$Id: NGATPropertyException.java,v 0.2 2002-09-27 12:59:56 je Exp $");
 
+    /**
+     * The basic Constructor.
+     */
     public NGATPropertyException()
     {
 	super();
     }
 
+    /**
+     * The NGATPropertyException-specific Constructor, detailing the reason
+     * parsing failed (<code>Exception <b>e</b></code>), the key used to
+     * search the properties (<b>a</b>) and the returned value from the
+     * key-search (<b>b</b>).
+     */
     public NGATPropertyException( Exception e, String a, String b )
     {
-	super( "NGATProperty : "+e+" on key ("+a+") value - "+b );
+	super( "NGATProperty : "+e+" on key ["+a+"] and value ["+b+"]" );
     }
 }
-//
-// $Log: not supported by cvs2svn $
-//
+/*
+ * $Date: 2002-09-27 12:59:56 $
+ * $RCSfile: NGATPropertyException.java,v $
+ * $Source: /space/home/eng/cjm/cvs/ngat/util/NGATPropertyException.java,v $
+ * $Log: not supported by cvs2svn $
+ * Revision 0.1  2000/09/06 13:13:07  cjm
+ * initial revision.
+ *
+ */
