@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.9 2000-09-01 15:50:40 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.10 2000-10-03 16:41:25 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -27,7 +27,7 @@ $(DVIOBJS): $(EPSOBJS)
 	$(LATEX) $<
 
 %.eps: %.fig
-	$(FIG2DEV) -L ps $< $@
+	$(FIG2DEV) $(FIG2DEV_OPTIONS) $< $@
 
 depend:
 	echo "NO depend rule for latex files."
@@ -49,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.9  2000/09/01 15:50:40  cjm
+# added ngat.math sources.
+#
 # Revision 0.8  2000/08/30 17:53:44  cjm
 # Added ngat.math.tex source.
 #
