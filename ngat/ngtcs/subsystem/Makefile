@@ -25,6 +25,7 @@ SRCS           = BasicMechanism.java \
                  TTL_Autoguider.java \
                  TTL_AutoguiderCentroid.java \
                  TTL_AutoguiderFactory.java \
+		 TTL_Boolean.java \
 		 TTL_CIL.java \
 		 TTL_CIL_GenericService.java \
 		 TTL_CIL_MessageClass.java \
@@ -63,12 +64,15 @@ SRCS           = BasicMechanism.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.14 $
-#       $Id: Makefile,v 1.14 2003-11-13 13:02:30 je Exp $
-#     $Date: 2003-11-13 13:02:30 $
+# $Revision: 1.15 $
+#       $Id: Makefile,v 1.15 2003-11-13 14:42:29 je Exp $
+#     $Date: 2003-11-13 14:42:29 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.14  2003/11/13 13:02:30  je
+#      Removed RotatorFactory as Rotator was made abstract.
+#
 #      Revision 1.13  2003/11/13 12:14:57  je
 #      Removed Autoguider.
 #
