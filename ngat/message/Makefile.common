@@ -1,0 +1,10 @@
+# $Header: /space/home/eng/cjm/cvs/ngat/message/Makefile.common,v 1.1 2003-11-14 15:35:20 cjm Exp $
+
+NGAT_MESSAGE_HOME	= message
+NGAT_MESSAGE_SRC_HOME	= $(NGAT_SRC_HOME)/$(NGAT_MESSAGE_HOME)
+NGAT_MESSAGE_DOC_HOME	= $(NGAT_DOC_HOME)/$(NGAT_MESSAGE_HOME)
+
+# $Log: not supported by cvs2svn $
+
+
+
