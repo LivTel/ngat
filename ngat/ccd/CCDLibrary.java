@@ -1,19 +1,42 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.12 1999-09-20 14:40:08 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.13 2000-01-24 14:08:57 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.12 $
+ * @version $Revision: 0.13 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.12 1999-09-20 14:40:08 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.13 2000-01-24 14:08:57 cjm Exp $");
 // ccd_dsp.h
+	/* These constants should be the same as those in ccd_dsp.h */
+	/**
+	 * Set Gain parameter, to set gain to 1.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_GAIN_ONE = 			0x1;
+	/**
+	 * Set Gain parameter, to set gain to 2.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_GAIN_TWO = 			0x2;
+	/**
+	 * Set Gain parameter, to set gain to 4.75.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_GAIN_FOUR = 			0x5;
+	/**
+	 * Set Gain parameter, to set gain to 9.5.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_GAIN_NINE = 			0xa;
+
+	/* These constants should be the same as those in ccd_dsp.h */
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
@@ -29,12 +52,36 @@ public class CCDLibrary
 	 * @see #CCDDSPGetExposureStatus
 	 */
 	public final static int CCD_DSP_EXPOSURE_STATUS_READOUT = 	2;
+
+	/* These constants should be the same as those in ccd_dsp.h */
+	/**
+	 * De-interlace type. This setting does no deinterlacing, as the CCD was read out from a single readout.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_DEINTERLACE_SINGLE = 			0;
+	/**
+	 * De-interlace type. This setting deinterlaces split parallel readout.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_PARALLEL = 		1;
+	/**
+	 * De-interlace type. This setting deinterlaces split serial readout.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_SERIAL = 		2;
+	/**
+	 * De-interlace type. This setting deinterlaces split quad readout.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_QUAD = 		3;
+
 // ccd_interface.h
+	/* These constants should be the same as those in ccd_interface.h */
 	/**
 	 * Interface device number, showing that commands will currently be sent nowhere.
 	 * @see #CCDInitialise
 	 */
-	public final static int CCD_INTERFACE_DEVICE_NONE = 	0;
+	public final static int CCD_INTERFACE_DEVICE_NONE = 		0;
 	/**
 	 * Interface device number, showing that commands will currently be sent to the text interface 
 	 * to be printed out.
@@ -42,21 +89,17 @@ public class CCDLibrary
 	 */
 	public final static int CCD_INTERFACE_DEVICE_TEXT =		1;
 	/**
-	 * Interface device number, showing that commands will currently be sent to the SBus interface.
-	 * @see #CCDInitialise
-	 */
-	public final static int CCD_INTERFACE_DEVICE_SBUS = 	2;
-	/**
 	 * Interface device number, showing that commands will currently be sent to the PCI interface.
 	 * @see #CCDInitialise
 	 */
-	public final static int CCD_INTERFACE_DEVICE_PCI = 		3;
+	public final static int CCD_INTERFACE_DEVICE_PCI = 		2;
 // ccd_setup.h 
+	/* These constants should be the same as those in ccd_setup.h */
 	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to do Reset Timing.
+	 * Setup flag passed to CCDSetupSetupCCD, to Reset the SDSU controller.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int CCD_SETUP_FLAG_RESET_TIMING = 		(1<<0);
+	public final static int CCD_SETUP_FLAG_RESET_CONTROLLER = 		(1<<0);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to do a hardware test.
 	 * @see #CCDSetupSetupCCD
@@ -106,10 +149,12 @@ public class CCDLibrary
 	 * Default setup flag passed to CCDSetupSetupCCD, which sets up all information.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int CCD_SETUP_FLAG_ALL = (CCD_SETUP_FLAG_RESET_TIMING|CCD_SETUP_FLAG_HARDWARE_TEST|
+	public final static int CCD_SETUP_FLAG_ALL = (CCD_SETUP_FLAG_RESET_CONTROLLER|CCD_SETUP_FLAG_HARDWARE_TEST|
 		CCD_SETUP_FLAG_TIMING_BOARD|CCD_SETUP_FLAG_UTILITY_BOARD|CCD_SETUP_FLAG_POWER_ON|
 		CCD_SETUP_FLAG_TARGET_CCD_TEMP|
 		CCD_SETUP_FLAG_GAIN|CCD_SETUP_FLAG_IDLE|CCD_SETUP_FLAG_DIMENSIONS|CCD_SETUP_FLAG_DEINTERLACE);
+
+	/* These constants should be the same as those in ccd_setup.h */
 	/**
 	 * Setup Load Type passed to CCDSetupSetupCCD as a load_type parameter, to load DSP application code from 
 	 * EEPROM.
@@ -121,51 +166,9 @@ public class CCDLibrary
 	 * @see #CCDSetupSetupCCD
 	 */
 	public final static int CCD_SETUP_LOAD_FILENAME = 			1;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 1.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_GAIN_ONE = 			1;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 2.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_GAIN_TWO = 			2;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 4.75.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_GAIN_FOUR = 			4;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 9.5.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_GAIN_NINE = 			9;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting does no deinterlacing,
-	 * as the CCD was read out from a single readout.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_DEINTERLACE_SINGLE = 		0;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting deinterlaces split
-	 * parallel readout.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL = 	1;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting deinterlaces split
-	 * serial readout.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_DEINTERLACE_SPLIT_SERIAL = 	2;
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting deinterlaces split
-	 * quad readout.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_DEINTERLACE_SPLIT_QUAD = 		3;
+
 // ccd_text.h
+	/* These constants should be the same as those in ccd_text.h */
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out commands only.
 	 * @see #CCDTextSetPrintLevel
@@ -175,22 +178,17 @@ public class CCDLibrary
 	 * Level number passed to CCDTextSetPrintLevel, to print out commands replies as well.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_REPLIES = 		1;
+	public final static int CCD_TEXT_PRINT_LEVEL_REPLIES = 			1;
 	/**
-	 * Level number passed to CCDTextSetPrintLevel, to print out more header information as well.
+	 * Level number passed to CCDTextSetPrintLevel, to print out parameter value information as well.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_HEADERS = 		2;
-	/**
-	 * Level number passed to CCDTextSetPrintLevel, to print out reply buffers as well.
-	 * @see #CCDTextSetPrintLevel
-	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_BUFFERS = 		5;
+	public final static int CCD_TEXT_PRINT_LEVEL_VALUES = 			2;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out everything.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int CCD_TEXT_PRINT_LEVEL_ALL = 			9;
+	public final static int CCD_TEXT_PRINT_LEVEL_ALL = 			3;
 
 // ccd_dsp.h
 	/**
@@ -344,6 +342,59 @@ public class CCDLibrary
 		return CCD_DSP_Get_Error_Number();
 	}
 
+	/**
+	 * Routine to parse a gain string and return a gain number suitable for input into
+	 * <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>, or a DSP Set Gain (SGN) command. 
+	 * @param s The string to parse.
+	 * @return The gain number, one of:
+	 * 	<ul>
+	 * 	<li><a href="#CCD_DSP_GAIN_ONE">CCD_DSP_GAIN_ONE</a>
+	 * 	<li><a href="#CCD_DSP_GAIN_TWO">CCD_DSP_GAIN_TWO</a>
+	 * 	<li><a href="#CCD_DSP_GAIN_FOUR">CCD_DSP_GAIN_FOUR</a>
+	 * 	<li><a href="#CCD_DSP_GAIN_NINE">CCD_DSP_GAIN_NINE</a>
+	 * 	</ul>.
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDDSPGainFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_DSP_GAIN_ONE"))
+			return CCD_DSP_GAIN_ONE;
+		if(s.equals("CCD_DSP_GAIN_TWO"))
+			return CCD_DSP_GAIN_TWO;
+		if(s.equals("CCD_DSP_GAIN_FOUR"))
+			return CCD_DSP_GAIN_FOUR;
+		if(s.equals("CCD_DSP_GAIN_NINE"))
+			return CCD_DSP_GAIN_NINE;
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDDSPGainFromString",s);
+	}
+
+	/**
+	 * Routine to parse a string containing a representation of a valid deinterlace type and to return
+	 * the numeric value of that type, suitable for passing into <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>
+	 * and other methods.
+	 * @param s The string to parse.
+	 * @return The deinterlace type number, one of:
+	 * 	<ul>
+	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>
+	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SPLIT_PARALLEL">CCD_DSP_DEINTERLACE_SPLIT_PARALLEL</a>
+	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SPLIT_SERIAL">CCD_DSP_DEINTERLACE_SPLIT_SERIAL</a>
+	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SPLIT_QUAD">CCD_DSP_DEINTERLACE_SPLIT_QUAD</a>
+	 * 	</ul>.
+	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
+	 */
+	public int CCDDSPDeinterlaceFromString(String s) throws CCDLibraryFormatException
+	{
+		if(s.equals("CCD_DSP_DEINTERLACE_SINGLE"))
+			return CCD_DSP_DEINTERLACE_SINGLE;
+		if(s.equals("CCD_DSP_DEINTERLACE_SPLIT_PARALLEL"))
+			return CCD_DSP_DEINTERLACE_SPLIT_PARALLEL;
+		if(s.equals("CCD_DSP_DEINTERLACE_SPLIT_SERIAL"))
+			return CCD_DSP_DEINTERLACE_SPLIT_SERIAL;
+		if(s.equals("CCD_DSP_DEINTERLACE_SPLIT_QUAD"))
+			return CCD_DSP_DEINTERLACE_SPLIT_QUAD;
+		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDDSPDeinterlaceFromString",s);
+	}
+
 // ccd_exposure.h
 	/**
 	 * Routine to perform an exposure.
@@ -431,7 +482,6 @@ public class CCDLibrary
 	 * 	One of:
 	 * <a href="#CCD_INTERFACE_DEVICE_NONE">CCD_INTERFACE_DEVICE_NONE</a>,
 	 * <a href="#CCD_INTERFACE_DEVICE_TEXT">CCD_INTERFACE_DEVICE_TEXT</a>,
-	 * <a href="#CCD_INTERFACE_DEVICE_SBUS">CCD_INTERFACE_DEVICE_SBUS</a>,
 	 * <a href="#CCD_INTERFACE_DEVICE_PCI">CCD_INTERFACE_DEVICE_PCI</a>.
 	 */
 	public void CCDInitialise(int interface_device)
@@ -503,15 +553,13 @@ public class CCDLibrary
 	 * 	<ul>
 	 * 	<li>CCD_INTERFACE_DEVICE_NONE,
 	 * 	<li>CCD_INTERFACE_DEVICE_TEXT,
-	 * 	<li>CCD_INTERFACE_DEVICE_SBUS,
-	 * 	<li>CCD_INTERFACE_DEVICE_PCI,
+	 * 	<li>CCD_INTERFACE_DEVICE_PCI.
 	 * 	</ul>.
 	 * @return An interface device number, one of:
 	 * 	<ul>
 	 * 	<li><a href="#CCD_INTERFACE_DEVICE_NONE">CCD_INTERFACE_DEVICE_NONE</a>,
 	 * 	<li><a href="#CCD_INTERFACE_DEVICE_TEXT">CCD_INTERFACE_DEVICE_TEXT</a>,
-	 * 	<li><a href="#CCD_INTERFACE_DEVICE_SBUS">CCD_INTERFACE_DEVICE_SBUS</a>,
-	 * 	<li><a href="#CCD_INTERFACE_DEVICE_PCI">CCD_INTERFACE_DEVICE_PCI</a>,
+	 * 	<li><a href="#CCD_INTERFACE_DEVICE_PCI">CCD_INTERFACE_DEVICE_PCI</a>.
 	 * 	</ul>. 
 	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
 	 */
@@ -521,8 +569,6 @@ public class CCDLibrary
 			return CCD_INTERFACE_DEVICE_NONE;
 		if(s.equals("CCD_INTERFACE_DEVICE_TEXT"))
 			return CCD_INTERFACE_DEVICE_TEXT;
-		if(s.equals("CCD_INTERFACE_DEVICE_SBUS"))
-			return CCD_INTERFACE_DEVICE_SBUS;
 		if(s.equals("CCD_INTERFACE_DEVICE_PCI"))
 			return CCD_INTERFACE_DEVICE_PCI;
 		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDInterfaceDeviceFromString",s);
@@ -552,10 +598,10 @@ public class CCDLibrary
 	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a> this specifies which file to load from.
 	 * @param target_temperature Specifies the target temperature the CCD is meant to run at. 
 	 * @param gain Specifies the gain to use for the CCD video processors. Acceptable values are:
-	 * 	<a href="#CCD_SETUP_GAIN_ONE">CCD_SETUP_GAIN_ONE</a>, 
-	 * 	<a href="#CCD_SETUP_GAIN_TWO">CCD_SETUP_GAIN_TWO</a>,
-	 * 	<a href="#CCD_SETUP_GAIN_FOUR">CCD_SETUP_GAIN_FOUR</a> and 
-	 * 	<a href="#CCD_SETUP_GAIN_NINE">CCD_SETUP_GAIN_NINE</a>.
+	 * 	<a href="#CCD_DSP_GAIN_ONE">CCD_DSP_GAIN_ONE</a>, 
+	 * 	<a href="#CCD_DSP_GAIN_TWO">CCD_DSP_GAIN_TWO</a>,
+	 * 	<a href="#CCD_DSP_GAIN_FOUR">CCD_DSP_GAIN_FOUR</a> and 
+	 * 	<a href="#CCD_DSP_GAIN_NINE">CCD_DSP_GAIN_NINE</a>.
 	 * @param gain_speed Set to true for fast integrator speed, false for slow integrator speed.
 	 * @param idle If true puts CCD clocks in readout sequence, but not transferring any data, whenever a
 	 * 	command is not executing.
@@ -567,10 +613,10 @@ public class CCDLibrary
 	 *	nrows.
 	 * @param deinterlace_setting The algorithm to use for deinterlacing the resulting data. The data needs to be
 	 * 	deinterlaced if the CCD is read out from multiple readouts.One of:
-	 * 	<a href="#CCD_SETUP_DEINTERLACE_SINGLE">CCD_SETUP_DEINTERLACE_SINGLE</a>,
-	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL">CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL</a>,
-	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_SERIAL">CCD_SETUP_DEINTERLACE_SPLIT_SERIAL</a>,
-	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_QUAD">CCD_SETUP_DEINTERLACE_SPLIT_QUAD</a>.
+	 * 	<a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>,
+	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_PARALLEL">CCD_DSP_DEINTERLACE_SPLIT_PARALLEL</a>,
+	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_SERIAL">CCD_DSP_DEINTERLACE_SPLIT_SERIAL</a>,
+	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_QUAD">CCD_DSP_DEINTERLACE_SPLIT_QUAD</a>.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
 	 */
 	public void CCDSetupSetupCCD(int setup_flags,
@@ -652,58 +698,6 @@ public class CCDLibrary
 		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDSetupLoadTypeFromString",s);
 	}
 
-	/**
-	 * Routine to parse a gain string and return a gain number suitable for input into
-	 * <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>. 
-	 * @param s The string to parse.
-	 * @return The gain number, one of:
-	 * 	<ul>
-	 * 	<li><a href="#CCD_SETUP_GAIN_ONE">CCD_SETUP_GAIN_ONE</a>
-	 * 	<li><a href="#CCD_SETUP_GAIN_TWO">CCD_SETUP_GAIN_TWO</a>
-	 * 	<li><a href="#CCD_SETUP_GAIN_FOUR">CCD_SETUP_GAIN_FOUR</a>
-	 * 	<li><a href="#CCD_SETUP_GAIN_NINE">CCD_SETUP_GAIN_NINE</a>
-	 * 	</ul>.
-	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
-	 */
-	public int CCDSetupGainFromString(String s) throws CCDLibraryFormatException
-	{
-		if(s.equals("CCD_SETUP_GAIN_ONE"))
-			return CCD_SETUP_GAIN_ONE;
-		if(s.equals("CCD_SETUP_GAIN_TWO"))
-			return CCD_SETUP_GAIN_TWO;
-		if(s.equals("CCD_SETUP_GAIN_FOUR"))
-			return CCD_SETUP_GAIN_FOUR;
-		if(s.equals("CCD_SETUP_GAIN_NINE"))
-			return CCD_SETUP_GAIN_NINE;
-		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDSetupGainFromString",s);
-	}
-
-	/**
-	 * Routine to parse a string containing a representation of a valid deinterlace type and to return
-	 * the numeric value of that type, suitable for passing into <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>.
-	 * @param s The string to parse.
-	 * @return The deinterlace type number, one of:
-	 * 	<ul>
-	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SINGLE">CCD_SETUP_DEINTERLACE_SINGLE</a>
-	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL">CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL</a>
-	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SPLIT_SERIAL">CCD_SETUP_DEINTERLACE_SPLIT_SERIAL</a>
-	 * 	<li><a href="#CCD_SETUP_DEINTERLACE_SPLIT_QUAD">CCD_SETUP_DEINTERLACE_SPLIT_QUAD</a>
-	 * 	</ul>.
-	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
-	 */
-	public int CCDSetupDeinterlaceFromString(String s) throws CCDLibraryFormatException
-	{
-		if(s.equals("CCD_SETUP_DEINTERLACE_SINGLE"))
-			return CCD_SETUP_DEINTERLACE_SINGLE;
-		if(s.equals("CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL"))
-			return CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL;
-		if(s.equals("CCD_SETUP_DEINTERLACE_SPLIT_SERIAL"))
-			return CCD_SETUP_DEINTERLACE_SPLIT_SERIAL;
-		if(s.equals("CCD_SETUP_DEINTERLACE_SPLIT_QUAD"))
-			return CCD_SETUP_DEINTERLACE_SPLIT_QUAD;
-		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDSetupDeinterlaceFromString",s);
-	}
-
 // ccd_temperature.h
 	/**
 	 * Routine to get the current CCD temperature.
@@ -742,8 +736,7 @@ public class CCDLibrary
 	 * @param level An integer describing how much information is displayed. Can be one of:
 	 * <a href="#CCD_TEXT_PRINT_LEVEL_COMMANDS">CCD_TEXT_PRINT_LEVEL_COMMANDS</a>,
 	 * <a href="#CCD_TEXT_PRINT_LEVEL_REPLIES">CCD_TEXT_PRINT_LEVEL_REPLIES</a>,
-	 * <a href="#CCD_TEXT_PRINT_LEVEL_HEADERS">CCD_TEXT_PRINT_LEVEL_HEADERS</a>,
-	 * <a href="#CCD_TEXT_PRINT_LEVEL_BUFFERS">CCD_TEXT_PRINT_LEVEL_BUFFERS</a> and
+	 * <a href="#CCD_TEXT_PRINT_LEVEL_VALUES">CCD_TEXT_PRINT_LEVEL_VALUES</a> and
 	 * <a href="#CCD_TEXT_PRINT_LEVEL_ALL">CCD_TEXT_PRINT_LEVEL_ALL</a>.
 	 */
 	public void CCDTextSetPrintLevel(int level)
@@ -760,8 +753,7 @@ public class CCDLibrary
 	 * 	<ul>
 	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_COMMANDS">CCD_TEXT_PRINT_LEVEL_COMMANDS</a>,
 	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_REPLIES">CCD_TEXT_PRINT_LEVEL_REPLIES</a>,
-	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_HEADERS">CCD_TEXT_PRINT_LEVEL_HEADERS</a>,
-	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_BUFFERS">CCD_TEXT_PRINT_LEVEL_BUFFERS</a> and
+	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_VALUES">CCD_TEXT_PRINT_LEVEL_VALUES</a> and
 	 * 	<a href="#CCD_TEXT_PRINT_LEVEL_ALL">CCD_TEXT_PRINT_LEVEL_ALL</a>.
 	 * 	</ul>.
 	 * @exception CCDLibraryFormatException If the string was not an accepted value an exception is thrown.
@@ -772,10 +764,8 @@ public class CCDLibrary
 			return CCD_TEXT_PRINT_LEVEL_COMMANDS;
 		if(s.equals("CCD_TEXT_PRINT_LEVEL_REPLIES"))
 			return CCD_TEXT_PRINT_LEVEL_REPLIES;
-		if(s.equals("CCD_TEXT_PRINT_LEVEL_HEADERS"))
-			return CCD_TEXT_PRINT_LEVEL_HEADERS;
-		if(s.equals("CCD_TEXT_PRINT_LEVEL_BUFFERS"))
-			return CCD_TEXT_PRINT_LEVEL_BUFFERS;
+		if(s.equals("CCD_TEXT_PRINT_LEVEL_VALUES"))
+			return CCD_TEXT_PRINT_LEVEL_VALUES;
 		if(s.equals("CCD_TEXT_PRINT_LEVEL_ALL"))
 			return CCD_TEXT_PRINT_LEVEL_ALL;
 
@@ -785,6 +775,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.12  1999/09/20 14:40:08  cjm
+// Changed due to libccd native routines throwing CCDLibraryNativeException when errors occur.
+//
 // Revision 0.11  1999/09/13 13:54:54  cjm
 // Class is now public.
 //
