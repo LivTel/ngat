@@ -1,13 +1,21 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.19 2000-12-11 14:36:41 snf Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.20 2001-01-15 12:53:28 snf Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
+include		./Makefile.common
+
+# Note this is a more complicated Makefile than most in ngat,
+# it creates two jars:
+# ngat_util.jar - The utility  ngat.util classes.
+#
+# ngat_util_logging.jar - The ngat.util.logging classes.
 
 UTIL_NAME	=util
 PACKAGEDIR 	=ngat/$(UTIL_NAME)
 PACKAGENAME 	=ngat.$(UTIL_NAME)
 JAR_FILE	=$(NGAT_HOME)_$(UTIL_NAME).jar
+DIRS 		=logging
 LIBDIR		=lib
 JAVACFLAGS 	=-d $(LIBDIR) -sourcepath ../..
 DOCSDIR 	=$(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
@@ -17,9 +25,10 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		NGATProperties.java NGATPropertyException.java CircularArray.java \
 		GraphParameterizer.java QueuedSynchFlag.java \
 		SharedStore.java StoreEmptyException.java GraphPlot.java GraphFrame.java HistogramPlot.java \
-		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java\
-		CommandParser.java ConfigurationCache.java ConfigurationProperties.java LogPanel.java \
-		Makeamess.java	GaussianRandom.java
+		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java SMTPMailer.java \
+		CommandParser.java ConfigurationCache.java ConfigurationProperties.java \
+		GaussianRandom.java 
+ 
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
@@ -28,32 +37,59 @@ top: jar docs
 $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
 
-jar: $(JARLIBDIR)/$(JAR_FILE)
+jar: logging_top $(JARLIBDIR)/$(JAR_FILE)
 
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
 	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
+logging_top:
+	(echo making in logging...; cd logging; $(MAKE) );
+
 docs: $(DOCS)
 
 $(DOCSDIR)/$(PACKAGEDIR)/%.html: %.java
-	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
+	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME) $(PACKAGENAME).logging
+
+
 
 checkout:
 	$(CO) $(CO_OPTIONS) $(SRCS)
+	@for i in $(DIRS); \
+	do \
+		(echo checkout in $$i...; cd $$i; $(CO) $(CO_OPTIONS) Makefile; $(MAKE) checkout); \
+	done;
 
 checkin:
 	-$(CI) $(CI_OPTIONS) $(SRCS)
-
+	-@for i in $(DIRS); \
+	do \
+		(echo checkin in $$i...; cd $$i; $(MAKE) checkin; $(CI) $(CI_OPTIONS) Makefile); \
+	done;
 clean:
 	-$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
-
+	@for i in $(DIRS); \
+	do \
+		(echo cleaning in $$i...; cd $$i; $(MAKE) clean); \
+	done;
 tidy:
 	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+	@for i in $(DIRS); \
+	do \
+		(echo cleaning in $$i...; cd $$i; $(MAKE) tidy); \
+	done;
 
 backup: tidy
 	-$(RM) $(RM_OPTIONS) $(OBJS)
+	@for i in $(DIRS); \
+	do \
+		(echo backup in $$i...; cd $$i; $(MAKE) backup); \
+	done;
+
 
 # $Log: not supported by cvs2svn $
+# Revision 1.19  2000/12/11 14:36:41  snf
+# Added GaussianRandom.
+#
 # Revision 1.18  2000/11/27 11:49:42  snf
 # Added Makeamess utility.
 #
