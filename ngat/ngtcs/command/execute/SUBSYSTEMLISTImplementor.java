@@ -10,7 +10,7 @@ import ngat.ngtcs.command.*;
  * used on the telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  */
 public class SUBSYSTEMLISTImplementor extends CommandImplementor
@@ -25,7 +25,7 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.3 2003-09-23 11:45:16 je Exp $" );
+    new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.4 2003-09-23 12:26:50 je Exp $" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -70,7 +70,7 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
 
     for( int i = 0; i < subSysList.size(); i++ )
     {
-      String mech = subSysList.get( i );
+      String mech = (String)subSysList.get( i );
       logger.log( 3, logName, "Listing mechanisms : "+mech );
       list = new String( list+mech+"\n" );
     }
@@ -79,10 +79,13 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-23 11:45:16 $
+ *    $Date: 2003-09-23 12:26:50 $
  * $RCSfile: SUBSYSTEMLISTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SUBSYSTEMLISTImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/23 11:45:16  je
+ *     Replaced System.err reporting with logger.log
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *
