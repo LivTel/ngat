@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.3 1999-11-22 16:14:35 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.4 1999-11-29 10:13:11 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -18,9 +18,7 @@ top: $(OBJS) docs
 $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
 
-docs: $(DOCS)
-
-$(DOCS): $(SRCS)
+docs:
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
 
 checkout:
@@ -37,6 +35,9 @@ tidy:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.3  1999/11/22 16:14:35  cjm
+# Added sourcepath to JAVACFLAGS.
+#
 # Revision 1.2  1999/09/15 16:10:30  cjm
 # Added CCDLibraryNativeException.java source file.
 #

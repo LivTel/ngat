@@ -1,15 +1,15 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.6 1999-09-08 14:32:43 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.7 1999-11-29 10:13:21 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
 
 PACKAGEDIR = ngat/util
 PACKAGENAME = ngat.util
-JAVACFLAGS = -d $(LIBDIR)
+JAVACFLAGS = -d $(LIBDIR) -sourcepath ../..
 DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS = -version -author -private
-SRCS = ThreadMonitor.java ThreadMonitorFrame.java
+SRCS = ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java CircularList.java CPUScheduler.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 
@@ -18,9 +18,10 @@ top: $(OBJS) docs
 $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
 
-docs: $(DOCS)
+#docs: $(DOCS)
 
-$(DOCS): $(SRCS)
+#$(DOCS): $(SRCS)
+docs:
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
 
 checkout:
@@ -36,6 +37,10 @@ tidy:
 	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.6  1999/09/08 14:32:43  cjm
+# Changed checkin target to accept failure(due to files not being checked out locked).
+# Changed checkin target to use CI_OPTIONS.
+#
 # Revision 1.5  1999/08/26 13:20:14  cjm
 # Changed to support new directory structure on ltccd1.
 #
