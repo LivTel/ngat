@@ -13,7 +13,7 @@ package ngat.ngtcs.common;
  * </ul>
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TelescopeState implements java.io.Serializable
 {
@@ -26,8 +26,8 @@ public class TelescopeState implements java.io.Serializable
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TelescopeState.java,v 1.2 2003-09-19 16:00:03 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TelescopeState.java,v 1.3 2003-10-13 16:00:29 je Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -74,6 +74,12 @@ public class TelescopeState implements java.io.Serializable
   public static final TelescopeState TRACKING = 
     new TelescopeState( "TRACKING", 500014 );
 
+  /**
+   * Tracking telescope State
+   */
+  public static final TelescopeState ERROR = 
+    new TelescopeState( "ERROR", 500015 );
+
 
   /**
    * Array to allow serialization.
@@ -83,7 +89,8 @@ public class TelescopeState implements java.io.Serializable
     IDLE,
     SAFE,
     SLEWING,
-    TRACKING
+    TRACKING,
+    ERROR
   };
 
   /*=======================================================================*/
@@ -228,10 +235,13 @@ public class TelescopeState implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:00:03 $
+ *    $Date: 2003-10-13 16:00:29 $
  * $RCSfile: TelescopeState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/TelescopeState.java,v $
- *      $Id: TelescopeState.java,v 1.2 2003-09-19 16:00:03 je Exp $
+ *      $Id: TelescopeState.java,v 1.3 2003-10-13 16:00:29 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/19 16:00:03  je
+ *     Updated Command tx/rx and TTL subsystem interfaces.
+ *
  *
  */
