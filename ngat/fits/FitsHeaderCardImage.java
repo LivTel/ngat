@@ -1,7 +1,8 @@
 // FitsHeaderCardImage.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderCardImage.java,v 0.1 2000-05-30 14:37:28 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderCardImage.java,v 0.2 2001-07-11 10:29:00 cjm Exp $
 package ngat.fits;
 
+import java.io.Serializable;
 import java.lang.*;
 import java.util.*;
 
@@ -9,15 +10,15 @@ import java.util.*;
  * This class holds data relating to one FITS header card image. A sequence of these card images make up a FITS
  * header. The FitsHeader class uses a list of instances of this class to represent a FITS header unit.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  * @see ngat.fits.FitsHeader
  */
-public class FitsHeaderCardImage
+public class FitsHeaderCardImage implements Serializable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderCardImage.java,v 0.1 2000-05-30 14:37:28 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeaderCardImage.java,v 0.2 2001-07-11 10:29:00 cjm Exp $");
 	/**
 	 * Variable holding the keyword this card image represents.
 	 */
@@ -202,4 +203,7 @@ public class FitsHeaderCardImage
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/05/30 14:37:28  cjm
+// initial revision.
+//
 //
