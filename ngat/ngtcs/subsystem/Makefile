@@ -22,6 +22,7 @@ SRCS           = Autoguider.java \
                  PluggableSubSystemFactory.java \
                  Rotator.java \
                  RotatorFactory.java \
+		 SystemException.java \
                  TTL_AuthState.java \
                  TTL_Autoguider.java \
                  TTL_AutoguiderCentroid.java \
@@ -59,12 +60,15 @@ SRCS           = Autoguider.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.10 $
-#       $Id: Makefile,v 1.10 2003-11-05 14:41:29 je Exp $
-#     $Date: 2003-11-05 14:41:29 $
+# $Revision: 1.11 $
+#       $Id: Makefile,v 1.11 2003-11-10 13:31:32 je Exp $
+#     $Date: 2003-11-10 13:31:32 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.10  2003/11/05 14:41:29  je
+#      Added some TTL_"subsystem"Factory classes.
+#
 #      Revision 1.9  2003/11/04 16:43:45  je
 #      Added TTL_SystemStatus.
 #
