@@ -1,5 +1,5 @@
 // StringUtilities.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.3 2002-06-20 15:21:34 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.4 2002-06-20 15:25:37 je Exp $
 package ngat.util;
 
 import java.io.*;
@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @author Chris Mottram
  */
 public class StringUtilities
@@ -15,7 +15,7 @@ public class StringUtilities
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.3 2002-06-20 15:21:34 je Exp $");
+	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.4 2002-06-20 15:25:37 je Exp $");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.
@@ -254,7 +254,7 @@ public class StringUtilities
 	{
 		int lastIndex;
 
-		lastIndex = s.lastIndexOf(s,separator);
+		lastIndex = s.lastIndexOf(separator);
 		if(lastIndex < 0)
 			return s;
 		return s.substring(lastIndex+1);
@@ -262,6 +262,9 @@ public class StringUtilities
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2002/06/20 15:21:34  je
+// *** empty log message ***
+//
 // Revision 1.2  2001/07/31 09:37:39  cjm
 // Name change from StringUtilites to StringUtilites in string.
 //
