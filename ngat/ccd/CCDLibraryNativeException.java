@@ -1,5 +1,5 @@
 // CCDLibraryNativeException.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryNativeException.java,v 1.1 1999-09-20 14:40:08 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryNativeException.java,v 1.2 1999-09-23 10:45:49 cjm Exp $
 package ngat.ccd;
 
 /**
@@ -7,14 +7,14 @@ package ngat.ccd;
  * error. The individual parts of the error generated are stored in the exception as well as the complete message.
  * The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CCDLibraryNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryNativeException.java,v 1.1 1999-09-20 14:40:08 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibraryNativeException.java,v 1.2 1999-09-23 10:45:49 cjm Exp $");
 	/**
 	 * A type of error that can cause this exception to be created. This type is when the error type
 	 * is unknown.
@@ -58,7 +58,7 @@ public class CCDLibraryNativeException extends Exception
 	 */
 	public CCDLibraryNativeException(String errorString)
 	{
-		super("CCDLibraryNativeException:"+errorString);
+		super(errorString);
 		this.errorString = new String(errorString);
 		this.errorType = CCD_NATIVE_EXCEPTION_TYPE_NONE;
 	}
@@ -71,7 +71,7 @@ public class CCDLibraryNativeException extends Exception
 	 */
 	public CCDLibraryNativeException(String errorString,int errorType)
 	{
-		super("CCDLibraryNativeException:"+errorString);
+		super(errorString);
 		this.errorString = new String(errorString);
 		if(isErrorType(errorType))
 			this.errorType = errorType;
@@ -149,4 +149,7 @@ public class CCDLibraryNativeException extends Exception
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  1999/09/20 14:40:08  cjm
+// Initial revision
+//
 //
