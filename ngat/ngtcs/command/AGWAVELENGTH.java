@@ -7,7 +7,7 @@ package ngat.ngtcs.command;
  * thrown.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AGWAVELENGTH extends ngat.ngtcs.command.Command
 {
@@ -20,8 +20,8 @@ public class AGWAVELENGTH extends ngat.ngtcs.command.Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: AGWAVELENGTH.java,v 1.2 2003-09-24 12:21:55 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: AGWAVELENGTH.java,v 1.3 2003-09-26 12:10:06 je Exp $" );
 
     /**
      * Minimum wavelength in metres.
@@ -90,11 +90,14 @@ public class AGWAVELENGTH extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-24 12:21:55 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: AGWAVELENGTH.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGWAVELENGTH.java,v $
- *      $Id: AGWAVELENGTH.java,v 1.2 2003-09-24 12:21:55 je Exp $
+ *      $Id: AGWAVELENGTH.java,v 1.3 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/24 12:21:55  je
+ *     Added documentation and changed internal units to metres.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

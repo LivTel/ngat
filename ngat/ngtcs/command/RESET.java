@@ -6,7 +6,7 @@ package ngat.ngtcs.command;
  * system, depending on the system name argument.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RESET extends Command
 {
@@ -19,8 +19,8 @@ public class RESET extends Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: RESET.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: RESET.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -31,7 +31,7 @@ public class RESET extends Command
     /**
      * The mechanism to be reset - null for all.
      */
-    private String systemName;
+    protected String systemName;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -89,9 +89,12 @@ public class RESET extends Command
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: RESET.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/RESET.java,v $
- *      $Id: RESET.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: RESET.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

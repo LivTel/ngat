@@ -4,7 +4,7 @@ package ngat.ngtcs.command;
  * Offset the focus of the telescope by the amount specified.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DFOCUS extends ngat.ngtcs.command.FOCUS
 {
@@ -17,8 +17,8 @@ public class DFOCUS extends ngat.ngtcs.command.FOCUS
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: DFOCUS.java,v 1.1 2003-09-19 16:09:49 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: DFOCUS.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /**
      * Minimum offset (-30.00) to the current focus position in millimetres.
@@ -83,9 +83,12 @@ public class DFOCUS extends ngat.ngtcs.command.FOCUS
     }
 }
 /*
- *    $Date: 2003-09-19 16:09:49 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: DFOCUS.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/DFOCUS.java,v $
- *      $Id: DFOCUS.java,v 1.1 2003-09-19 16:09:49 je Exp $
+ *      $Id: DFOCUS.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:49  je
+ *     Initial revision
+ *
  */

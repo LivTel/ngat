@@ -7,7 +7,7 @@ package ngat.ngtcs.command;
  * <code><b>MAX_TEMPERATURE</b></code> (320.00).
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TEMPERATURE extends Command
 {
@@ -20,8 +20,8 @@ public class TEMPERATURE extends Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: TEMPERATURE.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: TEMPERATURE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /**
      * Minimum temperature, 170K (-100&deg;C).
@@ -90,9 +90,12 @@ public class TEMPERATURE extends Command
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: TEMPERATURE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/TEMPERATURE.java,v $
- *      $Id: TEMPERATURE.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: TEMPERATURE.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

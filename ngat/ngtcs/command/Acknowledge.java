@@ -9,135 +9,138 @@ import java.util.*;
  * Acknowledges may be sent to increase this timeout.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class Acknowledge extends Message
+public class Acknowledge extends ngat.message.base.ACK
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS FIELDS.                                                         */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: Acknowledge.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: Acknowledge.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
-    /**
-     * Total number of acknowledges sent.
-     */
-    private static long totalAcknowledgeNumber = 0;
-
-
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
-
-    /**
-     * This acknowledges number.
-     */
-    private long acknowledgeNumber = 0;
-
-    /**
-     * Time to complete Command, in seconds.
-     */
-    private int timeToComplete;
-
-    /**
-     * Command for which this is an Acknowledge for.
-     */
-    private Command command;
+  /**
+   * Total number of acknowledges sent.
+   */
+  protected static long totalAcknowledgeNumber = 0;
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT FIELDS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * Return the total number of acknowledge sent.
-     * @return <code>totalAcknowledgeNumber</code>
-     * @see #totalAcknowledgeNumber
-     */
-    public static long getTotalAcknowledgeNumber()
-    {
-	return totalAcknowledgeNumber;
-    }
+  /**
+   * This acknowledges number.
+   */
+  protected long acknowledgeNumber = 0;
 
+  /**
+   * Time to complete Command, in seconds.
+   */
+  protected int timeToComplete;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
-
-    /**
-     * Constructor.
-     * <br>
-     * Sets the ID of this Acknowledge, and increments the acknowledge counters
-     * accordingly.
-     * @param s the ID string of this acknowledge.
-     * @param c the <code>Command</code> for which this is the <code>Ack</code>
-     */
-    public Acknowledge( String s, Command c )
-    {
-	super( s );
-	command = c;
-	acknowledgeNumber = ++totalAcknowledgeNumber;
-
-    }
+  /**
+   * Command for which this is an Acknowledge for.
+   */
+  protected Command command;
 
 
-    /**
-     * Set the completion time for the <code>Command</code> specified in the
-     * constructor.
-     */
-    public void setTimeToComplete( int i )
-    {
-	timeToComplete = i;
-    }
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS METHODS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   * Return the total number of acknowledge sent.
+   * @return <code>totalAcknowledgeNumber</code>
+   * @see #totalAcknowledgeNumber
+   */
+  public static long getTotalAcknowledgeNumber()
+  {
+    return totalAcknowledgeNumber;
+  }
 
 
-    /**
-     * Get the completion time for the <code>Command</code> specified in the
-     * constructor.
-     */
-    public int getTimeToComplete()
-    {
-	return timeToComplete;
-    }
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT METHODS.                                                       */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   * Constructor.
+   * <br>
+   * Sets the ID of this Acknowledge, and increments the acknowledge counters
+   * accordingly.
+   * @param s the ID string of this acknowledge.
+   * @param c the <code>Command</code> for which this is the <code>Ack</code>
+   */
+  public Acknowledge( String s, Command c )
+  {
+    super( s );
+    command = c;
+    acknowledgeNumber = ++totalAcknowledgeNumber;
+
+  }
 
 
-    /**
-     * Return the number of this acknowledge.
-     * @return <code>acknowledgeNumber</code>
-     * @see #acknowledgeNumber
-     */
-    public long getAcknowledgeNumber()
-    {
-	return acknowledgeNumber;
-    }
+  /**
+   * Set the completion time for the <code>Command</code> specified in the
+   * constructor.
+   */
+  public void setTimeToComplete( int i )
+  {
+    timeToComplete = i;
+  }
 
 
-    /**
-     * Return the <code>Command</code> for which this is an Acknowledgement.
-     * @return command
-     * @see #command
-     */
-    public Command getCommand()
-    {
-	return command;
-    }
+  /**
+   * Get the completion time for the <code>Command</code> specified in the
+   * constructor.
+   */
+  public int getTimeToComplete()
+  {
+    return timeToComplete;
+  }
+
+
+  /**
+   * Return the number of this acknowledge.
+   * @return <code>acknowledgeNumber</code>
+   * @see #acknowledgeNumber
+   */
+  public long getAcknowledgeNumber()
+  {
+    return acknowledgeNumber;
+  }
+
+
+  /**
+   * Return the <code>Command</code> for which this is an Acknowledgement.
+   * @return command
+   * @see #command
+   */
+  public Command getCommand()
+  {
+    return command;
+  }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: Acknowledge.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Acknowledge.java,v $
- *      $Id: Acknowledge.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: Acknowledge.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

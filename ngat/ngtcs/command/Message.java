@@ -10,108 +10,111 @@ package ngat.ngtcs.command;
  * @see ngat.ngtcs.Communicator
  *
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public abstract class Message implements java.io.Serializable
+public abstract class Message extends ngat.message.base.MESSAGE
+  implements java.io.Serializable
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS FIELDS.                                                         */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: Message.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: Message.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
-    /**
-     * Total number of messages sent.
-     */
-    private static long totalMessageNumber = 0;
-
-
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
-
-    /**
-     * ID of this Message.
-     */
-    protected String id;
-
-    /**
-     * This messages number.
-     */
-    private long messageNumber;
+  /**
+   * Total number of messages sent.
+   */
+  protected static long totalMessageNumber = 0;
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT FIELDS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * Return the total number of message sent.
-     * @return <code>totalMessageNumber</code>
-     * @see #totalMessageNumber
-     */
-    public static long getTotalMessageNumber()
-    {
-	return totalMessageNumber;
-    }
+  /**
+   * ID of this Message.
+   */
+  protected String id;
 
+  /**
+   * This messages number.
+   */
+  protected long messageNumber;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS METHODS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * Constructor.
-     * <br>
-     * Sets the ID of this Message, and increments the message counters
-     * accordingly.
-     * @param s the ID string of this message.
-     */
-    public Message( String s )
-    {
-	id = s;
-	messageNumber = ( ++totalMessageNumber );
-    }
+  /**
+   * Return the total number of message sent.
+   * @return <code>totalMessageNumber</code>
+   * @see #totalMessageNumber
+   */
+  public static long getTotalMessageNumber()
+  {
+    return totalMessageNumber;
+  }
 
 
-    /**
-     * Return the ID of this message.
-     * @return <code>id</code>
-     * @see #id
-     */
-    public String getId()
-    {
-	return id;
-    }
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT METHODS.                                                       */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   * Constructor.
+   * <br>
+   * Sets the ID of this Message, and increments the message counters
+   * accordingly.
+   * @param s the ID string of this message.
+   */
+  public Message( String s )
+  {
+    super( s );
+    messageNumber = ( ++totalMessageNumber );
+  }
 
 
-    /**
-     * Return the number of this message.
-     * @return <code>messageNumber</code>
-     * @see #messageNumber
-     */
-    public long getMessageNumber()
-    {
-	return messageNumber;
-    }
+  /**
+   * Return the ID of this message.
+   * @return <code>id</code>
+   * @see #id
+   */
+  public String getId()
+  {
+    return id;
+  }
+
+
+  /**
+   * Return the number of this message.
+   * @return <code>messageNumber</code>
+   * @see #messageNumber
+   */
+  public long getMessageNumber()
+  {
+    return messageNumber;
+  }
 
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: Message.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Message.java,v $
- *      $Id: Message.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: Message.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

@@ -6,155 +6,158 @@ import ngat.ngtcs.command.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AGCENTROIDDone extends CommandDone
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS FIELDS.                                                         */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: AGCENTROIDDone.java,v 1.1 2003-09-19 16:09:49 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: AGCENTROIDDone.java,v 1.2 2003-09-26 12:05:54 je Exp $" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT FIELDS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     *
-     */
-    protected double xPixel;
+  /**
+   *
+   */
+  protected double xPixel;
 
-    /**
-     *
-     */
-    protected double yPixel;
+  /**
+   *
+   */
+  protected double yPixel;
 
-    /**
-     *
-     */
-    protected double fwhm;
+  /**
+   *
+   */
+  protected double fwhm;
 
-    /**
-     *
-     */
-    protected double mag;
+  /**
+   *
+   */
+  protected double mag;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
-
-
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
-
-    /**
-     *
-     */
-    public AGCENTROIDDone( AGCENTROID a )
-    {
-	super( (Command)a );
-    }
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS METHODS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
 
 
-    /**
-     * Set the X pixel retrieved from the Status Database.
-     * @param d the latest X pixel
-     */
-    public void setXPixel( double d )
-    {
-	xPixel = d;
-    }
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT METHODS.                                                       */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   *
+   */
+  public AGCENTROIDDone( AGCENTROID a )
+  {
+    super( (Command)a );
+  }
 
 
-    /**
-     * Retrieve the X pixel of the most recent centroid.
-     * @return xPixel
-     * @see #xPixel
-     */
-    public double getXPixel()
-    {
-	return xPixel;
-    }
-
-    /**
-     * Set the Y pixel  retrieved from the Status Database.
-     * @param d the latest Y pixel
-     */
-    public void setYPixel( double d )
-    {
-	yPixel = d;
-    }
+  /**
+   * Set the X pixel retrieved from the Status Database.
+   * @param d the latest X pixel
+   */
+  public void setXPixel( double d )
+  {
+    xPixel = d;
+  }
 
 
-    /**
-     * Retrieve the Y pixel of the most recent centroid.
-     * @returnyPixel
-     * @see #yPixel
-     */
-    public double getYPixel()
-    {
-	return yPixel;
-    }
+  /**
+   * Retrieve the X pixel of the most recent centroid.
+   * @return xPixel
+   * @see #xPixel
+   */
+  public double getXPixel()
+  {
+    return xPixel;
+  }
 
-    /**
-     * Set the FWHM retrieved from the Status Database.
-     * @param d the latest 
-     */
-    public void setFWHM( double d )
-    {
-	fwhm = d;
-    }
-
-
-    /**
-     * Retrieve the FWHM of the most recent centroid.
-     * @return fwhm
-     * @see #fwhm
-     */
-    public double getFWHM()
-    {
-	return fwhm;
-    }
-
-    /**
-     * Set the magnitude retrieved from the Status Database.
-     * @param d the latest magnitude
-     */
-    public void setMagnitude( double d )
-    {
-	mag = d;
-    }
+  /**
+   * Set the Y pixel  retrieved from the Status Database.
+   * @param d the latest Y pixel
+   */
+  public void setYPixel( double d )
+  {
+    yPixel = d;
+  }
 
 
-    /**
-     * Retrieve the magnitude of the most recent centroid.
-     * @return mag
-     * @see #mag
-     */
-    public double getMagnitude()
-    {
-	return mag;
-    }
+  /**
+   * Retrieve the Y pixel of the most recent centroid.
+   * @returnyPixel
+   * @see #yPixel
+   */
+  public double getYPixel()
+  {
+    return yPixel;
+  }
+
+  /**
+   * Set the FWHM retrieved from the Status Database.
+   * @param d the latest 
+   */
+  public void setFWHM( double d )
+  {
+    fwhm = d;
+  }
+
+
+  /**
+   * Retrieve the FWHM of the most recent centroid.
+   * @return fwhm
+   * @see #fwhm
+   */
+  public double getFWHM()
+  {
+    return fwhm;
+  }
+
+  /**
+   * Set the magnitude retrieved from the Status Database.
+   * @param d the latest magnitude
+   */
+  public void setMagnitude( double d )
+  {
+    mag = d;
+  }
+
+
+  /**
+   * Retrieve the magnitude of the most recent centroid.
+   * @return mag
+   * @see #mag
+   */
+  public double getMagnitude()
+  {
+    return mag;
+  }
 
 }
 /*
- *    $Date: 2003-09-19 16:09:49 $
+ *    $Date: 2003-09-26 12:05:54 $
  * $RCSfile: AGCENTROIDDone.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGCENTROIDDone.java,v $
- *      $Id: AGCENTROIDDone.java,v 1.1 2003-09-19 16:09:49 je Exp $
+ *      $Id: AGCENTROIDDone.java,v 1.2 2003-09-26 12:05:54 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:49  je
+ *     Initial revision
+ *
  */

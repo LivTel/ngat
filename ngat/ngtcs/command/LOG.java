@@ -8,7 +8,7 @@ package ngat.ngtcs.command;
  * messages only, or none at all.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LOG extends Command
 {
@@ -21,8 +21,8 @@ public class LOG extends Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: LOG.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: LOG.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -33,12 +33,12 @@ public class LOG extends Command
     /**
      * The name of the logger to adjust.
      */
-    private String logName;
+    protected String logName;
 
     /**
      * The log level to be set.
      */
-    private int logLevel;
+    protected int logLevel;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -109,9 +109,12 @@ public class LOG extends Command
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: LOG.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/LOG.java,v $
- *      $Id: LOG.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: LOG.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

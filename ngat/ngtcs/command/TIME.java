@@ -6,29 +6,32 @@ package ngat.ngtcs.command;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: TIME.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/TIME.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */
 public class TIME extends Command
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: TIME.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: TIME.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
 
-    private long nanosecs;
+    protected long nanosecs;
 
-    private long secs;
+    protected long secs;
 
-    private long timestep;
+    protected long timestep;
 
-    private boolean staticTime = false;
+    protected boolean staticTime = false;
 
 
     public TIME( String commandPath, boolean newStaticTime,

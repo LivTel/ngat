@@ -10,7 +10,7 @@ import ngat.ngtcs.common.*;
  * specified mechanisms on that Telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
 public class STATUSDone extends CommandDone
@@ -24,8 +24,8 @@ public class STATUSDone extends CommandDone
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: STATUSDone.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: STATUSDone.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
 
     /*=======================================================================*/
@@ -37,12 +37,12 @@ public class STATUSDone extends CommandDone
     /**
      * Telescope status
      */
-    private TelescopeStatus telescopeStatus = null;
+    protected TelescopeStatus telescopeStatus = null;
 
     /**
      * Vector containing Status objects.
      */
-    private List statusList = null;
+    protected List statusList = null;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -107,8 +107,11 @@ public class STATUSDone extends CommandDone
     }
 }
 /*
- * $Date: 2003-07-01 10:12:39 $
+ * $Date: 2003-09-26 12:10:06 $
  * $RCSfile: STATUSDone.java,v $
  * $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/STATUSDone.java,v $
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2003/07/01 10:12:39  je
+ * Initial revision
+ *
  */

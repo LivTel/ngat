@@ -8,7 +8,7 @@ package ngat.ngtcs.command;
  * IllegalArgumentException will be thrown.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AGRADIAL extends ngat.ngtcs.command.Command
 {
@@ -21,8 +21,8 @@ public class AGRADIAL extends ngat.ngtcs.command.Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: AGRADIAL.java,v 1.1 2003-09-19 16:09:49 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: AGRADIAL.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /**
      * Minimum radius of the autoguider probe mirror.
@@ -120,9 +120,12 @@ public class AGRADIAL extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-19 16:09:49 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: AGRADIAL.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGRADIAL.java,v $
- *      $Id: AGRADIAL.java,v 1.1 2003-09-19 16:09:49 je Exp $
+ *      $Id: AGRADIAL.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:49  je
+ *     Initial revision
+ *
  */

@@ -14,7 +14,7 @@ package ngat.ngtcs.command;
  * &plusmn;<code>MAX_DEC_OFFSET_TIME</code> (3600.00) in Decliantion.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OFFBY extends ngat.ngtcs.command.Command
 {
@@ -27,8 +27,8 @@ public class OFFBY extends ngat.ngtcs.command.Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: OFFBY.java,v 1.1 2003-09-19 16:09:49 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: OFFBY.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -166,9 +166,12 @@ public class OFFBY extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-19 16:09:49 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: OFFBY.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/OFFBY.java,v $
- *      $Id: OFFBY.java,v 1.1 2003-09-19 16:09:49 je Exp $
+ *      $Id: OFFBY.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:49  je
+ *     Initial revision
+ *
  */

@@ -8,7 +8,7 @@ package ngat.ngtcs.command;
  * <code><b>MAX_PRESSURE</b></code> (1030.0 mB)
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PRESSURE extends Command
 {
@@ -21,8 +21,8 @@ public class PRESSURE extends Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: PRESSURE.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: PRESSURE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /**
      * The minimum allowable value for the pressure (0.00)
@@ -43,7 +43,7 @@ public class PRESSURE extends Command
     /**
      * The pressure in millibars.
      */
-    private double pressure;
+    protected double pressure;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -91,11 +91,14 @@ public class PRESSURE extends Command
 
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: PRESSURE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/PRESSURE.java,v $
- *      $Id: PRESSURE.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: PRESSURE.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */
 
 

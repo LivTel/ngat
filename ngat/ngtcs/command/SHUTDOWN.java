@@ -4,7 +4,7 @@ package ngat.ngtcs.command;
  * This command will shutdown the sub-system with the specified name.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SHUTDOWN extends Command
 {
@@ -17,8 +17,8 @@ public class SHUTDOWN extends Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: SHUTDOWN.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: SHUTDOWN.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -29,7 +29,7 @@ public class SHUTDOWN extends Command
     /**
      * Name of the Telescope or PluggableSubSystem to shut down.
      */
-    private String systemName = null;
+    protected String systemName = null;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -87,9 +87,12 @@ public class SHUTDOWN extends Command
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: SHUTDOWN.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/SHUTDOWN.java,v $
- *      $Id: SHUTDOWN.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: SHUTDOWN.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

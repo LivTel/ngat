@@ -5,9 +5,9 @@ package ngat.ngtcs.command;
  * used by every command.
  *
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public abstract class Command extends Message
+public abstract class Command extends ngat.message.base.COMMAND
 {
     /*=======================================================================*/
     /*                                                                       */
@@ -18,13 +18,13 @@ public abstract class Command extends Message
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: Command.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: Command.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /**
      * Total number of commands sent.
      */
-    private static long totalCommandNumber = 0;
+    protected static long totalCommandNumber = 0;
 
 
     /*=======================================================================*/
@@ -36,7 +36,7 @@ public abstract class Command extends Message
     /**
      * Number of this command.
      */
-    private long commandNumber = 0;
+    protected long commandNumber = 0;
 
 
     /*=======================================================================*/
@@ -49,7 +49,7 @@ public abstract class Command extends Message
     /**
      * Return the total number of <code>Command</code>s.
      */
-    public final static long getTotalCommandNumber()
+    public static long getTotalCommandNumber()
     {
 	return totalCommandNumber;
     }
@@ -76,7 +76,7 @@ public abstract class Command extends Message
      * @see #getArgString
      * @return the command name and arguments as a String
      */
-    public final String getArgumentString()
+    public String getArgumentString()
     {
 	return( this.getClass().getName()+"\n"+getArgString() );
     }
@@ -116,7 +116,7 @@ public abstract class Command extends Message
      * @return commandNumber
      * @see #commandNumber
      */
-    public final long getCommandNumber()
+    public long getCommandNumber()
     {
 	return commandNumber;
     }
@@ -134,9 +134,12 @@ public abstract class Command extends Message
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: Command.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Command.java,v $
- *      $Id: Command.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: Command.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

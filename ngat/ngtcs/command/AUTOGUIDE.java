@@ -6,7 +6,7 @@ import ngat.ngtcs.common.*;
  * Set the <code>AutoguideMode</code> and relevant parameters to autoguide.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AUTOGUIDE extends ngat.ngtcs.command.Command
 {
@@ -19,8 +19,8 @@ public class AUTOGUIDE extends ngat.ngtcs.command.Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: AUTOGUIDE.java,v 1.1 2003-09-19 16:09:49 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: AUTOGUIDE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /**
      * The brightest magnitude of star to guide on.
@@ -262,9 +262,12 @@ public class AUTOGUIDE extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-19 16:09:49 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: AUTOGUIDE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AUTOGUIDE.java,v $
- *      $Id: AUTOGUIDE.java,v 1.1 2003-09-19 16:09:49 je Exp $
+ *      $Id: AUTOGUIDE.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:49  je
+ *     Initial revision
+ *
  */

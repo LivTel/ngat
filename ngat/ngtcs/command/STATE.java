@@ -4,7 +4,7 @@ package ngat.ngtcs.command;
  * This command returns the state of the telescope system.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class STATE extends Command
 {
@@ -17,8 +17,8 @@ public class STATE extends Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: STATE.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: STATE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -70,9 +70,12 @@ public class STATE extends Command
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: STATE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/STATE.java,v $
- *      $Id: STATE.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: STATE.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

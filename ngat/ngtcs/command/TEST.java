@@ -7,7 +7,7 @@ import ngat.ngtcs.common.*;
  * and prints the returned information to the screen.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TEST extends Command
 {
@@ -20,8 +20,8 @@ public class TEST extends Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: TEST.java,v 1.1 2003-07-01 10:12:39 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: TEST.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -95,9 +95,12 @@ public class TEST extends Command
     }
 }
 /*
- *    $Date: 2003-07-01 10:12:39 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: TEST.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/TEST.java,v $
- *      $Id: TEST.java,v 1.1 2003-07-01 10:12:39 je Exp $
+ *      $Id: TEST.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:12:39  je
+ *     Initial revision
+ *
  */

@@ -5,7 +5,7 @@ package ngat.ngtcs.command;
  * test, or by reverting to the 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CALIBRATE extends ngat.ngtcs.command.Command
 {
@@ -18,8 +18,8 @@ public class CALIBRATE extends ngat.ngtcs.command.Command
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: CALIBRATE.java,v 1.1 2003-09-19 16:09:49 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: CALIBRATE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
     /*=======================================================================*/
     /*                                                                       */
@@ -69,9 +69,12 @@ public class CALIBRATE extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-19 16:09:49 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: CALIBRATE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/CALIBRATE.java,v $
- *      $Id: CALIBRATE.java,v 1.1 2003-09-19 16:09:49 je Exp $
+ *      $Id: CALIBRATE.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:49  je
+ *     Initial revision
+ *
  */

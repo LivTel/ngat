@@ -15,7 +15,7 @@ package ngat.ngtcs.command;
  * </ul>
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AutoguideMode implements java.io.Serializable
 {
@@ -28,8 +28,8 @@ public class AutoguideMode implements java.io.Serializable
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AutoguideMode.java,v 1.1 2003-09-19 16:09:49 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AutoguideMode.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -230,10 +230,13 @@ public class AutoguideMode implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:09:49 $
+ *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: AutoguideMode.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AutoguideMode.java,v $
- *      $Id: AutoguideMode.java,v 1.1 2003-09-19 16:09:49 je Exp $
+ *      $Id: AutoguideMode.java,v 1.2 2003-09-26 12:10:06 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:49  je
+ *     Initial revision
+ *
  *
  */
