@@ -16,7 +16,7 @@ import ngat.ngtcs.command.*;
  * <code>ngat.net</code> method of client<->server communication for the NGTCS.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  */
 public class NGAT_NET_Communicator implements Communicator
@@ -31,7 +31,7 @@ public class NGAT_NET_Communicator implements Communicator
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: NGAT_NET_Communicator.java,v 1.2 2003-09-23 11:58:09 je Exp $" );
+    new String( "$Id: NGAT_NET_Communicator.java,v 1.3 2003-09-23 12:29:17 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -95,7 +95,8 @@ public class NGAT_NET_Communicator implements Communicator
     catch( Exception e )
     {
       logger.log( 1, logName, e.toString() );
-      throw new InitialisationException( this.getClass().toString()+" : "+e );
+      logger.log( 2, logName, this.getClass().getName()+
+		  " : using default values" );
     }
 
     timeout = np.getInt( "timeout", 10000 );
@@ -219,10 +220,13 @@ public class NGAT_NET_Communicator implements Communicator
   }
 }
 /*
- * $Date: 2003-09-23 11:58:09 $
+ * $Date: 2003-09-23 12:29:17 $
  * $RCSfile: NGAT_NET_Communicator.java,v $
  * $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/NGAT_NET_Communicator.java,v $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2003/09/23 11:58:09  je
+ * Added documentation.
+ *
  * Revision 1.1  2003/07/01 10:13:54  je
  * Initial revision
  *
