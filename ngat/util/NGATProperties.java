@@ -1,5 +1,5 @@
 // NGATProperties.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.7 2002-09-25 12:53:31 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.8 2002-10-23 09:58:17 je Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.util.*;
  * For all methods taking a default value, the default value is returned if
  * parsing of the value returned on the key search fails.
  *
- * @version $Revision: 0.7 $
+ * @version $Revision: 0.8 $
  * @author Jason Etherton,Chris Mottram
  */
 public class NGATProperties extends Properties
@@ -24,7 +24,7 @@ public class NGATProperties extends Properties
      * Revision Control System id string, showing the version of the Class.
      */
     public final static String RCSID = new String
-	("$Id: NGATProperties.java,v 0.7 2002-09-25 12:53:31 je Exp $");
+	("$Id: NGATProperties.java,v 0.8 2002-10-23 09:58:17 je Exp $");
 
     /**
      * Method to load the properties.
@@ -103,7 +103,7 @@ public class NGATProperties extends Properties
 	if( value == null )
 	    {
 		throw new NGATPropertyException
-		    ( new NullPointerException(), key, "missing" );
+		    ( new NullPointerException(), key, "!MISSING!" );
 	    }
 
 	try
@@ -148,7 +148,7 @@ public class NGATProperties extends Properties
 	if( value == null )
 	    {
 		throw new NGATPropertyException
-		    ( new NullPointerException(), key, "missing" );
+		    ( new NullPointerException(), key, "!MISSING!" );
 	    }
 
 	try
@@ -194,7 +194,7 @@ public class NGATProperties extends Properties
 	if( value == null )
 	    {
 		throw new NGATPropertyException
-		    ( new NullPointerException(), key, "missing" );
+		    ( new NullPointerException(), key, "!MISSING!" );
 	    }
 
 	try
@@ -240,7 +240,7 @@ public class NGATProperties extends Properties
 	if( value == null )
 	    {
 		throw new NGATPropertyException
-		    ( new NullPointerException(), key, "missing" );
+		    ( new NullPointerException(), key, "!MISSING!" );
 	    }
 
 	try
@@ -320,7 +320,7 @@ public class NGATProperties extends Properties
 	if( value == null )
 	    {
 		throw new NGATPropertyException
-		    ( new NullPointerException(), key, "missing" );
+		    ( new NullPointerException(), key, "!MISSING!" );
 	    }
 
 	try
@@ -419,7 +419,7 @@ public class NGATProperties extends Properties
 	if( value == null )
 	    {
 		throw new NGATPropertyException
-		    ( new NullPointerException(), key, "missing" );
+		    ( new NullPointerException(), key, "!MISSING!" );
 	    }
 
 	try
@@ -462,11 +462,14 @@ public class NGATProperties extends Properties
      */
     protected void printError( Exception e, String a, String b )
     {
-	System.err.println( "NGATProperty : "+e+" on key ("+a+") value - "+b );
+	System.err.println( e+" on key ("+a+") value - "+b );
     }
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.7  2002/09/25 12:53:31  je
+// Sorted out documentation.
+//
 // Revision 0.6  2002/09/25 12:21:47  je
 // Added getClass methods.
 //
