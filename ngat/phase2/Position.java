@@ -8,7 +8,7 @@ import java.io.*;
  * Stores the location on the sky, of a target or of a pointing position.
  * Includes methods to translate between coordinate systems.
  * <br>
- * $Id: Position.java,v 1.2 2000-11-23 13:23:10 snf Exp $    
+ * $Id: Position.java,v 1.3 2000-11-23 13:24:27 snf Exp $    
  *
  */
 public class Position implements Serializable {
@@ -63,7 +63,7 @@ public class Position implements Serializable {
     
     /** Calculate the slew time to another Position. ## TBD snf -just returns 15 secs ##
      * @return The slew time in msecs.*/
-    public double getSlewTime(Position other) { return 15000.0;}
+    public double getSlewTime(Position other, double vAlt, double vAz) { return 15000.0;}
     
     /** Calculate the slew time to another Position. ## TBD snf -just returns 15 secs ##
      * @param other The position to move to.
@@ -323,6 +323,9 @@ public class Position implements Serializable {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2000/11/23 13:23:10  snf
+/** Added some doc comments.
+/**
 /** Revision 1.1  2000/05/11 14:28:27  snf
 /** Initial revision
 /** */
