@@ -1,5 +1,6 @@
 // TitledSmallerBorder.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/TitledSmallerBorder.java,v 0.1 1999-11-22 09:53:49 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/TitledSmallerBorder.java,v 0.2 1999-11-29 11:52:46 cjm Exp $
+package ngat.swing;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import javax.swing.border.TitledBorder;
 /**
  * This class extends TitledBorder, but tries to reduce the ridiculously big gap between
  * the title text and the inner contents. It does this by over-riding getBorderInsets.
+ * This may not be needed once the font settings are sorted out.
  */
 public class TitledSmallerBorder extends TitledBorder
 {
@@ -46,4 +48,7 @@ public class TitledSmallerBorder extends TitledBorder
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  1999/11/22 09:53:49  cjm
+// initial revision.
+//
 //
