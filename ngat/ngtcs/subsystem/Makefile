@@ -8,8 +8,7 @@ JAR_FILE       = ngat_ngtcs_subsystem.jar
 DIRS           = acn ags amn ept mcp sdb spt
 DIRS_TARGET    = dirs
 
-SRCS           = Autoguider.java \
-                 BasicMechanism.java \
+SRCS           = BasicMechanism.java \
                  BasicPluggableSubSystem.java \
                  ControllableSubSystem.java \
                  Enclosure.java \
@@ -65,12 +64,15 @@ SRCS           = Autoguider.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.12 $
-#       $Id: Makefile,v 1.12 2003-11-13 11:29:59 je Exp $
-#     $Date: 2003-11-13 11:29:59 $
+# $Revision: 1.13 $
+#       $Id: Makefile,v 1.13 2003-11-13 12:14:57 je Exp $
+#     $Date: 2003-11-13 12:14:57 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.12  2003/11/13 11:29:59  je
+#      Added TTL_CIL* classes.
+#
 #      Revision 1.11  2003/11/10 13:31:32  je
 #      Added SystemException.
 #
