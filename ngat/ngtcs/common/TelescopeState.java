@@ -1,7 +1,8 @@
 package ngat.ngtcs.common;
-  
+
 /**
- * Class defining Telescope states as type-safe enumerations.
+ * Class to define Type-safe Enumerations.  This class defines <b>ALL</b>
+ * possible references of type TelescopeState.
  * <p>
  * The list of states is:
  * <ul>
@@ -12,90 +13,225 @@ package ngat.ngtcs.common;
  * </ul>
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public final class TelescopeState extends State
+public class TelescopeState implements java.io.Serializable
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS FIELDS.                                                         */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: TelescopeState.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String RevisionString =
+    new String( "$Id: TelescopeState.java,v 1.2 2003-09-19 16:00:03 je Exp $" );
+
+  /**
+   * Hashtable of instances for retrieval by the enumeration's String name.
+   */
+  protected static java.util.Hashtable nameHash = new java.util.Hashtable();
+
+  /**
+   * Hashtable of instances for retrieval by the enumeration's int value.
+   */
+  protected static java.util.Hashtable intHash = new java.util.Hashtable();
+
+  /**
+   * Index of the next enumeration to be added.
+   */
+  protected static int nextIndex = 0;
+
+  /*=======================================================================*/
+  /*                                                                       */
+  /* ENUMERATIONS.                                                         */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /*
+   * Idle telescope State
+   */
+  public static final TelescopeState IDLE = 
+    new TelescopeState( "IDLE", 500011 );
+
+  /*
+   * Safe telescope State
+   */
+  public static final TelescopeState SAFE = 
+    new TelescopeState( "SAFE", 500012 );
+
+  /**
+   * Slewing telescope State
+   */
+  public static final TelescopeState SLEWING = 
+    new TelescopeState( "SLEWING", 500013 );
+
+  /**
+   * Tracking telescope State
+   */
+  public static final TelescopeState TRACKING = 
+    new TelescopeState( "TRACKING", 500014 );
 
 
-    /*
-     * Idle telescope State
-     */
-    public static final TelescopeState IDLE = 
-	new TelescopeState( "IDLE", 500011 );
+  /**
+   * Array to allow serialization.
+   */
+  protected final static TelescopeState[] array =
+  {
+    IDLE,
+    SAFE,
+    SLEWING,
+    TRACKING
+  };
 
-    /*
-     * Safe telescope State
-     */
-    public static final TelescopeState SAFE = 
-	new TelescopeState( "SAFE", 500012 );
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT FIELDS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
 
-    /**
-     * Slewing telescope State
-     */
-    public static final TelescopeState SLEWING = 
-	new TelescopeState( "SLEWING", 500013 );
+  /**
+   * String name of this type-safe enumeration.
+   */
+  protected transient String name;
 
-    /**
-     * Tracking telescope State
-     */
-    public static final TelescopeState TRACKING = 
-	new TelescopeState( "TRACKING", 500014 );
+  /**
+   * Optional integer for int representation of this Type-safe Enumeration.
+   */
+  protected transient int intValue;
 
-    /**
-     * Array allowing serialization.
-     */
-    protected static final TelescopeState[] array =
-    {
-	IDLE, SAFE, SLEWING, TRACKING
-    };
+  /**
+   * Assign an index to this enumeration.
+   */
+  protected final int index = nextIndex++;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS METHODS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   * Return an object reference of the TelescopeState with the String
+   * name specified.
+   * <p>
+   * <b>NOTE:</b> if there is no matching reference <code>null</code> will be
+   * returned.
+   * @param s the name of the TelescopeState
+   * @return a reference to the TelescopeState specified by the argument
+   */
+  public static TelescopeState getReference( String s )
+  {
+    return( (TelescopeState)( nameHash.get( s ) ) );
+  }
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /**
+   * Return an object reference of the TelescopeState with the int value
+   * specified.
+   * <p>
+   * <b>NOTE:</b> if there is no matching reference <code>null</code> will be
+   * returned.
+   * @param i the int representation of the TelescopeState
+   * @return a reference to the TelescopeState specified by the argument
+   */
+  public static TelescopeState getReference( int i )
+  {
+    return( (TelescopeState)( intHash.get( new Integer( i ) ) ) );
+  }
+
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT METHODS.                                                       */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   * Create an enumeration of the specified name.
+   * <p>
+   * <b>NOTE:</b> the <code><b>int</b></code> representation of this
+   * enumeration is assigned to the index (index) of this enumeration in
+   * the array.
+   * @param s the name of this enumeration
+   * @see #name
+   * @see #intValue
+   * @see #array
+   */
+  protected TelescopeState( String s )
+  {
+    name = s;
+    nameHash.put( s, this );
+    intValue = index;
+    intHash.put( new Integer( intValue ), this );
+  }
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /**
+   * Create an enumeration of the specified name and int representation.
+   * @param s the name of this enumeration
+   * @param i the int representation of this enumeration
+   * @see #name
+   * @see #intValue
+   * @see #array
+   */
+  protected TelescopeState( String s, int i )
+  {
+    name = s;
+    nameHash.put( s, this );
+    intValue = i;
+    intHash.put( new Integer( intValue ), this );
+  }
 
-    /**
-     * Creates a TelescopeState.  The type-safe enumeration of TelescopeState
-     * will have the specified String name (s) and int representation (i).
-     * @param s the String name of this type-safe state enumeration
-     * @param i the int representation of this type-safe state enumeration
-     */
-    protected TelescopeState( String s, int i )
-    {
-	super( s, i );	
-    }
+
+  /**
+   * Return the name of this TelescopeState.
+   * @return name
+   * @see #name
+   */
+  public String getName()
+  {
+    return name;
+  }
+
+
+  /**
+   * Return the int representation of this TelescopeState.
+   * @return intValue
+   * @see #intValue
+   */
+  public int getInt()
+  {
+    return intValue;
+  }
+
+
+  /**
+   * Over-ride the Serializable method to ensure the same Object references
+   * are returned after Serialization.
+   */
+  protected Object readResolve() throws java.io.ObjectStreamException
+  {
+    return( array[ index ] );
+  }
+
+
+  /**
+   * Return the name of this enumeration.
+   * @return name
+   * @see #name
+   */
+  public String toString()
+  {
+    return name;
+  }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2003-09-19 16:00:03 $
  * $RCSfile: TelescopeState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/TelescopeState.java,v $
- *      $Id: TelescopeState.java,v 1.1 2003-07-01 10:13:04 je Exp $
+ *      $Id: TelescopeState.java,v 1.2 2003-09-19 16:00:03 je Exp $
  *     $Log: not supported by cvs2svn $
+ *
  */

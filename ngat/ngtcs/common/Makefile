@@ -5,9 +5,7 @@
 PACKAGENAME    = ngat.ngtcs.common
 PACKAGEDIR     = ngat/ngtcs/common
 JAR_FILE       = ngat_ngtcs_common.jar
-SRCS           = AutoguideMode.java \
-                 CalendarType.java \
-                 CalibrateMode.java \
+SRCS           = CalendarType.java \
                  Convert.java \
                  Data.java \
                  DegreesMinutesSeconds.java \
@@ -39,9 +37,9 @@ SRCS           = AutoguideMode.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 0.4 $
-#       $Id: Makefile,v 0.4 2003-07-01 10:17:06 je Exp $
-#     $Date: 2003-07-01 10:17:06 $
+# $Revision: 0.5 $
+#       $Id: Makefile,v 0.5 2003-09-19 16:00:41 je Exp $
+#     $Date: 2003-09-19 16:00:41 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Makefile,v $
 #      $Log: not supported by cvs2svn $

@@ -11,15 +11,15 @@ package ngat.ngtcs.common;
  * that need to be defined.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class State extends ngat.util.TypeSafeEnumeration
+public abstract class State
 {
     /**
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: State.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+	new String( "$Id: State.java,v 1.2 2003-09-19 16:00:03 je Exp $" );
 
 
     /**
@@ -30,7 +30,7 @@ public class State extends ngat.util.TypeSafeEnumeration
      */
     protected State( String s, int i )
     {
-	super( s, i );
+
     }
 
 
@@ -41,13 +41,16 @@ public class State extends ngat.util.TypeSafeEnumeration
      */
     protected State( String s )
     {
-	super( s );
+
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2003-09-19 16:00:03 $
  * $RCSfile: State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/State.java,v $
- *      $Id: State.java,v 1.1 2003-07-01 10:13:04 je Exp $
+ *      $Id: State.java,v 1.2 2003-09-19 16:00:03 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
  */

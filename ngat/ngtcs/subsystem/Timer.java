@@ -7,15 +7,16 @@ import ngat.ngtcs.common.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Timer extends BasicMechanism
+  implements PluggableSubSystem
 {
     /**
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: Timer.java,v 1.1 2003-07-01 10:13:46 je Exp $" );
+	new String( "$Id: Timer.java,v 1.2 2003-09-19 16:01:09 je Exp $" );
 
 
     /**
@@ -72,18 +73,9 @@ public class Timer extends BasicMechanism
     /**
      * Constructor for Timer objects.
      */
-    protected Timer()
+    public Timer()
     {
 	super();
-    }
-
-
-    /**
-     *
-     */
-    public PluggableSubSystem getInstance()
-    {
-	return (PluggableSubSystem)( new Timer() );
     }
 
 
@@ -197,7 +189,7 @@ public class Timer extends BasicMechanism
     /**
      *
      */
-    public final void setEmulate( boolean newEmulate )
+    public void setEmulate( boolean newEmulate )
     {
 	emulate = newEmulate;
     }
@@ -206,7 +198,7 @@ public class Timer extends BasicMechanism
     /**
      *
      */
-    public final void setTime( long newSecs, long newNanosecs )
+    public void setTime( long newSecs, long newNanosecs )
     {
 	secs = newSecs;
 	nanosecs = newNanosecs;
@@ -219,7 +211,7 @@ public class Timer extends BasicMechanism
     /**
      *
      */
-    public final void setStatic( boolean newStaticTime )
+    public void setStatic( boolean newStaticTime )
     {
 	staticTime = newStaticTime;
     }
@@ -228,14 +220,17 @@ public class Timer extends BasicMechanism
     /**
      *
      */
-    public final void setTimestep( long newTimestepNanoseconds )
+    public void setTimestep( long newTimestepNanoseconds )
     {
 	timestep = newTimestepNanoseconds;
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:46 $
+ *    $Date: 2003-09-19 16:01:09 $
  * $RCSfile: Timer.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Timer.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:46  je
+ *     Initial revision
+ *
  */
