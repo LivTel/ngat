@@ -1,5 +1,5 @@
 // QuadraticFitTest.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.1 2000-08-18 17:31:56 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.2 2000-08-18 17:56:20 cjm Exp $
 
 import java.awt.event.*;
 import java.lang.*;
@@ -7,6 +7,7 @@ import java.util.*;
 import java.text.*;
 import javax.swing.*;
 
+import ngat.math.*;
 import ngat.OSS.utility.*;
 
 /**
@@ -14,14 +15,14 @@ import ngat.OSS.utility.*;
  * Puts command line arguments as y values in data list (i,args[i]).
  * Then does a quadratic fit and prints the result out.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  */
 public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.1 2000-08-18 17:31:56 cjm Exp $");
+	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.2 2000-08-18 17:56:20 cjm Exp $");
 	private QuadraticFit quadraticFit = null;
 	private GraphPlot graphPlot = null;
 	private GraphFrame graphFrame = null;
@@ -253,4 +254,7 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/08/18 17:31:56  cjm
+// initial revision.
+//
 //
