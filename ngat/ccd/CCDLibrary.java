@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.16 2000-02-22 17:30:48 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.17 2000-02-28 19:13:47 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.16 $
+ * @version $Revision: 0.17 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.16 2000-02-22 17:30:48 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.17 2000-02-28 19:13:47 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -174,6 +174,15 @@ public class CCDLibrary
 	 */
 	private native int CCD_DSP_Get_Exposure_Status();
 	/**
+	 * Native wrapper to libccd routine thats returns the length of the last exposure length set.
+	 */
+	private native int CCD_DSP_Get_Exposure_Length();
+	/**
+	 * Native wrapper to libccd routine thats returns the number of milliseconds since the EPOCH of
+	 * the exposure start time.
+	 */
+	private native long CCD_DSP_Get_Exposure_Start_Time();
+	/**
 	 * Native wrapper to return ccd_dsp's error number.
 	 */
 	private native int CCD_DSP_Get_Error_Number();
@@ -184,7 +193,7 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
 	 */
 	private native void CCD_Exposure_Expose(boolean open_shutter,boolean readout_ccd,
-		int msecs,String filename) throws CCDLibraryNativeException;
+		long startTime,int exposureTime,String filename) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that takes a bias frame.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
@@ -352,6 +361,24 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Method to get the exposure length the controller was last set to.
+	 * @return The exposure length.
+	 */
+	public int CCDDSPGetExposureLength()
+	{
+		return CCD_DSP_Get_Exposure_Length();
+	}
+
+	/**
+	 * Method to get number of milliseconds since the EPOCH to the exposure start time.
+	 * @return A long, in milliseconds.
+	 */
+	public long CCDDSPGetExposureStartTime()
+	{
+		return CCD_DSP_Get_Exposure_Start_Time();
+	}
+
+	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
 	 */
@@ -419,15 +446,18 @@ public class CCDLibrary
 	 * @param open_shutter Determines whether the shutter should be opened to do the exposure. The shutter might
 	 * 	be left closed to perform calibration images etc.
 	 * @param readout_ccd Determines whether the CCD should be read out at the end of the exposure.
-	 * @param msecs The number of milliseconds to expose the CCD.
+	 * @param startTime The start time, in milliseconds since the epoch (1st January 1970) to start the exposure.
+	 * 	Passing the value -1 will start the exposure as soon as possible.
+	 * @param exposureTime The number of milliseconds to expose the CCD.
 	 * @param filename The filename to save the exposure into.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if 
 	 * CCD_Exposure_Expose  failed.
 	 */
-	public void CCDExposureExpose(boolean open_shutter,boolean readout_ccd,int msecs,String filename) 
+	public void CCDExposureExpose(boolean open_shutter,boolean readout_ccd,
+		long startTime,int exposureTime,String filename) 
 		throws CCDLibraryNativeException
 	{
-		CCD_Exposure_Expose(open_shutter,readout_ccd,msecs,filename);
+		CCD_Exposure_Expose(open_shutter,readout_ccd,startTime,exposureTime,filename);
 	}
 
 	/**
@@ -938,6 +968,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.16  2000/02/22 17:30:48  cjm
+// Added CCD_DSP_EXPOSURE_STATUS_CLEAR status.
+//
 // Revision 0.15  2000/02/14 19:06:07  cjm
 // Added Java methods for accessing more setup data.
 //
