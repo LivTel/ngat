@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.26 2000-06-13 17:29:17 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.27 2000-06-20 12:54:27 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.26 $
+ * @version $Revision: 0.27 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.26 2000-06-13 17:29:17 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.27 2000-06-20 12:54:27 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -261,7 +261,7 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that does an exposure.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
 	 */
-	private native void CCD_Exposure_Expose(boolean open_shutter,boolean readout_ccd,
+	private native void CCD_Exposure_Expose(boolean open_shutter,
 		long startTime,int exposureTime,String filename) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that takes a bias frame.
@@ -642,11 +642,10 @@ public class CCDLibrary
 	 * CCD_Exposure_Expose  failed.
 	 * @see #CCD_Exposure_Expose
 	 */
-	public void CCDExposureExpose(boolean open_shutter,boolean readout_ccd,
-		long startTime,int exposureTime,String filename) 
+	public void CCDExposureExpose(boolean open_shutter,long startTime,int exposureTime,String filename) 
 		throws CCDLibraryNativeException
 	{
-		CCD_Exposure_Expose(open_shutter,readout_ccd,startTime,exposureTime,filename);
+		CCD_Exposure_Expose(open_shutter,startTime,exposureTime,filename);
 	}
 
 	/**
@@ -1243,6 +1242,11 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.26  2000/06/13 17:29:17  cjm
+// JNI changes realating to updating the library to work the same way as voodoo.
+// Includes PCI load code, amplifier setting,DSP internal var setting,
+// etc...
+//
 // Revision 0.25  2000/05/26 10:05:29  cjm
 // Added CCD_SETUP_WINDOW_COUNT constant.
 //
