@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.2 1999-09-08 14:33:28 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.3 1999-09-23 14:57:12 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -6,7 +6,7 @@ include ../Makefile.common
 DOCSDIR 	= $(NGAT_DOC_HOME)/latex
 
 TEXSRCS 	= ngat.net.tex ngat.net_error_machanisms.tex
-FIGSRCS 	= ngat.net.protocol.fig
+FIGSRCS 	= ngat.net.protocol.fig ngat.net.MAprotocol.fig
 
 DVIOBJS		= $(TEXSRCS:%.tex=%.dvi)
 PSOBJS		= $(TEXSRCS:%.tex=$(DOCSDIR)/%.ps)
@@ -20,7 +20,7 @@ $(DOCSDIR)/%.ps: %.dvi
 	$(DVIPS) $< -o
 	$(MV) $*.ps $(DOCSDIR)
 
-$(DVIOBJS): $(TEXSRCS) $(EPSOBJS)
+$(DVIOBJS): $(EPSOBJS)
 
 %.dvi: %.tex
 	$(LATEX) $<
@@ -47,6 +47,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.2  1999/09/08 14:33:28  cjm
+# Changed checkin target to use CI_OPTIONS.
+#
 # Revision 0.1  1999/08/26 10:53:36  cjm
 # initial revision
 #
