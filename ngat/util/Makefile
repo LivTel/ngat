@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.7 1999-11-29 10:13:21 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.8 1999-12-10 14:28:12 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -31,12 +31,18 @@ checkin:
 	-$(CI) $(CI_OPTIONS) $(SRCS)
 
 clean:
-	$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
 
 tidy:
-	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+
+backup: tidy
+	-$(RM) $(RM_OPTIONS) $(OBJS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.7  1999/11/29 10:13:21  cjm
+# Changed docs rule to call javadoc only once.
+#
 # Revision 1.6  1999/09/08 14:32:43  cjm
 # Changed checkin target to accept failure(due to files not being checked out locked).
 # Changed checkin target to use CI_OPTIONS.

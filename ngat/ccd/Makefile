@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.4 1999-11-29 10:13:11 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.5 1999-12-10 14:23:36 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -28,13 +28,19 @@ checkin:
 	-$(CI) $(CI_OPTIONS) $(SRCS)
 
 clean:
-	$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
 
 tidy:
-	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+
+backup: tidy
+	-$(RM) $(RM_OPTIONS) $(OBJS)
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.4  1999/11/29 10:13:11  cjm
+# Changed docs rule to call javadoc only once.
+#
 # Revision 1.3  1999/11/22 16:14:35  cjm
 # Added sourcepath to JAVACFLAGS.
 #
