@@ -1,6 +1,5 @@
 package ngat.util;
 
-import ngat.OSS.server.operations.*;
 
 /** 
  * Implements a shared storage area for Server to place responses to client transactions.
@@ -10,7 +9,7 @@ import ngat.OSS.server.operations.*;
  * ## This is likely to be replaced by an implementation using wait/notify but needs some work
  * ## to allow waiting Threads to be still interruptable by their controller.
  *
- * $Id: SharedStore.java,v 1.1 2000-11-21 17:08:04 snf Exp $
+ * $Id: SharedStore.java,v 1.2 2000-12-11 14:38:16 snf Exp $
  *
  */
 public class SharedStore {
@@ -65,4 +64,7 @@ public class SharedStore {
 
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 17:08:04  snf
+/** Initial revision
+/** */
