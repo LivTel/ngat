@@ -6,7 +6,6 @@ PACKAGENAME    = ngat.ngtcs.subsystem.sdb
 PACKAGEDIR     = ngat/ngtcs/subsystem/sdb
 JAR_FILE       = ngat_ngtcs_subsystem_sdb.jar
 SRCS           = SDB.java \
-		 SDB_Command.java \
 		 SDB_DataType.java \
                  SDB_Factory.java \
                  SDB_ServiceClass.java \
@@ -16,12 +15,15 @@ SRCS           = SDB.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.3 $
-#       $Id: Makefile,v 1.3 2003-10-28 15:38:42 je Exp $
-#     $Date: 2003-10-28 15:38:42 $
+# $Revision: 1.4 $
+#       $Id: Makefile,v 1.4 2003-10-28 15:57:18 je Exp $
+#     $Date: 2003-10-28 15:57:18 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/sdb/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.3  2003/10/28 15:38:42  je
+#      Added SDB_Command.
+#
 #      Revision 1.2  2003/10/27 16:57:46  je
 #      Added SDB_DataType.
 #
