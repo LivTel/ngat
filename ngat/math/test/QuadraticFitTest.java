@@ -14,20 +14,29 @@ import ngat.util.*;
  * Puts command line arguments as x,y values in data list.
  * Then does a quadratic fit and prints the result out.
  * @author Chris Mottram
- * @version $Revision: 0.5 $
+ * @version $Revision: 0.6 $
  */
 public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.5 2004-02-12 17:30:15 cjm Exp $");
+	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.6 2004-07-28 11:09:40 cjm Exp $");
+	/**
+	 * Degrees of freedom value.
+	 */
+	public final static int ONE_DEGREE_OF_FREEDOM = 1;
+	/**
+	 * Degrees of freedom value.
+	 */
+	public final static int THREE_DEGREES_OF_FREEDOM = 3;
 	private QuadraticFit quadraticFit = null;
 	private GraphPlot graphPlot = null;
 	private GraphFrame graphFrame = null;
 	private DecimalFormat decimalFormat = null;
 	private int minX,maxX,minY,maxY,dataCount;
 	private int loopCount = 10;
+	private int degreesOfFreedom = THREE_DEGREES_OF_FREEDOM;
 	private double targetChiSquared = 0.01;
 
 	public static void main(String args[])
@@ -54,7 +63,32 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 		}
 		for(int i = 0;i < args.length;i++)
 		{
-				if(args[i].equals("-help"))
+				if(args[i].equals("-degrees_of_freedom"))
+				{
+					if((i+1) >= args.length)
+					{
+						System.err.println("Degrees of Freedom needs parameter.");
+						System.exit(1);
+					}
+					try
+					{
+						degreesOfFreedom = Integer.parseInt(args[i+1]);
+						i++;
+						if((degreesOfFreedom != ONE_DEGREE_OF_FREEDOM)&&
+						   (degreesOfFreedom != THREE_DEGREES_OF_FREEDOM))
+						{
+							System.err.println("Degrees of Freedom should be 1 or 3.");
+							System.exit(1);
+						}
+					}
+					catch (NumberFormatException e)
+					{
+						System.err.println("Failed to parse degrees of freedom "+
+								   args[i+1]+":"+e);
+						System.exit(1);
+					}
+				}
+				else if(args[i].equals("-help"))
 				{
 					help();
 					System.exit(0);
@@ -212,14 +246,28 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 	 * Run the quadratic fit.
 	 * @see #loopCount
 	 * @see #targetChiSquared
+	 * @see #degreesOfFreedom
 	 */
 	private void run()
 	{
-		quadraticFit.quadraticFit(loopCount,targetChiSquared);
-		//		quadraticFit.quadraticFit(new ChiSquaredFitOneParameterUpdate("a",1,dataCount-1),
-		//			new ChiSquaredFitOneParameterUpdate("b",1,dataCount-1),
-		//			new ChiSquaredFitOneParameterUpdate("c",0,dataCount));
-		System.out.println("A = "+decimalFormat.format(quadraticFit.getA()));
+		if(degreesOfFreedom == ONE_DEGREE_OF_FREEDOM)
+		{
+			quadraticFit.quadraticFit(loopCount,targetChiSquared,
+						  new ChiSquaredFitOneParameterUpdate("a",1,dataCount-1),
+						  new ChiSquaredFitOneParameterUpdate("b",1,dataCount-1),
+						  new ChiSquaredFitOneParameterUpdate("c",0,dataCount));
+		}
+		else if (degreesOfFreedom == THREE_DEGREES_OF_FREEDOM)
+		{
+			quadraticFit.quadraticFit(loopCount,targetChiSquared);
+		}
+		else
+		{
+			System.out.println(this.getClass().getName()+"Illegal degrees of freedom:"+
+					   degreesOfFreedom+".");
+			System.exit(1);
+		}	
+ 		System.out.println("A = "+decimalFormat.format(quadraticFit.getA()));
 		System.out.println("B = "+decimalFormat.format(quadraticFit.getB()));
 		System.out.println("C = "+decimalFormat.format(quadraticFit.getC()));
 		System.out.println("\u03c7\u00b2 = "+decimalFormat.format(quadraticFit.getChiSquared()));
@@ -301,10 +349,11 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 	 */
 	private void help()
 	{
-		System.out.println("java ngat.math.test.QuadraticFitTest [-loop_count <n>\n"+
+		System.out.println("java ngat.math.test.QuadraticFitTest [-degrees_of_freedom <1|3>|-loop_count <n>\n"+
 				   "\t|-parameter_step_count <n>|\n"+
 				   "\t-parameter_start_values <a|b|c> <min> <max> <step size>|<x> <y>]...");
 		System.out.println("Supply pairs of x/y positions to quadratic fit to.");
+		System.out.println("-degrees_of_freedom specifies whether to do 3 1 DOF fits, or 1 3 DOF fit.");
 		System.out.println("-loop_count <n> specifies the number of times through the quadratic fit loop "+
 				   "(default 10).");
 		System.out.println("-parameter_step_count <n> specifies that step count steps are performed in the "+
@@ -396,9 +445,12 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 	}//end class ChiSquaredFitAUpdate
 }
 //
-// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.5 2004-02-12 17:30:15 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.6 2004-07-28 11:09:40 cjm Exp $
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.5  2004/02/12 17:30:15  cjm
+// More parameters.
+//
 // Revision 0.4  2001/08/13 13:09:29  cjm
 // Upgraded to use ngat.util. package.
 //
