@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.27 2001-07-24 15:42:32 je Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.28 2001-07-31 09:46:26 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -30,7 +30,7 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		GaussianRandom.java BooleanLock.java Predictor.java PredictorSample.java StandardPredictor.java \
 		StatisticalPredictor.java SMTPMailer.java Queue.java QueueEmptyException.java LinkedQueue.java\
 		ICSDCommand.java ICSDRebootCommand.java ICSDShutdownCommand.java \
-		FileUtilites.java FileUtilitesNativeException.java LockFile.java PersistentUniqueInteger.java
+		FileUtilities.java FileUtilitiesNativeException.java LockFile.java PersistentUniqueInteger.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
@@ -92,6 +92,9 @@ backup: tidy
 
 
 # $Log: not supported by cvs2svn $
+# Revision 1.27  2001/07/24 15:42:32  je
+# modified StringUtilites to StringUtilities - nice one Chris!
+#
 # Revision 1.26  2001/06/20 15:41:46  cjm
 # Added sources FileUtilites.java FileUtilitesNativeException.java LockFile.java PersistentUniqueInteger.java.
 #
