@@ -1,5 +1,5 @@
 // MinimumSizeFrame.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/MinimumSizeFrame.java,v 0.2 1999-11-29 11:51:35 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/MinimumSizeFrame.java,v 0.3 1999-12-09 15:09:17 cjm Exp $
 package ngat.swing;
 
 import java.awt.*;
@@ -14,6 +14,10 @@ import javax.swing.JFrame;
  */
 public class MinimumSizeFrame extends JFrame
 {
+	/**
+	 * Revision Control System id string, showing the version of the Class.
+	 */
+	public final static String RCSID = new String("$Id: MinimumSizeFrame.java,v 0.3 1999-12-09 15:09:17 cjm Exp $");
 	/**
 	 * Dimension to hold the minimum size.
  	 */
@@ -98,6 +102,9 @@ public class MinimumSizeFrame extends JFrame
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  1999/11/29 11:51:35  cjm
+// Changed package to ngat.swing.
+//
 // Revision 0.1  1999/11/22 09:53:49  cjm
 // initial revision.
 //
