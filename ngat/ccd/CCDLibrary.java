@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.14 2000-02-02 13:54:49 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.15 2000-02-14 19:06:07 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.14 $
+ * @version $Revision: 0.15 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.14 2000-02-02 13:54:49 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.15 2000-02-14 19:06:07 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -268,7 +268,31 @@ public class CCDLibrary
 	 */
 	private native int CCD_Setup_Get_NRows();
 	/**
-	 * Native wrapper to libccd routine that aborts the CCD setupgets whether a setup operation is in progress.
+	 * Native wrapper to libccd routine that gets the column binning.
+	 */
+	private native int CCD_Setup_Get_NSBin();
+	/**
+	 * Native wrapper to libccd routine that gets the row binning.
+	 */
+	private native int CCD_Setup_Get_NPBin();
+	/**
+	 * Native wrapper to libccd routine that gets the setup de-interlace type.
+	 */
+	private native int CCD_Setup_Get_DeInterlace_Type();
+	/**
+	 * Native wrapper to libccd routine that gets the setup window flags.
+	 */
+	private native int CCD_Setup_Get_Window_Flags();
+	/**
+	 * Native wrapper to libccd routine that gets the filter wheel position.
+	 */
+	private native int CCD_Setup_Get_Filter_Wheel_Position(int wheel_number) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets whether a setup operation has been completed successfully.
+	 */
+	private native boolean CCD_Setup_Get_Setup_Complete();
+	/**
+	 * Native wrapper to libccd routine that gets whether a setup operation is in progress.
 	 */
 	private native boolean CCD_Setup_Get_Setup_In_Progress();
 	/**
@@ -690,10 +714,11 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Routine to get the number of columns on the CCD chip last passed into CCDSetupStartup. This value
+	 * Routine to get the number of columns on the CCD chip last passed into CCDSetupDimensions. This value
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @return Returns an integer representing the number of columns.
-	 * @see #CCDSetupStartup
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_NCols
 	 */
 	public int CCDSetupGetNCols()
 	{
@@ -701,14 +726,98 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Routine to get the number of rows on the CCD chip last passed into CCDSetupStartup. This value
+	 * Routine to get the number of rows on the CCD chip last passed into CCDSetupDimensions. This value
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @return Returns an integer representing the number of rows.
-	 * @see #CCDSetupStartup
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_NRows
 	 */
 	public int CCDSetupGetNRows()
 	{
 		return CCD_Setup_Get_NRows();
+	}
+
+	/**
+	 * Routine to get the column binning last passed into CCDSetupDimensions. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns an integer representing the column binning.
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_NSBin
+	 */
+	public int CCDSetupGetNSBin()
+	{
+		return CCD_Setup_Get_NSBin();
+	}
+
+	/**
+	 * Routine to get the row binning last passed into CCDSetupDimensions. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns an integer representing the row binning.
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_NPBin
+	 */
+	public int CCDSetupGetNPBin()
+	{
+		return CCD_Setup_Get_NPBin();
+	}
+
+	/**
+	 * Returns which de-interlace type has been setup. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns the deinterlace type, one of:
+	 * 	<a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>,
+	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_PARALLEL">CCD_DSP_DEINTERLACE_SPLIT_PARALLEL</a>,
+	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_SERIAL">CCD_DSP_DEINTERLACE_SPLIT_SERIAL</a> and 
+	 *	<a href="#CCD_DSP_DEINTERLACE_SPLIT_QUAD">CCD_DSP_DEINTERLACE_SPLIT_QUAD</a>.
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_DeInterlace_Type
+	 */
+	public int CCDSetupGetDeInterlaceType()
+	{
+		return CCD_Setup_Get_DeInterlace_Type();
+	}
+
+	/**
+	 * Returns the window flags passed into the last setup. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns the window flags, a bit-field containing which window data is active. This consists of:
+	 * 	<a href="#CCD_SETUP_WINDOW_ONE">CCD_SETUP_WINDOW_ONE</a>,
+	 * 	<a href="#CCD_SETUP_WINDOW_TWO">CCD_SETUP_WINDOW_TWO</a>,
+	 * 	<a href="#CCD_SETUP_WINDOW_THREE">CCD_SETUP_WINDOW_THREE</a> and
+	 * 	<a href="#CCD_SETUP_WINDOW_FOUR">CCD_SETUP_WINDOW_FOUR</a>.
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_Window_Flags
+	 */
+	public int CCDSetupGetWindowFlags()
+	{
+		return CCD_Setup_Get_Window_Flags();
+	}
+
+	/**
+	 * Routine to get the last requested position for the specified filter wheel. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @param wheelNumber Which filter wheel to get the position for.
+	 * @return Returns an integer representing the position of the filterwheel.
+	 * @exception CCDLibraryNativeException Thrown if an error occurs getting the position
+	 * 	(the wheelNumber is out of range).
+	 * @see #CCDSetupFilterWheel
+	 * @see #CCD_Setup_Get_Filter_Wheel_Position
+	 */
+	public int CCDSetupGetFilterWheelPosition(int wheelNumber) throws CCDLibraryNativeException
+	{
+		return CCD_Setup_Get_Filter_Wheel_Position(wheelNumber);
+	}
+
+	/**
+	 * Routine to return whether a setup operation has been sucessfully completed since the last controller
+	 * reset.
+	 * @return Returns true if a setup has been completed otherwise false.
+	 * @see #CCDSetupStartup
+	 * @see #CCDSetupDimensions
+	 */
+	public boolean CCDSetupGetSetupComplete()
+	{
+		return (boolean)CCD_Setup_Get_Setup_Complete();
 	}
 
 	/**
@@ -824,6 +933,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.14  2000/02/02 13:54:49  cjm
+// Setup filter wheel and windowing paramater passing added.
+//
 // Revision 0.13  2000/01/24 14:08:57  cjm
 // Methods and constants updated for new PCI version of libccd.
 //
