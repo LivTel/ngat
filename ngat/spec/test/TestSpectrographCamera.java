@@ -1,5 +1,5 @@
 // TestSpectrographCamera.java
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/test/TestSpectrographCamera.java,v 1.1 2004-07-29 14:43:39 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/test/TestSpectrographCamera.java,v 1.2 2004-07-29 14:47:54 cjm Exp $
 package ngat.spec.test;
 
 import java.lang.*;
@@ -9,15 +9,19 @@ import ngat.spec.*;
 
 /**
  * Simple test of ngat.spec library.
+ * Run as follows:
+ * <pre>
+ * java ngat.spec.test.TestSpectrographCamera -l 34560 -f test.fits -e 10000
+ * </pre>
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TestSpectrographCamera
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TestSpectrographCamera.java,v 1.1 2004-07-29 14:43:39 cjm Exp $");
+	public final static String RCSID = new String("$Id: TestSpectrographCamera.java,v 1.2 2004-07-29 14:47:54 cjm Exp $");
 	/**
 	 * The logger.
 	 */
@@ -223,4 +227,7 @@ public class TestSpectrographCamera
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2004/07/29 14:43:39  cjm
+// Initial revision
+//
 //
