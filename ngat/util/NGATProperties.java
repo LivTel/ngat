@@ -1,5 +1,5 @@
 // NGATProperties.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.8 2002-10-23 09:58:17 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.9 2002-10-23 10:20:33 je Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.util.*;
  * For all methods taking a default value, the default value is returned if
  * parsing of the value returned on the key search fails.
  *
- * @version $Revision: 0.8 $
+ * @version $Revision: 0.9 $
  * @author Jason Etherton,Chris Mottram
  */
 public class NGATProperties extends Properties
@@ -24,7 +24,7 @@ public class NGATProperties extends Properties
      * Revision Control System id string, showing the version of the Class.
      */
     public final static String RCSID = new String
-	("$Id: NGATProperties.java,v 0.8 2002-10-23 09:58:17 je Exp $");
+	("$Id: NGATProperties.java,v 0.9 2002-10-23 10:20:33 je Exp $");
 
     /**
      * Method to load the properties.
@@ -130,7 +130,7 @@ public class NGATProperties extends Properties
 	    }
 	catch( NGATPropertyException npe )
 	    {
-		printError( npe, key, new Short( def ).toString() );
+		printError( npe, " - using default ["+def+"]" );
 		return def;
 	    }
     }
@@ -176,7 +176,7 @@ public class NGATProperties extends Properties
 	    }
 	catch( NGATPropertyException npe )
 	    {
-		printError( npe, key, new Integer( def ).toString() );
+		printError( npe, " - using default ["+def+"]" );
 		return def;
 	    }
     }
@@ -222,7 +222,7 @@ public class NGATProperties extends Properties
 	    }
 	catch( NGATPropertyException npe )
 	    {
-		printError( npe, key, new Long( def ).toString() );
+		printError( npe, " - using default ["+def+"]" );
 		return def;
 	    }
     }
@@ -268,7 +268,7 @@ public class NGATProperties extends Properties
 	    }
 	catch( NGATPropertyException npe )
 	    {
-		printError( npe, key, new Double( def ).toString() );
+		printError( npe, " - using default ["+def+"]" );
 		return def;
 	    }
     }
@@ -348,7 +348,7 @@ public class NGATProperties extends Properties
 	    }
 	catch( NGATPropertyException npe )
 	    {
-		printError( npe, key, def.toString() );
+		printError( npe, " - using default ["+def.toString()+"]" );
 		return def;
 	    }
     }
@@ -399,8 +399,8 @@ public class NGATProperties extends Properties
 	    }
 	catch( NGATPropertyException npe )
 	    {
-		String colorString = new String( "[r="+r+",g="+g+",b="+b+"]" );
-		printError( npe, key, colorString );
+		printError( npe,
+			    " - using default [r="+r+",g="+g+",b="+b+"]" );
 		return new Color( r, g, b );
 	    }
     }
@@ -447,7 +447,7 @@ public class NGATProperties extends Properties
 	    }
 	catch( NGATPropertyException npe )
 	    {
-		printError( npe, key, def.toString() );
+		printError( npe, " - using default ["+def.toString()+"]" );
 		return def;
 	    }
     }
@@ -460,13 +460,16 @@ public class NGATProperties extends Properties
      * @param a the key used to search the properties
      * @param b the value returned from the search on <b><code>a</code></b>
      */
-    protected void printError( Exception e, String a, String b )
+    protected void printError( Exception e, String s )
     {
-	System.err.println( e+" on key ("+a+") value - "+b );
+	System.err.println( e+s );
     }
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.8  2002/10/23 09:58:17  je
+// Changed printError method.
+//
 // Revision 0.7  2002/09/25 12:53:31  je
 // Sorted out documentation.
 //
