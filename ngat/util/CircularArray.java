@@ -11,7 +11,7 @@ import java.util.Enumeration;
  * This implementation does not provide a mechanism for 
  * removing elements.
  *
- * $Id: CircularArray.java,v 1.1 2000-11-21 17:37:40 snf Exp $
+ * $Id: CircularArray.java,v 1.2 2001-01-04 11:10:29 snf Exp $
  *
  */
 public class CircularArray {
@@ -19,6 +19,9 @@ public class CircularArray {
     /** Size of the array.*/
     private int nn;
     
+    /** Stores the current size of the array.*/
+    private int count;
+
     /** Underlying container for the data.*/
     private Object[] array;
     
@@ -41,6 +44,7 @@ public class CircularArray {
 	}
 	start = 0;
 	next  = 0;
+	count = 0;
     }
     
     /** Returns the size of the underlying array which stores
@@ -49,7 +53,10 @@ public class CircularArray {
 
     /** Returns the actual number of set elements.
      * NOTE: This may not work correctly - NEEDS TESTING ! */
-    public int getCount() { return (next + nn - start)%nn; }
+    public int getCount() { 
+	return count;
+	// ## return (next + nn - start)%nn;
+    }
     
     /** Insert the specified object (at the end of the array). */
     public void insert(Object stuff) {
@@ -57,6 +64,8 @@ public class CircularArray {
 	array[next] = stuff;
 	// Always increment <next>.
 	next = (next + 1)%nn;	
+	// Increment count unless full.
+	if (count <= nn) count++;
 	// Increment <start> if <next> collides with it.
 	if (start == next) {	    
 	    start = (start + 1)%nn;
@@ -95,4 +104,7 @@ public class CircularArray {
     
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 17:37:40  snf
+/** Initial revision
+/** */
