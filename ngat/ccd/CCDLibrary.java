@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.11 1999-09-13 13:54:54 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.12 1999-09-20 14:40:08 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.11 $
+ * @version $Revision: 0.12 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.11 1999-09-13 13:54:54 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.12 1999-09-20 14:40:08 cjm Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -205,17 +205,20 @@ public class CCDLibrary
 // ccd_exposure.h
 	/**
 	 * Native wrapper to libccd routine that does an exposure.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Exposure_Expose(boolean open_shutter,boolean readout_ccd,
-		int msecs,String filename);
+	private native void CCD_Exposure_Expose(boolean open_shutter,boolean readout_ccd,
+		int msecs,String filename) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that takes a bias frame.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Exposure_Bias(String filename);
+	private native void CCD_Exposure_Bias(String filename) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that does a readout of the CCD.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Exposure_Read_Out_CCD(String filename);
+	private native void CCD_Exposure_Read_Out_CCD(String filename) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that aborts an exposure.
 	 */
@@ -246,22 +249,25 @@ public class CCDLibrary
 // ccd_interface.h
 	/**
 	 * Native wrapper to libccd routine that opens the selected interface device.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Interface_Open();
+	private native void CCD_Interface_Open() throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that closes the selected interface device.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Interface_Close();
+	private native void CCD_Interface_Close() throws CCDLibraryNativeException;
 
 // ccd_setup.h
 	/**
 	 * Native wrapper to libccd routine that does the CCD setup.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Setup_Setup_CCD(int setup_flags,
+	private native void CCD_Setup_Setup_CCD(int setup_flags,
 		int timing_load_type,int timing_application_number,String timing_filename,
 		int utility_load_type,int utility_application_number,String utility_filename,
 		double target_temperature,int gain,boolean gain_speed,boolean idle,
-		int ncols,int nrows,int nsbin,int npbin,int deinterlace_setting);
+		int ncols,int nrows,int nsbin,int npbin,int deinterlace_setting) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that aborts the CCD setup.
 	 */
@@ -286,12 +292,14 @@ public class CCDLibrary
 // ccd_temperature.h
 	/**
 	 * Native wrapper to libccd routine that gets the current temperature of the CCD.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Temperature_Get(CCDLibraryDouble temperature);
+	private native void CCD_Temperature_Get(CCDLibraryDouble temperature) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that sets the current temperature of the CCD.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native boolean CCD_Temperature_Set(double target_temperature);
+	private native void CCD_Temperature_Set(double target_temperature) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to return ccd_temperature's error number.
 	 */
@@ -344,12 +352,13 @@ public class CCDLibrary
 	 * @param readout_ccd Determines whether the CCD should be read out at the end of the exposure.
 	 * @param msecs The number of milliseconds to expose the CCD.
 	 * @param filename The filename to save the exposure into.
-	 * @return Returns true if the exposure succeeded, false if it fails.If it failed,
-	 * 	use <a href="#CCDError">CCDError</a> to determine what error occured.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if 
+	 * CCD_Exposure_Expose  failed.
 	 */
-	public boolean CCDExposureExpose(boolean open_shutter,boolean readout_ccd,int msecs,String filename)
+	public void CCDExposureExpose(boolean open_shutter,boolean readout_ccd,int msecs,String filename) 
+		throws CCDLibraryNativeException
 	{
-		return  CCD_Exposure_Expose(open_shutter,readout_ccd,msecs,filename);
+		CCD_Exposure_Expose(open_shutter,readout_ccd,msecs,filename);
 	}
 
 	/**
@@ -358,23 +367,21 @@ public class CCDLibrary
 	 * This cannot be done with a call to CCDExposureExpose as this routine takes a <b>non-zero</b>
 	 * exposure time.
 	 * @param filename The filename to save the read out data into.
-	 * @return Returns true if the exposure succeeded, false if it fails.If it failed,
-	 * 	use <a href="#CCDError">CCDError</a> to determine what error occured.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
 	 */
-	public boolean CCDExposureBias(String filename)
+	public void CCDExposureBias(String filename) throws CCDLibraryNativeException
 	{
-		return CCD_Exposure_Bias(filename);
+		CCD_Exposure_Bias(filename);
 	}
 
 	/**
 	 * Routine to readout data on the CCD to a file.
 	 * @param filename The filename to save the read out data into.
-	 * @return Returns true if the exposure succeeded, false if it fails.If it failed,
-	 * 	use <a href="#CCDError">CCDError</a> to determine what error occured.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
 	 */
-	public boolean CCDExposureReadOutCCD(String filename)
+	public void CCDExposureReadOutCCD(String filename) throws CCDLibraryNativeException
 	{
-		return CCD_Exposure_Read_Out_CCD(filename);
+		CCD_Exposure_Read_Out_CCD(filename);
 	}
 
 	/**
@@ -464,13 +471,14 @@ public class CCDLibrary
 	 * Routine to open the interface selected with <a href="#CCDInitialise">CCDInitialise</a> 
 	 * or CCD_Interface_Set_Device 
 	 * (a libccd routine, not implemented in CCDLibrary at the moment). 
-	 * @return Returns true if the device could be opened, false otherwise.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the device could
+	 * 	not be opened.
 	 * @see #CCDInitialise
 	 * @see #CCDInterfaceClose
 	 */
-	public boolean CCDInterfaceOpen()
+	public void CCDInterfaceOpen() throws CCDLibraryNativeException
 	{
-		return (boolean)CCD_Interface_Open();
+		CCD_Interface_Open();
 	}
 
 	/**
@@ -478,13 +486,14 @@ public class CCDLibrary
 	 * or CCD_Interface_Set_Device
 	 * (a libccd routine, not implemented in CCDLibrary at the moment) and opened with 
 	 * <a href="#CCDInterfaceOpen">CCDInterfaceOpen</a>.
-	 * @return Returns true if the device could be closed, false otherwise.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the device could
+	 * 	not be closed.
 	 * @see #CCDInitialise
 	 * @see #CCDInterfaceOpen
 	 */
-	public boolean CCDInterfaceClose()
+	public void CCDInterfaceClose() throws CCDLibraryNativeException
 	{
-		return (boolean)CCD_Interface_Close();
+		CCD_Interface_Close();
 	}
 
 	/**
@@ -522,7 +531,6 @@ public class CCDLibrary
 // ccd_setup.h
 	/**
 	 * This routine sets up the SDSU CCD Controller ready to do exposures.
-	 * @return Returns true to indicate success and false for failure.
 	 * @param setup_flags Flags set to determine which parts of setup this call will do. Passing 
 	 * 	<a href="#CCD_SETUP_FLAG_ALL">CCD_SETUP_FLAG_ALL</a> does all parts of setup, or bits can be ORed
 	 * 	together from individual flags.
@@ -563,15 +571,15 @@ public class CCDLibrary
 	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL">CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL</a>,
 	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_SERIAL">CCD_SETUP_DEINTERLACE_SPLIT_SERIAL</a>,
 	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_QUAD">CCD_SETUP_DEINTERLACE_SPLIT_QUAD</a>.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
 	 */
-	public boolean CCDSetupSetupCCD(int setup_flags,
+	public void CCDSetupSetupCCD(int setup_flags,
 		int timing_load_type,int timing_application_number,String timing_filename,
 		int utility_load_type,int utility_application_number,String utility_filename,
 		double target_temperature,int gain,boolean gain_speed,boolean idle,
-		int ncols,int nrows,int nsbin,int npbin,int deinterlace_setting)
+		int ncols,int nrows,int nsbin,int npbin,int deinterlace_setting) throws CCDLibraryNativeException
 	{
-		return (boolean)CCD_Setup_Setup_CCD(setup_flags,
-				timing_load_type,timing_application_number,timing_filename,
+		CCD_Setup_Setup_CCD(setup_flags,timing_load_type,timing_application_number,timing_filename,
 				utility_load_type,utility_application_number,utility_filename,
 				target_temperature,gain,gain_speed,idle,
 				ncols,nrows,nsbin,npbin,deinterlace_setting);
@@ -698,26 +706,24 @@ public class CCDLibrary
 
 // ccd_temperature.h
 	/**
-	 * Routine to get the current CCD temperature
-	 * @return Returns true if the operation succeeded, false otherwise. Use <a href="#CCDError">CCDError</a>
-	 * 	to determine what error occured.
+	 * Routine to get the current CCD temperature.
 	 * @param temperature A double wrapper in which the current temperature is returned.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 * @see CCDLibraryDouble
 	 */
-	public boolean CCDTemperatureGet(CCDLibraryDouble temperature)
+	public void CCDTemperatureGet(CCDLibraryDouble temperature) throws CCDLibraryNativeException
 	{
-		return (boolean)CCD_Temperature_Get(temperature);
+		CCD_Temperature_Get(temperature);
 	}
 
 	/**
 	 * Routine to set the temperature of the CCD.
-	 * @return Returns true if the operation succeeded, false otherwise. Use <a href="#CCDError">CCDError</a>
-	 * 	to determine what error occured.
 	 * @param target_temperature The temperature in degrees centigrade required for the CCD.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	public boolean CCDTemperatureSet(double target_temperature)
+	public void CCDTemperatureSet(double target_temperature) throws CCDLibraryNativeException
 	{
-		return (boolean)CCD_Temperature_Set(target_temperature);
+		CCD_Temperature_Set(target_temperature);
 	}
 
 	/**
@@ -779,6 +785,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.11  1999/09/13 13:54:54  cjm
+// Class is now public.
+//
 // Revision 0.10  1999/09/10 15:33:42  cjm
 // Changed package to ngat.ccd.
 //
