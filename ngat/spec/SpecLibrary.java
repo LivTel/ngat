@@ -1,19 +1,19 @@
 // SpecLibrary.java -*- mode: Fundamental;-*-
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.6 2001-05-08 18:34:18 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.7 2001-05-17 15:23:53 cjm Exp $
 package ngat.spec;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.6 $
+ * @version $Revision: 0.7 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.6 2001-05-08 18:34:18 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.7 2001-05-17 15:23:53 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -84,6 +84,94 @@ public class SpecLibrary
 	 * @see #cameraExposeGetStatus
 	 */
 	public final static int SPEC_EXPOSURE_STATUS_SAVE		= 4;
+// camera temperature control constants
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_OK means the camera's temperature is currently within 1 degree C of the requested
+	 * temperature.
+	 * This value should be kept in line with the C CCD_TMP_OK value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_OK			= 0;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_UNDER means the camera's temperature is currently less than the requested
+	 * temperature.
+	 * This value should be kept in line with the C CCD_TMP_UNDER value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_UNDER			= 1;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_OVER means the camera's temperature is currently greater than the requested
+	 * temperature.
+	 * This value should be kept in line with the C CCD_TMP_OVER value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_OVER			= 2;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_ERROR means the camera's temperature controller has an error.
+	 * This value should be kept in line with the C CCD_TMP_ERR value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_ERROR			= 3;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_OK means the camera's temperature control sub-system is off.
+	 * This value should be kept in line with the C CCD_TMP_OFF value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_OFF			= 6;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_RAMPING_DOWN means the camera's temperature control system is ramping down to the
+	 * requested temperature.
+	 * This value should be kept in line with the C CCD_TMP_RDN value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_RAMPING_DOWN		= 7;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_RAMPING_UP means the camera's temperature control system is ramping up to the
+	 * requested temperature.
+	 * This value should be kept in line with the C CCD_TMP_RUP value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_RAMPING_UP		= 8;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_STUCK means the camera's temperature control system is stuck, and can't reach the
+	 * requested temperature.
+	 * This value should be kept in line with the C CCD_TMP_STUCK value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_STUCK			= 9;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_MAX means the camera's temperature cannot go any higher.
+	 * This value should be kept in line with the C CCD_TMP_MAX value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_MAX			= 10;
+	/**
+	 * Value returned from cameraTemperatureGetStatus, which is the status of the camera's temperature
+	 * control system.
+	 * SPEC_TEMP_STATUS_DONE means the camera's temperature is at ambient, and the coller is idle.
+	 * This value should be kept in line with the C CCD_TMP_DONE value in apogee's camera library, apccd.h.
+	 * @see #cameraTemperatureGetStatus
+	 */
+	public final static int SPEC_TEMP_STATUS_DONE			= 11;
+
 // daio constants
 	/**
 	 * Enumerated constant, used to select which Digital Analogue IO card to
@@ -315,20 +403,25 @@ public class SpecLibrary
 	 */
 	private static native void SPEC_Temperature_Off() throws SpecNativeException;
 	/**
-	 * Native wrapper to libspec SPEC_Temperature_Get routine.
+	 * Native wrapper to libspec SPEC_Temperature_Get routine (to get temperature).
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native double SPEC_Temperature_Get() throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Temperature_Get routine (to get temperature status).
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native int SPEC_Temperature_Get_Status() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Temperature_Regulate routine.
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native void SPEC_Temperature_Regulate() throws SpecNativeException;
 	/**
-	 * Native wrapper to libspec SPEC_Temperature_Get_Status routine.
+	 * Native wrapper to libspec SPEC_Temperature_Get/SPEC_Temperature_Status_String routine.
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native String SPEC_Temperature_Get_Status() throws SpecNativeException;
+	private static native String SPEC_Temperature_Status_String() throws SpecNativeException;
 // daio specific native methods
 	/**
 	 * Native wrapper to libspec SPEC_DAIO_Select_Device routine.
@@ -404,7 +497,7 @@ public class SpecLibrary
 	 * 	An integer between 0 and the number of filters minus one. 
 	 * @param ad_count The A/D count, which when returned from the analogue inputs, 
 	 * 	indicates the filter slide has achieved the required position. 
-	 * 	An int in the range 0..(1<<Analogue_Bit_Resolution).
+	 * 	An int in the range 0..(1&lt;&lt;Analogue_Bit_Resolution).
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Configure_Position
 	 */
@@ -930,11 +1023,36 @@ public class SpecLibrary
 	}
 
 	/**
-	 * This method gets the status of the temperature control system.
+	 * This method gets the status string of the temperature control system.
+	 * @return A string, representing the the status of the temperature control system.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Temperature_Status_String
+	 */
+	public static String cameraTemperatureGetStatusString() throws SpecNativeException
+	{
+		return SPEC_Temperature_Status_String();
+	}
+
+	/**
+	 * This method gets an integer representing the current status of the temperature control system.
+	 * @return An integer, representing the current status. One of:
+	 *	SPEC_TEMP_STATUS_OK, SPEC_TEMP_STATUS_UNDER, SPEC_TEMP_STATUS_OVER, SPEC_TEMP_STATUS_ERROR,
+	 *	SPEC_TEMP_STATUS_OFF, SPEC_TEMP_STATUS_RAMPING_DOWN ,SPEC_TEMP_STATUS_RAMPING_UP,
+	 * 	SPEC_TEMP_STATUS_STUCK, SPEC_TEMP_STATUS_MAX, SPEC_TEMP_STATUS_DONE.
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Temperature_Get_Status
+	 * @see #SPEC_TEMP_STATUS_OK
+	 * @see #SPEC_TEMP_STATUS_UNDER
+	 * @see #SPEC_TEMP_STATUS_OVER
+	 * @see #SPEC_TEMP_STATUS_ERROR
+	 * @see #SPEC_TEMP_STATUS_OFF
+	 * @see #SPEC_TEMP_STATUS_RAMPING_DOWN
+	 * @see #SPEC_TEMP_STATUS_RAMPING_UP
+	 * @see #SPEC_TEMP_STATUS_STUCK
+	 * @see #SPEC_TEMP_STATUS_MAX
+	 * @see #SPEC_TEMP_STATUS_DONE
 	 */
-	public static String cameraTemperatureGetStatus() throws SpecNativeException
+	public static int cameraTemperatureGetStatus() throws SpecNativeException
 	{
 		return SPEC_Temperature_Get_Status();
 	}
@@ -963,6 +1081,9 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.6  2001/05/08 18:34:18  cjm
+// Added DAIO_INTERFACE_DEVICE_FILTER_EMULATE.
+//
 // Revision 0.5  2001/02/15 15:34:21  cjm
 // removed readout_ccd boolean from exposure method.
 //
