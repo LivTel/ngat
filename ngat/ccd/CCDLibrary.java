@@ -1,38 +1,38 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.13 2000-01-24 14:08:57 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.14 2000-02-02 13:54:49 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.13 $
+ * @version $Revision: 0.14 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.13 2000-01-24 14:08:57 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.14 2000-02-02 13:54:49 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
 	 * Set Gain parameter, to set gain to 1.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public final static int CCD_DSP_GAIN_ONE = 			0x1;
 	/**
 	 * Set Gain parameter, to set gain to 2.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public final static int CCD_DSP_GAIN_TWO = 			0x2;
 	/**
 	 * Set Gain parameter, to set gain to 4.75.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public final static int CCD_DSP_GAIN_FOUR = 			0x5;
 	/**
 	 * Set Gain parameter, to set gain to 9.5.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public final static int CCD_DSP_GAIN_NINE = 			0xa;
 
@@ -56,22 +56,22 @@ public class CCDLibrary
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
 	 * De-interlace type. This setting does no deinterlacing, as the CCD was read out from a single readout.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupDimensions
 	 */
 	public final static int CCD_DSP_DEINTERLACE_SINGLE = 			0;
 	/**
 	 * De-interlace type. This setting deinterlaces split parallel readout.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupDimensions
 	 */
 	public final static int CCD_DSP_DEINTERLACE_SPLIT_PARALLEL = 		1;
 	/**
 	 * De-interlace type. This setting deinterlaces split serial readout.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupDimensions
 	 */
 	public final static int CCD_DSP_DEINTERLACE_SPLIT_SERIAL = 		2;
 	/**
 	 * De-interlace type. This setting deinterlaces split quad readout.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupDimensions
 	 */
 	public final static int CCD_DSP_DEINTERLACE_SPLIT_QUAD = 		3;
 
@@ -96,76 +96,49 @@ public class CCDLibrary
 // ccd_setup.h 
 	/* These constants should be the same as those in ccd_setup.h */
 	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to Reset the SDSU controller.
-	 * @see #CCDSetupSetupCCD
+	 * Window flag used as part of the window_flags bit-field parameter of CCD_Setup_Dimensions to specify the
+	 * first window position is to be used.
+	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_SETUP_FLAG_RESET_CONTROLLER = 		(1<<0);
+	public final static int CCD_SETUP_WINDOW_ONE =			(1<<0);
 	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to do a hardware test.
-	 * @see #CCDSetupSetupCCD
+	 * Window flag used as part of the window_flags bit-field parameter of CCD_Setup_Dimensions to specify the
+	 * second window position is to be used.
+	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_SETUP_FLAG_HARDWARE_TEST = 		(1<<1);
+	public final static int CCD_SETUP_WINDOW_TWO =			(1<<1);
 	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to send an application to the timing board.
-	 * @see #CCDSetupSetupCCD
+	 * Window flag used as part of the window_flags bit-field parameter of CCD_Setup_Dimensions to specify the
+	 * third window position is to be used.
+	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_SETUP_FLAG_TIMING_BOARD = 		(1<<2);
+	public final static int CCD_SETUP_WINDOW_THREE =		(1<<2);
 	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to send an application to the utility board.
-	 * @see #CCDSetupSetupCCD
+	 * Window flag used as part of the window_flags bit-field parameter of CCD_Setup_Dimensions to specify the
+	 * fourth window position is to be used.
+	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_SETUP_FLAG_UTILITY_BOARD = 		(1<<3);
+	public final static int CCD_SETUP_WINDOW_FOUR =			(1<<3);
 	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to turn the power on.
-	 * @see #CCDSetupSetupCCD
+	 * Window flag used as part of the window_flags bit-field parameter of CCDSetupDimensions to specify all the
+	 * window positions are to be used.
+	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_SETUP_FLAG_POWER_ON = 			(1<<4);
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to set a target CCD temperature.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_FLAG_TARGET_CCD_TEMP = 		(1<<5);
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to set the CCD gain/speed.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_FLAG_GAIN = 			(1<<6);
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to decide whether to set the idle status.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_FLAG_IDLE = 			(1<<7);
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to send the CCD dimensions/binning to the boards.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_FLAG_DIMENSIONS = 		(1<<8);
-	/**
-	 * Setup flag passed to CCDSetupSetupCCD, to decide to set the deinterlace type.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_FLAG_DEINTERLACE = 		(1<<9);
-	/**
-	 * Default setup flag passed to CCDSetupSetupCCD, which sets up all information.
-	 * @see #CCDSetupSetupCCD
-	 */
-	public final static int CCD_SETUP_FLAG_ALL = (CCD_SETUP_FLAG_RESET_CONTROLLER|CCD_SETUP_FLAG_HARDWARE_TEST|
-		CCD_SETUP_FLAG_TIMING_BOARD|CCD_SETUP_FLAG_UTILITY_BOARD|CCD_SETUP_FLAG_POWER_ON|
-		CCD_SETUP_FLAG_TARGET_CCD_TEMP|
-		CCD_SETUP_FLAG_GAIN|CCD_SETUP_FLAG_IDLE|CCD_SETUP_FLAG_DIMENSIONS|CCD_SETUP_FLAG_DEINTERLACE);
+	public final static int CCD_SETUP_WINDOW_ALL =			(CCD_SETUP_WINDOW_ONE|CCD_SETUP_WINDOW_TWO|
+								CCD_SETUP_WINDOW_THREE|CCD_SETUP_WINDOW_FOUR);
 
 	/* These constants should be the same as those in ccd_setup.h */
 	/**
-	 * Setup Load Type passed to CCDSetupSetupCCD as a load_type parameter, to load DSP application code from 
+	 * Setup Load Type passed to CCDSetupStartup as a load_type parameter, to load DSP application code from 
 	 * EEPROM.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public final static int CCD_SETUP_LOAD_APPLICATION = 		0;
 	/**
-	 * Setup flag passed to CCDSetupSetupCCD as a load_type parameter, to load DSP application code from a file.
-	 * @see #CCDSetupSetupCCD
+	 * Setup flag passed to CCDSetupStartup as a load_type parameter, to load DSP application code from a file.
+	 * @see #CCDSetupStartup
 	 */
-	public final static int CCD_SETUP_LOAD_FILENAME = 			1;
+	public final static int CCD_SETUP_LOAD_FILENAME = 		1;
 
 // ccd_text.h
 	/* These constants should be the same as those in ccd_text.h */
@@ -261,11 +234,27 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that does the CCD setup.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
-	private native void CCD_Setup_Setup_CCD(int setup_flags,
+	private native void CCD_Setup_Startup(
 		int timing_load_type,int timing_application_number,String timing_filename,
 		int utility_load_type,int utility_application_number,String utility_filename,
-		double target_temperature,int gain,boolean gain_speed,boolean idle,
-		int ncols,int nrows,int nsbin,int npbin,int deinterlace_setting) throws CCDLibraryNativeException;
+		double target_temperature,int gain,boolean gain_speed,boolean idle) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that does the CCD shutdown.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Setup_Shutdown() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that does the CCD dimensions setup.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Setup_Dimensions(int ncols,int nrows,int nsbin,int npbin,
+		int deinterlace_setting,int window_flags,
+		CCDLibrarySetupWindow window_list[]) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that does the filter wheel setup.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Setup_Filter_Wheel(int position_one,int position_two) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that aborts the CCD setup.
 	 */
@@ -344,7 +333,7 @@ public class CCDLibrary
 
 	/**
 	 * Routine to parse a gain string and return a gain number suitable for input into
-	 * <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>, or a DSP Set Gain (SGN) command. 
+	 * <a href="#CCDSetupStartup">CCDSetupStartup</a>, or a DSP Set Gain (SGN) command. 
 	 * @param s The string to parse.
 	 * @return The gain number, one of:
 	 * 	<ul>
@@ -370,8 +359,8 @@ public class CCDLibrary
 
 	/**
 	 * Routine to parse a string containing a representation of a valid deinterlace type and to return
-	 * the numeric value of that type, suitable for passing into <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>
-	 * and other methods.
+	 * the numeric value of that type, suitable for passing into 
+	 * <a href="#CCDSetupDimensions">CCDSetupDimensions</a> and other methods.
 	 * @param s The string to parse.
 	 * @return The deinterlace type number, one of:
 	 * 	<ul>
@@ -576,10 +565,20 @@ public class CCDLibrary
 
 // ccd_setup.h
 	/**
-	 * This routine sets up the SDSU CCD Controller ready to do exposures.
-	 * @param setup_flags Flags set to determine which parts of setup this call will do. Passing 
-	 * 	<a href="#CCD_SETUP_FLAG_ALL">CCD_SETUP_FLAG_ALL</a> does all parts of setup, or bits can be ORed
-	 * 	together from individual flags.
+	 * This routine sets up the SDSU CCD Controller. This routine does the following:
+	 * <ul>
+	 * <li>Resets setup completion flags.</li>
+	 * <li>Resets the SDSU CCD Controller.</li>
+	 * <li>Does a hardware test on the data links to each board in the controller.</li>
+	 * <li>Loads a timing board application from ROM/file.</li>
+	 * <li>Loads a utility board application from ROM/file.</li>
+	 * <li>Switches the boards analogue power on.</li>
+	 * <li>Sets the arrays target temperature.</li>
+	 * <li>Setup the array's gain and readout speed.</li>
+	 * <li>Setup the readout clocks to idle(or not!).</li>
+	 * </ul>
+	 * Array dimension information also needs to be setup before the controller can take exposures.
+	 * This routine can be aborted with CCDSetupAbort.
 	 * @param timing_load_type Where to load the Timing application DSP code from. Acceptable values are
 	 * 	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> and
 	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
@@ -605,35 +604,85 @@ public class CCDLibrary
 	 * @param gain_speed Set to true for fast integrator speed, false for slow integrator speed.
 	 * @param idle If true puts CCD clocks in readout sequence, but not transferring any data, whenever a
 	 * 	command is not executing.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
+	 * @see #CCDSetupAbort
+	 */
+	public void CCDSetupStartup(int timing_load_type,int timing_application_number,String timing_filename,
+		int utility_load_type,int utility_application_number,String utility_filename,
+		double target_temperature,int gain,boolean gain_speed,boolean idle) throws CCDLibraryNativeException
+	{
+		CCD_Setup_Startup(timing_load_type,timing_application_number,timing_filename,
+				utility_load_type,utility_application_number,utility_filename,
+				target_temperature,gain,gain_speed,idle);
+	}
+
+	/**
+	 * Routine to shut down the SDSU CCD Controller board. This consists of:
+	 * <ul>
+	 * <li>Reseting the setup completion flags.
+	 * <li>Performing a power off command to switch off analogue voltages.
+	 * </ul>
+	 * It then just remains to close the connection to the astro device driver.
+	 * This routine can be aborted with CCDSetupAbort.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the shutdown failed.
+	 * @see #CCDSetupStartup
+	 * @see #CCDSetupAbort
+	 */
+	public void CCDSetupShutdown() throws CCDLibraryNativeException
+	{
+		CCD_Setup_Shutdown();
+	}
+
+	/**
+	 * Routine to setup dimension information in the controller. This needs to be setup before an exposure
+	 * can take place. This routine must be called <b>after</b> the CCDSetupStartup method.
+	 * This routine can be aborted with CCDSetupAbort.
 	 * @param ncols The number of columns in the image.
 	 * @param nrows The number of rows in the image.
 	 * @param nsbin The amount of binning applied to pixels in columns.This parameter will change internally
 	 *	ncols.
 	 * @param npbin The amount of binning applied to pixels in rows.This parameter will change internally
 	 *	nrows.
-	 * @param deinterlace_setting The algorithm to use for deinterlacing the resulting data. The data needs to be
+	 * @param deinterlaceSetting The algorithm to use for deinterlacing the resulting data. The data needs to be
 	 * 	deinterlaced if the CCD is read out from multiple readouts.One of:
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_PARALLEL">CCD_DSP_DEINTERLACE_SPLIT_PARALLEL</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_SERIAL">CCD_DSP_DEINTERLACE_SPLIT_SERIAL</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_QUAD">CCD_DSP_DEINTERLACE_SPLIT_QUAD</a>.
+	 * @param windowFlags Flags describing which windows are in use. A bit-field combination of:
+	 * 	<a href="#CCD_SETUP_WINDOW_ONE">CCD_SETUP_WINDOW_ONE</a>,
+	 * 	<a href="#CCD_SETUP_WINDOW_TWO">CCD_SETUP_WINDOW_TWO</a>,
+	 * 	<a href="#CCD_SETUP_WINDOW_THREE">CCD_SETUP_WINDOW_THREE</a> and
+	 * 	<a href="#CCD_SETUP_WINDOW_FOUR">CCD_SETUP_WINDOW_FOUR</a>.
+	 * @param windowList A list of CCDLibrarySetupWindow objects describing the window dimensions.
+	 * 	This list should have <b>four</b> items in it.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
+	 * @see #CCDSetupAbort
 	 */
-	public void CCDSetupSetupCCD(int setup_flags,
-		int timing_load_type,int timing_application_number,String timing_filename,
-		int utility_load_type,int utility_application_number,String utility_filename,
-		double target_temperature,int gain,boolean gain_speed,boolean idle,
-		int ncols,int nrows,int nsbin,int npbin,int deinterlace_setting) throws CCDLibraryNativeException
+	public void CCDSetupDimensions(int ncols,int nrows,int nsbin,int npbin,
+		int deinterlaceSetting,int windowFlags,
+		CCDLibrarySetupWindow windowList[]) throws CCDLibraryNativeException
 	{
-		CCD_Setup_Setup_CCD(setup_flags,timing_load_type,timing_application_number,timing_filename,
-				utility_load_type,utility_application_number,utility_filename,
-				target_temperature,gain,gain_speed,idle,
-				ncols,nrows,nsbin,npbin,deinterlace_setting);
+		CCD_Setup_Dimensions(ncols,nrows,nsbin,npbin,deinterlaceSetting,windowFlags,windowList);
+	}
+
+	/**
+	 * Method to setup the filter wheel at the required positions.
+	 * This routine can be aborted with CCDSetupAbort.
+	 * @param positionOne The position the first filter wheel has to attain.
+	 * @param positionTwo The position the second filter wheel has to attain.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
+	 * @see #CCDSetupAbort
+	 */
+	public void CCDSetupFilterWheel(int positionOne,int positionTwo) throws CCDLibraryNativeException
+	{
+		CCD_Setup_Filter_Wheel(positionOne,positionTwo);
 	}
 
 	/**
 	 * Routine to abort a setup that is underway.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
+	 * @see #CCDSetupDimensions
 	 */
 	public void CCDSetupAbort()
 	{
@@ -641,10 +690,10 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Routine to get the number of columns on the CCD chip last passed into CCDSetupSetupCCD. This value
+	 * Routine to get the number of columns on the CCD chip last passed into CCDSetupStartup. This value
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @return Returns an integer representing the number of columns.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public int CCDSetupGetNCols()
 	{
@@ -652,10 +701,10 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Routine to get the number of rows on the CCD chip last passed into CCDSetupSetupCCD. This value
+	 * Routine to get the number of rows on the CCD chip last passed into CCDSetupStartup. This value
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @return Returns an integer representing the number of rows.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public int CCDSetupGetNRows()
 	{
@@ -665,7 +714,7 @@ public class CCDLibrary
 	/**
 	 * Routine to detect whether a setup operation is underway.
 	 * @return Returns true is a setup is in progress otherwise false.
-	 * @see #CCDSetupSetupCCD
+	 * @see #CCDSetupStartup
 	 */
 	public boolean CCDSetupGetSetupInProgress()
 	{
@@ -683,7 +732,7 @@ public class CCDLibrary
 
 	/**
 	 * Routine to parse a setup load type string and return a setup load type to pass into
-	 * <a href="#CCDSetupSetupCCD">CCDSetupSetupCCD</a>. 
+	 * <a href="#CCDSetupStartup">CCDSetupStartup</a>. 
 	 * @param s The string to parse.
 	 * @return The load type, either <a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> or
 	 * 	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
@@ -775,6 +824,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.13  2000/01/24 14:08:57  cjm
+// Methods and constants updated for new PCI version of libccd.
+//
 // Revision 0.12  1999/09/20 14:40:08  cjm
 // Changed due to libccd native routines throwing CCDLibraryNativeException when errors occur.
 //
