@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.20 2001-01-15 12:53:28 snf Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.21 2001-03-06 10:42:33 snf Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -25,25 +25,28 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		NGATProperties.java NGATPropertyException.java CircularArray.java \
 		GraphParameterizer.java QueuedSynchFlag.java \
 		SharedStore.java StoreEmptyException.java GraphPlot.java GraphFrame.java HistogramPlot.java \
-		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java SMTPMailer.java \
+		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java \
 		CommandParser.java ConfigurationCache.java ConfigurationProperties.java \
-		GaussianRandom.java 
+		GaussianRandom.java BooleanLock.java Predictor.java PredictorSample.java StandardPredictor.java \
+		StatisticalPredictor.java
  
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
 top: jar docs
+	@for i in $(DIRS); \
+	do \
+		(echo make in $$i...; cd $$i; $(MAKE) ); \
+	done;
 
-$(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
-	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
+jar: $(JARLIBDIR)/$(JAR_FILE)
 
-jar: logging_top $(JARLIBDIR)/$(JAR_FILE)
 
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
 	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
-logging_top:
-	(echo making in logging...; cd logging; $(MAKE) );
+$(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
+	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
 
 docs: $(DOCS)
 
@@ -65,6 +68,9 @@ checkin:
 	do \
 		(echo checkin in $$i...; cd $$i; $(MAKE) checkin; $(CI) $(CI_OPTIONS) Makefile); \
 	done;
+
+depend:
+
 clean:
 	-$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
 	@for i in $(DIRS); \
@@ -87,6 +93,9 @@ backup: tidy
 
 
 # $Log: not supported by cvs2svn $
+# Revision 1.20  2001/01/15 12:53:28  snf
+# Added subpackage stuff.
+#
 # Revision 1.19  2000/12/11 14:36:41  snf
 # Added GaussianRandom.
 #
