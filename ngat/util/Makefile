@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.23 2001-05-14 17:44:55 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.24 2001-05-14 19:01:46 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -28,7 +28,8 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java \
 		CommandParser.java ConfigurationCache.java ConfigurationProperties.java \
 		GaussianRandom.java BooleanLock.java Predictor.java PredictorSample.java StandardPredictor.java \
-		StatisticalPredictor.java SMTPMailer.java
+		StatisticalPredictor.java SMTPMailer.java \
+		ICSDCommand.java ICSDRebootCommand.java ICSDShutdownCommand.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
@@ -90,6 +91,9 @@ backup: tidy
 
 
 # $Log: not supported by cvs2svn $
+# Revision 1.23  2001/05/14 17:44:55  cjm
+# Steve added SMTPMailer.java.
+#
 # Revision 1.22  2001/03/23 15:24:06  cjm
 # ngat.util.logging now does it's own javadoc creation rather than relying on ngat.util.
 # This is because we could not get the ngat.util Makefile to check when to
