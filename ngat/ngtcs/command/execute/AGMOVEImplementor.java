@@ -6,13 +6,14 @@ import ngat.ngtcs.command.*;
 import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.subsystem.amn.*;
+import ngat.ngtcs.subsystem.ags.*;
 
 /**
  * Move autoguider probe mirror to a radial position, rotator to a
  * mount-position angle and set autoguider pixel on which to guide.
  * 
  * @author $Author: je $
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AGMOVEImplementor
   extends CommandImplementor
@@ -27,7 +28,7 @@ public class AGMOVEImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGMOVEImplementor.java,v 1.4 2003-09-29 11:37:17 je Exp $" );
+    new String( "$Id: AGMOVEImplementor.java,v 1.5 2003-09-29 11:55:56 je Exp $" );
 
   /**
    * The timeout for the AGMOVE command (500 seconds), in milliseconds.
@@ -142,7 +143,7 @@ public class AGMOVEImplementor
 
       // send GuideOnPixel command
       ag.guideOnPixel( x, y );
-      AGS_State actual, desired = AGS_State.E_AGS_ON_PIXEL;
+      AGS_State state, desired = AGS_State.E_AGS_ON_PIXEL;
 
       // wait for AGS state change and see if it's the desired one
       // every second
@@ -158,14 +159,14 @@ public class AGMOVEImplementor
 	{
 	  logger.log( 1, logName, ie.toString() );
 	}
-	actual = ttlAG.get_AGS_State();
+	state = ag.get_AGS_State();
       }
-      while( ( actual == AGS_State.E_AGS_WORKING )&&( slept < TIMEOUT ) );
+      while( ( state == AGS_State.E_AGS_WORKING )&&( slept < TIMEOUT ) );
 
       // if the desired state is not acheived, return a failure
-      if( actual != desired )
+      if( state != desired )
       {
-	String s = ( "after "+slept+"ms AGS has acheived "+actual.getName()+
+	String s = ( "after "+slept+"ms AGS has acheived "+state.getName()+
 		     " state, desired state is "+desired.getName() );
 	commandDone.setErrorMessage( s );
 	logger.log( 1, logName, s );
@@ -193,11 +194,14 @@ public class AGMOVEImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 11:37:17 $
+ *    $Date: 2003-09-29 11:55:56 $
  * $RCSfile: AGMOVEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGMOVEImplementor.java,v $
- *      $Id: AGMOVEImplementor.java,v 1.4 2003-09-29 11:37:17 je Exp $
+ *      $Id: AGMOVEImplementor.java,v 1.5 2003-09-29 11:55:56 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/29 11:37:17  je
+ *     Added execute documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *
