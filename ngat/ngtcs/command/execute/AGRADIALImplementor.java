@@ -12,7 +12,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AGRADIALImplementor
   extends CommandImplementor
@@ -26,8 +26,13 @@ public class AGRADIALImplementor
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGRADIALImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGRADIALImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the AGRADIAL command (60 seconds), in milliseconds.
+   */
+  public static final int TIMEOUT = 60000;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -53,77 +58,75 @@ public class AGRADIALImplementor
   /**
    *
    */
-  public AGRADIALImplementor( ExecutionThread eT, Telescope t, Command c )
+  public AGRADIALImplementor( Telescope t, Command c )
   {
-    super( eT, t, c );
+    super( t, c );
   }
 
 
   /**
-   *
+   * This execution sends the demand position, and waits until either the
+   * position error of the autoguider position is within the config
+   * file-specified tolerance, or the time elapsed exceeds the timeout for this
+   * command.
    */
   public void execute()
   {
-    AGRADIAL a = (AGRADIAL)command;
-    int nAck = 0;
-    double radius = 0.0;
-
     TTL_Autoguider ag = (TTL_Autoguider)TTL_Autoguider.getInstance();
+    double posError = 99999, actual = 0.0;
+    double demand = ( (AGRADIAL)command ).getRadius();
+    double tolerance = ag.getPositionTolerance();
 
     try
     {
-      int demand;
+      // send demand
+      ag.setDemandPosition( demand );
 
-      if( a.isCentre() )
-      {
-	//PointingOrigin po = 
-	//    telescope.getActiveVirtualTelescope().
-	//    getFocalStation().getPointingOrigin();
-	//
-	//double radius = Math.sqrt
-	//    ( ( po.getX() * po.getX() ) +
-	//      ( po.getY() * po.getY() ) );
-	radius = 123.4;
+      // get position
+      actual = ag.getActualPosition();
+      posError = Math.abs( demand - actual );
 
-	demand = (int)( Math.rint( radius * 1000.0 ) );
-      }
-      else
-      {
-	demand = (int)( Math.rint( a.getRadius() * 1000.0 ) );
-      }
-
-      if( ag.getActualPosition() == demand )
+      // OK?
+      if( posError < tolerance )
       {
 	commandDone.setReturnMessage
 	  ( "autoguider probe already in position" );
       }
+      // wait until OK
       else
       {
-	ag.setDemandPosition( demand );
-
-	// sleep to allow command routing??
-
-	while( ( ag.getActualPosition() != demand )&&
-	       ( nAck < 11 ) )
+	int sleep = 5000;
+	do
 	{
-	  Acknowledge ack = new Acknowledge
-	    ( command.getId()+"."+( nAck++ ),
-	      command );
-	  ack.setTimeToComplete( 6000 );
-	  executionThread.sendAcknowledge( ack );
-
 	  try
 	  {
-	    Thread.sleep( 5000 );
+	    Thread.sleep( sleep );
+	    slept += sleep;
 	  }
 	  catch( InterruptedException ie )
 	  {
-	    logger.log
-	      ( 2, logName, ie.toString() );
+	    logger.log( 1, logName, ie.toString() );
 	  }
+
+	  actual = ag.getActualPosition();
+	  posError = Math.abs( demand - actual );
 	}
+	while( ( posError > tolerance )&&( slept < TIMEOUT ) );
       }
-      commandDone.setSuccessful( true );
+
+      if( posError < tolerance )
+      {
+	commandDone.setSuccessful( true );
+	return;
+      }
+
+      String err = new String
+	( "Autoguider position ["+actual+"] did not fall within tolerance ["+
+	  tolerance+"] of demand ["+demand+"] after "+slept+
+	  " seconds : execution terminated" );
+      logger.log( 1, logName, err );
+      commandDone.setErrorMessage( err );
+      return;
     }
     catch( TTL_SystemException se )
     {
@@ -131,13 +134,27 @@ public class AGRADIALImplementor
       commandDone.setErrorMessage( se.toString() );
     }
   }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: AGRADIALImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGRADIALImplementor.java,v $
- *      $Id: AGRADIALImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: AGRADIALImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/09/19 16:10:15  je
  *     Initial revision
  *

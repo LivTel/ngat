@@ -3,7 +3,6 @@ package ngat.ngtcs.command.execute;
 import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
-
 import ngat.ngtcs.command.*;
 import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.subsystem.amn.*;
@@ -14,7 +13,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * autoguider beam.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class AGFILTERImplementor
   extends CommandImplementor
@@ -28,13 +27,13 @@ public class AGFILTERImplementor
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGFILTERImplementor.java,v 1.5 2003-09-22 14:21:36 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGFILTERImplementor.java,v 1.6 2003-09-26 09:58:41 je Exp $" );
 
   /**
-   * Timeout for this command, in milliseconds (60000).
+   * The timeout for the AGFILTER command (60 seconds), in milliseconds.
    */
-  public final int TIMEOUT = 60000;
+  public static final int TIMEOUT = 60000;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -58,9 +57,9 @@ public class AGFILTERImplementor
   /**
    *
    */
-  public AGFILTERImplementor( ExecutionThread eT, Telescope t, Command c )
+  public AGFILTERImplementor( Telescope t, Command c )
   {
-    super( eT, t, c );
+    super( t, c );
   }
 
 
@@ -160,13 +159,27 @@ public class AGFILTERImplementor
       commandDone.setErrorMessage( se.toString() );
     }
   }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 14:21:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: AGFILTERImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFILTERImplementor.java,v $
- *      $Id: AGFILTERImplementor.java,v 1.5 2003-09-22 14:21:36 je Exp $
+ *      $Id: AGFILTERImplementor.java,v 1.6 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.5  2003/09/22 14:21:36  je
+ *     Removed MAX_TIMEOUTS field.
+ *
  *     Revision 1.4  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

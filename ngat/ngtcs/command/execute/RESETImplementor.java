@@ -12,90 +12,110 @@ import ngat.ngtcs.subsystem.*;
  * <code>all</code> or <code>telescope</code>.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class RESETImplementor extends CommandImplementor
 {
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: RESETImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: RESETImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
 
-    /**
-     * RESET command this is to implement.
-     */
-    private RESET reset;
+  /**
+   * The timeout for the RESET command (30 seconds), in milliseconds
+   */
+  public static final int TIMEOUT = 30000;
 
 
-    public RESETImplementor( ExecutionThread eT, Telescope ts, Command c )
+  public RESETImplementor( Telescope ts, Command c )
+  {
+    super( ts, c );
+  }
+
+
+  /**
+   *
+   */
+  public void execute()
+  {
+    RESET reset = (RESET)command;
+
+    telescope.setTelescopeState( TelescopeState.IDLE );
+
+    String systemName = reset.getSystemName();
+
+    if( ( systemName.equals( telescope.getName() ) ) || 
+	( systemName.equalsIgnoreCase( "all" ) ) ||
+	( systemName.equalsIgnoreCase( "telescope" ) ) )
     {
-	super( eT, ts, c );
+      try
+      {
+	telescope.initialise();
+	commandDone.setSuccessful( true );
+	return;
+      }
+      catch( InitialisationException nie )
+      {
+	String err = new String
+	  ( "Failed to reset "+systemName+" : "+nie.toString() );
+	logger.log( 1, logName, err );
+	commandDone.setErrorMessage( err );
+	return;
+      }
     }
-
-
-    /**
-     *
-     */
-    public void execute()
+    else
     {
-	reset = (RESET)command;
+      PluggableSubSystem mechanism =
+	telescope.getPluggableSubSystem( systemName );
 
-	telescope.setTelescopeState( TelescopeState.IDLE );
+      if( mechanism == null )
+      {
+	String err = new String
+	  ( "No such mechanism ["+systemName+"] : execution terminated" );
+	logger.log( 1, logName, err );
+	commandDone.setErrorMessage( err );
+	return;
+      }
 
-	String systemName = reset.getSystemName();
-
-	if( ( systemName.equals( telescope.getName() ) ) || 
-	    ( systemName.equalsIgnoreCase( "all" ) ) ||
-	    ( systemName.equalsIgnoreCase( "telescope" ) ) )
-	    {
-		try
-		    {
-			telescope.initialise();
-			commandDone.setSuccessful( true );
-			return;
-		    }
-		catch( InitialisationException nie )
-		    {
-			logger.log( 1, logName, nie );
-			commandDone.setErrorMessage
-			    ( nie.toString() );
-			return;
-		    }
-	    }
-
-	java.util.List mechList = telescope.getPluggableSubSystemList();
-	PluggableSubSystem mechanism;
-
-	for( int i = 0; i < mechList.size(); i++ )
-	    {
-		if( systemName.equals( (String)( mechList.get( i ) ) ) )
-		    {
-			try
-			    {
-				mechanism = telescope.getPluggableSubSystem
-				    ( systemName );
-				mechanism.initialise( telescope );
-				commandDone.setSuccessful( true );
-				return;
-			    }
-			catch( InitialisationException nie )
-			    {
-				logger.log( 1, logName, nie );
-				commandDone.setErrorMessage
-				    ( nie.toString() );
-				return;
-			    }
-		    }
-	    }
+      try
+      {
+	mechanism = telescope.getPluggableSubSystem( systemName );
+	mechanism.initialise( telescope );
+	commandDone.setSuccessful( true );
+	return;
+      }
+      catch( InitialisationException nie )
+      {
+	String err = new String
+	  ( "Failed to reset "+systemName+" : "+nie.toString() );
+	logger.log( 1, logName, err );
+	commandDone.setErrorMessage( err );
+	return;
+      }
     }
+  }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: RESETImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/RESETImplementor.java,v $
- *      $Id: RESETImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: RESETImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/07/01 10:12:55  je
  *     Initial revision
  *

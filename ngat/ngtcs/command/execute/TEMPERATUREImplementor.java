@@ -9,7 +9,7 @@ import ngat.ngtcs.command.*;
  * by the AstrometryCalculator on the specified telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TEMPERATUREImplementor extends CommandImplementor
 {
@@ -22,8 +22,13 @@ public class TEMPERATUREImplementor extends CommandImplementor
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: TEMPERATUREImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: TEMPERATUREImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the TEMPERATURE command (3 seconds), in milliseconds.
+   */
+  public static final int TIMEOUT = 3000;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -52,9 +57,9 @@ public class TEMPERATUREImplementor extends CommandImplementor
      * @param ts the Telescope on which this CommandImplementor is executing
      * @param c the Command (ngat.ngtcs.command.TEMPERATURE) to execute
      */
-    public TEMPERATUREImplementor( ExecutionThread eT, Telescope ts, Command c )
+    public TEMPERATUREImplementor( Telescope ts, Command c )
     {
-	super( eT, ts, c );
+	super( ts, c );
     }
 
 
@@ -68,13 +73,27 @@ public class TEMPERATUREImplementor extends CommandImplementor
 	    setTemperatureKelvin( ( (TEMPERATURE)command ).getKelvin() );
 	commandDone.setSuccessful( true );
     }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: TEMPERATUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TEMPERATUREImplementor.java,v $
- *      $Id: TEMPERATUREImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: TEMPERATUREImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/07/01 10:12:55  je
  *     Initial revision
  *

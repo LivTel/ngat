@@ -15,7 +15,7 @@ import ngat.ngtcs.subsystem.ags.*;
  * magnitude.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AGCENTROIDImplementor
   extends CommandImplementor
@@ -29,19 +29,19 @@ public class AGCENTROIDImplementor
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGCENTROIDImplementor.java,v 1.4 2003-09-22 13:33:22 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGCENTROIDImplementor.java,v 1.5 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the AGCENTROID command (120 seconds), in milliseconds.
+   */
+  public static final int TIMEOUT = 120000;
 
   /*=======================================================================*/
   /*                                                                       */
   /* OBJECT FIELDS.                                                        */
   /*                                                                       */
   /*=======================================================================*/
-
-  /**
-   * Timeout for this command, in milliseconds (120s).
-   */
-  public final int TIMEOUT = 120000;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -59,9 +59,9 @@ public class AGCENTROIDImplementor
   /**
    *
    */
-  public AGCENTROIDImplementor( ExecutionThread eT, Telescope t, Command c )
+  public AGCENTROIDImplementor( Telescope t, Command c )
   {
-    super( eT, t, c );
+    super( t, c );
   }
 
 
@@ -98,13 +98,27 @@ public class AGCENTROIDImplementor
 
     commandDone.setSuccessful( true );
   }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:33:22 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: AGCENTROIDImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGCENTROIDImplementor.java,v $
- *      $Id: AGCENTROIDImplementor.java,v 1.4 2003-09-22 13:33:22 je Exp $
+ *      $Id: AGCENTROIDImplementor.java,v 1.5 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/22 13:33:22  je
+ *     Added timeout variable 'public static final int TIMEOUT'
+ *
  *     Revision 1.3  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

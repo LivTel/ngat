@@ -9,11 +9,10 @@ import ngat.ngtcs.command.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class CALIBRATEImplementor
   extends CommandImplementor
-  implements Runnable
 {
   /*=======================================================================*/
   /*                                                                       */
@@ -24,13 +23,13 @@ public class CALIBRATEImplementor
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: CALIBRATEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: CALIBRATEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
 
   /**
-   * Length of time (milliseconds) to sleep between sending back Acknowledges.
+   * The timeout for the CALIBRATE command (1800 seconds), in milliseconds.
    */
-  public static final int SLEEP_MILLIS = 10000;
+  public static final int TIMEOUT = 1800000;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -42,11 +41,6 @@ public class CALIBRATEImplementor
    *
    */
   protected boolean calibrating = false;
-
-  /**
-   *
-   */
-  protected int nAck = 0;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -64,9 +58,9 @@ public class CALIBRATEImplementor
   /**
    *
    */
-  public CALIBRATEImplementor( ExecutionThread eT, Telescope t, Command c )
+  public CALIBRATEImplementor( Telescope t, Command c )
   {
-    super( eT, t, c );
+    super( t, c );
   }
 
 
@@ -78,6 +72,7 @@ public class CALIBRATEImplementor
     CALIBRATE c = (CALIBRATE)command;
     CalibrateMode cm = c.getMode();
     commandDone = new CALIBRATEDone( c );
+    PointingModelCoefficients pmc = null;
 
     if( cm == CalibrateMode.DEFAULT )
     {
@@ -87,21 +82,18 @@ public class CALIBRATEImplementor
       }
       catch( InitialisationException ie )
       {
-	logger.log( 1, logName, ie );
+	String err = new String
+	  ( "Failed to reset pointing model : "+ie.toString() );
+	logger.log( 1, logName, err );
+	commandDone.setErrorMessage( err );
 	return;
       }
     }
     else if( cm == CalibrateMode.NEW )
     {
-      PointingModelCoefficients pmc = null;
+      pmc = null;
 
       calibrating = true;
-
-      // start a thread to send back Acknowledges until command is completed
-      Thread t = new Thread( this );
-      t.setPriority( Thread.MIN_PRIORITY );
-      t.start();
-
       //perform some calibration
 
 
@@ -120,36 +112,24 @@ public class CALIBRATEImplementor
 
 
   /**
-   *
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
    */
-  public void run()
+  public int calcAcknowledgeTime()
   {
-    Acknowledge ack = new Acknowledge
-      ( command.getId()+"."+( nAck++ ), command );
-    ack.setTimeToComplete( SLEEP_MILLIS + 1000 );
-
-    while( calibrating )
-    {
-      try
-      {
-	Thread.sleep( SLEEP_MILLIS );
-
-	if( calibrating )
-	  executionThread.sendAcknowledge( ack );
-      }
-      catch( InterruptedException ie )
-      {
-	logger.log( 1, logName, ie );
-      }
-    }
+    return( TIMEOUT );
   }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: CALIBRATEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/CALIBRATEImplementor.java,v $
- *      $Id: CALIBRATEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: CALIBRATEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/09/19 16:10:15  je
  *     Initial revision
  *

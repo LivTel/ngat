@@ -19,7 +19,7 @@ import ngat.ngtcs.subsystem.ags.*;
  * initial guide star coordinates have been calculated.  When autoguiding is
  * stopped the pointing model corrections are removed.
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AUTOGUIDEImplementor extends CommandImplementor
   implements Runnable
@@ -33,8 +33,13 @@ public class AUTOGUIDEImplementor extends CommandImplementor
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AUTOGUIDEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AUTOGUIDEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the AUTOGUIDE command (200 seconds), in milliseconds.
+   */
+  public static final int TIMEOUT = 200000;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -78,9 +83,9 @@ public class AUTOGUIDEImplementor extends CommandImplementor
   /**
    *
    */
-  public AUTOGUIDEImplementor( ExecutionThread eT, Telescope t, Command c )
+  public AUTOGUIDEImplementor( Telescope t, Command c )
   {
-    super( eT, t, c );
+    super( t, c );
   }
 
 
@@ -148,55 +153,50 @@ public class AUTOGUIDEImplementor extends CommandImplementor
 
       // wait for AGS state change and see if it's the desired one
       // after 200 seconds
-      int nAck = 0;
+      int sleep = 5000;
       while( ( ttlAG.get_AGS_State() == AGS_State.E_AGS_WORKING )&&
-	     ( nAck < 40 ) )
+	     ( slept < TIMEOUT ) )
       {
-	Acknowledge ack = new Acknowledge
-	  ( command.getId()+"."+( nAck++ ), command );
-	ack.setTimeToComplete( 6500 );
-	executionThread.sendAcknowledge( ack );
 
 	try
 	{
-	  Thread.sleep( 5000 );
+	  Thread.sleep( sleep );
+	  slept += sleep;
 	}
 	catch( InterruptedException ie )
 	{
-	  logger.log( 2, logName, ie.toString() );
+	  logger.log( 1, logName, ie.toString() );
 	}
       }
 
       AGS_State actual = ttlAG.get_AGS_State();
       if( actual != desired )
       {
-	String s =
-	  ( "after "+(nAck * 5)+" seconds AGS has acheived "+
-	    actual.getName()+" state, desired state is "+
-	    desired.getName() );
+	String s = ( "after "+slept+"ms AGS has acheived "+actual.getName()+
+		     " state, desired state is "+desired.getName() );
 	commandDone.setErrorMessage( s );
 	logger.log( 1, logName, s );
 	return;
       }
 
-      Acknowledge ack = new Acknowledge
-	( command.getId()+"."+( nAck++ ), command );
-      ack.setTimeToComplete( 6500 );
-      executionThread.sendAcknowledge( ack );
 
       // get x,y of guide star depending on mode and check for age of
       // returned centroids - centroids MUST have been placed SINCE this
       // cmd impl was started.
       TTL_AutoguiderCentroid centroid;
+
+      // sleep for 0.5 sec to check values have been updated
+      int updateSleep = 500;
       do
       {
 	try
 	{
 	  Thread.sleep( 500 );
+	  slept += 500;
 	}
 	catch( InterruptedException ie )
 	{
-	  logger.log( 2, logName, ie.toString() );
+	  logger.log( 1, logName, ie.toString() );
 	}
 
 	centroid = ttlAG.getCentroidData();
@@ -210,8 +210,7 @@ public class AUTOGUIDEImplementor extends CommandImplementor
     {
 
     }
-    
-    
+
     stopGuiding = false;
     new Thread( this ).start();
 
@@ -249,13 +248,27 @@ public class AUTOGUIDEImplementor extends CommandImplementor
     // as now out of guide loop remove coefficients from PointingModel
     telescope.getMount().getPointingModel().removeCoefficients( pmc );
   }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: AUTOGUIDEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AUTOGUIDEImplementor.java,v $
- *      $Id: AUTOGUIDEImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: AUTOGUIDEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/09/19 16:10:15  je
  *     Initial revision
  *

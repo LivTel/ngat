@@ -8,7 +8,7 @@ import ngat.ngtcs.command.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class MOVE_FOLDImplementor extends CommandImplementor
 {
@@ -21,8 +21,13 @@ public class MOVE_FOLDImplementor extends CommandImplementor
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: MOVE_FOLDImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: MOVE_FOLDImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the MOVE_FOLD command (120 seconds), in milliseconds.
+   */
+  public static final int TIMEOUT = 120000;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -46,9 +51,9 @@ public class MOVE_FOLDImplementor extends CommandImplementor
   /**
    *
    */
-  public MOVE_FOLDImplementor( ExecutionThread eT, Telescope t, Command c )
+  public MOVE_FOLDImplementor( Telescope t, Command c )
   {
-    super( eT, t, c );
+    super( t, c );
   }
 
 
@@ -59,13 +64,27 @@ public class MOVE_FOLDImplementor extends CommandImplementor
   {
     return;
   }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: MOVE_FOLDImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/MOVE_FOLDImplementor.java,v $
- *      $Id: MOVE_FOLDImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: MOVE_FOLDImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/09/19 16:10:15  je
  *     Initial revision
  *

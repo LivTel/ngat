@@ -10,7 +10,7 @@ import ngat.ngtcs.command.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SHOWImplementor extends CommandImplementor
 {
@@ -23,8 +23,13 @@ public class SHOWImplementor extends CommandImplementor
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: SHOWImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: SHOWImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the SHOW command (60 seconds), in milliseconds.
+   */
+  public static final int TIMEOUT = 60000;
 
     /*=======================================================================*/
     /*                                                                       */
@@ -75,9 +80,9 @@ public class SHOWImplementor extends CommandImplementor
      * @param ts the Telescope on which this CommandImplementor is executing
      * @param c the Command (ngat.ngtcs.command.SHOW) to execute
      */
-    public SHOWImplementor( ExecutionThread eT, Telescope ts, Command c )
+    public SHOWImplementor( Telescope ts, Command c )
     {
-	super( eT, ts, c );
+	super( ts, c );
     }
 
 
@@ -138,13 +143,27 @@ public class SHOWImplementor extends CommandImplementor
 	}
 	commandDone.setSuccessful( true );
     }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: SHOWImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SHOWImplementor.java,v $
- *      $Id: SHOWImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: SHOWImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/07/01 10:12:55  je
  *     Initial revision
  *

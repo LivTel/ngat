@@ -10,20 +10,15 @@ import ngat.ngtcs.command.*;
  * be implemented by the telescope control system.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class CommandImplementor
 {
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: CommandImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
-
-  /**
-   * Default timeout of 10 seconds for each command, in milliseconds.
-   */
-  public final int TIMEOUT = 10000;
+  public static final String rcsid =
+    new String( "$Id: CommandImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
 
   /**
    * Logger for each CommandImplementor.
@@ -56,11 +51,6 @@ public abstract class CommandImplementor
   protected CommandDone commandDone;
 
   /**
-   *
-   */
-  protected ExecutionThread executionThread;
-
-  /**
    * Number of milliseconds slept (<code>Thread.sleep()</code>) during
    * execution of this command
    */
@@ -69,16 +59,15 @@ public abstract class CommandImplementor
   /**
    *
    */
-  protected String returnMessage = "";
+  //  protected String returnMessage = "";
 
   /**
    *
    */
-  public CommandImplementor( ExecutionThread eT, Telescope ts, Command c )
+  public CommandImplementor( Telescope ts, Command c )
   {
     telescope = ts;
     command = c;
-    executionThread = eT;
     logger = telescope.getLogger( this.getClass() );
     logName = logger.getName();
     commandDone = new CommandDone( command );
@@ -89,17 +78,6 @@ public abstract class CommandImplementor
    *
    */
   public abstract void execute();
-
-
-  /**
-   * Returns the default timeout of 10 seconds.
-   * </p><p>
-   * This method should be over-ridden by the actual CommandImplementor.
-   */
-  public int calcAcknowledgeTime()
-  {
-    return 10000;
-  }
 
 
   /**
@@ -129,12 +107,20 @@ public abstract class CommandImplementor
   {
     return command;
   }
+
+  /**
+   * Returns the timeout for the specific command implementation, in ms.
+   */
+  public abstract int calcAcknowledgeTime();
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: CommandImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/CommandImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/07/01 10:12:55  je
  *     Initial revision
  *

@@ -10,7 +10,7 @@ import ngat.ngtcs.command.*;
  * used on the telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  */
 public class SUBSYSTEMLISTImplementor extends CommandImplementor
@@ -24,8 +24,13 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.4 2003-09-23 12:26:50 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.5 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the SUBSYSTEMLIST command (3 seconds), in milliseconds
+   */
+  public static final int TIMEOUT = 3000;
 
   /*=========================================================================*/
   /*                                                                         */
@@ -51,9 +56,9 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
    * @see CommandImplementor
    */
   public SUBSYSTEMLISTImplementor
-    ( ExecutionThread eT, Telescope ts, Command c )
+    ( Telescope ts, Command c )
   {
-    super( eT, ts, c );
+    super( ts, c );
   }
 
 
@@ -77,12 +82,26 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
     commandDone.setReturnMessage( list );
     commandDone.setSuccessful( true );
   }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-23 12:26:50 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: SUBSYSTEMLISTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SUBSYSTEMLISTImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/23 12:26:50  je
+ *     Forgot to cast Hashtable.get() from Object to String
+ *
  *     Revision 1.3  2003/09/23 11:45:16  je
  *     Replaced System.err reporting with logger.log
  *

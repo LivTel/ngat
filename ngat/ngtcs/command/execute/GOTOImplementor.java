@@ -31,7 +31,7 @@ import ngat.ngtcs.subsystem.*;
  * i.e. SLEWING or TRACKING.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class GOTOImplementor extends CommandImplementor
   implements java.lang.Runnable
@@ -39,8 +39,14 @@ public class GOTOImplementor extends CommandImplementor
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: GOTOImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: GOTOImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+
+  /**
+   * The timeout for the GOTO command (300 seconds), in milliseconds.
+   */
+  public static final int TIMEOUT = 300000;
+
 
   protected Target target;
 
@@ -80,16 +86,17 @@ public class GOTOImplementor extends CommandImplementor
 
   protected boolean equatorialRotation = false;
 
-  protected AstrometryCalculator astroCalc;
+  protected boolean stopTracking = false;
 
+  protected AstrometryCalculator astroCalc;
 
   /**
    * The GOTOImplementor is instantiated. This sets the telescope state to
    * IDLE to stop any other GOTO commands.
    */
-  public GOTOImplementor( ExecutionThread eT, Telescope ts, Command c )
+  public GOTOImplementor( Telescope ts, Command c )
   {
-    super( eT, ts, c );
+    super( ts, c );
     telescope.setTelescopeState( TelescopeState.IDLE );
   }
 
@@ -109,8 +116,7 @@ public class GOTOImplementor extends CommandImplementor
   {
     // stop previous gotos
     STOPImplementor stop = new STOPImplementor
-      ( executionThread, telescope, 
-	new STOP( command.getId() ) );
+      ( telescope, new STOP( command.getId() ) );
     stop.execute();
 
     // set relevant mechanisms
@@ -163,38 +169,35 @@ public class GOTOImplementor extends CommandImplementor
 		       TimescaleType.UTC ) );
 
 
-    System.err.println( "starting GOTO thread..." );
+    logger.log( 1, logName, "Starting GOTO thread." );
     Thread t = new Thread( this );
     t.setPriority( Thread.MAX_PRIORITY );
     t.start();
 
     telescope.setTelescopeState( TelescopeState.SLEWING );
 
-    int nAck = 0;
     int gotoOK = 0;
     double mountPositionError = 0.0;
 
     // either timeout after 500 seconds or if thread is killed
-    while( ( nAck < 50 ) && ( t.isAlive() ) )
+    int sleep = 10000;
+    while( ( slept < TIMEOUT ) && ( t.isAlive() ) )
     {
       gotoOK = 0;
 
       try
       {
 	Thread.sleep( 10000 );
+	slept += sleep;
       }
       catch( InterruptedException ie )
       {
 	logger.log( 1, logName, ie );
       }
-      Acknowledge ack = new Acknowledge
-	( command.getId()+"."+( nAck++ ), command );
-      ack.setTimeToComplete( 15000 );
-
-      executionThread.sendAcknowledge( (Acknowledge)ack );
 
       // check position error
       // if GOTO is OK for 3 seconds return success
+      int okSleep = 500;
       mountPositionError = calcMountPositionError();
       while( mountPositionError < telescope.MAX_TRACKING_ERROR )
       {
@@ -202,7 +205,8 @@ public class GOTOImplementor extends CommandImplementor
 
 	try
 	{
-	  Thread.sleep( 500 );
+	  Thread.sleep( okSleep );
+	  slept += okSleep;
 	}
 	catch( InterruptedException ie )
 	{
@@ -213,21 +217,32 @@ public class GOTOImplementor extends CommandImplementor
 
 	if( gotoOK >= 6 )
 	{
-	  telescope.setTelescopeState
-	    ( TelescopeState.TRACKING );
-	  logger.log( 3, logName,
-		      "telescope tracking" );
+	  telescope.setTelescopeState( TelescopeState.TRACKING );
+	  String msg = new String( "Telescope tracking" );
+	  logger.log( 3, logName, msg );
+	  commandDone.setReturnMessage( msg );
 	  commandDone.setSuccessful( true );
 	  return;
 	}
       }
     }
-    if( nAck >= 50 )
-      returnMessage = "could not reach tracking tolerance";
-    else
-      returnMessage = "GOTO thread has mysteriously died";
 
-    logger.log( 1, logName, returnMessage );
+    String err;
+    if( slept > TIMEOUT )
+    {
+      err = new String
+	( "Could not reach tracking tolerance within "+
+	  TIMEOUT+"ms : execution terminated " );
+      stopTracking = true;
+    }
+    else
+    {
+      err = new String( "GOTO thread has mysteriously died" );
+      stopTracking = true;
+    }
+
+    logger.log( 1, logName, err );
+    commandDone.setErrorMessage( err );
     stop.execute();
   }
 
@@ -284,11 +299,12 @@ public class GOTOImplementor extends CommandImplementor
     // NEEDS replacing
 
 
-    System.out.println( "entering tracking loop" );
+    logger.log( 2, logName, "Entering tracking loop" );
 
     while( ( telescope.getSoftwareState() == SoftwareState.OKAY )&&
 	   ( ( telescope.getTelescopeState() == TelescopeState.TRACKING )||
-	     ( telescope.getTelescopeState() == TelescopeState.SLEWING ) ))
+	     ( telescope.getTelescopeState() == TelescopeState.SLEWING ) )&&
+	   ( stopTracking == false ) )
     {
       // calc VT output
       observedPos = activeVT.calcMountPosition
@@ -317,8 +333,8 @@ public class GOTOImplementor extends CommandImplementor
 	newRotPos  = rotatorDemand;
       }
 
-      logger.log( 4, logName,
-		  "sending position demand : \n"+
+      logger.log( 3, logName,
+		  "\nsending position demand : \n"+
 		  demandTP.getPosition()+
 		  "\n     and rotator demand : "+rotatorDemand+"\n"+
 		  "\n           at timestamp : "+timestamp );
@@ -336,27 +352,23 @@ public class GOTOImplementor extends CommandImplementor
 	  telescope.setTelescopeState
 	    ( TelescopeState.SLEWING );
 	  telescopeState = TelescopeState.SLEWING;
-	  logger.log
-	    ( 1, logName, "position error exceeded" );
-	  logger.log
-	    ( 4, logName, "entered SLEWING state" );
+	  logger.log( 1, logName, "position error exceeded" );
+	  logger.log( 2, logName, "entered SLEWING state" );
 	}
       }
       else
       {
 	if( telescopeState == TelescopeState.SLEWING )
-	  telescope.setTelescopeState
-	    ( TelescopeState.TRACKING );
 	{
+	  telescope.setTelescopeState( TelescopeState.TRACKING );
 	  telescopeState = TelescopeState.TRACKING;
-	  logger.log( 4, logName,
-		      "entered TRACKING state" );
+	  logger.log( 2, logName, "entered TRACKING state" );
 	}
       }
       timestamp = timer.trigger();
     }
 
-    System.out.println( "exited tracking loop" );
+    logger.log( 2, logName, "Exited tracking loop" );
 
     target    = null;
     limits    = null;
@@ -423,12 +435,26 @@ public class GOTOImplementor extends CommandImplementor
 
     return( rotError > posError ? rotError : posError );
   }
+
+
+  /**
+   * Return the default timeout for this command execution.
+   * @return TIMEOUT
+   * @see #TIMEOUT
+   */
+  public int calcAcknowledgeTime()
+  {
+    return( TIMEOUT );
+  }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: GOTOImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/GOTOImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/09/19 16:10:15  je
  *     Initial revision
  *
