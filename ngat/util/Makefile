@@ -1,23 +1,32 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.11 2000-11-21 14:31:38 snf Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.12 2000-11-21 15:40:42 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
 
-PACKAGEDIR = ngat/util
-PACKAGENAME = ngat.util
-JAVACFLAGS = -d $(LIBDIR) -sourcepath ../..
-DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
-DOCFLAGS = -version -author -private
-SRCS = ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java CircularList.java CPUScheduler.java \
-ExecuteCommand.java StringUtilites.java NGATProperties.java NGATPropertyException.java CircularArray.java
+UTIL_NAME	=util
+PACKAGEDIR 	=ngat/$(UTIL_NAME)
+PACKAGENAME 	=ngat.$(UTIL_NAME)
+JAR_FILE	=$(NGAT_HOME)_$(UTIL_NAME).jar
+LIBDIR		=lib
+JAVACFLAGS 	=-d $(LIBDIR) -sourcepath ../..
+DOCSDIR 	=$(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
+DOCFLAGS 	=-version -author -private
+SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java CircularList.java \
+			CPUScheduler.java ExecuteCommand.java StringUtilites.java \
+			NGATProperties.java NGATPropertyException.java CircularArray.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 
-top: $(OBJS) docs
+top: jar docs
 
 $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
+
+jar: $(JARLIBDIR)/$(JAR_FILE)
+
+$(JARLIBDIR)/$(JAR_FILE): $(OBJS)
+	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
 #docs: $(DOCS)
 
@@ -41,6 +50,9 @@ backup: tidy
 	-$(RM) $(RM_OPTIONS) $(OBJS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.11  2000/11/21 14:31:38  snf
+# Added CircularArray.
+#
 # Revision 1.10  2000/09/06 13:16:22  cjm
 # Added StringUtilites, NGATProperties classes.
 #
