@@ -1,21 +1,23 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.38 2003-01-28 16:25:35 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.39 2003-06-06 16:50:40 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
+import java.util.List;
+import java.util.Vector;
 import ngat.util.logging.*;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.38 $
+ * @version $Revision: 0.39 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.38 2003-01-28 16:25:35 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.39 2003-06-06 16:50:40 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -270,7 +272,7 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
 	 */
 	private native void CCD_Exposure_Expose(boolean open_shutter,
-		long startTime,int exposureTime,String filename) throws CCDLibraryNativeException;
+		long startTime,int exposureTime,List filenameList) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that takes a bias frame.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
@@ -453,6 +455,10 @@ public class CCDLibrary
 	 */
 	private native int CCD_Setup_Get_NPBin();
 	/**
+	 * Native wrapper to libccd routine that gets the setup amplifier type.
+	 */
+	private native int CCD_Setup_Get_Amplifier();
+	/**
 	 * Native wrapper to libccd routine that gets the setup de-interlace type.
 	 */
 	private native int CCD_Setup_Get_DeInterlace_Type();
@@ -468,6 +474,14 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that gets a setup CCD window.
 	 */
 	private native CCDLibrarySetupWindow CCD_Setup_Get_Window(int windowIndex) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the width (inclusive of bias strips) of the specified window.
+	 */
+	private native int CCD_Setup_Get_Window_Width(int window_index);
+	/**
+	 * Native wrapper to libccd routine that gets the height of the specified window.
+	 */
+	private native int CCD_Setup_Get_Window_Height(int window_index);
 	/**
 	 * Native wrapper to libccd routine that gets whether a setup operation has been completed successfully.
 	 */
@@ -729,7 +743,8 @@ public class CCDLibrary
 	 * @param startTime The start time, in milliseconds since the epoch (1st January 1970) to start the exposure.
 	 * 	Passing the value -1 will start the exposure as soon as possible.
 	 * @param exposureTime The number of milliseconds to expose the CCD.
-	 * @param filename The filename to save the exposure into.
+	 * @param filename The filename to save the exposure into. This assumes the CCD is not configured to
+	 *                 be windowed.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if 
 	 * CCD_Exposure_Expose  failed.
 	 * @see #CCD_Exposure_Expose
@@ -737,7 +752,30 @@ public class CCDLibrary
 	public void CCDExposureExpose(boolean open_shutter,long startTime,int exposureTime,String filename) 
 		throws CCDLibraryNativeException
 	{
-		CCD_Exposure_Expose(open_shutter,startTime,exposureTime,filename);
+		List filenameList = null;
+
+		filenameList = new Vector();
+		filenameList.add(filename);
+		CCD_Exposure_Expose(open_shutter,startTime,exposureTime,filenameList);
+	}
+
+	/**
+	 * Routine to perform an exposure.
+	 * @param open_shutter Determines whether the shutter should be opened to do the exposure. The shutter might
+	 * 	be left closed to perform calibration images etc.
+	 * @param readout_ccd Determines whether the CCD should be read out at the end of the exposure.
+	 * @param startTime The start time, in milliseconds since the epoch (1st January 1970) to start the exposure.
+	 * 	Passing the value -1 will start the exposure as soon as possible.
+	 * @param exposureTime The number of milliseconds to expose the CCD.
+	 * @param filenameList A list of filename strings (one per window) to save the exposure into.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if 
+	 * CCD_Exposure_Expose  failed.
+	 * @see #CCD_Exposure_Expose
+	 */
+	public void CCDExposureExpose(boolean open_shutter,long startTime,int exposureTime,List filenameList) 
+		throws CCDLibraryNativeException
+	{
+		CCD_Exposure_Expose(open_shutter,startTime,exposureTime,filenameList);
 	}
 
 	/**
@@ -1311,6 +1349,22 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Returns which amplifier has been setup. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns the amplifier, one of:
+	 * 	CCD_DSP_AMPLIFIER_LEFT,CCD_DSP_AMPLIFIER_RIGHT,CCD_DSP_AMPLIFIER_BOTH.
+	 * @see #CCD_DSP_AMPLIFIER_LEFT
+	 * @see #CCD_DSP_AMPLIFIER_RIGHT
+	 * @see #CCD_DSP_AMPLIFIER_BOTH
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_Amplifier
+	 */
+	public int CCDSetupGetAmplifier()
+	{
+		return CCD_Setup_Get_Amplifier();
+	}
+
+	/**
 	 * Returns which de-interlace type has been setup. This value
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @return Returns the deinterlace type, one of:
@@ -1373,6 +1427,36 @@ public class CCDLibrary
 	{
 		return CCD_Setup_Get_Window(windowIndex);
 	}
+
+	/**
+	 * Routine to get the window width of the specified window. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * Note this value is different from the width passed in the window list to CCDSetupDimensions,
+	 * as it includes any bias strips added to the sides.
+	 * @param windowIndex The index of the window.
+	 * @return Returns an integer representing the width of the window.
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_Window_Width
+	 */
+	public int CCDSetupGetWindowWidth(int windowIndex)
+	{
+		return CCD_Setup_Get_Window_Width(windowIndex);
+	}
+
+	/**
+	 * Routine to get the window height of the specified window. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @param windowIndex The index of the window.
+	 * @return Returns an integer representing the height of the window.
+	 * @see #CCDSetupDimensions
+	 * @see #CCD_Setup_Get_Window_Height
+	 */
+	public int CCDSetupGetWindowHeight(int windowIndex)
+	{
+		return CCD_Setup_Get_Window_Height(windowIndex);
+	}
+
+
 
 	/**
 	 * Routine to return whether a setup operation has been sucessfully completed since the last controller
@@ -1596,6 +1680,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.38  2003/01/28 16:25:35  cjm
+// New filter wheel code.
+//
 // Revision 0.37  2002/12/16 19:50:49  cjm
 // Changed Abort prototypes, thay can now return exceptions.
 // Changed some CCDDSP methods to CCDExposure, to match libccd.
