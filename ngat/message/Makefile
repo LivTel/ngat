@@ -1,10 +1,9 @@
-# Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/message/Makefile,v 1.1 2000-12-01 18:39:12 snf Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/message/Makefile,v 1.2 2002-10-02 11:03:00 je Exp $ 
 
 include	../Makefile.common
 include	Makefile.common
 
-DIRS = OSS RCS_TCS
+DIRS = base OSS RCS_TCS INST_DP ISS_INST
 
 top:
 	@for i in $(DIRS); \
@@ -45,3 +44,6 @@ backup: tidy
 		(echo backup in $$i...; cd $$i; $(MAKE) backup); \
 	done;
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2000/12/01 18:39:12  snf
+# Initial revision
+#
