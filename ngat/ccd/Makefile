@@ -1,25 +1,33 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.7 2000-02-02 13:34:19 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.8 2000-11-21 14:27:55 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
 
-PACKAGEDIR = ngat/ccd
-PACKAGENAME = ngat.ccd
-JAVACFLAGS = -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
-DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
-DOCFLAGS = -version -author -private
+CCD_NAME	=ccd
+PACKAGEDIR 	=ngat/$(CCD_NAME)
+PACKAGENAME	=ngat.$(CCD_NAME)
+JAR_FILE	=$(NGAT_HOME)_$(CCD_NAME).jar
+LIBDIR		= lib
+JAVACFLAGS 	= -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
+DOCSDIR 	= $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
+DOCFLAGS 	= -version -author -private
 
 SRCS = CCDLibraryDouble.java CCDLibraryFormatException.java CCDLibraryNativeException.java \
-CCDLibrarySetupWindow.java CCDLibrary.java
+	CCDLibrarySetupWindow.java CCDLibrary.java
 
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 
-top: $(OBJS) docs
+top: jar docs
 
 $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
+
+jar: $(JARLIBDIR)/$(JAR_FILE)
+
+$(JARLIBDIR)/$(JAR_FILE): $(OBJS)
+	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
 docs:
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
@@ -41,6 +49,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.7  2000/02/02 13:34:19  cjm
+# Fixed error in Makefile.
+#
 # Revision 1.6  2000/02/02 13:32:27  cjm
 # Added CCDLibrarySetupWindow source file.
 #
