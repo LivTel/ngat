@@ -1,5 +1,5 @@
 // CCDLibraryNativeException.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryNativeException.java,v 1.2 1999-09-23 10:45:49 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryNativeException.java,v 1.3 2001-04-05 16:50:46 cjm Exp $
 package ngat.ccd;
 
 /**
@@ -7,14 +7,14 @@ package ngat.ccd;
  * error. The individual parts of the error generated are stored in the exception as well as the complete message.
  * The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class CCDLibraryNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryNativeException.java,v 1.2 1999-09-23 10:45:49 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibraryNativeException.java,v 1.3 2001-04-05 16:50:46 cjm Exp $");
 	/**
 	 * A type of error that can cause this exception to be created. This type is when the error type
 	 * is unknown.
@@ -51,6 +51,38 @@ public class CCDLibraryNativeException extends Exception
 	 * occured in the native code or the JNI interface code.
 	 */
 	private int errorType = CCD_NATIVE_EXCEPTION_TYPE_NONE;
+	/**
+	 * The current value of the error number in the DSP module.
+	 */
+	protected int DSPErrorNumber = 0;
+	/**
+	 * The current value of the error number in the Exposure module.
+	 */
+	protected int exposureErrorNumber = 0;
+	/**
+	 * The current value of the error number in the filter wheel module.
+	 */
+	protected int filterWheelErrorNumber = 0;
+	/**
+	 * The current value of the error number in the Interface module.
+	 */
+	protected int interfaceErrorNumber = 0;
+	/**
+	 * The current value of the error number in the PCI module.
+	 */
+	protected int PCIErrorNumber = 0;
+	/**
+	 * The current value of the error number in the Setup module.
+	 */
+	protected int setupErrorNumber = 0;
+	/**
+	 * The current value of the error number in the Temperature module.
+	 */
+	protected int temperatureErrorNumber = 0;
+	/**
+	 * The current value of the error number in the Text module.
+	 */
+	protected int textErrorNumber = 0;
 
 	/**
 	 * Constructor for the exception.
@@ -61,6 +93,46 @@ public class CCDLibraryNativeException extends Exception
 		super(errorString);
 		this.errorString = new String(errorString);
 		this.errorType = CCD_NATIVE_EXCEPTION_TYPE_NONE;
+	}
+
+	/**
+	 * Constructor for the exception. The exception is assumed to be of type CCD_NATIVE_EXCEPTION_TYPE_NATIVE.
+	 * The error number fields of the created exception are filled with error numbers retrieved using
+	 * JNI calls to the libccd instance passed in.
+	 * @param errorString The error string.
+	 * @param libccd The instance of CCDLibrary that threw this exception.
+	 * @see #errorString
+	 * @see #errorType
+	 * @see #DSPErrorNumber
+	 * @see #exposureErrorNumber
+	 * @see #filterWheelErrorNumber
+	 * @see #interfaceErrorNumber
+	 * @see #PCIErrorNumber
+	 * @see #setupErrorNumber
+	 * @see #temperatureErrorNumber
+	 * @see #textErrorNumber
+	 * @see CCDLibrary#CCDDSPGetErrorNumber
+	 * @see CCDLibrary#CCDExposureGetErrorNumber
+	 * @see CCDLibrary#CCDFilterWheelGetErrorNumber
+	 * @see CCDLibrary#CCDInterfaceGetErrorNumber
+	 * @see CCDLibrary#CCDPCIGetErrorNumber
+	 * @see CCDLibrary#CCDSetupGetErrorNumber
+	 * @see CCDLibrary#CCDTemperatureGetErrorNumber
+	 * @see CCDLibrary#CCDTextGetErrorNumber
+	 */
+	public CCDLibraryNativeException(String errorString,CCDLibrary libccd)
+	{
+		super(errorString);
+		this.errorString = new String(errorString);
+		this.errorType = CCD_NATIVE_EXCEPTION_TYPE_NATIVE;
+		this.DSPErrorNumber = libccd.CCDDSPGetErrorNumber();
+		this.exposureErrorNumber = libccd.CCDExposureGetErrorNumber();
+		this.filterWheelErrorNumber = libccd.CCDFilterWheelGetErrorNumber();
+		this.interfaceErrorNumber = libccd.CCDInterfaceGetErrorNumber();
+		this.PCIErrorNumber = libccd.CCDPCIGetErrorNumber();
+		this.setupErrorNumber = libccd.CCDSetupGetErrorNumber();
+		this.temperatureErrorNumber = libccd.CCDTemperatureGetErrorNumber();
+		this.textErrorNumber = libccd.CCDTextGetErrorNumber();
 	}
 
 	/**
@@ -123,6 +195,94 @@ public class CCDLibraryNativeException extends Exception
 	}
 
 	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #DSPErrorNumber
+	 */
+	public int getDSPErrorNumber()
+	{
+		return DSPErrorNumber;
+	}
+
+	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #exposureErrorNumber
+	 */
+	public int getExposureErrorNumber()
+	{
+		return exposureErrorNumber;
+	}
+
+	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #filterWheelErrorNumber
+	 */
+	public int getFilterWheelErrorNumber()
+	{
+		return filterWheelErrorNumber;
+	}
+
+	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #interfaceErrorNumber
+	 */
+	public int getInterfaceErrorNumber()
+	{
+		return interfaceErrorNumber;
+	}
+
+	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #PCIErrorNumber
+	 */
+	public int getPCIErrorNumber()
+	{
+		return PCIErrorNumber;
+	}
+
+	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #setupErrorNumber
+	 */
+	public int getSetupErrorNumber()
+	{
+		return setupErrorNumber;
+	}
+
+	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #temperatureErrorNumber
+	 */
+	public int getTemperatureErrorNumber()
+	{
+		return temperatureErrorNumber;
+	}
+
+	/**
+	 * Retrieve routine for the error number for the relevant C module.
+	 * @return Returns the error number supplied for this exception, 
+	 * 	if the number was supplied in a constructor.
+	 * @see #textErrorNumber
+	 */
+	public int getTextErrorNumber()
+	{
+		return textErrorNumber;
+	}
+
+	/**
 	 * Routine to get a string representation of the error type supplied to the exception.
 	 * @return Returns a string, describing the error type of this exception.
 	 * @see #errorType
@@ -149,6 +309,9 @@ public class CCDLibraryNativeException extends Exception
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  1999/09/23 10:45:49  cjm
+// Changed message going into super constructor.
+//
 // Revision 1.1  1999/09/20 14:40:08  cjm
 // Initial revision
 //
