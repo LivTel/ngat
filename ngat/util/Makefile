@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.16 2000-11-21 17:23:09 snf Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.17 2000-11-22 19:46:00 snf Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -17,7 +17,7 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		NGATProperties.java NGATPropertyException.java CircularArray.java \
 		GraphParameterizer.java QueuedSynchFlag.java \
 		SharedStore.java StoreEmptyException.java GraphPlot.java GraphFrame.java HistogramPlot.java \
-		StoreFullException.java SynchFlag.java TimeStamp.java \
+		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java\
 		CommandParser.java ConfigurationCache.java ConfigurationProperties.java LogPanel.java 		
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
@@ -53,6 +53,9 @@ backup: tidy
 	-$(RM) $(RM_OPTIONS) $(OBJS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.16  2000/11/21 17:23:09  snf
+# Removed most Plots temporarily.
+#
 # Revision 1.15  2000/11/21 17:20:57  snf
 # Removed GraphParameterizerFrame.
 #
