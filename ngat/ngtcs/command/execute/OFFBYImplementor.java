@@ -1,7 +1,9 @@
 package ngat.ngtcs.command.execute;
 
 import ngat.ngtcs.*;
+import ngat.ngtcs.common.*;
 import ngat.ngtcs.command.*;
+import ngat.ngtcs.subsystem.*;
 
 /**
  * Offset the telescope from the reference position so that the image moves by
@@ -9,7 +11,7 @@ import ngat.ngtcs.command.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OFFBYImplementor extends CommandImplementor
 {
@@ -23,7 +25,7 @@ public class OFFBYImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: OFFBYImplementor.java,v 1.4 2003-10-16 16:48:03 je Exp $" );
+    new String( "$Id: OFFBYImplementor.java,v 1.5 2003-10-16 16:50:30 je Exp $" );
 
   /**
    * The timeout for the OFFBY command (60 seconds), in milliseconds.
@@ -72,8 +74,8 @@ public class OFFBYImplementor extends CommandImplementor
     OFFBY o = (OFFBY)command;
     OffsetMode om = o.getMode();
     Target tgt = telescope.getCurrentTarget();
-    double offsetX = o.getRa();
-    double offsetY = o.getDec();
+    double offsetX = o.getRightAscensionOffset();
+    double offsetY = o.getDeclinationOffset();
 
     if( om == OffsetMode.TIME )
     {
@@ -85,7 +87,7 @@ public class OFFBYImplementor extends CommandImplementor
     {
       VirtualTelescope vt = telescope.getActiveVirtualTelescope();
       XYZMatrix mntPos = telescope.getMount().getCurrentPosition();
-      Timestamp = telescope.getTimer().getTime();
+      Timestamp time = telescope.getTimer().getTime();
       Rotator rot = telescope.getRotator();
       double angle = ( ( rot == null ) ? 0.0 : rot.getPositionAngle() );
       PointingOrigin po1 = vt.calcPointingOrigin( time, tgt, mntPos, angle );
@@ -125,11 +127,14 @@ public class OFFBYImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-10-16 16:48:03 $
+ *    $Date: 2003-10-16 16:50:30 $
  * $RCSfile: OFFBYImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/OFFBYImplementor.java,v $
- *      $Id: OFFBYImplementor.java,v 1.4 2003-10-16 16:48:03 je Exp $
+ *      $Id: OFFBYImplementor.java,v 1.5 2003-10-16 16:50:30 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/10/16 16:48:03  je
+ *     Implemented the execute method.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *
