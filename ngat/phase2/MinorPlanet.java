@@ -109,7 +109,7 @@ public class MinorPlanet extends SolarSystemSource implements Serializable {
 	npMinorPlanet.setLongAscNode(longAscNode);
 	npMinorPlanet.setArgPeri(argPeri);
 	npMinorPlanet.setOrbitalInc(orbitalInc);
-	npMinorPlanet.setEccentricity(eccentricit);
+	npMinorPlanet.setEccentricity(eccentricity);
 	npMinorPlanet.setMeanAnomaly(meanAnomaly);
 	npMinorPlanet.setMeanDistance(meanDistance);
     } // end (P -> NP Translator).

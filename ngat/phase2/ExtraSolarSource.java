@@ -73,7 +73,7 @@ public class ExtraSolarSource extends Source implements Serializable {
     public double getParallax() { return parallax;}
     
     /** Set the source radial velocity.*/
-    public void setRadialVelocity() { this.radialVelocity = in; }
+    public void setRadialVelocity(double in) { this.radialVelocity = in; }
 
     /** Returns the source radial velocity.*/
     public double getRadialVelocity() { return radialVelocity; }
