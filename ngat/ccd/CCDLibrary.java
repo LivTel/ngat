@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.27 2000-06-20 12:54:27 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.28 2000-12-21 12:10:40 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.27 $
+ * @version $Revision: 0.28 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.27 2000-06-20 12:54:27 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.28 2000-12-21 12:10:40 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -74,6 +74,31 @@ public class CCDLibrary
 	 * @see #CCDDSPGetExposureStatus
 	 */
 	public final static int CCD_DSP_EXPOSURE_STATUS_READOUT = 	3;
+
+	/* These constants should be the same as those in ccd_dsp.h */
+	/**
+	 * DSP filter wheel status number, showing that no filter wheel operation is underway at the present moment.
+	 * @see #CCDDSPGetFilterWheelStatus
+	 */
+	public final static int CCD_DSP_FILTER_WHEEL_STATUS_NONE = 		0;
+	/**
+	 * DSP filter wheel status number, showing that a filter wheel move operation is 
+	 * underway at the present moment.
+	 * @see #CCDDSPGetFilterWheelStatus
+	 */
+	public final static int CCD_DSP_FILTER_WHEEL_STATUS_MOVING = 		1;
+	/**
+	 * DSP filter wheel status number, showing that a filter wheel reset operation is 
+	 * underway at the present moment.
+	 * @see #CCDDSPGetFilterWheelStatus
+	 */
+	public final static int CCD_DSP_FILTER_WHEEL_STATUS_RESETING = 		2;
+	/**
+	 * DSP filter wheel status number, showing that a filter wheel abort operation is 
+	 * pending at the present moment.
+	 * @see #CCDDSPGetFilterWheelStatus
+	 */
+	public final static int CCD_DSP_FILTER_WHEEL_STATUS_ABORTED = 		3;
 
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -230,6 +255,10 @@ public class CCDLibrary
 	 */
 	private native long CCD_DSP_Get_Exposure_Start_Time();
 	/**
+	 * Native wrapper to libccd routine thats returns whether an filter wheel operation is currently in progress.
+	 */
+	private native int CCD_DSP_Get_Filter_Wheel_Status();
+	/**
 	 * Native wrapper to return ccd_dsp's error number.
 	 */
 	private native int CCD_DSP_Get_Error_Number();
@@ -334,11 +363,6 @@ public class CCDLibrary
 		int amplifier,int deinterlace_setting,int window_flags,
 		CCDLibrarySetupWindow window_list[]) throws CCDLibraryNativeException;
 	/**
-	 * Native wrapper to libccd routine that does the filter wheel setup.
-	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
-	 */
-	private native void CCD_Setup_Filter_Wheel(int position_one,int position_two) throws CCDLibraryNativeException;
-	/**
 	 * Native wrapper to libccd routine that performs a hardware test data link.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
@@ -380,10 +404,6 @@ public class CCDLibrary
 	 */
 	private native CCDLibrarySetupWindow CCD_Setup_Get_Window(int windowIndex) throws CCDLibraryNativeException;
 	/**
-	 * Native wrapper to libccd routine that gets the filter wheel position.
-	 */
-	private native int CCD_Setup_Get_Filter_Wheel_Position(int wheel_number) throws CCDLibraryNativeException;
-	/**
 	 * Native wrapper to libccd routine that gets whether a setup operation has been completed successfully.
 	 */
 	private native boolean CCD_Setup_Get_Setup_Complete();
@@ -411,6 +431,32 @@ public class CCDLibrary
 	 * Native wrapper to return ccd_temperature's error number.
 	 */
 	private native int CCD_Temperature_Get_Error_Number();
+
+// ccd_filter_wheel.h
+	/**
+	 * Native wrapper to libccd routine that sets the number of positions in each filter wheel.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Filter_Wheel_Set_Position_Count(int position_count) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that does a filter wheel reset.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Filter_Wheel_Reset(int wheel_number) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that does a filter wheel move.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Filter_Wheel_Move(int wheel_number,int position) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that aborts a filter wheel move or reset.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Filter_Wheel_Abort() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the filter wheel position.
+	 */
+	private native int CCD_Filter_Wheel_Get_Position(int wheel_number) throws CCDLibraryNativeException;
 
 // ccd_text.h
 	/**
@@ -503,6 +549,26 @@ public class CCDLibrary
 	public long CCDDSPGetExposureStartTime()
 	{
 		return CCD_DSP_Get_Exposure_Start_Time();
+	}
+
+	/**
+	 * Returns the current status of the filter wheel control. The library keeps track of whether 
+	 * a filter wheel is being moved,reset or aborted.
+	 * @return Returns the filter wheel status, one of 
+	 * 	CCD_DSP_FILTER_WHEEL_STATUS_NONE,CCD_DSP_FILTER_WHEEL_STATUS_MOVING,
+	 * 	CCD_DSP_FILTER_WHEEL_STATUS_RESETING or CCD_DSP_FILTER_WHEEL_STATUS_ABORTED.
+	 * @see #CCD_DSP_FILTER_WHEEL_STATUS_NONE
+	 * @see #CCD_DSP_FILTER_WHEEL_STATUS_MOVING
+	 * @see #CCD_DSP_FILTER_WHEEL_STATUS_RESETING
+	 * @see #CCD_DSP_FILTER_WHEEL_STATUS_ABORTED
+	 * @see #CCDFilterWheelMove
+	 * @see #CCDFilterWheelReset
+	 * @see #CCDFilterWheelAbort
+	 * @see #CCD_DSP_Get_Filter_Wheel_Status
+	 */
+	public int CCDDSPGetFilterWheelStatus()
+	{
+		return CCD_DSP_Get_Filter_Wheel_Status();
 	}
 
 	/**
@@ -942,20 +1008,6 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Method to setup the filter wheel at the required positions.
-	 * This routine can be aborted with CCDSetupAbort.
-	 * @param positionOne The position the first filter wheel has to attain.
-	 * @param positionTwo The position the second filter wheel has to attain.
-	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the setup failed.
-	 * @see #CCDSetupAbort
-	 * @see #CCD_Setup_Filter_Wheel
-	 */
-	public void CCDSetupFilterWheel(int positionOne,int positionTwo) throws CCDLibraryNativeException
-	{
-		CCD_Setup_Filter_Wheel(positionOne,positionTwo);
-	}
-
-	/**
 	 * Method to perform a hardware data link test, to ensure we can communicate with each board in the
 	 * controller.
 	 * This routine can be aborted with CCDSetupAbort.
@@ -1093,21 +1145,6 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Routine to get the last requested position for the specified filter wheel. This value
-	 * is got from the stored setup data, rather than querying the camera directly.
-	 * @param wheelNumber Which filter wheel to get the position for.
-	 * @return Returns an integer representing the position of the filterwheel.
-	 * @exception CCDLibraryNativeException Thrown if an error occurs getting the position
-	 * 	(the wheelNumber is out of range).
-	 * @see #CCDSetupFilterWheel
-	 * @see #CCD_Setup_Get_Filter_Wheel_Position
-	 */
-	public int CCDSetupGetFilterWheelPosition(int wheelNumber) throws CCDLibraryNativeException
-	{
-		return CCD_Setup_Get_Filter_Wheel_Position(wheelNumber);
-	}
-
-	/**
 	 * Routine to return whether a setup operation has been sucessfully completed since the last controller
 	 * reset.
 	 * @return Returns true if a setup has been completed otherwise false.
@@ -1195,6 +1232,72 @@ public class CCDLibrary
 		return CCD_Temperature_Get_Error_Number();
 	}
 
+// ccd_filter_wheel.h
+	/**
+	 * Method to setup the number of positions in each filter wheel.
+	 * @param positionCount The number of positions in each filter wheel.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Filter_Wheel_Set_Position_Count
+	 */
+	public void CCDFilterWheelSetPositionCount(int positionCount) throws CCDLibraryNativeException
+	{
+		CCD_Filter_Wheel_Set_Position_Count(positionCount);
+	}
+
+
+	/**
+	 * Method to reset a filter wheel to it's home position.
+	 * This routine can be aborted with CCDFilterWheelAbort.
+	 * @param wheel Which wheel to move. An integer, either zero or one.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCDFilterWheelAbort
+	 * @see #CCD_Filter_Wheel_Reset
+	 */
+	public void CCDFilterWheelReset(int wheel) throws CCDLibraryNativeException
+	{
+		CCD_Filter_Wheel_Reset(wheel);
+	}
+
+	/**
+	 * Method to move a filter wheel to the required position.
+	 * This routine can be aborted with CCDFilterWheelAbort.
+	 * @param wheel Which wheel to move. An integer, either zero or one.
+	 * @param position The absolute position to move the specified wheel to.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCDFilterWheelAbort
+	 * @see #CCD_Filter_Wheel_Move
+	 */
+	public void CCDFilterWheelMove(int wheel,int position) throws CCDLibraryNativeException
+	{
+		CCD_Filter_Wheel_Move(wheel,position);
+	}
+
+	/**
+	 * Method to abort a filter wheel move or reset operation.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Filter_Wheel_Abort
+	 */
+	public void CCDFilterWheelAbort() throws CCDLibraryNativeException
+	{
+		CCD_Filter_Wheel_Abort();
+	}
+
+	/**
+	 * Routine to get the last position for the specified filter wheel. This value
+	 * is got from the stored data.
+	 * @param wheelNumber Which filter wheel to get the position for. An integer, either zero or one.
+	 * @return Returns an integer representing the position of the filterwheel. This is an integer between
+	 * 	zero (inclusive) and the number of positions in the wheel (exclusive). It can also be -1, which
+	 * 	means the position is not currently known, or the wheel is moving.
+	 * @exception CCDLibraryNativeException Thrown if an error occurs getting the position
+	 * 	(the wheelNumber is out of range).
+	 * @see #CCD_Filter_Wheel_Get_Position
+	 */
+	public int CCDFilterWheelGetPosition(int wheelNumber) throws CCDLibraryNativeException
+	{
+		return CCD_Filter_Wheel_Get_Position(wheelNumber);
+	}
+
 // ccd_text.h
 	/**
 	 * Routine thats set the amount of information displayed when the text interface device
@@ -1242,6 +1345,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.27  2000/06/20 12:54:27  cjm
+// CCDExposureExpose now has ne readout_ccd parameter.
+//
 // Revision 0.26  2000/06/13 17:29:17  cjm
 // JNI changes realating to updating the library to work the same way as voodoo.
 // Includes PCI load code, amplifier setting,DSP internal var setting,
