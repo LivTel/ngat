@@ -15,7 +15,7 @@ package ngat.util;
  * enable correct serialization of this class.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class TypeSafeEnumeration implements java.io.Serializable
 {
@@ -29,7 +29,7 @@ public abstract class TypeSafeEnumeration implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TypeSafeEnumeration.java,v 1.2 2003-09-01 15:08:30 je Exp $" );
+    new String( "$Id: TypeSafeEnumeration.java,v 1.3 2003-09-02 09:50:54 je Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -201,7 +201,7 @@ public abstract class TypeSafeEnumeration implements java.io.Serializable
    * with all enumerations (ENUM_1, ENUM_2, ...) declared and instantiated as
    * <code>public final static</code> fields in the sub-class.
    */
-  public abstract Object getArrayElement( int i );
+  protected abstract Object getArrayElement( int i );
 
 
   /**
@@ -235,11 +235,14 @@ public abstract class TypeSafeEnumeration implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-01 15:08:30 $
+ *    $Date: 2003-09-02 09:50:54 $
  * $RCSfile: TypeSafeEnumeration.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/util/TypeSafeEnumeration.java,v $
- *      $Id: TypeSafeEnumeration.java,v 1.2 2003-09-01 15:08:30 je Exp $
+ *      $Id: TypeSafeEnumeration.java,v 1.3 2003-09-02 09:50:54 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/01 15:08:30  je
+ *     Added serialization improvements for sub-classes.
+ *
  *     Revision 1.1  2002/10/29 16:56:36  je
  *     Initial revision
  *
