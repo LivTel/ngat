@@ -1,6 +1,6 @@
 // SpecLibrary.java
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.9 2004-03-04 11:17:31 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.10 2004-07-27 10:32:00 cjm Exp $
 package ngat.spec;
 
 import java.lang.*;
@@ -11,14 +11,14 @@ import ngat.util.logging.*;
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.9 $
+ * @version $Revision: 0.10 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.9 2004-03-04 11:17:31 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.10 2004-07-27 10:32:00 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -189,7 +189,8 @@ public class SpecLibrary
 	public final static int DAIO_INTERFACE_DEVICE_TEXT 		= 1;
 	public final static int DAIO_INTERFACE_DEVICE_DAS08JR 		= 2;
 	public final static int DAIO_INTERFACE_DEVICE_PC104_DAS08 	= 3;
-	public final static int DAIO_INTERFACE_DEVICE_FILTER_EMULATE 	= 4;
+	public final static int DAIO_INTERFACE_DEVICE_PCI_DAS08 	= 4;
+	public final static int DAIO_INTERFACE_DEVICE_FILTER_EMULATE 	= 5;
 
 // general native methods
 	/**
@@ -1170,6 +1171,10 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.9  2004/03/04 11:17:31  cjm
+// Added logging methods and logger reference.
+// Added setLogLevel method.
+//
 // Revision 0.8  2002/02/14 18:05:35  cjm
 // Added Dimension support.
 //
