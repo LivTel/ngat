@@ -1,19 +1,24 @@
-// SpecLibrary.java -*- mode: Fundamental;-*-
+// SpecLibrary.java
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.8 2002-02-14 18:05:35 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.9 2004-03-04 11:17:31 cjm Exp $
 package ngat.spec;
+
+import java.lang.*;
+import java.util.List;
+import java.util.Vector;
+import ngat.util.logging.*;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.8 $
+ * @version $Revision: 0.9 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.8 2002-02-14 18:05:35 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.9 2004-03-04 11:17:31 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -197,6 +202,10 @@ public class SpecLibrary
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native void SPEC_Close() throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Set_Log_Filter_Level routine.
+	 */
+	private static native void SPEC_Set_Log_Filter_Level(int level);
 // arc lamp native methods
 	/**
 	 * Native wrapper to libspec SPEC_Arc_Lamp_Set_Lamp routine.
@@ -436,6 +445,22 @@ public class SpecLibrary
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native void SPEC_DAIO_Select_Device(int device) throws SpecNativeException;
+//internal C layer initialisation
+	/**
+	 * Native method that allows the JNI layer to store a reference to this Class's logger.
+	 * @param logger The logger for this class.
+	 */
+	private native void initialiseLoggerReference(Logger logger);
+	/**
+	 * Native method that allows the JNI layer to release the global reference to this Class's logger.
+	 */
+	private native void finaliseLoggerReference();
+
+// per instance variables
+	/**
+	 * The logger to log messages to.
+	 */
+	protected Logger logger = null;
 
 // static code block
 	/**
@@ -445,6 +470,29 @@ public class SpecLibrary
 	static
 	{
 		System.loadLibrary("spec");
+	}
+
+// constructor
+	/**
+	 * Constructor. Constructs the logger, and sets the C layers reference to it.
+	 * @see #logger
+	 * @see #initialiseLoggerReference
+	 */
+	public SpecLibrary()
+	{
+		super();
+		logger = LogManager.getLogger(this);
+		initialiseLoggerReference(logger);
+	}
+
+	/**
+	 * Finalize method for this class, delete JNI global references.
+	 * @see #finaliseLoggerReference
+	 */
+	protected void finalize() throws Throwable
+	{
+		super.finalize();
+		finaliseLoggerReference();
 	}
 
 // general methods
@@ -469,6 +517,16 @@ public class SpecLibrary
 	public static void close() throws SpecNativeException
 	{
 		SPEC_Close();
+	}
+
+	/**
+	 * Method to set the log level of the library.
+	 * @param level The logging level, an integer with each bit specifying some logging.
+	 * @see #SPEC_Set_Log_Filter_Level
+	 */
+	public static void setLogLevel(int level)
+	{
+		SPEC_Set_Log_Filter_Level(level);
 	}
 // arc lamp
 	/**
@@ -1112,6 +1170,9 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.8  2002/02/14 18:05:35  cjm
+// Added Dimension support.
+//
 // Revision 0.7  2001/05/17 15:23:53  cjm
 // Added cameraTemperatureGetStatusString, cameraTemperatureGetStatus and
 // SPEC_TEMP_STATUS_* constants.
