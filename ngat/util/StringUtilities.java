@@ -1,5 +1,5 @@
 // StringUtilities.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.2 2001-07-31 09:37:39 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.3 2002-06-20 15:21:34 je Exp $
 package ngat.util;
 
 import java.io.*;
@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @author Chris Mottram
  */
 public class StringUtilities
@@ -15,7 +15,7 @@ public class StringUtilities
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.2 2001-07-31 09:37:39 cjm Exp $");
+	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.3 2002-06-20 15:21:34 je Exp $");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.
@@ -143,6 +143,17 @@ public class StringUtilities
 		return sb.toString();
 	}
 
+    /**
+     * Method that returns a new String padded out with spaces until it is length <b>length</b>.
+     * @param length The total length of the string to return. 
+     * @return A new string of length <b>length</b>, which is <b>s</b> padded out with spaces.
+     */
+    public static String pad(int length) {
+	StringBuffer sb = new StringBuffer();
+	pad(sb, length, true);
+	return sb.toString();
+    }
+
 	/**
 	 * Method that returns <b>s</b>, padded out with spaces until it is length <b>length</b>.
 	 * If the length of <b>s</b> is already greater than <b>length</b>,<b>s</b> is not truncated.
@@ -251,6 +262,9 @@ public class StringUtilities
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2001/07/31 09:37:39  cjm
+// Name change from StringUtilites to StringUtilites in string.
+//
 // Revision 1.1  2001/07/24 15:41:05  je
 // Initial revision
 //
