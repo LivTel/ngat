@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.22 2001-03-23 15:24:06 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.23 2001-05-14 17:44:55 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -28,7 +28,7 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		StoreFullException.java SynchFlag.java TimeStamp.java ControlThread.java \
 		CommandParser.java ConfigurationCache.java ConfigurationProperties.java \
 		GaussianRandom.java BooleanLock.java Predictor.java PredictorSample.java StandardPredictor.java \
-		StatisticalPredictor.java
+		StatisticalPredictor.java SMTPMailer.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
@@ -90,6 +90,12 @@ backup: tidy
 
 
 # $Log: not supported by cvs2svn $
+# Revision 1.22  2001/03/23 15:24:06  cjm
+# ngat.util.logging now does it's own javadoc creation rather than relying on ngat.util.
+# This is because we could not get the ngat.util Makefile to check when to
+# javadoc ngat.util.logging sources without having a list og ngat.util.logging source
+# filenames in both Makefiles.
+#
 # Revision 1.21  2001/03/06 10:42:33  snf
 # added Bogstanlogformatter.
 #
