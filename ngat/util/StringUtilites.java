@@ -1,5 +1,5 @@
 // StringUtilites.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilites.java,v 0.1 2000-09-06 12:58:42 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilites.java,v 0.2 2000-10-06 14:38:25 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  * @author Chris Mottram
  */
 public class StringUtilites
@@ -15,7 +15,7 @@ public class StringUtilites
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilites.java,v 0.1 2000-09-06 12:58:42 cjm Exp $");
+	public final static String RCSID = new String("$Id: StringUtilites.java,v 0.2 2000-10-06 14:38:25 cjm Exp $");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.
@@ -201,7 +201,28 @@ public class StringUtilites
 
 		return sb.toString();
 	}
+
+	/**
+	 * Method to get the last (leaf) element of a path. The path is separated by <b>separator</b>s.
+	 * e.g. getLeaf("java.lang.Object",'.') returns "Object".
+	 * @param s The string to search.
+	 * @param separator The separator character.
+	 * @return A string. If no separator's are found the string itself is returned. If one or more
+	 * 	separator's are found, the string after the last of the separator's is returned.
+	 */
+	public static String getLeaf(String s,char separator)
+	{
+		int lastIndex;
+
+		lastIndex = s.lastIndexOf(s,separator);
+		if(lastIndex < 0)
+			return s;
+		return s.substring(lastIndex+1);
+	}
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/09/06 12:58:42  cjm
+// initial revision.
+//
 //
