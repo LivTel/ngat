@@ -1,5 +1,5 @@
 // QuadraticFit.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/math/QuadraticFit.java,v 0.2 2000-08-29 10:12:57 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/math/QuadraticFit.java,v 0.3 2000-09-01 15:30:37 cjm Exp $
 package ngat.math;
 
 import java.lang.*;
@@ -9,14 +9,14 @@ import java.util.*;
  * This class does a quadratic fit for a series of (x,y) data points.
  * It works out values (a,b,c) for a quadratic fit such that y = a(x*x)+bx+c.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  */
 public class QuadraticFit
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFit.java,v 0.2 2000-08-29 10:12:57 cjm Exp $");
+	public final static String RCSID = new String("$Id: QuadraticFit.java,v 0.3 2000-09-01 15:30:37 cjm Exp $");
 	/**
 	 * The number of parameter fit for a quadratic. This is three (a,b,c).
 	 */
@@ -119,7 +119,7 @@ public class QuadraticFit
 	protected double parameterStartStepSize[];
 	/**
 	 * A value passed through to the Chi Squared fit. Used to determine the step size when
-	 * constraining the paramater(s), such that step count steps are performed in the next parameter loop.
+	 * constraining the parameter(s), such that step count steps are performed in the next parameter loop.
 	 */
 	protected double parameterStepCount = DEFAULT_PARAMETER_STEP_COUNT;
 
@@ -529,7 +529,7 @@ public class QuadraticFit
 // These two model and actual for first derivative of a quadratic
 	/**
 	 * Private inner class to model the first derivative of y= a(x^2) + bx + c. i.e.
-	 * value = 2ax + b. A and B are paramaters, A can be set in the constructor so a 1 degree freedom
+	 * value = 2ax + b. A and B are parameters, A can be set in the constructor so a 1 degree freedom
 	 * of movement can be used once A has been determined.
 	 * @see ChiSquaredFitModeller
 	 */
@@ -647,7 +647,7 @@ public class QuadraticFit
 // These two model and actual for three degrees of freedom chi squared fit of a quadratic
 	/**
 	 * Private inner class to model y= a(x^2) + bx + c. i.e.
-	 * a,b and c are the paramaters.
+	 * a,b and c are the parameters.
 	 * @see ChiSquaredFitModeller
 	 */
 	protected class QuadraticChiSquaredFitModel implements ChiSquaredFitModeller
@@ -685,7 +685,7 @@ public class QuadraticFit
 
 		/**
 		 * Method called to set a constant parameter to compute a chi squared fit for.
-		 * This class only allows the parameter name "a".
+		 * This class only allows parameters name "a","b" and "c".
 		 */
 		public void setParameter(String name,double value)
 		{
@@ -735,6 +735,9 @@ public class QuadraticFit
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  2000/08/29 10:12:57  cjm
+// Added setParameterStartValues method.
+//
 // Revision 0.1  2000/08/18 17:24:43  cjm
 // initial revision.
 //
