@@ -1,0 +1,105 @@
+\documentclass[10pt,a4paper]{article}
+\pagestyle{plain}
+\textwidth 16cm
+\textheight 21cm
+\oddsidemargin -0.5cm
+\topmargin 0cm
+
+\title{Java Message System: ngat.swing package}
+\author{C. J. Mottram}
+\date{}
+\begin{document}
+\pagenumbering{arabic}
+\thispagestyle{empty}
+\maketitle
+\begin{abstract}
+This document describes classes in the ngat.swing package.
+These classes are common utility classes used when writing GUIs using the javax.swing.* package.
+\end{abstract}
+
+\centerline{\Large History}
+\begin{center}
+\begin{tabular}{|l|l|l|p{15em}|}
+\hline
+{\bf Version} & {\bf Author} & {\bf Date} & {\bf Notes} \\
+\hline
+0.0 &              C. J. Mottram & 29/11/99 & First draft \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\section{Documentation Overview}
+\subsection{What is the ngat.swing package?}
+This package is a set of Java utility classes for performing common operations
+when writing GUIs using the javax.swing.* package.
+It consists of:
+\begin{itemize}
+\item The GUIDialogUnmanager class.
+\item The GUILabelSetter class.
+\item The GUITextAppender class.
+\item The MinimumSizeFrame class.
+\item The TitledSmallerBorder class.
+\end{itemize}
+
+
+\section{Swing Features}
+The javax.swing package currently has features which require these utility classes to get around.
+
+\subsection{Threading}
+All method calls that update graphical elements in the swing package must be called from the swing thread in Java.
+This is because the Swing package does not synchronize it's method calls within the package because of
+the resulting performance degredation.
+
+This causes problems when we wish to update our GUIs outside the Swing thread. This is a command problem in our GUIs
+as inter-process communication is done using threads to allow us to service more than one command at once. The ngat.net
+package, which implemnts the Java Message System (JMS) we use for inter-process communication, is thread based. We
+want to write receipt of acknowledments and command completeion messages to the parts of our GUI that
+reflects the current state.
+
+Luckily, Swing allows for the fact that users of the toolkit may want to perform these operations. It provides a 
+SwingUtilities class, which has an {\em invokeLater} method. This takes a {\em Runnable} object as a parameter,
+and runs this objects {\em run} maethod from within the Swing thread, so it is thread safe. This package contains
+several {\em Runnable} classes for use with this mechanism.
+
+\section{Class Overview}
+API documentation for these classes is available at \cite{bib:ngatswingtree}.
+
+\subsection{The GUIDialogUnmanager class}
+The GUIDialogUnmanager is Runnable. It is used as an argument to SwingUtilities.invokeLater.
+It unmanages a JDialog. This is needed when a dialog is unmanaged from a menu item, as otherwise
+the menu-bar the item is on complains about events from unmanaged components.
+
+\subsection{The GUILabelSetter class}
+The GUILabelSetter is Runnable. It is used as an argument to SwingUtilities.invokeLater.
+It sets a label's text. This should be used when a label needs to be updated out-side of the Swing
+thread.
+
+\subsection{The GUITextAppender class}
+The GUITextAppender is Runnable. It is used as an argument to SwingUtilities.invokeLater.
+It appends some passed in text to the JTextArea. This should be used when some text needs to
+be appended to a JTextArea out-side of the Swing thread.
+
+\subsection{The MinimumSizeFrame class}
+This class extends JFrame, and tries to set a minimum size for the frame.
+It does this by monitoring Component Window re-sizeing events, and checking the current size	
+against the minimum size and re-sizing if appropriate. This is not a very good mechanism
+for doing this, as the frame re-sizes smaller before this class has a chance to make it bigger again.
+
+\subsection{The TitledSmallerBorder class}
+This class extends TitledBorder, but tries to reduce the ridiculously big gap between
+the title text and the inner contents. It does this by over-riding {\em getBorderInsets}.
+This may not be needed once the font settings of our delevopment system are sorted out.
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{Bibliography}
+\bibitem{bib:ngatswingtree}{\bf Ngat.Swing Class Tree}
+Liverpool John Moores University \newline{\em http://ltccd1.livjm.ac.uk/\verb'~'dev/ngat/javadocs/ngat/swing/index.html}
+\end{thebibliography}
+
+\end{document}
