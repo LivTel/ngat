@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationProperties.java,v 1.1 2000-11-21 16:11:43 snf Exp $
+ * $Id: ConfigurationProperties.java,v 1.2 2001-07-11 10:24:23 snf Exp $
  *
  */
 public class ConfigurationProperties extends Properties {
@@ -116,6 +116,42 @@ public class ConfigurationProperties extends Properties {
 	}
     }
 
+    /** Returns an existing File from its path name in a property key.*/
+    public File getFile(String key) throws FileNotFoundException {
+	if (key == null || getProperty(key) == null)
+	    throw new FileNotFoundException("Cannot locate file for key ("+key+")");
+	File file = new File(getProperty(key));
+	if (!file.exists())
+	    throw new FileNotFoundException("No such file: "+file.getPath());
+	return file;
+    }
+
+    /** Returns a File from its path name in a property key or the supplied default.*/
+     public File getFile(String key, String def) throws FileNotFoundException {
+	 try {
+	     return getFile(key);
+	 } catch (FileNotFoundException e) {
+	     File file = new File(def);
+	     if (!file.exists())
+		 throw new FileNotFoundException("No such file: "+file.getPath());
+	     return file;
+	 }
+     }
+    
+    /** Returns a File from its path name in a property key or the supplied default.*/
+    public File getFile(String key, File file) throws FileNotFoundException {
+	try {
+	    return getFile(key);
+	} catch (FileNotFoundException e) {
+	    if (!file.exists())
+		throw new FileNotFoundException("No such file: "+file.getPath());
+	    return file;
+	}
+    }
+    
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 16:11:43  snf
+/** Initial revision
+/** */

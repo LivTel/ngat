@@ -11,7 +11,7 @@ import java.util.Enumeration;
  * and symbol-type, size and color set for each channel. Subclasses should redefine the
  * paint() and putPoint() methods to carry out any additional processing.
  *
- * $Id: GraphPlot.java,v 1.1 2000-11-21 16:24:33 snf Exp $
+ * $Id: GraphPlot.java,v 1.2 2001-07-11 10:24:23 snf Exp $
  *
  */ 
 public class GraphPlot extends JPanel {
@@ -122,8 +122,8 @@ public class GraphPlot extends JPanel {
 	    joinPoints[i] = false;
 	}
 
-	markColor[0] = Color.blue;
-	markColor[1] = Color.red;
+	markColor[0] = Color.red;
+	markColor[1] = Color.blue;
 	markColor[2] = Color.magenta;
 	markColor[3] = Color.black;
 	markColor[4] = Color.green;
@@ -143,7 +143,7 @@ public class GraphPlot extends JPanel {
      * @param chan The channel number.
      */
     public void putPoint(float x, float y, int chan) {
-	pts[level].add(x,y);
+	pts[chan].add(x,y);
 	repaint();
     }
 
@@ -195,7 +195,7 @@ public class GraphPlot extends JPanel {
     /** Toggle joined-up points on this channel.
      * @param chan The channel.
      * @param join If true, points are joined together. */
-    public void SetJoinPoints(int chan, boolean joinup) { joinPoints[chan] = joinup;}
+    public void setJoinPoints(int chan, boolean joinup) { joinPoints[chan] = joinup;}
 
     /** Reset the value of xLo. */
     public void setXLo(float x) { xLo = x;}
@@ -354,6 +354,8 @@ public class GraphPlot extends JPanel {
 	    int x1 = (int)getScreenX(pt.x);
 	    int y1 = (int)getScreenY(pt.y);
 
+	    int count = 0;
+
 	    while (e.hasMoreElements()) {
 
 		pt = (UPoint)e.nextElement();
@@ -383,12 +385,13 @@ public class GraphPlot extends JPanel {
 		g.drawLine(x1-2, y1, x1+2, y1);
 		g.drawLine(x1, y1-2, x1, y1+2);	
 		
-		if (joinPoints[k]) {
+		if (joinPoints[k] && count != 0) {
 		    g.drawLine(x1,y1, x2,y2);
 		}
 
 		x1 = x2;
 		y1 = y2;
+		count++;
 	    }
 	}
 	g.setColor(Color.black);
@@ -438,15 +441,15 @@ public class GraphPlot extends JPanel {
 	public void add(float x, float y) {
 	    array[next].x = x;
 	    array[next].y = y; 
-	    System.out.println("addpoint  next"+next+" start"+start);
+	   
 	    next = (next + 1)%nn;
-	    System.out.println("addpoint +next"+next+" start"+start);
+	    
 	    if (start == next) {
 		
 		start = (start + 1)%nn;
-		xLo += 1.0f;
-		xHi += 1.0f;
-		System.out.println("OK SHIFTING AXIS BY 1.0f");
+		//xLo += 1.0f;
+		//xHi += 1.0f;
+		
 	    }
 	}
 	
@@ -490,4 +493,7 @@ public class GraphPlot extends JPanel {
     
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 16:24:33  snf
+/** Initial revision
+/** */
