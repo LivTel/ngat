@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.6 2000-02-02 13:32:27 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.7 2000-02-02 13:34:19 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -11,7 +11,7 @@ DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS = -version -author -private
 
 SRCS = CCDLibraryDouble.java CCDLibraryFormatException.java CCDLibraryNativeException.java \
-CCDLibrarySetupWindow.javaCCDLibrary.java
+CCDLibrarySetupWindow.java CCDLibrary.java
 
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
@@ -41,6 +41,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.6  2000/02/02 13:32:27  cjm
+# Added CCDLibrarySetupWindow source file.
+#
 # Revision 1.5  1999/12/10 14:23:36  cjm
 # Added backup target.
 #
