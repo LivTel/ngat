@@ -25,7 +25,8 @@ $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 jar: $(JARLIBDIR)/$(JAR_FILE)
 
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
-	$(JAR) $(JAR_OPTIONS) $(JARLIBDIR)/$(JAR_FILE) $(LIBDIR)/$(PACKAGEDIR)/*.class
+	cd $(LIBDIR); \
+	$(JAR) $(JAR_OPTIONS) $(JARLIBDIR)/$(JAR_FILE) $(PACKAGEDIR)/*.class
 
 docs: $(DOCS)
 
@@ -51,8 +52,11 @@ backup: tidy
 # RCS information
 #
 # $Author: je $ 
-# $Date: 2002-09-26 10:17:32 $
+# $Date: 2002-09-30 14:55:52 $
 # $RCSfile: Makefile.ngat,v $
 # $Source: /space/home/eng/cjm/cvs/ngat/Makefile.ngat,v $
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2002/09/26 10:17:32  je
+# Initial revision
+#
