@@ -1,8 +1,12 @@
 package ngat.phase2;
+
+import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 import ngat.phase2.util.*;
+
 import com.odi.*;
 import com.odi.util.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 import java.io.*;
@@ -66,7 +70,7 @@ public class Observation extends DBObject implements Serializable {
     protected Source source;
     
      // Constructor.
-    public Observation() {this("untitled");}
+    public Observation() {super();}
     
     public Observation(String name) {
 	super(name);
@@ -253,7 +257,7 @@ public class Observation extends DBObject implements Serializable {
 	log(buffer,"Twilight usage: "+twilightUsageMode);
 	
 	// Check sunrise/set
-	Position sun = Scheduling.getSolarPosition();
+	Position sun = Astrometry.getSolarPosition();
 	
 	log(buffer,"Sun:   RA: "+Position.toHMSString(sun.getRA())+
 	    " dec: "+Position.toDMSString(sun.getDec()));
@@ -341,7 +345,7 @@ public class Observation extends DBObject implements Serializable {
 	
 	//allow &= lunarParams.inRange(lunarDistance);
 	
-	Position moon = Scheduling.getLunarPosition();
+	Position moon = Astrometry.getLunarPosition();
 	
 	log(buffer,"Moon:   RA: "+Position.toHMSString(moon.getRA())+
 	    " dec: "+Position.toDMSString(moon.getDec()));
