@@ -1,16 +1,16 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.2 1999-02-23 11:08:00 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.3 1999-03-08 12:20:40 dev Exp $
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.2 1999-02-23 11:08:00 dev Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.3 1999-03-08 12:20:40 dev Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -30,23 +30,23 @@ class CCDLibrary
 // ccd_interface.h
 	/**
 	 * Interface device number, showing that commands will currently be sent nowhere.
-	 * @see #CCDSetup
+	 * @see #CCDInitialise
 	 */
 	public final static int INTERFACE_DEVICE_NONE = 	0;
 	/**
 	 * Interface device number, showing that commands will currently be sent to the text interface 
 	 * to be printed out.
-	 * @see #CCDSetup
+	 * @see #CCDInitialise
 	 */
 	public final static int INTERFACE_DEVICE_TEXT =		1;
 	/**
 	 * Interface device number, showing that commands will currently be sent to the SBus interface.
-	 * @see #CCDSetup
+	 * @see #CCDInitialise
 	 */
 	public final static int INTERFACE_DEVICE_SBUS = 	2;
 	/**
 	 * Interface device number, showing that commands will currently be sent to the PCI interface.
-	 * @see #CCDSetup
+	 * @see #CCDInitialise
 	 */
 	public final static int INTERFACE_DEVICE_PCI = 		3;
 // ccd_setup.h 
@@ -226,7 +226,7 @@ class CCDLibrary
 	/**
 	 * Native wrapper to libccd routine that sets up the CCD library for use.
 	 */
-	private native void CCD_Setup(int interface_device);
+	private native void CCD_Initialise(int interface_device);
 	/**
 	 * Native wrapper to libccd routine that prints error values.
 	 */
@@ -390,9 +390,9 @@ class CCDLibrary
 	 * <a href="#INTERFACE_DEVICE_SBUS">INTERFACE_DEVICE_SBUS</a>,
 	 * <a href="#INTERFACE_DEVICE_PCI">INTERFACE_DEVICE_PCI</a>.
 	 */
-	public void CCDSetup(int interface_device)
+	public void CCDInitialise(int interface_device)
 	{
-		CCD_Setup(interface_device);
+		CCD_Initialise(interface_device);
 	}
 
 	/**
@@ -407,10 +407,11 @@ class CCDLibrary
 
 // ccd_interface.h
 	/**
-	 * Routine to open the interface selected with <a href="#CCDSetup">CCDSetup</a> or CCD_Interface_Set_Device 
+	 * Routine to open the interface selected with <a href="#CCDInitialise">CCDInitialise</a> 
+	 * or CCD_Interface_Set_Device 
 	 * (a libccd routine, not implemented in CCDLibrary at the moment). 
 	 * @return Returns true if the device could be opened, false otherwise.
-	 * @see #CCDSetup
+	 * @see #CCDInitialise
 	 * @see #CCDInterfaceClose
 	 */
 	public boolean CCDInterfaceOpen()
@@ -419,11 +420,12 @@ class CCDLibrary
 	}
 
 	/**
-	 * Routine to close the interface selected with <a href="#CCDSetup">CCDSetup</a> or CCD_Interface_Set_Device
+	 * Routine to close the interface selected with <a href="#CCDInitialise">CCDInitialise</a> 
+	 * or CCD_Interface_Set_Device
 	 * (a libccd routine, not implemented in CCDLibrary at the moment) and opened with 
 	 * <a href="#CCDInterfaceOpen">CCDInterfaceOpen</a>.
 	 * @return Returns true if the device could be closed, false otherwise.
-	 * @see #CCDSetup
+	 * @see #CCDInitialise
 	 * @see #CCDInterfaceOpen
 	 */
 	public boolean CCDInterfaceClose()
@@ -556,6 +558,9 @@ class CCDLibrary
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  1999/02/23 11:08:00  dev
+// backup/transfer to ltccd1.
+//
 // Revision 0.1  1999/01/21 15:44:00  dev
 // initial revision
 //
