@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.23 2000-05-25 08:54:48 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.24 2000-05-26 09:56:48 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.23 $
+ * @version $Revision: 0.24 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.23 2000-05-25 08:54:48 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.24 2000-05-26 09:56:48 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -325,6 +325,10 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that gets the setup window flags.
 	 */
 	private native int CCD_Setup_Get_Window_Flags();
+	/**
+	 * Native wrapper to libccd routine that gets a setup CCD window.
+	 */
+	private native CCDLibrarySetupWindow CCD_Setup_Get_Window(int windowIndex) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that gets the filter wheel position.
 	 */
@@ -928,6 +932,21 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Returns a new instance of CCDLibrarySetupWindow describing the CCD camera window at index windowIndex.
+	 * Note this window is only used if the corresponding bit in CCDSetupGetWindowFlags() is set.
+	 * @param windowIndex Which window to get information for. This should be from zero to the 
+	 * 	number of windows minus one. Four windows are supported by the hardware, hence the maximum value
+	 * 	the index can take is three.
+	 * @return A new instance of CCDLibrarySetupWindow with the window paramaters.
+	 * @exception CCDLibraryNativeException Thrown if the windowIndex is out of range.
+	 * @see #CCDSetupGetWindowFlags
+	 */
+	public CCDLibrarySetupWindow CCDSetupGetWindow(int windowIndex) throws CCDLibraryNativeException
+	{
+		return CCD_Setup_Get_Window(windowIndex);
+	}
+
+	/**
 	 * Routine to get the last requested position for the specified filter wheel. This value
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @param wheelNumber Which filter wheel to get the position for.
@@ -1067,6 +1086,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.23  2000/05/25 08:54:48  cjm
+// Added CCDSetupGetGain method.
+//
 // Revision 0.22  2000/03/09 16:35:12  cjm
 // Added CCDDSPCommandReadExposureTime implementation.
 //
