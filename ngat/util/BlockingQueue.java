@@ -2,14 +2,20 @@
  * A first in-first out queue that will block on both the <code>remove</code>
  * and <code>peek</code> methods until they can succeed.
  * 
+ * 
+ * Blocking is performed using the <code>wait - notifyAll</code> methods.
+ *
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
-/* $Date: 2002-09-25 10:07:12 $
+/* $Date: 2002-09-25 10:09:16 $
  * $RCSfile: BlockingQueue.java,v $
  * $Source: /space/home/eng/cjm/cvs/ngat/util/BlockingQueue.java,v $
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2002/09/25 10:07:12  snf
+ * Initial revision
+ *
  */
 
 package ngat.util;
@@ -22,7 +28,7 @@ public class BlockingQueue
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: BlockingQueue.java,v 1.1 2002-09-25 10:07:12 je Exp $" );
+	new String( "$Id: BlockingQueue.java,v 1.2 2002-09-25 10:09:16 je Exp $" );
 
     /**
      * The Queue.
