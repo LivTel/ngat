@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.43 2004-05-16 14:18:51 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.44 2004-08-02 16:27:44 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.43 $
+ * @version $Revision: 0.44 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.43 2004-05-16 14:18:51 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.44 2004-08-02 16:27:44 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -65,20 +65,26 @@ public class CCDLibrary
 	 */
 	public final static int CCD_DSP_DEINTERLACE_SINGLE = 		0;
 	/**
+	 * De-interlace type. This setting flips the output image in X, if the CCD was readout from the
+	 * "wrong" amplifier, i.e. to ensure east is to the left.
+	 * @see #CCDSetupDimensions
+	 */
+	public final static int CCD_DSP_DEINTERLACE_FLIP = 		1;
+	/**
 	 * De-interlace type. This setting deinterlaces split parallel readout.
 	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_DSP_DEINTERLACE_SPLIT_PARALLEL = 	1;
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_PARALLEL = 	2;
 	/**
 	 * De-interlace type. This setting deinterlaces split serial readout.
 	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_DSP_DEINTERLACE_SPLIT_SERIAL =  	2;
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_SERIAL =  	3;
 	/**
 	 * De-interlace type. This setting deinterlaces split quad readout.
 	 * @see #CCDSetupDimensions
 	 */
-	public final static int CCD_DSP_DEINTERLACE_SPLIT_QUAD = 	3;
+	public final static int CCD_DSP_DEINTERLACE_SPLIT_QUAD = 	4;
 
 // ccd_exposure.h
 	/* These constants should be the same as those in ccd_exposure.h */
@@ -715,6 +721,7 @@ public class CCDLibrary
 	 * @return The deinterlace type number, one of:
 	 * 	<ul>
 	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>
+	 * 	<li><a href="#CCD_DSP_DEINTERLACE_FLIP">CCD_DSP_DEINTERLACE_FLIP</a>
 	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SPLIT_PARALLEL">CCD_DSP_DEINTERLACE_SPLIT_PARALLEL</a>
 	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SPLIT_SERIAL">CCD_DSP_DEINTERLACE_SPLIT_SERIAL</a>
 	 * 	<li><a href="#CCD_DSP_DEINTERLACE_SPLIT_QUAD">CCD_DSP_DEINTERLACE_SPLIT_QUAD</a>
@@ -725,6 +732,8 @@ public class CCDLibrary
 	{
 		if(s.equals("CCD_DSP_DEINTERLACE_SINGLE"))
 			return CCD_DSP_DEINTERLACE_SINGLE;
+		if(s.equals("CCD_DSP_DEINTERLACE_FLIP"))
+			return CCD_DSP_DEINTERLACE_FLIP;
 		if(s.equals("CCD_DSP_DEINTERLACE_SPLIT_PARALLEL"))
 			return CCD_DSP_DEINTERLACE_SPLIT_PARALLEL;
 		if(s.equals("CCD_DSP_DEINTERLACE_SPLIT_SERIAL"))
@@ -1238,6 +1247,7 @@ public class CCDLibrary
 	 * @param deinterlaceSetting The algorithm to use for deinterlacing the resulting data. The data needs to be
 	 * 	deinterlaced if the CCD is read out from multiple readouts.One of:
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>,
+	 * 	<a href="#CCD_DSP_DEINTERLACE_FLIP">CCD_DSP_DEINTERLACE_FLIP</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_PARALLEL">CCD_DSP_DEINTERLACE_SPLIT_PARALLEL</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_SERIAL">CCD_DSP_DEINTERLACE_SPLIT_SERIAL</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_QUAD">CCD_DSP_DEINTERLACE_SPLIT_QUAD</a>.
@@ -1353,6 +1363,7 @@ public class CCDLibrary
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @return Returns the deinterlace type, one of:
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SINGLE">CCD_DSP_DEINTERLACE_SINGLE</a>,
+	 * 	<a href="#CCD_DSP_DEINTERLACE_FLIP">CCD_DSP_DEINTERLACE_FLIP</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_PARALLEL">CCD_DSP_DEINTERLACE_SPLIT_PARALLEL</a>,
 	 * 	<a href="#CCD_DSP_DEINTERLACE_SPLIT_SERIAL">CCD_DSP_DEINTERLACE_SPLIT_SERIAL</a> and 
 	 *	<a href="#CCD_DSP_DEINTERLACE_SPLIT_QUAD">CCD_DSP_DEINTERLACE_SPLIT_QUAD</a>.
@@ -1664,6 +1675,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.43  2004/05/16 14:18:51  cjm
+// Deleted CCDExposureAbortReadout. Allexposure aborts now handled by CCDExposureAbort.
+//
 // Revision 0.42  2004/03/03 15:45:19  cjm
 // Added comments amount units of temperature returned in CCDTemperatureGet.
 //
