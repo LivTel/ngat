@@ -1,5 +1,5 @@
 // FitsHeader.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.1 2000-05-30 14:37:28 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.2 2000-06-14 10:50:36 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -11,7 +11,7 @@ import java.util.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -19,7 +19,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.1 2000-05-30 14:37:28 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.2 2000-06-14 10:50:36 cjm Exp $");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -258,6 +258,13 @@ public class FitsHeader
 		value = cardImage.getValue();
 		comment = cardImage.getComment();
 		units = cardImage.getUnits();
+	// If the keyword or value is null we get a NULLPointer Exception thrown, which
+	// is not very descriptive. Catch this and make something more descriptive.
+		if((keyword == null)||(value == null))
+		{
+			throw new FitsHeaderException("writeFitsField:keyword/value null:keyword:'"+keyword+
+				"':value:'"+value+"'.");
+		}
 		if(value instanceof String)
 			retval = Fits_Header_Update_Keyword_String(keyword,(String)value,comment,units);
 		else if(value instanceof Integer)
@@ -312,4 +319,7 @@ public class FitsHeader
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/05/30 14:37:28  cjm
+// initial revision.
+//
 //
