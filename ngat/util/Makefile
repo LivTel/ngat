@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.10 2000-09-06 13:16:22 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.11 2000-11-21 14:31:38 snf Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -10,7 +10,7 @@ JAVACFLAGS = -d $(LIBDIR) -sourcepath ../..
 DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS = -version -author -private
 SRCS = ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java CircularList.java CPUScheduler.java \
-ExecuteCommand.java StringUtilites.java NGATProperties.java NGATPropertyException.java
+ExecuteCommand.java StringUtilites.java NGATProperties.java NGATPropertyException.java CircularArray.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 
@@ -41,6 +41,9 @@ backup: tidy
 	-$(RM) $(RM_OPTIONS) $(OBJS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.10  2000/09/06 13:16:22  cjm
+# Added StringUtilites, NGATProperties classes.
+#
 # Revision 1.9  2000/02/15 13:41:15  cjm
 # Added ExecuteCommand.java source file.
 #
