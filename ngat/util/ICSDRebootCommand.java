@@ -1,5 +1,5 @@
 // ICSDRebootCommand.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/ICSDRebootCommand.java,v 1.1 2001-05-14 19:02:08 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/ICSDRebootCommand.java,v 1.2 2001-05-15 09:08:29 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -13,7 +13,7 @@ import ngat.util.logging.*;
  * This class is used to reboot an instrument control system. A telnet conenction is made to
  * an <b>icsd_inet</b> daemon running on the instrument control computer. The command "reboot"
  * is then sent over the connection, and the connection closed. 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Chris Mottram
  * @see ngat.net.TelnetConnection
  */
@@ -22,7 +22,7 @@ public class ICSDRebootCommand extends ICSDCommand implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ICSDRebootCommand.java,v 1.1 2001-05-14 19:02:08 cjm Exp $");
+	public final static String RCSID = new String("$Id: ICSDRebootCommand.java,v 1.2 2001-05-15 09:08:29 cjm Exp $");
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
@@ -100,7 +100,7 @@ public class ICSDRebootCommand extends ICSDCommand implements Runnable
 	 * Main program.
 	 * @param args Argument list. Should have 2 arguments as follows:
 	 * 	<pre>
-	 * 	java ICSDRebootCommand <address> <port number>
+	 * 	java ICSDRebootCommand &lt;address&gt; &lt;port number&gt;
 	 * 	</pre>
 	 */
 	public static void main(String args[])
@@ -144,4 +144,7 @@ public class ICSDRebootCommand extends ICSDCommand implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2001/05/14 19:02:08  cjm
+// Initial revision
+//
 //
