@@ -17,9 +17,8 @@ import ngat.ngtcs.subsystem.*;
  * Enter the value of the effective wavelength of light used in
  * theatmospheric refraction calculation for the autoguider.
  * 
- * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AGWAVELENGTHImplementor
   extends CommandImplementor
@@ -34,7 +33,7 @@ public class AGWAVELENGTHImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGWAVELENGTHImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: AGWAVELENGTHImplementor.java,v 1.4 2003-09-29 12:04:32 je Exp $" );
 
   /**
    * The timeout for the AGWAVELENGTH command (3 seconds), in milliseconds.
@@ -72,7 +71,8 @@ public class AGWAVELENGTHImplementor
 
 
   /**
-   *
+   * Set the wavelength on the VirtualTelescope used by the autoguider to the
+   * wavelength specified in the command argument.
    */
   public void execute()
   {
@@ -94,11 +94,14 @@ public class AGWAVELENGTHImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-09-29 12:04:32 $
  * $RCSfile: AGWAVELENGTHImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGWAVELENGTHImplementor.java,v $
- *      $Id: AGWAVELENGTHImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: AGWAVELENGTHImplementor.java,v 1.4 2003-09-29 12:04:32 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

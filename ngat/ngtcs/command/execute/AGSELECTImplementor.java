@@ -10,9 +10,8 @@ import ngat.ngtcs.subsystem.*;
 /**
  * Select which Autoguider to use.
  * 
- * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AGSELECTImplementor
   extends CommandImplementor
@@ -27,7 +26,7 @@ public class AGSELECTImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGSELECTImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: AGSELECTImplementor.java,v 1.4 2003-09-29 12:03:13 je Exp $" );
 
   /**
    * The timeout for the AGSELECT command (20 seconds), in milliseconds.
@@ -35,7 +34,7 @@ public class AGSELECTImplementor
   public static final int TIMEOUT = 20000;
 
   /**
-   *
+   * The selected autoguider.
    */
   protected static TTL_Autoguider selectedAutoguider = null;
 
@@ -68,7 +67,9 @@ public class AGSELECTImplementor
 
 
   /**
-   *
+   * Call the super-constructor with the given arguments:
+   * (<code>super( t, c );</code>
+   * @see CommandImplementor
    */
   public AGSELECTImplementor
     ( Telescope t, Command c )
@@ -78,7 +79,10 @@ public class AGSELECTImplementor
 
 
   /**
-   *
+   * Request the PluggableSubSystem named in the AGSELECT command from the
+   * telescope object.  If no such PluggableSubSystem exists, telescope will
+   * return a <code>null</code> and a failed CommandDone will be returned by
+   * this CommandImplementor.
    */
   public void execute()
   {
@@ -109,11 +113,14 @@ public class AGSELECTImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-09-29 12:03:13 $
  * $RCSfile: AGSELECTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGSELECTImplementor.java,v $
- *      $Id: AGSELECTImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: AGSELECTImplementor.java,v 1.4 2003-09-29 12:03:13 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *
