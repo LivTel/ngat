@@ -1,16 +1,16 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.6 1999-06-07 16:56:41 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.7 1999-07-09 12:17:09 dev Exp $
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.6 $
+ * @version $Revision: 0.7 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.6 1999-06-07 16:56:41 dev Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.7 1999-07-09 12:17:09 dev Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -260,6 +260,14 @@ class CCDLibrary
 	 * Native wrapper to libccd routine that aborts the CCD setup.
 	 */
 	private native void CCD_Setup_Abort();
+	/**
+	 * Native wrapper to libccd routine that gets the number of columns.
+	 */
+	private native int CCD_Setup_Get_NCols();
+	/**
+	 * Native wrapper to libccd routine that gets the number of Rows.
+	 */
+	private native int CCD_Setup_Get_NRows();
 	/**
 	 * Native wrapper to libccd routine that aborts the CCD setupgets whether a setup operation is in progress.
 	 */
@@ -559,7 +567,30 @@ class CCDLibrary
 	}
 
 	/**
-	 * Routine to abort a setup that is underway.
+	 * Routine to get the number of columns on the CCD chip last passed into CCDSetupSetupCCD. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns an integer representing the number of columns.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public int CCDSetupGetNCols()
+	{
+		return CCD_Setup_Get_NCols();
+	}
+
+	/**
+	 * Routine to get the number of rows on the CCD chip last passed into CCDSetupSetupCCD. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns an integer representing the number of rows.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public int CCDSetupGetNRows()
+	{
+		return CCD_Setup_Get_NRows();
+	}
+
+	/**
+	 * Routine to detect whether a setup operation is underway.
+	 * @return Returns true is a setup is in progress otherwise false.
 	 * @see #CCDSetupSetupCCD
 	 */
 	public boolean CCDSetupGetSetupInProgress()
@@ -728,6 +759,9 @@ class CCDLibrary
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.6  1999/06/07 16:56:41  dev
+// String to Number parse routines
+//
 // Revision 0.5  1999/05/28 09:54:18  dev
 // "Name
 //
