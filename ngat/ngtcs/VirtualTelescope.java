@@ -21,7 +21,7 @@ import ngat.ngtcs.subsystem.*;
  * coordinates from the focal station X,Y and the rotator position angle.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class VirtualTelescope
 {
@@ -35,7 +35,7 @@ public class VirtualTelescope
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: VirtualTelescope.java,v 1.1 2003-07-01 10:11:30 je Exp $" );
+    new String( "$Id: VirtualTelescope.java,v 1.2 2003-09-24 14:26:15 je Exp $" );
 
   /**
    * AstrometryCalculator used to perform all astrometric transformations.
@@ -61,7 +61,7 @@ public class VirtualTelescope
   /**
    * Mount for the Telescope.
    */
-  protected Mount mount;
+  protected MountType mountType;
 
   /**
    * The Rotator used on the Telescope.
@@ -79,7 +79,8 @@ public class VirtualTelescope
   protected double focalLength = 1.0;
 
   /**
-   *
+   * The physical location of the instrument (0.0, 0.0) coordinate on the
+   * rotator plane, in millimetres.
    */
   protected PointingOrigin pointingOrigin;
 
@@ -101,12 +102,12 @@ public class VirtualTelescope
   /**
    * Define the offset for the PA calculation points.
    */
-  private double offsetRadians = 0.000005;
+  protected double offsetRadians = 0.000005;
 
   /**
    * Define the sine of the offset angle for the PA calculation points.
    */
-  private double sineOffset = Math.sin( offsetRadians );
+  protected double sineOffset = Math.sin( offsetRadians );
 
   /**
    * The astronomical target used in the transformations.
@@ -117,7 +118,10 @@ public class VirtualTelescope
 
   /**
    * Virtual Telescope constructor.
-   * @param telescope telescope for which this is a virtual representation
+   * @param t the telescope for which this is a virtual representation
+   * @param fs the FocalStation defining this VT's coordinates
+   * @param ac the AstrometryCalculator to use for astrometric transformations
+   * @param d the focal length of this VT
    */
   public VirtualTelescope( Telescope t,
 			   FocalStation fs,
@@ -129,7 +133,10 @@ public class VirtualTelescope
     astroCalc     = ac;
     focalLength   = d;
     name          = focalStation.getName();
-    pointingModel = telescope.getMount().getPointingModel();
+    Mount mount   = telescope.getMount();
+    mountType     = mount.getType();
+    pointingModel = mount.getPointingModel();
+    Rotator rotator = t.getRotator();
 
     // read relevant config scripts and initiallise
   }
@@ -137,7 +144,10 @@ public class VirtualTelescope
 
   /**
    * Virtual Telescope constructor.
-   * @param telescope telescope for which this is a virtual representation
+   * @param fs the FocalStation defining this VT's coordinates
+   * @param ac the AstrometryCalculator to use for astrometric transformations
+   * @param d the focal length of this VT
+   * @param pm the pointing model for this VT
    */
   public VirtualTelescope( FocalStation fs,
 			   AstrometryCalculator ac,
@@ -162,6 +172,30 @@ public class VirtualTelescope
   public FocalStation getFocalStation()
   {
     return focalStation;
+  }
+
+
+  /**
+   * Reutrn the pointing origin that is used in the astrometric transformations
+   * for this VT.
+   * @return pointingOrigin
+   * @see #pointingOrigin
+   */
+  public PointingOrigin getPointingOrigin()
+  {
+    return pointingOrigin;
+  }
+
+
+  /**
+   * Set the pointing origin that is used in the astrometric transformations
+   * for this VT.
+   * @param po
+   * @see #pointingOrigin
+   */
+  public void setPointingOrigin( PointingOrigin po )
+  {
+    pointingOrigin = po;
   }
 
 
@@ -221,9 +255,12 @@ public class VirtualTelescope
   public XYZMatrix calcMountPosition( Timestamp timestamp,
 				      Target target )
   {
-    return calcMountPosition( timestamp, target, focalStation.getTargetXY(),
-			      rotator.predictPositionAngle( timestamp ),
-			      lambda );
+    return calcMountPosition
+      ( timestamp,
+	target,
+	focalStation.getTargetXY(),
+	( rotator == null ? 0.0 : rotator.predictPositionAngle( timestamp ) ),
+	lambda );
   }
 
 
@@ -328,10 +365,10 @@ public class VirtualTelescope
   public ReportedTarget calcObservedTarget( Timestamp timestamp,
 					    XYZMatrix mountPosition )
   {
-    return calcObservedTarget( timestamp, mountPosition,
-			       focalStation.getTargetXY(),
-			       rotator.predictPositionAngle( timestamp ),
-			       lambda );
+    return calcObservedTarget
+      ( timestamp, mountPosition, focalStation.getTargetXY(),
+	( rotator == null ? 0.0 : rotator.predictPositionAngle( timestamp ) ),
+	lambda );
   }
 
 
@@ -529,7 +566,7 @@ public class VirtualTelescope
     }
 
     //convert from Horizon to Equatorial
-    if( mount.getType() == MountType.EQUATORIAL )
+    if( mountType == MountType.EQUATORIAL )
     {
       XYZMatrix temp;
       temp = astroCalc.altAzToRADec( upperPos );
@@ -578,7 +615,7 @@ public class VirtualTelescope
     z = mountPos.getZ();
 
     positionAngle = pointingModel.removeRotatorCorrection
-      ( rotator.getPositionAngle() );
+      ( ( rotator == null ? 0.0 : rotator.getPositionAngle() ) );
 
     /*
       System.err.println( "current corrected rotPos = "+
@@ -599,7 +636,7 @@ public class VirtualTelescope
       lowerPos = new XYZMatrix( x/r, y/r, ( z - sineOffset )/r );
 
       //convert from Horizon to Equatorial
-      if( mount.getType() == MountType.EQUATORIAL )
+      if( mountType == MountType.EQUATORIAL )
       {
 	XYZMatrix temp;
 	temp = astroCalc.raDecToAltAz( upperPos );
@@ -697,9 +734,12 @@ public class VirtualTelescope
   }
 }
 /*
- *    $Date: 2003-07-01 10:11:30 $
+ *    $Date: 2003-09-24 14:26:15 $
  * $RCSfile: VirtualTelescope.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/VirtualTelescope.java,v $
- *      $Id: VirtualTelescope.java,v 1.1 2003-07-01 10:11:30 je Exp $
+ *      $Id: VirtualTelescope.java,v 1.2 2003-09-24 14:26:15 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:11:30  je
+ *     Initial revision
+ *
  */
