@@ -12,7 +12,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * mount-position angle and set autoguider pixel on which to guide.
  * 
  * @author $Author: je $
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AGMOVEImplementor
   extends CommandImplementor
@@ -27,7 +27,7 @@ public class AGMOVEImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGMOVEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: AGMOVEImplementor.java,v 1.4 2003-09-29 11:37:17 je Exp $" );
 
   /**
    * The timeout for the AGMOVE command (500 seconds), in milliseconds.
@@ -63,7 +63,13 @@ public class AGMOVEImplementor
 
 
   /**
-   *
+   * First the autoguider position demand and the rotator angle demand are
+   * sent.  After both mechanisms have fallen within tolerance of the demanded
+   * positions the GuideOnPixel command is sent to the autoguider.  The
+   * autoguider state is then monitored every second to check for the
+   * <code>AGS_State.E_AGS_ON_PIXEL</code> state before returning a success.
+   * Failure to acheive any of these requirements before the timeout expires
+   * results in a failure being returned.
    */
   public void execute()
   {
@@ -85,7 +91,6 @@ public class AGMOVEImplementor
     {
       ag.setDemandPosition( radius );
       rot.setDemandPosition( angle );
-      ag.guideOnPixel( x, y );
 
       // Rotator position tolerance
       tolerance = rot.getPositionTolerance();
@@ -105,8 +110,8 @@ public class AGMOVEImplementor
 	actual = rot.getActualPosition();
 	posError = Math.abs( actual - angle );
       }
-      while( ( ag.get_AGD_State() == AGD_State.E_AGD_STATE_MOVING )&&
-	     ( posError > tolerance )&&( slept < TIMEOUT ) );
+      while( ( ( ag.get_AGD_State() == AGD_State.E_AGD_STATE_MOVING )||
+	       ( posError > tolerance ) )&&( slept < TIMEOUT ) );
 
       // check rotator position
       if( posError > tolerance )
@@ -135,6 +140,38 @@ public class AGMOVEImplementor
 	return;
       }
 
+      // send GuideOnPixel command
+      ag.guideOnPixel( x, y );
+      AGS_State actual, desired = AGS_State.E_AGS_ON_PIXEL;
+
+      // wait for AGS state change and see if it's the desired one
+      // every second
+      sleep = 1000;
+      do
+      {
+	try
+	{
+	  Thread.sleep( sleep );
+	  slept += sleep;
+	}
+	catch( InterruptedException ie )
+	{
+	  logger.log( 1, logName, ie.toString() );
+	}
+	actual = ttlAG.get_AGS_State();
+      }
+      while( ( actual == AGS_State.E_AGS_WORKING )&&( slept < TIMEOUT ) );
+
+      // if the desired state is not acheived, return a failure
+      if( actual != desired )
+      {
+	String s = ( "after "+slept+"ms AGS has acheived "+actual.getName()+
+		     " state, desired state is "+desired.getName() );
+	commandDone.setErrorMessage( s );
+	logger.log( 1, logName, s );
+	return;
+      }
+
       commandDone.setSuccessful( true );
     }
     catch( TTL_SystemException se )
@@ -156,11 +193,14 @@ public class AGMOVEImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-09-29 11:37:17 $
  * $RCSfile: AGMOVEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGMOVEImplementor.java,v $
- *      $Id: AGMOVEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: AGMOVEImplementor.java,v 1.4 2003-09-29 11:37:17 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/23 14:16:58  je
  *     Added documentation.
  *

@@ -19,7 +19,7 @@ import ngat.ngtcs.subsystem.ags.*;
  * initial guide star coordinates have been calculated.  When autoguiding is
  * stopped the pointing model corrections are removed.
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AUTOGUIDEImplementor extends CommandImplementor
   implements Runnable
@@ -34,7 +34,7 @@ public class AUTOGUIDEImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AUTOGUIDEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: AUTOGUIDEImplementor.java,v 1.4 2003-09-29 11:42:03 je Exp $" );
 
   /**
    * The timeout for the AUTOGUIDE command (200 seconds), in milliseconds.
@@ -90,7 +90,12 @@ public class AUTOGUIDEImplementor extends CommandImplementor
 
 
   /**
-   *
+   * After the relevent command has been sent to the autoguider the autoguider
+   * state is checked periodically for the demanded mode of operation.  Once
+   * acheived a Thread is started from this class (see the <code>run</code>
+   * method) to update the pointing corrections.
+   * Failure to acheive the desired state within the timeout results in
+   * failure.
    */
   public void execute()
   {
@@ -261,11 +266,14 @@ public class AUTOGUIDEImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-09-29 11:42:03 $
  * $RCSfile: AUTOGUIDEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AUTOGUIDEImplementor.java,v $
- *      $Id: AUTOGUIDEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: AUTOGUIDEImplementor.java,v 1.4 2003-09-29 11:42:03 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *
