@@ -1,5 +1,5 @@
 // SplashScreen.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/SplashScreen.java,v 0.1 1999-12-14 11:58:36 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/SplashScreen.java,v 0.2 1999-12-14 12:29:34 cjm Exp $
 package ngat.swing;
 
 import java.awt.*;
@@ -9,15 +9,17 @@ import javax.swing.border.Border;
 
 /**
  * This class provides a splash screen to be used when a program is starting up.
+ * The splash screen stays up for a user definable length of time.
+ * Clicking the mouse on the splash screen unmanages it.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  */
 public class SplashScreen implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SplashScreen.java,v 0.1 1999-12-14 11:58:36 cjm Exp $");
+	public final static String RCSID = new String("$Id: SplashScreen.java,v 0.2 1999-12-14 12:29:34 cjm Exp $");
 	/**
 	 * The window the splash screen appears in.
 	 */
@@ -155,6 +157,7 @@ public class SplashScreen implements Runnable
 			contentPanel.setBorder(BorderFactory.createLineBorder(Color.red,10));
 		else
 			contentPanel.setBorder(border);
+		contentPanel.addMouseListener(new SplashScreenMouseListener());
 
 		// start a thread to display it
 		Thread t = new Thread(this);
@@ -179,7 +182,27 @@ public class SplashScreen implements Runnable
 		}
 		splashWindow.setVisible(false);
 	}
+
+	/**
+	 * Inner class providing a mouse listener that listens for mouse clicks on the splash screen.
+	 */
+	class SplashScreenMouseListener extends MouseAdapter
+	{
+		/**
+		 * Method called when the mouse is clicked on the splash window.
+		 * Unmanages the splash window.
+		 * @see #splashWindow
+		 */
+		public void mouseClicked(MouseEvent e)
+		{
+			splashWindow.setVisible(false);
+		}
+	}
+
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  1999/12/14 11:58:36  cjm
+// initial revision.
+//
 //
