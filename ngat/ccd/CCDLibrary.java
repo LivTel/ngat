@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.24 2000-05-26 09:56:48 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.25 2000-05-26 10:05:29 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.24 $
+ * @version $Revision: 0.25 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.24 2000-05-26 09:56:48 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.25 2000-05-26 10:05:29 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -100,6 +100,10 @@ public class CCDLibrary
 	public final static int CCD_INTERFACE_DEVICE_PCI = 		2;
 // ccd_setup.h 
 	/* These constants should be the same as those in ccd_setup.h */
+	/**
+	 * The number of windows the controller can put on the CCD.
+	 */
+	public final static int CCD_SETUP_WINDOW_COUNT = 		4;
 	/**
 	 * Window flag used as part of the window_flags bit-field parameter of CCD_Setup_Dimensions to specify the
 	 * first window position is to be used.
@@ -1086,6 +1090,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.24  2000/05/26 09:56:48  cjm
+// Added CCDSetupGetWindow method.
+//
 // Revision 0.23  2000/05/25 08:54:48  cjm
 // Added CCDSetupGetGain method.
 //
