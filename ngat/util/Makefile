@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.12 2000-11-21 15:40:42 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.13 2000-11-21 16:29:52 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -16,7 +16,7 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 			CPUScheduler.java ExecuteCommand.java StringUtilites.java \
 			NGATProperties.java NGATPropertyException.java CircularArray.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
-DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
+DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
 top: jar docs
 
@@ -28,10 +28,9 @@ jar: $(JARLIBDIR)/$(JAR_FILE)
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
 	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
-#docs: $(DOCS)
+docs: $(DOCS)
 
-#$(DOCS): $(SRCS)
-docs:
+$(DOCSDIR)/$(PACKAGEDIR)/%.html: %.java
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
 
 checkout:
@@ -50,6 +49,9 @@ backup: tidy
 	-$(RM) $(RM_OPTIONS) $(OBJS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.12  2000/11/21 15:40:42  cjm
+# Changed to create jars per ngat package.
+#
 # Revision 1.11  2000/11/21 14:31:38  snf
 # Added CircularArray.
 #
