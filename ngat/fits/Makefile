@@ -1,25 +1,33 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/fits/Makefile,v 0.2 2000-10-25 10:16:12 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/fits/Makefile,v 0.3 2000-11-21 14:33:00 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
 
-PACKAGEDIR = ngat/fits
-PACKAGENAME = ngat.fits
-JAVACFLAGS = -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
-DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
-DOCFLAGS = -version -author -private
+FITS_NAME	=fits
+PACKAGEDIR 	=ngat/$(FITS_NAME)
+PACKAGENAME 	=ngat.$(FITS_NAME)
+JAR_FILE	=$(NGAT_HOME)_$(FITS_NAME).jar
+LIBDIR		=lib
+JAVACFLAGS 	= -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
+DOCSDIR 	= $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
+DOCFLAGS 	= -version -author -private
 
 SRCS = FitsHeader.java FitsHeaderCardImage.java FitsHeaderException.java \
-FitsHeaderCardImageOrderNumberComparator.java FitsHeaderDefaults.java
+	FitsHeaderCardImageOrderNumberComparator.java FitsHeaderDefaults.java
 
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 
-top: $(OBJS) docs
+top: jar docs
 
 $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
+
+jar: $(JARLIBDIR)/$(JAR_FILE)
+
+$(JARLIBDIR)/$(JAR_FILE): $(OBJS)
+	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
 docs:
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
@@ -44,6 +52,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.2  2000/10/25 10:16:12  cjm
+# Shared C library now a separate package.
+#
 # Revision 0.1  2000/06/01 10:46:35  cjm
 # initial revision.
 #
