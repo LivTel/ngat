@@ -17,8 +17,6 @@ SRCS           = AutoguideMode.java \
                  IERSData.java \
                  Matrix.java \
                  MeteorologicalData.java \
-                 MountState.java \
-                 MountStatus.java \
                  ReportedTarget.java \
                  RotatorMode.java \
                  SiteData.java \
@@ -32,8 +30,8 @@ SRCS           = AutoguideMode.java \
                  TelescopeStatus.java \
                  Time.java \
                  TimescaleType.java \
-                 TimestampedPosition.java \
                  Timestamp.java \
+                 TimestampedPosition.java \
                  Util.java \
                  XYZMatrix.java
 
@@ -41,9 +39,9 @@ SRCS           = AutoguideMode.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 0.3 $
-#       $Id: Makefile,v 0.3 2003-07-01 10:13:45 je Exp $
-#     $Date: 2003-07-01 10:13:45 $
+# $Revision: 0.4 $
+#       $Id: Makefile,v 0.4 2003-07-01 10:17:06 je Exp $
+#     $Date: 2003-07-01 10:17:06 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Makefile,v $
 #      $Log: not supported by cvs2svn $
