@@ -10,7 +10,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class FOCUSImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class FOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: FOCUSImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: FOCUSImplementor.java,v 1.4 2003-09-29 14:16:44 je Exp $" );
 
   /**
    * The timeout for the FOCUS command (900 seconds), in milliseconds.
@@ -62,33 +62,44 @@ public class FOCUSImplementor extends CommandImplementor
 
 
   /**
-   *
+   * First define the demand to send to the secondary mirror (default or
+   * user-input focus), then send the demand and periodically poll the position
+   * until it is within tolerance of the demand.  An out of range demand or
+   * expired timeout will result in a failure.
    */
   public void execute()
   {
-    TTL_SecondaryMirror sm =
-      (TTL_SecondaryMirror)TTL_SecondaryMirror.getInstance();
-
+    TTL_SecondaryMirror sm = TTL_SecondaryMirror.getInstance();
     FOCUS focus = (FOCUS)command;
+    double actual = 0.0;
+    double demand = focus.getPosition();
+    double posError = 999999.9;
+    double tolerance = sm.getPositionTolerance();
 
-    if( focus.isDefaultPosition() )
+    try
     {
-
-    }
-    else
-    {
-      try
+      if( focus.isDefaultPosition() )
       {
-	double actual, demand, posError, tolerance;
-	demand = focus.getPosition();
-	posError = 0.0;
-	tolerance = sm.getPositionTolerance();
+	demand = telescope.getActiveVT().getFocalStation().getFocus();
+	sm.setDemandPosition( demand );
 
+	do
+	{
+	  sleep( 10000 );
 
+	  actual = sm.getActualPosition();
+	  demand = sm.getDemandPosition();
+	  posError = Math.abs( actual - demand );
+	}
+	while( ( slept < TIMEOUT )&&( posError > tolerance ) );
+
+      }
+      else
+      {
 	if( ( demand < sm.getMinimumDemandPosition() ) ||
 	    ( demand > sm.getMaximumDemandPosition() ) )
 	{
-	  commandDone.setErrorMessage
+	  logError
 	    ( "Requested position ["+demand+"mm ] will drive the mirror out "+
 	      "of operational range ["+sm.getMinimumDemandPosition()+"mm - "+
 	      sm.getMaximumDemandPosition()+"mm ]: execution terminated" );
@@ -100,50 +111,29 @@ public class FOCUSImplementor extends CommandImplementor
 	if( ( smf_State != SMF_State.E_SMF_STATE_READY ) ||
 	    ( smf_State != SMF_State.E_SMF_STATE_MOVING ) )
 	{
-	  commandDone.setErrorMessage
+	  logError
 	    ( "Secondary Mirror state ["+smf_State.getName()+
-	      "] is not READY or MOVING : execution terminated" );
+	      "] is not able to accept commands : execution terminated" );
 	  return;
 	}
 
 	// send position demand
 	sm.setDemandPosition( demand );
 
-	// check state is STOPPED
-	int nAck = 0;
-	posError = 999.0; //larger than possible until first real reading
-
-	// ??
-	// HOW TO HANDLE A MOVEMENT *THROUGH* THE TOLERANCE RANGE SO THAT
-	// EXECUTION DOES NOT RETURN SUCCESS PREMATURELY BECAUSE WE CANNOT USE
-	// E_STATE_MOVING AS IT CAN APPLY TO TEMPERATURE COMPENSATION
-	// ??
-	//
-	// TEMP-COMP ONLY MOMENTARY - USE ANYWAY??
-	//
-	while( ( nAck < 30 ) && ( posError > tolerance ) )
+	// and wait...
+	do
 	{
+	  sleep( 10000 );
+
 	  actual = sm.getActualPosition();
 	  demand = sm.getDemandPosition();
 	  posError = Math.abs( actual - demand );
-
-	  // sleep 1/30th of Timeout				      
-	  try
-	  {
-	    Thread.sleep( 10000 );
-	  }
-	  catch( InterruptedException ie )
-	  {
-	    logger.log( 1, logName, ie );
-	  }
 	}
+	while( ( slept < TIMEOUT )&&( posError > tolerance ) );
 
-	actual = sm.getActualPosition();
-	demand = sm.getDemandPosition();
-	posError = Math.abs( actual - demand );
 	if( posError > tolerance )
 	{
-	  logger.log
+	  logError
 	    ( 1, logName, "The Secondary Mirror focus has stopped at "+
 	      actual+"mm which is more than the acceptable position error ["+
 	      tolerance+"mm ] away from the demand ["+demand+
@@ -151,12 +141,13 @@ public class FOCUSImplementor extends CommandImplementor
 	  return;
 	}
 
-	sm.setFocusPosition( actual );
+	// update SM focus and offset internal fields
+	sm.setFocusPosition();
+	sm.setFocusOffset( 0.0 );
       }
       catch( TTL_SystemException se )
       {
-	logger.log( 1, logName, se );
-	commandDone.setErrorMessage( se.toString() );
+	logError( se.toString() );
 	return;
       }
     }
@@ -175,11 +166,14 @@ public class FOCUSImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-09-29 14:16:44 $
  * $RCSfile: FOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/FOCUSImplementor.java,v $
- *      $Id: FOCUSImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: FOCUSImplementor.java,v 1.4 2003-09-29 14:16:44 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *
