@@ -1,5 +1,5 @@
 // AttributedTextArea.java
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/AttributedTextArea.java,v 1.1 2003-08-21 13:04:16 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/AttributedTextArea.java,v 1.2 2003-08-21 13:42:21 cjm Exp $
 package ngat.swing;
 
 import java.awt.*;
@@ -9,7 +9,7 @@ import javax.swing.text.*;
 /** 
  * Subclass of JTextPane allowing colour attributes.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AttributedTextArea extends JTextPane
 {
@@ -23,8 +23,7 @@ public class AttributedTextArea extends JTextPane
 	protected Color defaultForegroundColour = null;
 
 	/**
-	 * Constructor. Set the document to the default styled document.
-	 * @see #defaultStyledDocument
+	 * Constructor.
 	 */
 	public AttributedTextArea()
 	{
@@ -32,8 +31,7 @@ public class AttributedTextArea extends JTextPane
 	}
 
 	/**
-	 * Constructor. Set the document to the default styled document.
-	 * @see #defaultStyledDocument
+	 * Constructor.
 	 */
 	public AttributedTextArea(String s)
 	{
@@ -46,6 +44,7 @@ public class AttributedTextArea extends JTextPane
 	 * @param string The string to append.
 	 * @param color The colour of the text.
 	 * @exception BadLocationException Thrown if an error occurs.
+	 * @exception ClassCastException Thrown if initialiseDocument fails.
 	 * @see #initialiseDocument
 	 */
 	public void append(String string,Color color) throws BadLocationException,ClassCastException
@@ -179,8 +178,10 @@ public class AttributedTextArea extends JTextPane
 	 * The default styled document is retrieved.
 	 * @see #defaultStyledDocument
 	 * @see #defaultForegroundColour
+	 * @exception ClassCastException Thrown if the document retrieved from the superclass is not a 
+	 *            DefaultStyledDocument.
 	 */
-	protected void initialiseDocument()
+	protected void initialiseDocument() throws ClassCastException
 	{
 		Document document = null;
 		Style style = null;
@@ -206,4 +207,7 @@ public class AttributedTextArea extends JTextPane
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.1  2003/08/21 13:04:16  cjm
+** Initial revision
+**
 */
