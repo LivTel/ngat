@@ -1,5 +1,5 @@
 // QuadraticFitTest.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.3 2001-08-13 12:59:48 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/math/test/QuadraticFitTest.java,v 0.4 2001-08-13 13:09:29 cjm Exp $
 
 import java.awt.event.*;
 import java.lang.*;
@@ -8,21 +8,21 @@ import java.text.*;
 import javax.swing.*;
 
 import ngat.math.*;
-import ngat.OSS.utility.*;
+import ngat.util.*;
 
 /**
  * Simple test class for QuadraticFit.
  * Puts command line arguments as x,y values in data list.
  * Then does a quadratic fit and prints the result out.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  */
 public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.3 2001-08-13 12:59:48 cjm Exp $");
+	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.4 2001-08-13 13:09:29 cjm Exp $");
 	private QuadraticFit quadraticFit = null;
 	private GraphPlot graphPlot = null;
 	private GraphFrame graphFrame = null;
@@ -98,8 +98,8 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 		graphPlot.setMarkSize(0,2);
 		graphPlot.setMarkSize(1,2);
 
-		graphPlot.SetJoinPoints(0,true);
-		graphPlot.SetJoinPoints(1,true);
+		graphPlot.setJoinPoints(0,true);
+		graphPlot.setJoinPoints(1,true);
 
 		graphFrame = new GraphFrame(this.getClass().getName(),graphPlot);
 		graphFrame.setVisible(true);
@@ -284,6 +284,9 @@ public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2001/08/13 12:59:48  cjm
+// Added x corrdinate input to argument list parser.
+//
 // Revision 0.2  2000/08/18 17:56:20  cjm
 // Added ngat.math import.
 //
