@@ -9,7 +9,7 @@ import ngat.ngtcs.subsystem.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DFOCUSImplementor extends CommandImplementor
 {
@@ -23,7 +23,7 @@ public class DFOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: DFOCUSImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: DFOCUSImplementor.java,v 1.4 2003-09-29 13:27:41 je Exp $" );
 
   /**
    * The timeout for the DFOCUS command (300 seconds), in milliseconds.
@@ -61,7 +61,13 @@ public class DFOCUSImplementor extends CommandImplementor
 
 
   /**
-   *
+   * The input argument for the offset value is added to the current position
+   * and checked to see if it is within operational range.  If so, the demand
+   * is sent to the Secondary Mirror and the position polled periodically until
+   * it is within tolerance of the demand, or the timeout has expired.
+   * If the timeout expires, or the demand offset will move the mirror out of
+   * operational range, a failed commandDone will be returned by this
+   * implementor.
    */
   public void execute()
   {
@@ -71,7 +77,10 @@ public class DFOCUSImplementor extends CommandImplementor
     DFOCUS dFocus = (DFOCUS)command;
     double offset = dFocus.getOffset();
     double demand = offset + sm.getFocusPosition();
+    double tolerance = sm.getPositionTolerance();
+    double posError = 99999.9, actual = 0.0;
 
+    // check demand vs. actual position
     try
     {
       if( ( demand < sm.getMinimumDemandPosition() ) ||
@@ -84,13 +93,20 @@ public class DFOCUSImplementor extends CommandImplementor
 	return;
       }
 
+      // send demand
+      sm.setDemandPosition( demand );
 
-      //sm.setDemandedPosition( offset + home );
+      do
+      {
+	sleep( 500 );
+	actual = sm.getActualPosition();
+	posError = Math.abs( actual - demand );
+      }
+      while( ( slept < TIMEOUT )&&( posError > tolerance ) );
 
-      // check state is READY
-      //while( sm.getState() == SMF_State.E_SMF_STATE_MOVING )
-      // check state is STOPPED
-      // check |(position-demand)| < tolerance
+      // update SM internal focus and offset position fields
+      sm.setFocusPosition();
+      sm.setFocusOffset( offset );
     }
     catch( TTL_SystemException se )
     {
@@ -115,11 +131,14 @@ public class DFOCUSImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-09-29 13:27:41 $
  * $RCSfile: DFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/DFOCUSImplementor.java,v $
- *      $Id: DFOCUSImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: DFOCUSImplementor.java,v 1.4 2003-09-29 13:27:41 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *
