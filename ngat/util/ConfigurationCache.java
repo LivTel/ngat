@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationCache.java,v 1.1 2000-11-21 16:12:37 snf Exp $
+ * $Id: ConfigurationCache.java,v 1.2 2000-11-21 17:26:44 snf Exp $
  *
  */
 public class ConfigurationCache extends ConfigurationProperties {
@@ -44,7 +44,7 @@ public class ConfigurationCache extends ConfigurationProperties {
 	// Now go through the props and set the cache vars individually.
 	e = essential.keys();
 	while (e.hasMoreElements()) {
-g	    key = (String)e.nextElement();
+	    key = (String)e.nextElement();
 	    setProperty(key, defaults.getProperty(key));
 	    update(key, defaults.getProperty(key));
 	}
@@ -93,4 +93,7 @@ g	    key = (String)e.nextElement();
 
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 16:12:37  snf
+/** Initial revision
+/** */
