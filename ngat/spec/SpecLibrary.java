@@ -1,6 +1,6 @@
 // SpecLibrary.java
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.10 2004-07-27 10:32:00 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.11 2004-07-29 18:50:45 cjm Exp $
 package ngat.spec;
 
 import java.lang.*;
@@ -11,14 +11,14 @@ import ngat.util.logging.*;
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.10 $
+ * @version $Revision: 0.11 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.10 2004-07-27 10:32:00 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.11 2004-07-29 18:50:45 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -451,17 +451,17 @@ public class SpecLibrary
 	 * Native method that allows the JNI layer to store a reference to this Class's logger.
 	 * @param logger The logger for this class.
 	 */
-	private native void initialiseLoggerReference(Logger logger);
+	private static native void initialiseLoggerReference(Logger logger);
 	/**
 	 * Native method that allows the JNI layer to release the global reference to this Class's logger.
 	 */
-	private native void finaliseLoggerReference();
+	private static native void finaliseLoggerReference();
 
 // per instance variables
 	/**
 	 * The logger to log messages to.
 	 */
-	protected Logger logger = null;
+	protected static Logger logger = null;
 
 // static code block
 	/**
@@ -475,49 +475,54 @@ public class SpecLibrary
 
 // constructor
 	/**
-	 * Constructor. Constructs the logger, and sets the C layers reference to it.
-	 * @see #logger
-	 * @see #initialiseLoggerReference
+	 * Constructor. Not normally used.
 	 */
 	public SpecLibrary()
 	{
 		super();
-		logger = LogManager.getLogger(this);
-		initialiseLoggerReference(logger);
 	}
 
 	/**
-	 * Finalize method for this class, delete JNI global references.
-	 * @see #finaliseLoggerReference
+	 * Finalize method for this class, not normally used!
 	 */
 	protected void finalize() throws Throwable
 	{
 		super.finalize();
-		finaliseLoggerReference();
 	}
 
 // general methods
 	/**
 	 * Method to open a connection to the hardware.
+	 * Now also creates the logger and initialises the logger reference in the JNI code.
+	 * This is normally done in the constructor, but this class is not usually instansiated!
 	 * @param openBits A bitfield, specifying which parts of the Spectrograph hardware to open.
 	 * 	SPEC_OPEN_ALL_BIT opens all the hardware (CCD camera and IO card).
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Open
 	 * @see #SPEC_OPEN_ALL_BIT
+	 * @see #logger
+	 * @see #initialiseLoggerReference
 	 */
 	public static void open(int openBits) throws SpecNativeException
 	{
 		SPEC_Open(openBits);
+		logger = LogManager.getLogger("ngat.spec.SpecLibrary");
+		initialiseLoggerReference(logger);
 	}
 
 	/**
 	 * Method to close the opened connections to the hardware.
+	 * Now also used to delete JNI global references.
+	 * This is normally done in the constructor, but this class is not usually instansiated!
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Close
+
+	 * @see #finaliseLoggerReference
 	 */
 	public static void close() throws SpecNativeException
 	{
 		SPEC_Close();
+		finaliseLoggerReference();
 	}
 
 	/**
@@ -1171,6 +1176,9 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.10  2004/07/27 10:32:00  cjm
+// Added DAIO_INTERFACE_DEVICE_PCI_DAS08 in line with daio_interface.
+//
 // Revision 0.9  2004/03/04 11:17:31  cjm
 // Added logging methods and logger reference.
 // Added setLogLevel method.
