@@ -30,6 +30,7 @@ SRCS           = Autoguider.java \
                  TTL_DataUnit.java \
                  TTL_DataValue.java \
                  TTL_Enclosure.java \
+                 TTL_FoldMirror.java \
                  TTL_GenericData.java \
                  TTL_Mount.java \
                  TTL_MountFactory.java \
@@ -52,12 +53,15 @@ SRCS           = Autoguider.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.6 $
-#       $Id: Makefile,v 1.6 2003-10-14 13:50:20 je Exp $
-#     $Date: 2003-10-14 13:50:20 $
+# $Revision: 1.7 $
+#       $Id: Makefile,v 1.7 2003-10-14 14:10:33 je Exp $
+#     $Date: 2003-10-14 14:10:33 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.6  2003/10/14 13:50:20  je
+#      Added TTL_PrimaryMirror.
+#
 #      Revision 1.5  2003/09/24 15:39:39  je
 #      Removed BasicSingletonMechanism
 #
