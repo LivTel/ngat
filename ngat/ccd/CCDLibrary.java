@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.40 2003-12-08 15:03:47 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.41 2003-12-08 15:07:41 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.40 $
+ * @version $Revision: 0.41 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.40 2003-12-08 15:03:47 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.41 2003-12-08 15:07:41 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -84,39 +84,39 @@ public class CCDLibrary
 	/* These constants should be the same as those in ccd_exposure.h */
 	/**
 	 * Exposure status number, showing that no exposure is underway at the present moment.
-	 * @see #CCDDSPGetExposureStatus
+	 * @see #CCDExposureGetExposureStatus
 	 */
 	public final static int CCD_EXPOSURE_STATUS_NONE =  		0;
 	/**
 	 * Exposure status number, showing that the library is waiting for the right moment to open the shutter.
-	 * @see #CCDDSPGetExposureStatus
+	 * @see #CCDExposureGetExposureStatus
 	 */
 	public final static int CCD_EXPOSURE_STATUS_WAIT_START = 	1;
 	/**
 	 * Exposure status number, showing that the CCD is being cleared at the moment.
-	 * @see #CCDDSPGetExposureStatus
+	 * @see #CCDExposureGetExposureStatus
 	 */
 	public final static int CCD_EXPOSURE_STATUS_CLEAR = 		2;
 	/**
 	 * Exposure status number, showing that an exposure is underway at the present moment.
-	 * @see #CCDDSPGetExposureStatus
+	 * @see #CCDExposureGetExposureStatus
 	 */
 	public final static int CCD_EXPOSURE_STATUS_EXPOSE = 		3;
 	/**
 	 * Exposure status number, showing that a readout is about to start, and we should
 	 * stop sending commands to the controller that don't work during a readout.
-	 * @see #CCDDSPGetExposureStatus
+	 * @see #CCDExposureGetExposureStatus
 	 */
 	public final static int CCD_EXPOSURE_STATUS_PRE_READOUT = 	4;
 	/**
 	 * Exposure status number, showing that a readout is underway at the present moment.
-	 * @see #CCDDSPGetExposureStatus
+	 * @see #CCDExposureGetExposureStatus
 	 */
 	public final static int CCD_EXPOSURE_STATUS_READOUT = 		5;
 	/**
 	 * Exposure status number, showing that the readout of the exposure has been completed,
 	 * and the data is being post-processed (byte swapped/de-interlaced/saved to disc).
-	 * @see #CCDDSPGetExposureStatus
+	 * @see #CCDExposureGetExposureStatus
 	 */
 	public final static int CCD_EXPOSURE_STATUS_POST_READOUT = 	6;
 
@@ -810,10 +810,11 @@ public class CCDLibrary
 
 	/**
 	 * Routine to abort an exposure that is underway. You can see if an exposure is in progress using 
-	 * CCDDSPGetExposureStatus. If the return value is CCD_EXPOSURE_STATUS_READOUT then the CCD is reading out 
+	 * CCDExposureGetExposureStatus. 
+	 * If the return value is CCD_EXPOSURE_STATUS_READOUT then the CCD is reading out 
 	 * and CCDExposureAbortReadout should be called instead.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
-	 * @see #CCDDSPGetExposureStatus 
+	 * @see #CCDExposureGetExposureStatus 
 	 * @see #CCDExposureExpose 
 	 * @see #CCDExposureAbortReadout
 	 * @see #CCD_Exposure_Abort
@@ -825,10 +826,10 @@ public class CCDLibrary
 
 	/**
 	 * Routine to abort an exposure that is reading out. You can see if an exposure is reading out using 
-	 * CCDDSPGetExposureStatus which should return CCD_EXPOSURE_STATUS_READOUT. If the return value is 
+	 * CCDExposureGetExposureStatus which should return CCD_EXPOSURE_STATUS_READOUT. If the return value is 
 	 * CCD_EXPOSURE_STATUS_EXPOSE then the CCD is exposing and CCDExposureAbort should be called instead.
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
-	 * @see #CCDDSPGetExposureStatus 
+	 * @see #CCDExposureGetExposureStatus 
 	 * @see #CCDExposureExpose 
 	 * @see #CCDExposureAbort
 	 * @see #CCD_Exposure_Abort_Readout
@@ -1686,6 +1687,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.40  2003/12/08 15:03:47  cjm
+// EXPOSURE_STATUS_WAIT_START added.
+//
 // Revision 0.39  2003/06/06 16:50:40  cjm
 // Added windowing implementation.
 //
