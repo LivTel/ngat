@@ -1,19 +1,19 @@
 // SpecLibrary.java -*- mode: Fundamental;-*-
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.4 2000-11-20 16:40:09 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.5 2001-02-15 15:34:21 cjm Exp $
 package ngat.spec;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision: 0.5 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.4 2000-11-20 16:40:09 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.5 2001-02-15 15:34:21 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -266,7 +266,7 @@ public class SpecLibrary
 	 * Native wrapper to libspec SPEC_Exposure_Expose routine.
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Exposure_Expose(boolean open_shutter,boolean readout_ccd,
+	private static native void SPEC_Exposure_Expose(boolean open_shutter,
 		long start_time,int exposure_time,String filename) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Exposure_Bias routine.
@@ -767,7 +767,6 @@ public class SpecLibrary
 	 * This method takes an exposure with the camera.
 	 * @param openShutter Whether to open the shutter or not (perform a dark frame). Should be set to
 	 * 	true to open the shutter and false to not open the shutter.
-	 * @param readoutCCD Whether to read out the data once the exposure has taken place.
 	 * @param startTime The start time, in milliseconds since the epoch (1st January 1970) to start the exposure.
 	 * 	Passing the value -1 will start the exposure as soon as possible.
 	 * @param exposureTime The length of time to open the shutter for in milliseconds.
@@ -776,15 +775,15 @@ public class SpecLibrary
 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Exposure_Expose
 	 */
-	public static void cameraExpose(boolean openShutter,boolean readoutCCD,
+	public static void cameraExpose(boolean openShutter,
 		long startTime,int exposureTime,String filename) throws SpecNativeException
 	{
-		SPEC_Exposure_Expose(openShutter,readoutCCD,startTime,exposureTime,filename);
+		SPEC_Exposure_Expose(openShutter,startTime,exposureTime,filename);
 	}
 
 	/**
 	 * This method takes an exposure with the camera. It is an overloaded method, it calls through
-	 * to SPEC_Exposure_Expose with openShutter true (open shutter), readoutCCD true (readout) 
+	 * to SPEC_Exposure_Expose with openShutter true (open shutter),
 	 * and startTime -1 (start at any time).
 	 * @param exposureTime The length of time to open the shutter for in milliseconds.
 	 * @param filename The filename to save the exposure into. The FITS headers should have previously been saved
@@ -794,7 +793,7 @@ public class SpecLibrary
 	 */
 	public static void cameraExpose(int exposureTime,String filename) throws SpecNativeException
 	{
-		SPEC_Exposure_Expose(true,true,-1,exposureTime,filename);
+		SPEC_Exposure_Expose(true,-1,exposureTime,filename);
 	}
 
 	/**
@@ -962,6 +961,9 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.4  2000/11/20 16:40:09  cjm
+// Added cameraExposeGetLength and cameraExposeGetStartTime.
+//
 // Revision 0.3  2000/10/23 09:23:54  cjm
 // Added SPEC_FILTER_COUNT constant.
 //
