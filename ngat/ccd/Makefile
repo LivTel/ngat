@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.8 2000-11-21 14:27:55 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.9 2000-11-21 16:42:18 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -17,7 +17,7 @@ SRCS = CCDLibraryDouble.java CCDLibraryFormatException.java CCDLibraryNativeExce
 	CCDLibrarySetupWindow.java CCDLibrary.java
 
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
-DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
+DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
 top: jar docs
 
@@ -29,7 +29,9 @@ jar: $(JARLIBDIR)/$(JAR_FILE)
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
 	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
-docs:
+docs: $(DOCS)
+
+$(DOCSDIR)/$(PACKAGEDIR)/%.html: %.java
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
 
 checkout:
@@ -49,6 +51,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.8  2000/11/21 14:27:55  cjm
+# Changed to create jars per ngat package.
+#
 # Revision 1.7  2000/02/02 13:34:19  cjm
 # Fixed error in Makefile.
 #

@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/fits/Makefile,v 0.3 2000-11-21 14:33:00 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/fits/Makefile,v 0.4 2000-11-21 16:40:24 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -17,7 +17,7 @@ SRCS = FitsHeader.java FitsHeaderCardImage.java FitsHeaderException.java \
 	FitsHeaderCardImageOrderNumberComparator.java FitsHeaderDefaults.java
 
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
-DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
+DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
 top: jar docs
 
@@ -29,7 +29,9 @@ jar: $(JARLIBDIR)/$(JAR_FILE)
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
 	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
-docs:
+docs: $(DOCS)
+
+$(DOCSDIR)/$(PACKAGEDIR)/%.html: %.java
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
 
 checkout:
@@ -52,6 +54,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.3  2000/11/21 14:33:00  cjm
+# Changed to create jars per ngat package.
+#
 # Revision 0.2  2000/10/25 10:16:12  cjm
 # Shared C library now a separate package.
 #
