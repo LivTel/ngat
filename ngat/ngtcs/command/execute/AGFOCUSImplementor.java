@@ -13,7 +13,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * 
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AGFOCUSImplementor extends CommandImplementor
 {
@@ -27,7 +27,7 @@ public class AGFOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGFOCUSImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $" );
+    new String( "$Id: AGFOCUSImplementor.java,v 1.3 2003-09-22 14:39:45 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -73,8 +73,9 @@ public class AGFOCUSImplementor extends CommandImplementor
       actual = ag.getActualFocusPosition();
       demand = a.getPosition();
       tolerance = ag.getFocusPositionTolerance();
+      posError = Math.abs( demand - actual );
 
-      if( Math.abs( demand - actual ) < tolerance )
+      if( posError < tolerance )
       {
 	commandDone.setReturnMessage( "focus already in position" );
       }
@@ -83,13 +84,9 @@ public class AGFOCUSImplementor extends CommandImplementor
 	ag.setDemandFocusPosition( demand );
 	boolean completed = false;
 
-	while( ( nAck < 13 )&&( !completed ) )
+	while( slept < TIMEOUT )
 	{
-	  Acknowledge ack = new Acknowledge
-	    ( command.getId()+"."+( nAck++ ), command );
-	  ack.setTimeToComplete( 5500 );
-	  executionThread.sendAcknowledge( ack );
-
+	  slept += 5000;
 	  try
 	  {
 	    Thread.sleep( 5000 );
@@ -100,23 +97,20 @@ public class AGFOCUSImplementor extends CommandImplementor
 	  }
 
 	  actual = ag.getActualFocusPosition();
-	  posError = demand - actual;
-	  if( Math.abs( posError ) < tolerance )
-	    completed = true;
+	  posError = Math.abs( demand - actual );
+	  if( posError < tolerance )
+	  {
+	    commandDone.setSuccessful( true );
+	    return;
+	  }
 	}
 
-	actual = ag.getActualFocusPosition();
-	posError = demand - actual;
-	if( Math.abs( posError ) > tolerance )
-	{
-	  String err = new String
-	    ( "Autoguider focus has not achieved the "+
-	      "demanded position ["+demand+"mm] after 60 seconds; "+
-	      "position acheived = "+actual+"mm : execution terminated" );
-	  logger.log( 1, logName, err );
-	  commandDone.setErrorMessage( err );
-	  return;
-	}
+	String err = new String
+	  ( "Autoguider focus position ["+actual+"mm] has not achieved the "+
+	    "demanded position ["+demand+"mm] after 60 seconds "+
+	    ": execution terminated" );
+	logger.log( 1, logName, err );
+	commandDone.setErrorMessage( err );
       }
     }
     catch( TTL_SystemException se )
@@ -125,16 +119,17 @@ public class AGFOCUSImplementor extends CommandImplementor
       commandDone.setErrorMessage( se.toString() );
       return;
     }
-
-    commandDone.setSuccessful( true );
   }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-22 14:39:45 $
  * $RCSfile: AGFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFOCUSImplementor.java,v $
- *      $Id: AGFOCUSImplementor.java,v 1.2 2003-09-22 13:24:36 je Exp $
+ *      $Id: AGFOCUSImplementor.java,v 1.3 2003-09-22 14:39:45 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.1  2003/09/19 16:10:15  je
  *     Initial revision
  *
