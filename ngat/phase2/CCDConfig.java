@@ -61,9 +61,9 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
 	super(npCCDConfig);
 	upperFilterWheel = npCCDConfig.getUpperFilterWheel();
 	lowerFilterWheel = npCCDConfig.getLowerFilterWheel();
-	detectors[0] = new CCDDetector(npCCDConfig.getDetector(0));
+	detectors[0] = new CCDDetector((NPCCDDetector)npCCDConfig.getNPDetector(0));
     } // end (NP -> P Translator).
-        
+    
     // P -> NP Translator.
     public void stuff(NPCCDConfig npCCDConfig) {
 	super.stuff(npCCDConfig);
