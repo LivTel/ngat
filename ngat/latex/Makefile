@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.8 2000-08-30 17:53:44 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.9 2000-09-01 15:50:40 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -6,7 +6,7 @@ include ../Makefile.common
 DOCSDIR 	= $(NGAT_DOC_HOME)/latex
 
 TEXSRCS 	= ngat.ccd.tex ngat.fits.tex ngat.math.tex ngat.net.tex ngat.net_error_machanisms.tex ngat.swing.tex 
-FIGSRCS 	= ngat.net.protocol.fig ngat.net.MAprotocol.fig ngat.fits.dirtree.fig
+FIGSRCS 	= ngat.net.protocol.fig ngat.net.MAprotocol.fig ngat.fits.dirtree.fig ngat.math.secdiffdata.fig
 
 DVIOBJS		= $(TEXSRCS:%.tex=%.dvi)
 PSOBJS		= $(TEXSRCS:%.tex=$(DOCSDIR)/%.ps)
@@ -49,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.8  2000/08/30 17:53:44  cjm
+# Added ngat.math.tex source.
+#
 # Revision 0.7  2000/06/01 10:42:33  cjm
 # Added ngat.fits.tex/ngat.fits.dirtree.fig sources.
 #
