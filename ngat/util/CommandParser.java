@@ -17,7 +17,7 @@ import java.text.*;
  *
  * A typical arglist might look like: -noresize -heap 200 -stackmin 30 -stackmax 80 -verbose
  *
- * $Id: CommandParser.java,v 1.5 2001-07-11 10:24:23 snf Exp $
+ * $Id: CommandParser.java,v 1.6 2004-01-15 16:01:57 snf Exp $
  *
  */
 public class CommandParser {
@@ -28,16 +28,27 @@ public class CommandParser {
     /** Holds the current command delimiter character.*/
     protected String delim;
 
+    /** Character used to swap incase the delimiter is wanted in a property.*/
+    protected char swapChar;
+
     /** Create a CommandParser using default - character.*/
     public CommandParser() {
 	this("-");
     }
 
     /** Create a CommandParser.*/
-    public CommandParser(String delim) {
+    public CommandParser(String delim, char swapChar) {
 	map = new ConfigurationProperties();
-	this.delim = delim;
+	this.delim    = delim;
+	this.swapChar = swapChar;
     }
+  
+    /** Create a CommandParser.*/
+    public CommandParser(String delim) {
+	this(delim, '%');
+    }
+
+
 
     public void parse(String argList) throws ParseException { parse(argList, "enable", "disable"); }
 
@@ -55,33 +66,39 @@ public class CommandParser {
 	
 	if (argList == null) throw new ParseException("No Args", 0);
 	
-	StringTokenizer st = new StringTokenizer(argList, delim);
+	StringTokenizer st = new StringTokenizer(argList, delim); 
+	//System.err.println("Using delim ["+delim+"]");
 	String token = null;
 	String name = null;
 	String value = null;
 	int pos = 0;
 	while (st.hasMoreTokens()) {
 	    token = st.nextToken().trim(); // loose any trailing spaces.
+	    //System.err.println("Token was: ["+token+"]");
 	    //System.out.println("TOKEN: "+token);
 	    pos = token.indexOf(" ");
 	    //System.out.println("POS: "+pos);
 	    if (pos != -1) {
 		// type 1.
 		name = token.substring(0, pos);
-		value = token.substring(pos+1);
-		map.setProperty(name,value);
+		value = token.substring(pos+1).trim();
+		map.setProperty(name,value.replace(swapChar, delim.charAt(0)));
+		//System.err.println("Storing: ["+name+"] as: ["+value+"]");
 	    } else {
 		// type 2.
 		if (token.length() > 2) {
 		    if (token.substring(0,2).equals("no")) {
 			name = token.substring(2);
 			map.setProperty(name,noVal);
+			//System.err.println("Storing: ["+name+"] as: ["+noVal+"]");
 		    } else {
 			name = token;
 			map.setProperty(name, yesVal);
+			//System.err.println("Storing: ["+name+"] as: ["+yesVal+"]");
 		    }
 		} else {
 		    map.setProperty(token, yesVal);
+		    //System.err.println("Storing: ["+name+"] as: ["+yesVal+"]");
 		}
 	    }
 	}
@@ -94,13 +111,14 @@ public class CommandParser {
 	if (args == null) return;
 	if (args.length == 0) return;
 	for (int i = 0; i < args.length; i++) {
-	    //System.out.println("ARG: "+i+" : "+args[i]);
+	    //System.err.println("ARG: "+i+" : ["+args[i]+"]");
 	    if (args[i].startsWith(delim)) {
-		buff.append(args[i]);
+		buff.append(args[i]).append(" ");
 	    } else {
-		buff.append(" ").append(args[i]);
+		buff.append(" ").append(args[i]).append(" ");
 	    }
 	}
+	//System.err.println("Using ["+buff.toString()+"]");
 	parse(buff.toString(), "true", "false");
     }
 
@@ -128,6 +146,9 @@ public class CommandParser {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.5  2001/07/11 10:24:23  snf
+/** Changed props to ConfigProps.
+/**
 /** Revision 1.4  2001/02/23 18:49:14  snf
 /** Added linger and awaken.
 /**
