@@ -1,0 +1,58 @@
+# This Makefile is to be included AFTER the PACKAGENAME, PACKAGEDIR, JAR_FILE
+#  and SRC variables have been set in the source directory Makefile
+#
+
+include		$(LT_SRC_HOME)/Makefile.common
+
+LIBDIR		= $(LT_BIN_HOME)
+JARLIBDIR 	= $(LT_BIN_HOME)/javalib
+
+JAVACFLAGS 	= -d $(LIBDIR) -sourcepath $(LT_SRC_HOME) -classpath $(LIBDIR):$(CLASSPATH)
+
+DOCSDIR 	= $(LT_DOC_HOME)/ngat/javadocs/$(PACKAGEDIR)
+DOCFLAGS 	= -version -author -private
+
+OBJS 		= $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
+DOCS 		= $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
+
+top: jar docs
+
+classes: $(OBJS)
+
+$(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
+	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
+
+jar: $(JARLIBDIR)/$(JAR_FILE)
+
+$(JARLIBDIR)/$(JAR_FILE): $(OBJS)
+	$(JAR) $(JAR_OPTIONS) $(JARLIBDIR)/$(JAR_FILE) $(LIBDIR)/$(PACKAGEDIR)/*.class
+
+docs: $(DOCS)
+
+$(DOCSDIR)/$(PACKAGEDIR)/%.html: %.java
+	$(JAVADOC) -sourcepath $(LT_SRC_HOME) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
+
+checkout:
+	$(CO) $(CO_OPTIONS) $(SRCS)
+
+checkin:
+	-$(CI) $(CI_OPTIONS) $(SRCS)
+
+clean:
+	-$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
+
+tidy:
+	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
+
+backup: tidy
+	-$(RM) $(RM_OPTIONS) $(OBJS)
+
+#
+# RCS information
+#
+# $Author: je $ 
+# $Date: 2002-09-26 10:17:32 $
+# $RCSfile: Makefile.ngat,v $
+# $Source: /space/home/eng/cjm/cvs/ngat/Makefile.ngat,v $
+# $Revision: 1.1 $
+# $Log: not supported by cvs2svn $
