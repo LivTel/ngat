@@ -1,49 +1,20 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/message/Makefile,v 1.3 2002-10-03 11:21:33 je Exp $ 
-
-include	../Makefile.common
-include	Makefile.common
-
 DIRS = base OSS RCS_TCS INST_DP ISS_INST POS_RCS
-
-top:
-	@for i in $(DIRS); \
-	do \
-		(echo making in $$i...; cd $$i; $(MAKE) ); \
-	done; \
+DIRS_TARGET    = dirs
 
 checkin:
-	-@for i in $(DIRS); \
-	do \
-		(echo checkin in $$i...; cd $$i; $(MAKE) checkin; $(CI) $(CI_OPTIONS) Makefile); \
-	done;
+	echo "checkin not needed for makeamess generated sources."
 
 checkout:
-	@for i in $(DIRS); \
-	do \
-		(echo checkout in $$i...; cd $$i; $(CO) $(CO_OPTIONS) Makefile; $(MAKE) checkout); \
-	done;
+	echo "checkout not needed for makeamess generated sources."
 
-clean:
-	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
-	@for i in $(DIRS); \
-	do \
-		(echo cleaning in $$i...; cd $$i; $(MAKE) clean); \
-	done;
+include	$(LT_SRC_HOME)/ngat/Makefile.ngat
 
-tidy:
-	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
-	@for i in $(DIRS); \
-	do \
-		(echo cleaning in $$i...; cd $$i; $(MAKE) tidy); \
-	done;
-
-# this only works if the checkin target leaves the sub-dirs makefiles checked out unlocked (ci -u)
-backup: tidy
-	@for i in $(DIRS); \
-	do \
-		(echo backup in $$i...; cd $$i; $(MAKE) backup); \
-	done;
+# $Header: /space/home/eng/cjm/cvs/ngat/message/Makefile,v 1.4 2003-03-11 11:45:12 cjm Exp $ 
+#
 # $Log: not supported by cvs2svn $
+# Revision 1.3  2002/10/03 11:21:33  je
+# Added POS_RCS to the dirs variable.
+#
 # Revision 1.2  2002/10/02 11:03:00  je
 # Added base, INST_DP and ISS_INST to dirs.
 #
