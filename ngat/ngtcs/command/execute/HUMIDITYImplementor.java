@@ -10,70 +10,69 @@ import ngat.ngtcs.command.*;
  * the AstrometryCalculator on the specified telescope.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class HUMIDITYImplementor extends CommandImplementor
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String rcsid =
-	new String( "$Id: HUMIDITYImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: HUMIDITYImplementor.java,v 1.4 2003-10-02 12:35:30 je Exp $" );
 
   /**
    * The timeout for the HUMIDITY command (3 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 3000;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * Create the HUMIDITY command implementor using the specified thread, to
-     * be executed on the specified telescope with the specified command.
-     * @param eT the ExecutionThread executing this CommandImplementor
-     * @param ts the Telescope on which this CommandImplementor is executing
-     * @param c the Command (ngat.ngtcs.command.HUMIDITY) to execute
-     */
-    public HUMIDITYImplementor( Telescope ts, Command c )
-    {
-	super( ts, c );
-    }
+  /**
+   * Create the HUMIDITY command implementor to be executed on the specified
+   * telescope with the specified command.
+   * @param ts the Telescope on which this CommandImplementor is executing
+   * @param c the Command (ngat.ngtcs.command.HUMIDITY) to execute
+   */
+  public HUMIDITYImplementor( Telescope ts, Command c )
+  {
+    super( ts, c );
+  }
 
 
-    /**
-     * This execute method sets the humidity in the MeteorologicalData object
-     * used by the AstrometryCalculator.
-     */
-    public void execute()
-    {
-	telescope.getAstrometryCalculator().getMeteorologicalData().
-	    setHumidity( ( (HUMIDITY)command ).getHumidity() );
-	commandDone.setSuccessful( true );
-    }
+  /**
+   * This execute method sets the humidity in the MeteorologicalData object
+   * used by the AstrometryCalculator.
+   */
+  public void execute()
+  {
+    telescope.getAstrometryCalculator().getMeteorologicalData().
+      setHumidity( ( (HUMIDITY)command ).getHumidity() );
+    commandDone.setSuccessful( true );
+  }
 
 
   /**
@@ -87,11 +86,14 @@ public class HUMIDITYImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-10-02 12:35:30 $
  * $RCSfile: HUMIDITYImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/HUMIDITYImplementor.java,v $
- *      $Id: HUMIDITYImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: HUMIDITYImplementor.java,v 1.4 2003-10-02 12:35:30 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *
