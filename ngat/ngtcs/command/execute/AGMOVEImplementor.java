@@ -8,12 +8,11 @@ import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.subsystem.amn.*;
 
 /**
- * Move autoguider probe mirror to a radial position, rotator to amount
- * position angle and set autoguider pixel on which to guide.
- * 
+ * Move autoguider probe mirror to a radial position, rotator to a
+ * mount-position angle and set autoguider pixel on which to guide.
  * 
  * @author $Author: je $
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AGMOVEImplementor
   extends CommandImplementor
@@ -28,7 +27,7 @@ public class AGMOVEImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGMOVEImplementor.java,v 1.1 2003-09-22 13:24:36 je Exp $" );
+    new String( "$Id: AGMOVEImplementor.java,v 1.2 2003-09-23 14:16:58 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -54,7 +53,6 @@ public class AGMOVEImplementor
   /*                                                                       */
   /*=======================================================================*/
 
-
   /**
    *
    */
@@ -70,13 +68,17 @@ public class AGMOVEImplementor
   public void execute()
   {
     AGMOVE a = (AGMOVE)command;
-    double radius = a.getRadius();
+    double radius = a.getPosition();
     double angle = a.getRotatorAngle();
     double x = a.getXPixel();
     double y = a.getYPixel();
 
+    logger.log( 3, logName, "Sending autoguider to "+radius+
+		"mm, guiding on pixel ("+x+", "+y+
+		"), with mount position angle "+angle+" degrees." );
+
     TTL_Autoguider ag = (TTL_Autoguider)TTL_Autoguider.getInstance();
-    TTL_Rotator rot = TTL_Rotator.getInstance();
+    TTL_Rotator rot = (TTL_Rotator)TTL_Rotator.getInstance();
     double actual, posError, tolerance;
 
     try
@@ -87,12 +89,14 @@ public class AGMOVEImplementor
 
       // Rotator position tolerance
       tolerance = rot.getPositionTolerance();
+
+      int sleep = 5000;
       do
       {
-	slept += 5000;
 	try
 	{
-	  Thread.sleep( 5000 );
+	  Thread.sleep( sleep );
+	  slept += sleep;
 	}
 	catch( InterruptedException ie )
 	{
@@ -104,6 +108,7 @@ public class AGMOVEImplementor
       while( ( ag.get_AGD_State() == AGD_State.E_AGD_STATE_MOVING )&&
 	     ( posError > tolerance )&&( slept < TIMEOUT ) );
 
+      // check rotator position
       if( posError > tolerance )
       {
 	String err = new String
@@ -115,9 +120,10 @@ public class AGMOVEImplementor
 	return;
       }
 
+      // check autoguider position
       actual = ag.getActualPosition();
       posError = Math.abs( actual - radius );
-      tolerance = ag.getPositionTolerance();
+      tolerance = ag.getFocusPositionTolerance();
       if( posError > tolerance )
       {
 	String err = new String
@@ -139,10 +145,13 @@ public class AGMOVEImplementor
   }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-23 14:16:58 $
  * $RCSfile: AGMOVEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGMOVEImplementor.java,v $
- *      $Id: AGMOVEImplementor.java,v 1.1 2003-09-22 13:24:36 je Exp $
+ *      $Id: AGMOVEImplementor.java,v 1.2 2003-09-23 14:16:58 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/22 13:24:36  je
+ *     Initial revision
+ *
  *
  */
