@@ -1,9 +1,8 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.11 2002-05-10 11:16:13 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.12 2002-11-15 13:02:16 je Exp $
 
 include ../../Makefile.common
-include ../Makefile.common
 
-DOCSDIR 	= $(NGAT_DOC_HOME)/latex
+DOCSDIR 	= $(LTT_DOC_HOME)/ngat/latex
 
 TEXSRCS 	= ngat.ccd.tex ngat.fits.tex ngat.math.tex ngat.net.tex ngat.net_error_machanisms.tex \
 			ngat.spec.tex ngat.swing.tex 
@@ -50,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.11  2002/05/10 11:16:13  cjm
+# Added ngat.spec.tex source.
+#
 # Revision 0.10  2000/10/03 16:41:25  cjm
 # Changed fig2dev options.
 #
