@@ -12,7 +12,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * Set autoguider focus position.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class AGFOCUSImplementor extends CommandImplementor
 {
@@ -26,7 +26,7 @@ public class AGFOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGFOCUSImplementor.java,v 1.5 2003-09-29 11:06:03 je Exp $" );
+    new String( "$Id: AGFOCUSImplementor.java,v 1.6 2003-09-29 11:53:18 je Exp $" );
 
   /**
    * The timeout for the AGFOCUS command (60 seconds), in milliseconds.
@@ -84,7 +84,7 @@ public class AGFOCUSImplementor extends CommandImplementor
       demand = a.getPosition();
       tolerance = ag.getFocusPositionTolerance();
       posError = Math.abs( demand - actual );
-      ag.setFocusDemandPosition( actual );
+      ag.setDemandFocusPosition( actual );
 
       if( posError < tolerance )
       {
@@ -146,11 +146,14 @@ public class AGFOCUSImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 11:06:03 $
+ *    $Date: 2003-09-29 11:53:18 $
  * $RCSfile: AGFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFOCUSImplementor.java,v $
- *      $Id: AGFOCUSImplementor.java,v 1.5 2003-09-29 11:06:03 je Exp $
+ *      $Id: AGFOCUSImplementor.java,v 1.6 2003-09-29 11:53:18 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.5  2003/09/29 11:06:03  je
+ *     Added <code>execute</code> documentation.
+ *
  *     Revision 1.4  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *
