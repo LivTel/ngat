@@ -1,5 +1,5 @@
 // AttributedTextArea.java
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/AttributedTextArea.java,v 1.2 2003-08-21 13:42:21 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/AttributedTextArea.java,v 1.3 2003-08-26 13:22:45 cjm Exp $
 package ngat.swing;
 
 import java.awt.*;
@@ -9,7 +9,7 @@ import javax.swing.text.*;
 /** 
  * Subclass of JTextPane allowing colour attributes.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AttributedTextArea extends JTextPane
 {
@@ -187,9 +187,11 @@ public class AttributedTextArea extends JTextPane
 		Style style = null;
 
 		// get defaultStyledDocument
-		if(defaultStyledDocument == null)
+		// We have to check EVERY TIME whether to change defaultStyledDocument,
+		// as setText in old Solaris JVM's (v1.2.1) changed the JTextPane's associated document.
+		document = getDocument();
+		if((defaultStyledDocument == null)||(document != defaultStyledDocument))
 		{
-			document = getDocument();
 			defaultStyledDocument = (DefaultStyledDocument)document;
 		}
 		// get default foreground colour
@@ -207,6 +209,9 @@ public class AttributedTextArea extends JTextPane
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.2  2003/08/21 13:42:21  cjm
+** Fixed comments and exceptions.
+**
 ** Revision 1.1  2003/08/21 13:04:16  cjm
 ** Initial revision
 **
