@@ -1,18 +1,56 @@
-// NGATProperties.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.1 2000-09-06 13:09:51 cjm Exp $
+// NGATProperties.java -*- mode: Fundamental;-*-
+// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.2 2001-03-05 20:04:15 cjm Exp $
 package ngat.util;
 
-import java.lang.*;
-import java.util.*;
 import java.awt.*;
+import java.lang.*;
+import java.io.*;
 import java.net.*;
+import java.util.*;
 
+/**
+ * This class extends the ngat.util.Properties class with useful load and type
+ * conversion routines.
+ * @version $Revision: 0.2 $
+ * @author Jason Etherton,Chris Mottram
+ */
 public class NGATProperties extends Properties
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: NGATProperties.java,v 0.1 2000-09-06 13:09:51 cjm Exp $");
+	public final static String RCSID = new String("$Id: NGATProperties.java,v 0.2 2001-03-05 20:04:15 cjm Exp $");
+
+	/**
+	 * Method to load the properties.
+	 * @param filename The filename of the property list.
+	 * @exception FileNotFoundException Thrown if the file doesn't exist.
+	 * @exception IOException Thrown if the load failed.
+	 * @see #load(java.io.File)
+	 */
+	public void load(String filename) throws FileNotFoundException, IOException
+	{
+		File file = null;
+
+		file = new File(filename);
+		load(file);
+	}    
+
+	/**
+	 * Method to load the properties.
+	 * @param file A File object representing the filename of the property list.
+	 * @exception FileNotFoundException Thrown if the file doesn't exist.
+	 * @exception IOException Thrown if the load failed.
+	 * @see #load(java.io.FileInputStream)
+	 */
+	public void load(File file) throws FileNotFoundException, IOException
+	{
+		FileInputStream fileInputStream = null;
+
+		fileInputStream = new FileInputStream(file);
+		load(fileInputStream);
+		fileInputStream.close();
+	}
 
     public short getShort( String key ) throws NGATPropertyException
     {
@@ -203,4 +241,7 @@ public class NGATProperties extends Properties
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/09/06 13:09:51  cjm
+// initial revision.
+//
 //
