@@ -1,19 +1,19 @@
 // SpecLibrary.java -*- mode: Fundamental;-*-
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.3 2000-10-23 09:23:54 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.4 2000-11-20 16:40:09 cjm Exp $
 package ngat.spec;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.3 2000-10-23 09:23:54 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.4 2000-11-20 16:40:09 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
@@ -281,6 +281,14 @@ public class SpecLibrary
 	 * Native wrapper to libspec SPEC_Exposure_Get_Status routine.
 	 */
 	private static native int SPEC_Exposure_Get_Status();
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Get_Length routine.
+	 */
+	private static native int SPEC_Exposure_Get_Length();
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Get_Start_Time routine.
+	 */
+	private static native long SPEC_Exposure_Get_Start_Time();
 	/**
 	 * Native wrapper to libspec SPEC_Exposure_Set_Start_Offset_Time routine.
 	 */
@@ -827,6 +835,26 @@ public class SpecLibrary
 	}
 
 	/**
+	 * This method returns the last length set for an exposure.
+	 * @return The exposure length, in milliseconds.
+	 * @see #SPEC_Exposure_Get_Length
+	 */
+	public static int cameraExposeGetLength()
+	{
+		return SPEC_Exposure_Get_Length();
+	}
+
+	/**
+	 * Method to get number of milliseconds since the EPOCH to the exposure start time.
+	 * @return The start time, in milliseconds since the EPOCH (January 1st, 1970).
+	 * @see #SPEC_Exposure_Get_Start_Time
+	 */
+	public static long cameraExposeGetStartTime()
+	{
+		return SPEC_Exposure_Get_Start_Time();
+	}
+
+	/**
 	 * Method to set the start offset time for an exposure. 
 	 * This time is the amount of time before an exposure is required to start to send the command to open
 	 * the shutter, to allow for transmission delays etc. 
@@ -934,6 +962,9 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2000/10/23 09:23:54  cjm
+// Added SPEC_FILTER_COUNT constant.
+//
 // Revision 0.2  2000/10/19 13:48:14  cjm
 // initial revision.
 //
