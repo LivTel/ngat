@@ -1,10 +1,11 @@
-// ICSDShutdownCommand.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/ICSDShutdownCommand.java,v 1.3 2001-05-15 12:20:09 cjm Exp $
+// ICSDShutdownCommand.java
+// $Header: /space/home/eng/cjm/cvs/ngat/util/ICSDShutdownCommand.java,v 1.4 2004-08-02 10:45:09 cjm Exp $
 package ngat.util;
 
 import java.io.*;
 import java.lang.*;
 import java.net.*;
+import java.text.SimpleDateFormat;
 
 import ngat.net.TelnetConnection;
 import ngat.util.logging.*;
@@ -18,7 +19,7 @@ import ngat.util.logging.*;
  * ICSDShutdownCommand command = new ICSDShutdownCommand("ltccd1",7368);
  * command.send();
  * </pre>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @author Chris Mottram
  * @see ngat.net.TelnetConnection
  */
@@ -27,7 +28,7 @@ public class ICSDShutdownCommand extends ICSDCommand implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ICSDShutdownCommand.java,v 1.3 2001-05-15 12:20:09 cjm Exp $");
+	public final static String RCSID = new String("$Id: ICSDShutdownCommand.java,v 1.4 2004-08-02 10:45:09 cjm Exp $");
 	/**
 	 * String containing the command string to send over the connection.
 	 */
@@ -111,14 +112,22 @@ public class ICSDShutdownCommand extends ICSDCommand implements Runnable
 	public static void main(String args[])
 	{
 		ICSDShutdownCommand command = null;
+		Logger logger = null;
+		LogFormatter logFormatter = null;
+		LogHandler logHandler = null;
+		String addressString = null;
 		int portNumber = 0;
 
-		if((args.length < 1)||(args.length > 2))
+		if((args.length > 2))
 		{
-			System.err.println("Usage:java ICSDShutdownCommand <address> [<port number>]");
+			System.err.println("Usage:java ICSDShutdownCommand [<address> <port number>]");
 			System.err.println("The default port number is:"+DEFAULT_PORT_NUMBER);
 
 			System.exit(1);
+		}
+		if(args.length > 0)
+		{
+			addressString = args[0];
 		}
 		if(args.length == 2)
 		{
@@ -134,14 +143,27 @@ public class ICSDShutdownCommand extends ICSDCommand implements Runnable
 		}
 		else
 			portNumber = DEFAULT_PORT_NUMBER;
+		// create (error) logger
+		logger = LogManager.getLogger("ngat.util.ICSDShutdownCommand");
+		logFormatter = new BogstanLogFormatter();
+		logFormatter.setDateFormat(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS z"));
+		logHandler = new ConsoleLogHandler(logFormatter);
+		logHandler.setLogLevel(Logging.ALL);
+		logger.addHandler(logHandler);
+		logger.setLogLevel(Logging.ALL);
+		// do command		
 		try
 		{
-			command = new ICSDShutdownCommand(args[0],portNumber);
+			if(args.length > 0)
+				command = new ICSDShutdownCommand(args[0],portNumber);
+			else
+				command = new ICSDShutdownCommand();
 			command.send();
 		}
 		catch(Exception e)
 		{
 			System.err.println("Failed:"+e);
+			e.printStackTrace();
 			System.exit(3);
 		}
 		System.exit(0);
@@ -149,6 +171,9 @@ public class ICSDShutdownCommand extends ICSDCommand implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2001/05/15 12:20:09  cjm
+// Changed comment.
+//
 // Revision 1.2  2001/05/15 09:08:35  cjm
 // Fixed comment.
 //
