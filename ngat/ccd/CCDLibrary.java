@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.29 2001-02-09 18:29:48 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.30 2001-03-01 12:28:08 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.29 $
+ * @version $Revision: 0.30 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.29 2001-02-09 18:29:48 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.30 2001-03-01 12:28:08 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -345,6 +345,10 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that sets the filter wheel speed.
 	 */
 	private native void CCD_Filter_Wheel_Set_Milliseconds_Per_Step(int ms) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that sets the de-bounce step count.
+	 */
+	private native void CCD_Filter_Wheel_Set_De_Bounce_Step_Count(int count) throws CCDLibraryNativeException;
 
 // ccd_global.h
 	/**
@@ -1316,6 +1320,23 @@ public class CCDLibrary
 		CCD_Filter_Wheel_Set_Milliseconds_Per_Step(ms);
 	}
 
+
+	/**
+	 * A method to set the number of steps of the stepper motors we make when driving the wheel out of
+	 * a detent position before checking detent inputs, during a filter wheel move. This 'de-bounces'
+	 * the detent inputs when driving the filter wheel out of a detent.
+	 * @param count The number of steps. This should be at least one, and less than the maximum DSP
+	 * 	integer. Ideally it should be 40-50 on a seven position wheel (where 1 position is ~57 steps),
+	 * 	and less than 80 on a five position wheel (where 1 position is 80 steps).
+	 * @exception CCDLibraryNativeException Thrown if an error occurs (the parameter is out of range,
+	 * 	or we could not write to the controller).
+	 * @see #CCD_Filter_Wheel_Set_De_Bounce_Step_Count
+	 */
+	public void CCDFilterWheelSetDeBounceStepCount(int count) throws CCDLibraryNativeException
+	{
+		CCD_Filter_Wheel_Set_De_Bounce_Step_Count(count);
+	}
+
 // ccd_text.h
 	/**
 	 * Routine thats set the amount of information displayed when the text interface device
@@ -1363,6 +1384,10 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.29  2001/02/09 18:29:48  cjm
+// Added CCDFilterWheelSetMsPerStep and changed
+// CCDFilterWheelGetStatus.
+//
 // Revision 0.28  2000/12/21 12:10:40  cjm
 // Added CCDDSPGetFilterWheelStatus and relevant statuss.
 //
