@@ -1,6 +1,7 @@
 package ngat.util;
 
 import java.util.Enumeration;
+
 /**
  * Implementation of a fixed length array for storing
  * Objects. The array grows as objects are added up
@@ -11,7 +12,7 @@ import java.util.Enumeration;
  * This implementation does not provide a mechanism for 
  * removing elements.
  *
- * $Id: CircularArray.java,v 1.2 2001-01-04 11:10:29 snf Exp $
+ * $Id: CircularArray.java,v 1.3 2001-02-23 18:49:14 snf Exp $
  *
  */
 public class CircularArray {
@@ -74,13 +75,14 @@ public class CircularArray {
     
     /** Returns the 'first' element in the list.*/
     public Object first() { return array[start]; }
-
+    
     /** Returns the 'last' element in the list.*/
     public Object last() { return array[last]; }
-	
+    
     /** Returns an enumeration of the elements from start to last.*/
     public Enumeration enumerate() { return new Enumerator();}
     
+    /** Inner class to represent an Enumeration of the array's content.*/
     private class Enumerator implements Enumeration {
 	
 	private int count;
@@ -105,6 +107,9 @@ public class CircularArray {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2001/01/04 11:10:29  snf
+/** Modified counter.
+/**
 /** Revision 1.1  2000/11/21 17:37:40  snf
 /** Initial revision
 /** */
