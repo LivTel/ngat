@@ -1,193 +1,194 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.4 1999-03-25 14:02:01 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.5 1999-05-28 09:54:18 dev Exp $
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision: 0.5 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.4 1999-03-25 14:02:01 dev Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.5 1999-05-28 09:54:18 dev Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int DSP_EXPOSURE_STATUS_NONE = 	0;
+	public final static int CCD_DSP_EXPOSURE_STATUS_NONE = 	0;
 	/**
 	 * DSP exposure status number, showing that an exposure is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int DSP_EXPOSURE_STATUS_EXPOSE = 	1;
+	public final static int CCD_DSP_EXPOSURE_STATUS_EXPOSE = 	1;
 	/**
 	 * DSP exposure status number, showing that a readout is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int DSP_EXPOSURE_STATUS_READOUT = 	2;
+	public final static int CCD_DSP_EXPOSURE_STATUS_READOUT = 	2;
 // ccd_interface.h
 	/**
 	 * Interface device number, showing that commands will currently be sent nowhere.
 	 * @see #CCDInitialise
 	 */
-	public final static int INTERFACE_DEVICE_NONE = 	0;
+	public final static int CCD_INTERFACE_DEVICE_NONE = 	0;
 	/**
 	 * Interface device number, showing that commands will currently be sent to the text interface 
 	 * to be printed out.
 	 * @see #CCDInitialise
 	 */
-	public final static int INTERFACE_DEVICE_TEXT =		1;
+	public final static int CCD_INTERFACE_DEVICE_TEXT =		1;
 	/**
 	 * Interface device number, showing that commands will currently be sent to the SBus interface.
 	 * @see #CCDInitialise
 	 */
-	public final static int INTERFACE_DEVICE_SBUS = 	2;
+	public final static int CCD_INTERFACE_DEVICE_SBUS = 	2;
 	/**
 	 * Interface device number, showing that commands will currently be sent to the PCI interface.
 	 * @see #CCDInitialise
 	 */
-	public final static int INTERFACE_DEVICE_PCI = 		3;
+	public final static int CCD_INTERFACE_DEVICE_PCI = 		3;
 // ccd_setup.h 
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to do Reset Timing.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_RESET_TIMING = 		(1<<0);
+	public final static int CCD_SETUP_FLAG_RESET_TIMING = 		(1<<0);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to do a hardware test.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_HARDWARE_TEST = 		(1<<1);
+	public final static int CCD_SETUP_FLAG_HARDWARE_TEST = 		(1<<1);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to send an application to the timing board.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_TIMING_BOARD = 		(1<<2);
+	public final static int CCD_SETUP_FLAG_TIMING_BOARD = 		(1<<2);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to send an application to the utility board.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_UTILITY_BOARD = 		(1<<3);
+	public final static int CCD_SETUP_FLAG_UTILITY_BOARD = 		(1<<3);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to turn the power on.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_POWER_ON = 			(1<<4);
+	public final static int CCD_SETUP_FLAG_POWER_ON = 			(1<<4);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to set a target CCD temperature.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_TARGET_CCD_TEMP = 		(1<<5);
+	public final static int CCD_SETUP_FLAG_TARGET_CCD_TEMP = 		(1<<5);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to set the CCD gain/speed.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_GAIN = 			(1<<6);
+	public final static int CCD_SETUP_FLAG_GAIN = 			(1<<6);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to decide whether to set the idle status.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_IDLE = 			(1<<7);
+	public final static int CCD_SETUP_FLAG_IDLE = 			(1<<7);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to send the CCD dimensions/binning to the boards.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_DIMENSIONS = 		(1<<8);
+	public final static int CCD_SETUP_FLAG_DIMENSIONS = 		(1<<8);
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD, to decide to set the deinterlace type.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_DEINTERLACE = 		(1<<9);
+	public final static int CCD_SETUP_FLAG_DEINTERLACE = 		(1<<9);
 	/**
 	 * Default setup flag passed to CCDSetupSetupCCD, which sets up all information.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_FLAG_ALL = (SETUP_FLAG_RESET_TIMING|SETUP_FLAG_HARDWARE_TEST|
-		SETUP_FLAG_TIMING_BOARD|SETUP_FLAG_UTILITY_BOARD|SETUP_FLAG_POWER_ON|SETUP_FLAG_TARGET_CCD_TEMP|
-		SETUP_FLAG_GAIN|SETUP_FLAG_IDLE|SETUP_FLAG_DIMENSIONS|SETUP_FLAG_DEINTERLACE);
+	public final static int CCD_SETUP_FLAG_ALL = (CCD_SETUP_FLAG_RESET_TIMING|CCD_SETUP_FLAG_HARDWARE_TEST|
+		CCD_SETUP_FLAG_TIMING_BOARD|CCD_SETUP_FLAG_UTILITY_BOARD|CCD_SETUP_FLAG_POWER_ON|
+		CCD_SETUP_FLAG_TARGET_CCD_TEMP|
+		CCD_SETUP_FLAG_GAIN|CCD_SETUP_FLAG_IDLE|CCD_SETUP_FLAG_DIMENSIONS|CCD_SETUP_FLAG_DEINTERLACE);
 	/**
 	 * Setup Load Type passed to CCDSetupSetupCCD as a load_type parameter, to load DSP application code from 
 	 * EEPROM.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_LOAD_APPLICATION = 		0;
+	public final static int CCD_SETUP_LOAD_APPLICATION = 		0;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a load_type parameter, to load DSP application code from a file.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_LOAD_FILENAME = 			1;
+	public final static int CCD_SETUP_LOAD_FILENAME = 			1;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 1.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_GAIN_ONE = 			1;
+	public final static int CCD_SETUP_GAIN_ONE = 			1;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 2.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_GAIN_TWO = 			2;
+	public final static int CCD_SETUP_GAIN_TWO = 			2;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 4.75.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_GAIN_FOUR = 			4;
+	public final static int CCD_SETUP_GAIN_FOUR = 			4;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a gain parameter, to set gain to 9.5.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_GAIN_NINE = 			9;
+	public final static int CCD_SETUP_GAIN_NINE = 			9;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting does no deinterlacing,
 	 * as the CCD was read out from a single readout.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_DEINTERLACE_SINGLE = 		0;
+	public final static int CCD_SETUP_DEINTERLACE_SINGLE = 		0;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting deinterlaces split
 	 * parallel readout.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_DEINTERLACE_SPLIT_PARALLEL = 	1;
+	public final static int CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL = 	1;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting deinterlaces split
 	 * serial readout.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_DEINTERLACE_SPLIT_SERIAL = 	2;
+	public final static int CCD_SETUP_DEINTERLACE_SPLIT_SERIAL = 	2;
 	/**
 	 * Setup flag passed to CCDSetupSetupCCD as a deinterlace type. This setting deinterlaces split
 	 * quad readout.
 	 * @see #CCDSetupSetupCCD
 	 */
-	public final static int SETUP_DEINTERLACE_SPLIT_QUAD = 		3;
+	public final static int CCD_SETUP_DEINTERLACE_SPLIT_QUAD = 		3;
 // ccd_text.h
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out commands only.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int TEXT_PRINT_LEVEL_COMMANDS = 		0;
+	public final static int CCD_TEXT_PRINT_LEVEL_COMMANDS = 		0;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out commands replies as well.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int TEXT_PRINT_LEVEL_REPLIES = 		1;
+	public final static int CCD_TEXT_PRINT_LEVEL_REPLIES = 		1;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out more header information as well.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int TEXT_PRINT_LEVEL_HEADERS = 		2;
+	public final static int CCD_TEXT_PRINT_LEVEL_HEADERS = 		2;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out reply buffers as well.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int TEXT_PRINT_LEVEL_BUFFERS = 		5;
+	public final static int CCD_TEXT_PRINT_LEVEL_BUFFERS = 		5;
 	/**
 	 * Level number passed to CCDTextSetPrintLevel, to print out everything.
 	 * @see #CCDTextSetPrintLevel
 	 */
-	public final static int TEXT_PRINT_LEVEL_ALL = 			9;
+	public final static int CCD_TEXT_PRINT_LEVEL_ALL = 			9;
 
 // ccd_dsp.h
 	/**
@@ -231,6 +232,10 @@ class CCDLibrary
 	 * Native wrapper to libccd routine that prints error values.
 	 */
 	private native void CCD_Global_Error();
+	/**
+	 * Native wrapper to libccd routine that gets error values into a string.
+	 */
+	private native String CCD_Global_Error_String();
 
 // ccd_interface.h
 	/**
@@ -298,9 +303,9 @@ class CCDLibrary
 	 * Returns whether an exposure is currently in progress. The library keeps track of whether a call to
 	 * <a href="#CCDExposureExpose">CCDExposureExpose</a> is in progress, and whether it is exposing or reading out
 	 * @return Returns the exposure status, one of 
-	 * 	<a href="#DSP_EXPOSURE_STATUS_NONE">DSP_EXPOSURE_STATUS_NONE</a>,
-	 * 	<a href="#DSP_EXPOSURE_STATUS_EXPOSE">DSP_EXPOSURE_STATUS_EXPOSE</a> and 
-	 *	<a href="#DSP_EXPOSURE_STATUS_READOUT">DSP_EXPOSURE_STATUS_READOUT</a>.
+	 * 	<a href="#CCD_DSP_EXPOSURE_STATUS_NONE">CCD_DSP_EXPOSURE_STATUS_NONE</a>,
+	 * 	<a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a> and 
+	 *	<a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a>.
 	 * @see #CCDExposureExpose
 	 */
 	public int CCDDSPGetExposureStatus()
@@ -347,8 +352,8 @@ class CCDLibrary
 	/**
 	 * Routine to abort an exposure that is underway. You can see if an exposure is in progress using 
 	 * <a href="#CCDDSPGetExposureStatus">CCDDSPGetExposureStatus</a> which should return
-	 * <a href="#DSP_EXPOSURE_STATUS_EXPOSE">DSP_EXPOSURE_STATUS_EXPOSE</a>. If the return value is 
-	 * <a href="#DSP_EXPOSURE_STATUS_READOUT">DSP_EXPOSURE_STATUS_READOUT</a> then the CCD is reading out and
+	 * <a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a>. If the return value is 
+	 * <a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a> then the CCD is reading out and
 	 * <a href="#CCDExposureAbortReadout">CCDExposureAbortReadout</a> should be called instead.
 	 * @see #CCDDSPGetExposureStatus 
 	 * @see #CCDExposureExpose 
@@ -362,8 +367,8 @@ class CCDLibrary
 	/**
 	 * Routine to abort an exposure that is reading out. You can see if an exposure is reading out using 
 	 * <a href="#CCDDSPGetExposureStatus">CCDDSPGetExposureStatus</a> which should return
-	 * <a href="#DSP_EXPOSURE_STATUS_READOUT">DSP_EXPOSURE_STATUS_READOUT</a>. If the return value is 
-	 * <a href="#DSP_EXPOSURE_STATUS_EXPOSE">DSP_EXPOSURE_STATUS_EXPOSE</a> then the CCD is exposing and
+	 * <a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a>. If the return value is 
+	 * <a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a> then the CCD is exposing and
 	 * <a href="#CCDExposureAbort">CCDExposureAbort</a> should be called instead.
 	 * @see #CCDDSPGetExposureStatus 
 	 * @see #CCDExposureExpose 
@@ -389,10 +394,10 @@ class CCDLibrary
 	 * called once at the start of each program. 
 	 * @param interface_device The interface device to use to communicate with the SDSU CCD Controller.
 	 * 	One of:
-	 * <a href="#INTERFACE_DEVICE_NONE">INTERFACE_DEVICE_NONE</a>,
-	 * <a href="#INTERFACE_DEVICE_TEXT">INTERFACE_DEVICE_TEXT</a>,
-	 * <a href="#INTERFACE_DEVICE_SBUS">INTERFACE_DEVICE_SBUS</a>,
-	 * <a href="#INTERFACE_DEVICE_PCI">INTERFACE_DEVICE_PCI</a>.
+	 * <a href="#CCD_INTERFACE_DEVICE_NONE">CCD_INTERFACE_DEVICE_NONE</a>,
+	 * <a href="#CCD_INTERFACE_DEVICE_TEXT">CCD_INTERFACE_DEVICE_TEXT</a>,
+	 * <a href="#CCD_INTERFACE_DEVICE_SBUS">CCD_INTERFACE_DEVICE_SBUS</a>,
+	 * <a href="#CCD_INTERFACE_DEVICE_PCI">CCD_INTERFACE_DEVICE_PCI</a>.
 	 */
 	public void CCDInitialise(int interface_device)
 	{
@@ -403,10 +408,27 @@ class CCDLibrary
 	 * Error routine. Should be called whenever another library routine has failed. 
 	 * Prints out to stderr any error messages outstanding in any of the modules that
 	 * make up libccd.
+	 * <b>Note</b> you cannot call both CCDError and CCDErrorString to print the error string and 
+	 * get a string copy of it, only one of the error routines can be called after libccd has generated an error.
+	 * A second call to one of these methods will generate a libccd 'Error not found' error!.
 	 */
 	public void CCDError()
 	{
 		CCD_Global_Error();
+	}
+
+	/**
+	 * Error routine. Should be called whenever another library routine has failed. 
+	 * Returns in a string any error messages outstanding in any of the modules that
+	 * make up libccd.
+	 * <b>Note</b> you cannot call both CCDError and CCDErrorString to print the error string and 
+	 * get a string copy of it, only one of the error routines can be called after libccd has generated an error.
+	 * A second call to one of these methods will generate a libccd 'Error not found' error!.
+	 * @return Returns the error string generated by libccd.
+	 */
+	public String CCDErrorString()
+	{
+		return CCD_Global_Error_String();
 	}
 
 // ccd_interface.h
@@ -442,26 +464,30 @@ class CCDLibrary
 	 * This routine sets up the SDSU CCD Controller ready to do exposures.
 	 * @return Returns true to indicate success and false for failure.
 	 * @param setup_flags Flags set to determine which parts of setup this call will do. Passing 
-	 * 	<a href="#SETUP_FLAG_ALL">SETUP_FLAG_ALL</a> does all parts of setup, or bits can be ORed
+	 * 	<a href="#CCD_SETUP_FLAG_ALL">CCD_SETUP_FLAG_ALL</a> does all parts of setup, or bits can be ORed
 	 * 	together from individual flags.
 	 * @param timing_load_type Where to load the Timing application DSP code from. Acceptable values are
-	 * 	<a href="#SETUP_LOAD_APPLICATION">SETUP_LOAD_APPLICATION</a> and
-	 *	<a href="#SETUP_LOAD_FILENAME">SETUP_LOAD_FILENAME</a>.
+	 * 	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> and
+	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
 	 * @param timing_application_number If timing_load_type is
-	 *	<a href="#SETUP_LOAD_APPLICATION">SETUP_LOAD_APPLICATION</a> this specifies which application to load.
+	 *	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> this specifies which 
+	 * 	application to load.
 	 * @param timing_filename If timing_load_type is
-	 *	<a href="#SETUP_LOAD_FILENAME">SETUP_LOAD_FILENAME</a> this specifies which file to load from.
+	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a> this specifies which file to load from.
 	 * @param utility_load_type Where to load the Utility application DSP code from. Acceptable values are
-	 * 	<a href="#SETUP_LOAD_APPLICATION">SETUP_LOAD_APPLICATION</a> and
-	 *	<a href="#SETUP_LOAD_FILENAME">SETUP_LOAD_FILENAME</a>.
+	 * 	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> and
+	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a>.
 	 * @param utility_application_number If utility_load_type is
-	 *	<a href="#SETUP_LOAD_APPLICATION">SETUP_LOAD_APPLICATION</a> this specifies which application to load.
+	 *	<a href="#CCD_SETUP_LOAD_APPLICATION">CCD_SETUP_LOAD_APPLICATION</a> this specifies which 
+	 * 	application to load.
 	 * @param utility_filename If utility_load_type is
-	 *	<a href="#SETUP_LOAD_FILENAME">SETUP_LOAD_FILENAME</a> this specifies which file to load from.
+	 *	<a href="#CCD_SETUP_LOAD_FILENAME">CCD_SETUP_LOAD_FILENAME</a> this specifies which file to load from.
 	 * @param target_temperature Specifies the target temperature the CCD is meant to run at. 
 	 * @param gain Specifies the gain to use for the CCD video processors. Acceptable values are:
-	 * 	<a href="#SETUP_GAIN_ONE">SETUP_GAIN_ONE</a>, <a href="#SETUP_GAIN_TWO">SETUP_GAIN_TWO</a>,
-	 * 	<a href="#SETUP_GAIN_FOUR">SETUP_GAIN_FOUR</a> and <a href="#SETUP_GAIN_NINE">SETUP_GAIN_NINE</a>.
+	 * 	<a href="#CCD_SETUP_GAIN_ONE">CCD_SETUP_GAIN_ONE</a>, 
+	 * 	<a href="#CCD_SETUP_GAIN_TWO">CCD_SETUP_GAIN_TWO</a>,
+	 * 	<a href="#CCD_SETUP_GAIN_FOUR">CCD_SETUP_GAIN_FOUR</a> and 
+	 * 	<a href="#CCD_SETUP_GAIN_NINE">CCD_SETUP_GAIN_NINE</a>.
 	 * @param gain_speed Set to true for fast integrator speed, false for slow integrator speed.
 	 * @param idle If true puts CCD clocks in readout sequence, but not transferring any data, whenever a
 	 * 	command is not executing.
@@ -473,10 +499,10 @@ class CCDLibrary
 	 *	nrows.
 	 * @param deinterlace_setting The algorithm to use for deinterlacing the resulting data. The data needs to be
 	 * 	deinterlaced if the CCD is read out from multiple readouts.One of:
-	 * 	<a href="#SETUP_DEINTERLACE_SINGLE">SETUP_DEINTERLACE_SINGLE</a>,
-	 * 	<a href="#SETUP_DEINTERLACE_SPLIT_PARALLEL">SETUP_DEINTERLACE_SPLIT_PARALLEL</a>,
-	 * 	<a href="#SETUP_DEINTERLACE_SPLIT_SERIAL">SETUP_DEINTERLACE_SPLIT_SERIAL</a>,
-	 * 	<a href="#SETUP_DEINTERLACE_SPLIT_QUAD">SETUP_DEINTERLACE_SPLIT_QUAD</a>.
+	 * 	<a href="#CCD_SETUP_DEINTERLACE_SINGLE">CCD_SETUP_DEINTERLACE_SINGLE</a>,
+	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL">CCD_SETUP_DEINTERLACE_SPLIT_PARALLEL</a>,
+	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_SERIAL">CCD_SETUP_DEINTERLACE_SPLIT_SERIAL</a>,
+	 * 	<a href="#CCD_SETUP_DEINTERLACE_SPLIT_QUAD">CCD_SETUP_DEINTERLACE_SPLIT_QUAD</a>.
 	 */
 	public boolean CCDSetupSetupCCD(int setup_flags,
 		int timing_load_type,int timing_application_number,String timing_filename,
@@ -556,11 +582,11 @@ class CCDLibrary
 	 * Routine thats set the amount of information displayed when the text interface device
 	 * is enabled.
 	 * @param level An integer describing how much information is displayed. Can be one of:
-	 * <a href="#TEXT_PRINT_LEVEL_COMMANDS">TEXT_PRINT_LEVEL_COMMANDS</a>,
-	 * <a href="#TEXT_PRINT_LEVEL_REPLIES">TEXT_PRINT_LEVEL_REPLIES</a>,
-	 * <a href="#TEXT_PRINT_LEVEL_HEADERS">TEXT_PRINT_LEVEL_HEADERS</a>,
-	 * <a href="#TEXT_PRINT_LEVEL_BUFFERS">TEXT_PRINT_LEVEL_BUFFERS</a> and
-	 * <a href="#TEXT_PRINT_LEVEL_ALL">TEXT_PRINT_LEVEL_ALL</a>.
+	 * <a href="#CCD_TEXT_PRINT_LEVEL_COMMANDS">CCD_TEXT_PRINT_LEVEL_COMMANDS</a>,
+	 * <a href="#CCD_TEXT_PRINT_LEVEL_REPLIES">CCD_TEXT_PRINT_LEVEL_REPLIES</a>,
+	 * <a href="#CCD_TEXT_PRINT_LEVEL_HEADERS">CCD_TEXT_PRINT_LEVEL_HEADERS</a>,
+	 * <a href="#CCD_TEXT_PRINT_LEVEL_BUFFERS">CCD_TEXT_PRINT_LEVEL_BUFFERS</a> and
+	 * <a href="#CCD_TEXT_PRINT_LEVEL_ALL">CCD_TEXT_PRINT_LEVEL_ALL</a>.
 	 */
 	public void CCDTextSetPrintLevel(int level)
 	{
@@ -571,6 +597,9 @@ class CCDLibrary
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.4  1999/03/25 14:02:01  dev
+// Backup
+//
 // Revision 0.3  1999/03/08 12:20:40  dev
 // Backup
 //
