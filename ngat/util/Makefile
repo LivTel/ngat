@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.4 1999-06-24 12:46:00 dev Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.5 1999-08-26 13:20:14 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -7,19 +7,18 @@ include		../Makefile.common
 PACKAGEDIR = ngat/util
 PACKAGENAME = ngat.util
 JAVACFLAGS = -d $(LIBDIR)
-DOCSDIR = ../javadocs/$(PACKAGEDIR)
+DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS = -version -author -private
 SRCS = ThreadMonitor.java ThreadMonitorFrame.java
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 
-top: $(OBJS) $(DOCS)
+top: $(OBJS) docs
 
-$(LIBDIR)/$(PACKAGEDIR)/ThreadMonitor.class: ThreadMonitor.java
-	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) ThreadMonitor.java
+$(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
+	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) $<
 
-$(LIBDIR)/$(PACKAGEDIR)/ThreadMonitorFrame.class: ThreadMonitorFrame.java
-	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) ThreadMonitorFrame.java
+docs: $(DOCS)
 
 $(DOCS): $(SRCS)
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
@@ -37,6 +36,9 @@ tidy:
 	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.4  1999/06/24 12:46:00  dev
+# "Backup"
+#
 # Revision 1.3  1999/04/27 11:26:23  dev
 # Backup
 #
