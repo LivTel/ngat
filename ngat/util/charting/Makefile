@@ -1,5 +1,3 @@
-
-
 #
 # This is an automatically generated Makfile from
 # /home/dev/src/scripts/change_makefiles.csh
@@ -7,7 +5,7 @@
 PACKAGENAME    = ngat.util.charting
 PACKAGEDIR     = ngat/util/charting
 JAR_FILE       = ngat_util_charting.jar
-DIRS           =
+
 
 SRCS           = Axis.java \
                  ChartConstants.java \
