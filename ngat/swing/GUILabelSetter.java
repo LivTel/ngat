@@ -1,5 +1,6 @@
 // GUILabelSetter.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUILabelSetter.java,v 0.2 1999-11-24 12:50:41 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUILabelSetter.java,v 0.3 1999-11-29 11:40:01 cjm Exp $
+package ngat.swing;
 
 import java.lang.*;
 import java.io.*;
@@ -12,7 +13,7 @@ import javax.swing.*;
  * It sets a label's text. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUILabelSetter implements Runnable
@@ -20,7 +21,7 @@ public class GUILabelSetter implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUILabelSetter.java,v 0.2 1999-11-24 12:50:41 cjm Exp $");
+	public final static String RCSID = new String("$Id: GUILabelSetter.java,v 0.3 1999-11-29 11:40:01 cjm Exp $");
 	/**
 	 * The Swing JLabel to append to.
 	 */
@@ -54,6 +55,9 @@ public class GUILabelSetter implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  1999/11/24 12:50:41  cjm
+// Changed @see clause.
+//
 // Revision 0.1  1999/11/22 09:53:49  cjm
 // initial revision.
 //
