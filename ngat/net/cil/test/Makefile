@@ -1,5 +1,5 @@
 include		../../../../Makefile.common
-include		../../../Makefile.common
+include		../../../Makefile.ngat
 
 PACKAGE_DIR     = ngat/net/cil/test
 BINDIR 		= $(LT_HOME)/classes/$(PACKAGE_DIR)
@@ -37,6 +37,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2002/11/15 11:40:15  cjm
+# Initial revision
+#
 # Revision 0.1  2000/10/16 17:39:24  cjm
 # initial revision.
 #
