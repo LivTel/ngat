@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.3 1999-04-27 11:26:23 dev Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.4 1999-06-24 12:46:00 dev Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -16,10 +16,10 @@ DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 top: $(OBJS) $(DOCS)
 
 $(LIBDIR)/$(PACKAGEDIR)/ThreadMonitor.class: ThreadMonitor.java
-	$(JAVAC) $(JAVACFLAGS) ThreadMonitor.java
+	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) ThreadMonitor.java
 
 $(LIBDIR)/$(PACKAGEDIR)/ThreadMonitorFrame.class: ThreadMonitorFrame.java
-	$(JAVAC) $(JAVACFLAGS) ThreadMonitorFrame.java
+	$(JAVAC) $(JAVAC_OPTIONS) $(JAVACFLAGS) ThreadMonitorFrame.java
 
 $(DOCS): $(SRCS)
 	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
@@ -37,6 +37,9 @@ tidy:
 	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.3  1999/04/27 11:26:23  dev
+# Backup
+#
 # Revision 1.2  1999/03/25 14:01:31  dev
 # Backup
 #
