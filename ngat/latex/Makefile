@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.4 1999-11-29 14:35:59 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.5 1999-12-10 14:31:07 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
@@ -14,7 +14,6 @@ PSOBJS		= $(TEXSRCS:%.tex=$(DOCSDIR)/%.ps)
 EPSOBJS		= $(FIGSRCS:%.fig=%.eps)
 
 top: $(PSOBJS)
-
 
 $(DOCSDIR)/%.ps: %.dvi
 	$(DVIPS) $< -o
@@ -34,10 +33,13 @@ depend:
 	echo "NO depend rule for latex files."
 
 clean:
-	$(RM) $(RM_OPTIONS) $(DVIOBJS) $(PSOBJS) $(EPSOBJS) $(LATEX_TIDY_OPTIONS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(DVIOBJS) $(PSOBJS) $(EPSOBJS) $(LATEX_TIDY_OPTIONS) $(TIDY_OPTIONS)
 
 tidy:
-	$(RM) $(RM_OPTIONS) $(LATEX_TIDY_OPTIONS) $(TIDY_OPTIONS)
+	-$(RM) $(RM_OPTIONS) $(LATEX_TIDY_OPTIONS) $(TIDY_OPTIONS)
+
+backup: tidy
+	-$(RM) $(RM_OPTIONS) $(DVIOBJS) $(EPSOBJS)
 
 checkin:
 	-$(CI) $(CI_OPTIONS) $(TEXSRCS) $(FIGSRCS)
@@ -47,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.4  1999/11/29 14:35:59  cjm
+# added ngat.swing.tex source file.
+#
 # Revision 0.3  1999/09/23 14:57:12  cjm
 # Added ngat.net.MAprotocol.fig source.
 #
