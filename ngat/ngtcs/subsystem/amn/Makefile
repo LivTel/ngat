@@ -14,6 +14,7 @@ SRCS           = AGD_DataType.java \
                  AGF_Status.java \
                  AMN.java \
 		 SFD_DataType.java \
+		 SFD_MirrorPosition \
 		 SFD_State.java \
 		 SFD_Status.java \
 		 SMF_DataType.java \
@@ -24,10 +25,13 @@ SRCS           = AGD_DataType.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2003-09-19 16:09:29 je Exp $
-#     $Date: 2003-09-19 16:09:29 $
+# $Revision: 1.2 $
+#       $Id: Makefile,v 1.2 2003-10-15 11:30:24 je Exp $
+#     $Date: 2003-10-15 11:30:24 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.1  2003/09/19 16:09:29  je
+#      Initial revision
+#
 #
