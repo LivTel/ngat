@@ -1,5 +1,5 @@
 // StringUtilites.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilites.java,v 0.2 2000-10-06 14:38:25 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilites.java,v 0.3 2001-07-10 16:55:40 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  * @author Chris Mottram
  */
 public class StringUtilites
@@ -15,7 +15,7 @@ public class StringUtilites
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilites.java,v 0.2 2000-10-06 14:38:25 cjm Exp $");
+	public final static String RCSID = new String("$Id: StringUtilites.java,v 0.3 2001-07-10 16:55:40 cjm Exp $");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.
@@ -79,6 +79,35 @@ public class StringUtilites
 
 		return sb.toString();
 	}
+
+	/**
+	 * This method changes the String <b>s</b>, by replacing any occurances of
+	 * <b>searchString</b> within the string with <b>replaceString</b>.
+	 * <b>Note:</b> This method will enter an infinite loop if <b>replaceString</b> includes
+	 * <b>searchString</b> i.e. if <b>replaceString.indexOf(searchString) > -1</b>
+	 * @param s The initial string to modify.
+	 * @param searchString A string that this method searches for. Each occurance of <b>searchString</b>
+	 * 	in <b>s</b> is replaced with <b>replaceString</b>.
+	 * @param replaceString Every occurance of <b>searchString</b> in <b>s</b> is replaced with this string.
+	 * @return The new string is returned.
+	 */
+	public static String replace(String s,String searchString, String replaceString)
+	{
+		String sString, eString;
+		int sindex,searchStringLength;
+
+		searchStringLength = searchString.length();
+		sindex = s.indexOf(searchString);
+		while(sindex > -1)
+		{
+			sString = s.substring(0,sindex);
+			eString = s.substring(sindex+searchStringLength);
+			s = new String(sString+replaceString+eString);
+			sindex = s.indexOf(searchString);
+		}
+		return s;
+	}
+
 	/**
 	 * This method returns a new string, which removes any of the characters in
 	 * <b>oldCharacters</b>.
@@ -222,6 +251,9 @@ public class StringUtilites
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  2000/10/06 14:38:25  cjm
+// Added getLeaf method.
+//
 // Revision 0.1  2000/09/06 12:58:42  cjm
 // initial revision.
 //
