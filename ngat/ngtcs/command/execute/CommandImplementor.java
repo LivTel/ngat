@@ -10,7 +10,7 @@ import ngat.ngtcs.command.*;
  * be implemented by the telescope control system.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class CommandImplementor
 {
@@ -24,7 +24,7 @@ public abstract class CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: CommandImplementor.java,v 1.5 2003-09-29 13:12:18 je Exp $" );
+    new String( "$Id: CommandImplementor.java,v 1.6 2003-09-29 13:58:53 je Exp $" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -158,12 +158,30 @@ public abstract class CommandImplementor
     }
     slept += ms;
   }
+
+
+  /**
+   * Log the specified error string to this CommandImplementor's logger and set
+   * the error message in the commandDone.<br>
+   * <b>NOTE:</b><br>
+   * Command-specific CommandDone sub-classes <i>must</i> be instantiated and
+   * assigned <i>before</i> this method is used.
+   * @param err the error message to log
+   */
+  protected void logError( String err )
+  {
+    logger.log( 1, logName, err );
+    commandDone.setErrorMessage( err );
+  }
 }
 /*
- *    $Date: 2003-09-29 13:12:18 $
+ *    $Date: 2003-09-29 13:58:53 $
  * $RCSfile: CommandImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/CommandImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.5  2003/09/29 13:12:18  je
+ *     Added generic sleep method.
+ *
  *     Revision 1.4  2003/09/29 11:50:28  je
  *     Added documentation.
  *
