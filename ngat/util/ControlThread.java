@@ -47,6 +47,9 @@ public abstract class ControlThread extends Thread {
     /** Class Logger.*/
     protected Logger logger;
 
+    /** Text description.*/
+    protected String desc;
+
     // Constructors.
 
     /** Construct a ControlThread which may be TRANSIENT or PERMANENT. */
@@ -186,6 +189,22 @@ public abstract class ControlThread extends Thread {
     /** Check if this Thread runs its mainTask() once only. */
     protected final boolean isTransient() { return !permanence;}
 
+    /** Sets the text description.*/
+    public void setDesc(String desc) { this.desc = desc; }
+
+    /** Returns the text descrioption.*/
+    public String getDesc() { return desc; }
+
+    /** Returns a text description of this thread.*/
+    public String toString() { 
+	synchronized(pauseLock) {
+	    return "ControlThread: "+getName()+" :" +
+		(permanence ? "(Continuous)" : "(Single-shot)")+
+		(paused ? "PAUSED" : "RUNNING")+
+		" : "+desc;
+	}
+    }
+    
 }
 
 
