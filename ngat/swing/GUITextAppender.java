@@ -1,5 +1,5 @@
 // GUITextAppender.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUITextAppender.java,v 0.1 1999-11-22 09:53:49 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUITextAppender.java,v 0.2 1999-11-24 12:50:31 cjm Exp $
 
 import java.lang.*;
 import java.io.*;
@@ -12,15 +12,15 @@ import javax.swing.*;
  * It appends some passed in text to the JTextArea. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
- * @see SwingUtilities#invokeLater
+ * @version $Revision: 0.2 $
+ * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUITextAppender implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUITextAppender.java,v 0.1 1999-11-22 09:53:49 cjm Exp $");
+	public final static String RCSID = new String("$Id: GUITextAppender.java,v 0.2 1999-11-24 12:50:31 cjm Exp $");
 	/**
 	 * The Swing JTextAreacomponent to append to.
 	 */
@@ -54,4 +54,7 @@ public class GUITextAppender implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  1999/11/22 09:53:49  cjm
+// initial revision.
+//
 //
