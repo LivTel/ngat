@@ -18,15 +18,16 @@ SRCS           = Autoguider.java \
                  PluggableSubSystemCreator.java \
                  PluggableSubSystemFactory.java \
                  Rotator.java \
-                 Timer.java
+                 Timer.java \
+                 TimerFactory.java
 
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2003-07-01 10:13:53 je Exp $
-#     $Date: 2003-07-01 10:13:53 $
+# $Revision: 1.2 $
+#       $Id: Makefile,v 1.2 2003-08-20 12:27:02 je Exp $
+#     $Date: 2003-08-20 12:27:02 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
