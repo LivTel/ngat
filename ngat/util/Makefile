@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.21 2001-03-06 10:42:33 snf Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.22 2001-03-23 15:24:06 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -29,7 +29,6 @@ SRCS 		=ThreadMonitor.java ThreadMonitorFrame.java CircularListNode.java Circula
 		CommandParser.java ConfigurationCache.java ConfigurationProperties.java \
 		GaussianRandom.java BooleanLock.java Predictor.java PredictorSample.java StandardPredictor.java \
 		StatisticalPredictor.java
- 
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGEDIR)/%.html)
 
@@ -41,7 +40,6 @@ top: jar docs
 
 jar: $(JARLIBDIR)/$(JAR_FILE)
 
-
 $(JARLIBDIR)/$(JAR_FILE): $(OBJS)
 	(cd $(LIBDIR); $(JAR) $(JAR_OPTIONS) $(JAR_FILE) $(PACKAGEDIR); $(MV) $(JAR_FILE) $(JARLIBDIR))
 
@@ -51,9 +49,8 @@ $(LIBDIR)/$(PACKAGEDIR)/%.class: %.java
 docs: $(DOCS)
 
 $(DOCSDIR)/$(PACKAGEDIR)/%.html: %.java
-	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME) $(PACKAGENAME).logging
-
-
+	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME)
+#diddly	$(JAVADOC) -sourcepath ../..:$(CLASSPATH) -d $(DOCSDIR) $(DOCFLAGS) $(PACKAGENAME) $(PACKAGENAME).logging
 
 checkout:
 	$(CO) $(CO_OPTIONS) $(SRCS)
@@ -93,6 +90,9 @@ backup: tidy
 
 
 # $Log: not supported by cvs2svn $
+# Revision 1.21  2001/03/06 10:42:33  snf
+# added Bogstanlogformatter.
+#
 # Revision 1.20  2001/01/15 12:53:28  snf
 # Added subpackage stuff.
 #
