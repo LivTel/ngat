@@ -1,12 +1,10 @@
-
-
 #
 # This is an automatically generated Makfile from
-# /home/dev/src/scripts/change_makefiles.csh
+# /home/dev/src/scripts/make_makefile.csh
 #
 PACKAGENAME    = ngat.message.POS_RCS
 PACKAGEDIR     = ngat/message/POS_RCS
-JAR_FILE       = ngat_message_POS_RCS.jar
+JAR_FILE       = ngat_message_pos_rcs.jar
 DIRS           =
 
 SRCS           = ABORT_DONE.java \
@@ -37,4 +35,14 @@ SRCS           = ABORT_DONE.java \
                  USERID_DONE.java \
                  USERID.java
 
+
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
+#
+#   $Author: je $
+# $Revision: 1.3 $
+#       $Id: Makefile,v 1.3 2002-10-03 10:57:27 je Exp $
+#     $Date: 2002-10-03 10:57:27 $
+#  $RCSfile: Makefile,v $
+#   $Source: /space/home/eng/cjm/cvs/ngat/message/POS_RCS/Makefile,v $
+#      $Log: not supported by cvs2svn $
+#
