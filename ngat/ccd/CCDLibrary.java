@@ -1,16 +1,16 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.3 1999-03-08 12:20:40 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.4 1999-03-25 14:02:01 dev Exp $
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.3 1999-03-08 12:20:40 dev Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.4 1999-03-25 14:02:01 dev Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -226,11 +226,11 @@ class CCDLibrary
 	/**
 	 * Native wrapper to libccd routine that sets up the CCD library for use.
 	 */
-	private native void CCD_Initialise(int interface_device);
+	private native void CCD_Global_Initialise(int interface_device);
 	/**
 	 * Native wrapper to libccd routine that prints error values.
 	 */
-	private native void CCD_Error();
+	private native void CCD_Global_Error();
 
 // ccd_interface.h
 	/**
@@ -255,6 +255,10 @@ class CCDLibrary
 	 * Native wrapper to libccd routine that aborts the CCD setup.
 	 */
 	private native void CCD_Setup_Abort();
+	/**
+	 * Native wrapper to libccd routine that aborts the CCD setupgets whether a setup operation is in progress.
+	 */
+	private native boolean CCD_Setup_Get_Setup_In_Progress();
 	/**
 	 * Native wrapper to return ccd_setup's error number.
 	 */
@@ -392,7 +396,7 @@ class CCDLibrary
 	 */
 	public void CCDInitialise(int interface_device)
 	{
-		CCD_Initialise(interface_device);
+		CCD_Global_Initialise(interface_device);
 	}
 
 	/**
@@ -402,7 +406,7 @@ class CCDLibrary
 	 */
 	public void CCDError()
 	{
-		CCD_Error();
+		CCD_Global_Error();
 	}
 
 // ccd_interface.h
@@ -497,6 +501,15 @@ class CCDLibrary
 	}
 
 	/**
+	 * Routine to abort a setup that is underway.
+	 * @see #CCDSetupSetupCCD
+	 */
+	public boolean CCDSetupGetSetupInProgress()
+	{
+		return (boolean)CCD_Setup_Get_Setup_In_Progress();
+	}
+
+	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
 	 */
@@ -558,6 +571,9 @@ class CCDLibrary
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  1999/03/08 12:20:40  dev
+// Backup
+//
 // Revision 0.2  1999/02/23 11:08:00  dev
 // backup/transfer to ltccd1.
 //

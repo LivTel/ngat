@@ -1,5 +1,5 @@
 // ThreadMonitor.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/ThreadMonitor.java,v 1.1 1999-03-19 16:22:07 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/ThreadMonitor.java,v 1.2 1999-03-25 14:00:34 dev Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -12,8 +12,8 @@ import java.awt.*;
 public class ThreadMonitor extends Thread
 {
 	List list;
-	boolean allThreads = true;
 	int updateTime = 2000; // unit is ms
+	ThreadGroup threadGroup = null;
 	Thread threadArray[] = null;
 
 	/**
@@ -22,29 +22,18 @@ public class ThreadMonitor extends Thread
 	 */
 	public ThreadMonitor(List list)
 	{
-		this(list,true,2000);
+		this(list,2000);
 	}
 
 	/**
 	 * Constructor for the thread monitor.
 	 * @param list The list to display threads in.
-	 * @param allThreads Whether to display all running threads or just those running Socket connections.
-	 */
-	public ThreadMonitor(List list, boolean allThreads)
-	{
-		this(list,allThreads,2000);
-	}
-
-	/**
-	 * Constructor for the thread monitor.
-	 * @param list The list to display threads in.
-	 * @param allThreads Whether to display all running threads or just those running Socket connections.
 	 * @param The updateTime between updating the threads in the list, in milliseconds.
 	 */
-	public ThreadMonitor(List list,boolean allThreads,int updateTime)
+	public ThreadMonitor(List list,int updateTime)
 	{
+		setName("Thread Monitor");
 		this.list = list;
-		this.allThreads = allThreads;
 		this.updateTime = updateTime;
 	}
 
@@ -54,33 +43,10 @@ public class ThreadMonitor extends Thread
 	 */
 	public void run()
 	{
-		int count;
-		String s;
-		int i;
-
-		Thread.currentThread().setName("Thread Monitor");
+		getTopThreadGroup();
 		while(true)
 		{
-			list.removeAll();
-			synchronized (this)
-			{
-				count = Thread.activeCount();
-				threadArray = new Thread[count];
-				count=Thread.enumerate(threadArray);
-				for (i=1;i<count;i++)
-				{
-					s = new String(threadArray[i].getName());
-					if (allThreads == true)
-					{
-						list.addItem(s);
-					}
-					else
-					{
-						if(s.startsWith("Socket"))
-							list.addItem(s);
-					}
-				}
-			}
+			update();
 			try
 			{
 				sleep(updateTime);
@@ -90,6 +56,47 @@ public class ThreadMonitor extends Thread
 			}
 		}
 	}
+
+	/**
+	 * Routine that updates the list. Gets all threads in the current threadGroup (and sub groups)
+	 * and puts their name into the list.
+	 */
+	public synchronized void update()
+	{
+		int count;
+		String s;
+
+		if(threadGroup == null)
+			getTopThreadGroup();
+		list.removeAll();
+		count = threadGroup.activeCount();
+		threadArray = new Thread[count];
+		count=threadGroup.enumerate(threadArray);
+		for(int i = 1;i < count;i++)
+		{
+			s = new String(threadArray[i].getName());
+			list.addItem(s);
+		}
+	}
+
+	/**
+	 * Set the update time for the monitor thread.
+	 * @param milliseconds The time in milliseconds.
+	 */
+	public void setUpdateTime(int milliseconds)
+	{
+		updateTime = milliseconds;
+	}
+
+	private void getTopThreadGroup()
+	{
+		threadGroup = this.getThreadGroup();
+		while(threadGroup.getParent() != null)
+			threadGroup = threadGroup.getParent();
+	}
 }
 
 // $Log: not supported by cvs2svn $
+// Revision 1.1  1999/03/19 16:22:07  dev
+// Backup
+//
