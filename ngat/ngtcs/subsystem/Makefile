@@ -10,10 +10,10 @@ DIRS_TARGET    = dirs
 
 SRCS           = Autoguider.java \
                  BasicMechanism.java \
+                 BasicPluggableSubSystem.java \
                  BasicSingletonMechanism.java \
                  ControllableSubSystem.java \
                  Enclosure.java \
-                 MSI_AutoguiderFactory.java \
                  Mount.java \
                  MountState.java \
                  MountStatus.java \
@@ -22,6 +22,7 @@ SRCS           = Autoguider.java \
                  PluggableSubSystemCreator.java \
                  PluggableSubSystemFactory.java \
                  Rotator.java \
+                 RotatorFactory.java \
                  TTL_AuthState.java \
                  TTL_Autoguider.java \
                  TTL_AutoguiderCentroid.java \
@@ -29,16 +30,19 @@ SRCS           = Autoguider.java \
                  TTL_DataType.java \
                  TTL_DataUnit.java \
                  TTL_DataValue.java \
-                 TTL_Enumeration.java \
+                 TTL_Enclosure.java \
+                 TTL_GenericData.java \
                  TTL_Mount.java \
                  TTL_MountFactory.java \
                  TTL_Package.java \
+                 TTL_Rotator.java \
+                 TTL_RotatorFactory.java \
+                 TTL_SecondaryMirror.java \
                  TTL_System.java \
                  TTL_SystemCommand.java \
                  TTL_SystemException.java \
                  TTL_SystemRequest.java \
                  TTL_SystemState.java \
-                 TTL_SystemStatus.java \
                  Timer.java \
                  TimerFactory.java
 
@@ -46,9 +50,9 @@ SRCS           = Autoguider.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.3 $
-#       $Id: Makefile,v 1.3 2003-09-02 14:21:10 je Exp $
-#     $Date: 2003-09-02 14:21:10 $
+# $Revision: 1.4 $
+#       $Id: Makefile,v 1.4 2003-09-23 14:11:40 je Exp $
+#     $Date: 2003-09-23 14:11:40 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
