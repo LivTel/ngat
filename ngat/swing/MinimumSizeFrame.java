@@ -1,5 +1,5 @@
 // MinimumSizeFrame.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/MinimumSizeFrame.java,v 0.3 1999-12-09 15:09:17 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/MinimumSizeFrame.java,v 0.4 1999-12-09 15:11:32 cjm Exp $
 package ngat.swing;
 
 import java.awt.*;
@@ -11,13 +11,15 @@ import javax.swing.JFrame;
  * It does this by monitoring Component Window re-sizeing events, and checking the current size	
  * against the minimum size and re-sizing if appropriate. This is not a very good mechanism
  * for doing this.
+ * @author Chris Mottram
+ * @version $Revision: 0.4 $
  */
 public class MinimumSizeFrame extends JFrame
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: MinimumSizeFrame.java,v 0.3 1999-12-09 15:09:17 cjm Exp $");
+	public final static String RCSID = new String("$Id: MinimumSizeFrame.java,v 0.4 1999-12-09 15:11:32 cjm Exp $");
 	/**
 	 * Dimension to hold the minimum size.
  	 */
@@ -102,6 +104,9 @@ public class MinimumSizeFrame extends JFrame
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  1999/12/09 15:09:17  cjm
+// Added RCSID.
+//
 // Revision 0.2  1999/11/29 11:51:35  cjm
 // Changed package to ngat.swing.
 //
