@@ -1,11 +1,11 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.5 1999-12-10 14:31:07 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/latex/Makefile,v 0.6 2000-02-03 17:07:48 cjm Exp $
 
 include ../../Makefile.common
 include ../Makefile.common
 
 DOCSDIR 	= $(NGAT_DOC_HOME)/latex
 
-TEXSRCS 	= ngat.net.tex ngat.swing.tex ngat.net_error_machanisms.tex
+TEXSRCS 	= ngat.net.tex ngat.swing.tex ngat.ccd.tex ngat.net_error_machanisms.tex
 FIGSRCS 	= ngat.net.protocol.fig ngat.net.MAprotocol.fig
 
 DVIOBJS		= $(TEXSRCS:%.tex=%.dvi)
@@ -49,6 +49,9 @@ checkout:
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.5  1999/12/10 14:31:07  cjm
+# Backup target added.
+#
 # Revision 0.4  1999/11/29 14:35:59  cjm
 # added ngat.swing.tex source file.
 #
