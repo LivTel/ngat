@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.21 2000-03-08 10:25:59 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.22 2000-03-09 16:35:12 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.21 $
+ * @version $Revision: 0.22 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.21 2000-03-08 10:25:59 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.22 2000-03-09 16:35:12 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -183,6 +183,11 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
 	 */
 	private native void CCD_DSP_Command_REX() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that get the amount of time an exposure has been underway.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
+	 */
+	private native int CCD_DSP_Command_Read_Exposure_Time() throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine thats returns whether an exposure is currently in progress.
 	 */
@@ -392,6 +397,19 @@ public class CCDLibrary
 	public void CCDDSPCommandREX() throws CCDLibraryNativeException
 	{
 		CCD_DSP_Command_REX();
+	}
+
+	/**
+	 * Method to return the amount of time an exposure has been underway (i.e. the length of time the
+	 * shutter has been open for).
+	 * @return The amount of time an exposure has been underway, in milliseconds. If an exposure
+	 * 	is not underway (the shutter is not open) zero is returned.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_DSP_Command_Read_Exposure_Time
+	 */
+	public int CCDDSPCommandReadExposureTime() throws CCDLibraryNativeException
+	{
+		return CCD_DSP_Command_Read_Exposure_Time();
 	}
 
 	/**
@@ -1029,6 +1047,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.21  2000/03/08 10:25:59  cjm
+// Added CCDLibraryNativeException to pause and resumr methods.
+//
 // Revision 0.20  2000/03/07 17:03:05  cjm
 // Added pause and resume methods.
 //
