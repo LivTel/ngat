@@ -25,6 +25,7 @@ These classes deal with sending information over the network.
 \hline
 0.0 &              C. J. Mottram & 4/5/99 & First draft \\
 0.1 &              C. J. Mottram & 31/8/99 & Changed document references to documents on ltccd1.\\
+0.2 &              C. J. Mottram & 23/9/99 & Added section on Multiple Acknowledgment/Socket Timeout enhancements.\\
 \hline
 \end{tabular}
 \end{center}
@@ -40,9 +41,11 @@ These classes deal with sending information over the network.
 This package is a set of Java classes that send information over a network.
 It consists of:
 \begin{itemize}
+\item The TCPConstants class.
 \item The TCPServer class.
 \item The TCPServerConnectionThread class.
 \item The TCPClientConnectionThread class.
+\item The TCPClientConnectionThreadMA class.
 \end{itemize}
 
 \section{Design Rationale}
@@ -75,7 +78,8 @@ a lot of support code, which will be difficult to keep up to date. RMI is fine f
 soon become too complicated when two processes need interactive two way communication.
 
 \section{Protocol}
-The protcol used is documented in the Java Message System Design Document \cite{bib:jmsdd}.
+\subsection{Original Protocol}
+The original protocol used is documented in the Java Message System Design Document \cite{bib:jmsdd}.
 
 Figure \ref{fig:ngatnetprotocol} shows how a transaction takes place within the system:
 \setlength{\unitlength}{1in}
@@ -89,9 +93,37 @@ Figure \ref{fig:ngatnetprotocol} shows how a transaction takes place within the 
 	\label{fig:ngatnetprotocol} 
 \end{figure}
 
+\subsection{Multiple Acknowledgment Protocol}
+As a result of a discussion on error handling, and difficulties with the original protocol in several
+respects, an advanced version of the protocol was devised that will be used for communication. The discussion
+that led to these enhancements is documented in \cite{bib:jmserrorhandle}.
+
+The protocol was extended by allowing more than one acknowledgment to be returned by the server. This means if the
+server has to implement one complicated request with several sub-operations, it only need calculate the time to
+complete the next sub-operation. 
+
+Figure \ref{fig:ngatnetmaprotocol} shows how a transaction takes place within the system:
+\setlength{\unitlength}{1in}
+\begin{figure}[!h]
+	\begin{center}
+		\begin{picture}(8.0,5.5)(0.0,0.0)
+			\put(0,0){\special{psfile=ngat.net.MAprotocol.eps   hscale=70 vscale=75}}
+		\end{picture}
+	\end{center}
+	\caption{\em ngat.net example multiple acknowledgment transaction. }
+	\label{fig:ngatnetmaprotocol} 
+\end{figure}
+
+Another problem with the original protocol was if a server died, the client waited forever for it to respond.
+This was fixed by adding a {\em socket timeout} mechanism, where if the client waits to long for a message to
+be returned from the server it times out and an error is returned.
+
 \section{Class Overview}
 These are the classes currently available that implement the protocol previously described. API documentation
 for these classes is also available \cite{bib:ngatnettree}.
+
+\subsection{The TCPConstants class}
+This class holds various constants used by the other classes. These constants include various socket timeouts.
 
 \subsection{The TCPServer class}
 The class implements a TCP Server. The class extends the standard Java Thread class, so that the resulting Server
@@ -105,14 +137,23 @@ This class implements the generic message protocol used by the message passing s
 and an object of this class is run for each connection accepted. The generic implementation involves receiving a 
 command, sending an acknowledge message back, and then sending a done message to complete the transaction. Sub-classes
 of this class should process the command passed in and perform the command, and also calculate the time to complete 
-a command.
+a command. The class has been extended to allow more than one acknowledgment to be returned to the client when using
+the Multiple Acknowledgment enhancement.
 
 \subsection{The TCPClientConnectionThread class}
 This class implements the client end of the generic message protocol. It is instantiated as a thread,
 and an object of a sub-class of this class is run for each command to be sent. The generic implementation involves
-opening a socket connection to the server, sending a command to the server, awaiting an acknowledgement, 
+opening a socket connection to the server, sending a command to the server, awaiting an acknowledgment, 
 and then awaiting a done message to complete the transaction. This class is sub-classed to provide the process
-specific implementations to implement internal responses to the acknowledgement and the done message.
+specific implementations to implement internal responses to the acknowledgment and the done message.
+
+\subsection{The TCPClientConnectionThreadMA class}
+This class implements the client end of the generic message protocol, when using the Multiple Acknowledgment 
+enhancement. It is instantiated as a thread,
+and an object of a sub-class of this class is run for each command to be sent. The generic implementation involves
+opening a socket connection to the server, sending a command to the server, awaiting one or more acknowledgments, 
+and then awaiting a done message to complete the transaction. This class is sub-classed to provide the process
+specific implementations to implement internal responses to the acknowledgment and the done message.
 
 \begin{thebibliography}{99}
 \addcontentsline{toc}{section}{Bibliography}
@@ -120,6 +161,8 @@ specific implementations to implement internal responses to the acknowledgement 
 Liverpool John Moores University
 \bibitem{bib:ngatnettree}{\bf Ngat.Net Class Tree}
 Liverpool John Moores University \newline{\em http://ltccd1.livjm.ac.uk/\verb'~'dev/ngat/javadocs/ngat/net/tree.html}
+\bibitem{bib:jmserrorhandle}{\bf ngat.net package Error Handling Mechanisms}
+Liverpool John Moores University {\em http://ltccd1.livjm.ac.uk/\verb'~'dev/ngat/latex/ngat.net\_error\_mechanisms.ps}
 \end{thebibliography}
 
 \end{document}
