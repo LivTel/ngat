@@ -14,7 +14,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * autoguider beam.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AGFILTERImplementor
   extends CommandImplementor
@@ -29,17 +29,12 @@ public class AGFILTERImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGFILTERImplementor.java,v 1.4 2003-09-22 13:24:36 je Exp $" );
+    new String( "$Id: AGFILTERImplementor.java,v 1.5 2003-09-22 14:21:36 je Exp $" );
 
   /**
    * Timeout for this command, in milliseconds (60000).
    */
-  public static final int TIMEOUT = 60000;
-
-  /**
-   * Number of Acknowledgements before a timeout (6).
-   */
-  public static final int MAX_TIMEOUTS = 6;
+  public final int TIMEOUT = 60000;
 
   /*=======================================================================*/
   /*                                                                       */
@@ -70,7 +65,11 @@ public class AGFILTERImplementor
 
 
   /**
-   *
+   * If deploy flag is set and filter is NOT deployed, then deploy OR vice
+   * versa.  If the demand has already been acheived, then return immediately
+   * with success = true.  If a movement is required, a periodic sleep is
+   * performed to return whether the movement has succeeded or not, unless the
+   * timeout period is exceeded, in which case a success = false is returned.
    */
   public void execute()
   {
@@ -93,7 +92,6 @@ public class AGFILTERImplementor
 	  demand = AGD_FilterPosition.E_AGD_IR_IN_LINE;
 	  ag.setDemandFilterPosition( demand );
 	  move = true;
-
 	  logger.log( 3, logName, "Autoguider filter demand set to IN_LINE" );
 	}
 	else
@@ -111,7 +109,6 @@ public class AGFILTERImplementor
 	  demand = AGD_FilterPosition.E_AGD_IR_RETRACT;
 	  ag.setDemandFilterPosition( demand );
 	  move = true;
-
 	  logger.log( 3, logName, "Autoguider filter demand set to RETRACT" );
 	}
 	else if( pos == AGD_FilterPosition.E_AGD_IR_RETRACT )
@@ -165,11 +162,14 @@ public class AGFILTERImplementor
   }
 }
 /*
- *    $Date: 2003-09-22 13:24:36 $
+ *    $Date: 2003-09-22 14:21:36 $
  * $RCSfile: AGFILTERImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFILTERImplementor.java,v $
- *      $Id: AGFILTERImplementor.java,v 1.4 2003-09-22 13:24:36 je Exp $
+ *      $Id: AGFILTERImplementor.java,v 1.5 2003-09-22 14:21:36 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/22 13:24:36  je
+ *     Added TTL TCS-Network-ICD documentation.
+ *
  *     Revision 1.3  2003/09/22 11:37:26  je
  *     Changed timeout message.
  *
