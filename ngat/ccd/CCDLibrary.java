@@ -1,5 +1,5 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.31 2001-04-05 16:49:36 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.32 2001-07-13 10:10:23 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -9,14 +9,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.31 $
+ * @version $Revision: 0.32 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.31 2001-04-05 16:49:36 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.32 2001-07-13 10:10:23 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -481,6 +481,11 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
 	private native void CCD_Temperature_Set(double target_temperature) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the current heater ADU counts.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native int CCD_Temperature_Get_Heater_ADU() throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to return ccd_temperature's error number.
 	 */
@@ -1422,6 +1427,17 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Routine to get the current CCD header Analogue to Digital count, a measure of how much
+	 * heat is being put into the dewar to control the temperature.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Temperature_Get_Heater_ADU
+	 */
+	public int CCDTemperatureGetHeaterADU() throws CCDLibraryNativeException
+	{
+		return CCD_Temperature_Get_Heater_ADU();
+	}
+
+	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
 	 * @see #CCD_Temperature_Get_Error_Number
@@ -1488,6 +1504,10 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.31  2001/04/05 16:49:36  cjm
+// Added logging back from C to Logger.
+// Added more native interfaces for getting error numbers.
+//
 // Revision 0.30  2001/03/01 12:28:08  cjm
 // Added CCDFilterWheelSetDeBounceStepCount.
 //
