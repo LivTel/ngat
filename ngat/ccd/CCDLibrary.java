@@ -1,16 +1,16 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.8 1999-09-08 10:52:40 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.9 1999-09-09 10:13:07 cjm Exp $
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.8 $
+ * @version $Revision: 0.9 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.8 1999-09-08 10:52:40 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.9 1999-09-09 10:13:07 cjm Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -207,6 +207,10 @@ class CCDLibrary
 	private native boolean CCD_Exposure_Expose(boolean open_shutter,boolean readout_ccd,
 		int msecs,String filename);
 	/**
+	 * Native wrapper to libccd routine that takes a bias frame.
+	 */
+	private native boolean CCD_Exposure_Bias(String filename);
+	/**
 	 * Native wrapper to libccd routine that does a readout of the CCD.
 	 */
 	private native boolean CCD_Exposure_Read_Out_CCD(String filename);
@@ -344,6 +348,20 @@ class CCDLibrary
 	public boolean CCDExposureExpose(boolean open_shutter,boolean readout_ccd,int msecs,String filename)
 	{
 		return  CCD_Exposure_Expose(open_shutter,readout_ccd,msecs,filename);
+	}
+
+	/**
+	 * Routine to take a bias frame and save the result to a file.
+	 * A bias frame is taken by clearing the ccd array and then immediately reading it out to disk.
+	 * This cannot be done with a call to CCDExposureExpose as this routine takes a <b>non-zero</b>
+	 * exposure time.
+	 * @param filename The filename to save the read out data into.
+	 * @return Returns true if the exposure succeeded, false if it fails.If it failed,
+	 * 	use <a href="#CCDError">CCDError</a> to determine what error occured.
+	 */
+	public boolean CCDExposureBias(String filename)
+	{
+		return CCD_Exposure_Bias(filename);
 	}
 
 	/**
@@ -759,6 +777,9 @@ class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.8  1999/09/08 10:52:40  cjm
+// Trying to fix file permissions of these files.
+//
 // Revision 0.7  1999/07/09 12:17:09  dev
 // JNI Routines to get the number of rows/columns the CCD was setup to
 // use.
