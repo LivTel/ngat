@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.19 2000-03-03 10:32:03 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.20 2000-03-07 17:03:05 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.19 $
+ * @version $Revision: 0.20 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.19 2000-03-03 10:32:03 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.20 2000-03-07 17:03:05 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -173,6 +173,14 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that aborts DSP commands.
 	 */
 	private native void CCD_DSP_Abort();
+	/**
+	 * Native wrapper to libccd routine that pauses an exposure.
+	 */
+	private native void CCD_DSP_Command_PEX();
+	/**
+	 * Native wrapper to libccd routine that resumes an exposure.
+	 */
+	private native void CCD_DSP_Command_REX();
 	/**
 	 * Native wrapper to libccd routine thats returns whether an exposure is currently in progress.
 	 */
@@ -362,6 +370,24 @@ public class CCDLibrary
 	public void CCDDSPAbort()
 	{
 		CCD_DSP_Abort();
+	}
+
+	/**
+	 * Method to pause an exposure underway.
+	 * @see #CCD_DSP_Command_PEX
+	 */
+	public void CCDDSPCommandPEX()
+	{
+		CCD_DSP_Command_PEX();
+	}
+
+	/**
+	 * Method to resume a paused exposure.
+	 * @see #CCD_DSP_Command_REX
+	 */
+	public void CCDDSPCommandREX()
+	{
+		CCD_DSP_Command_REX();
 	}
 
 	/**
@@ -999,6 +1025,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.19  2000/03/03 10:32:03  cjm
+// Added CCDDSPAbort method.
+//
 // Revision 0.18  2000/03/02 17:17:09  cjm
 // Added CCDSetupHardwareTest.
 //
