@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationProperties.java,v 1.2 2001-07-11 10:24:23 snf Exp $
+ * $Id: ConfigurationProperties.java,v 1.3 2002-09-25 10:56:17 cjm Exp $
  *
  */
 public class ConfigurationProperties extends Properties {
@@ -26,7 +26,7 @@ public class ConfigurationProperties extends Properties {
     public int getIntValue(String key) throws ParseException {
 	try {
 	    return Integer.parseInt(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    throw new ParseException(e.toString(),0);
 	}
     }
@@ -35,7 +35,7 @@ public class ConfigurationProperties extends Properties {
     public int getIntValue(String key, int def) {
 	try {
 	    return Integer.parseInt(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    return def;
 	}
     }
@@ -44,7 +44,7 @@ public class ConfigurationProperties extends Properties {
     public float getFloatValue(String key) throws ParseException {
 	try {
 	    return  Float.parseFloat(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    throw new ParseException(e.toString(),0);
 	}
     }
@@ -53,7 +53,7 @@ public class ConfigurationProperties extends Properties {
     public float getFloatValue(String key, float def) {
 	try {
 	    return Float.parseFloat(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    return def;
 	}
     }
@@ -62,7 +62,7 @@ public class ConfigurationProperties extends Properties {
     public double getDoubleValue(String key) throws ParseException {
 	try {
 	    return  Double.parseDouble(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    throw new ParseException(e.toString(),0);
 	}
     }
@@ -71,7 +71,7 @@ public class ConfigurationProperties extends Properties {
     public double getDoubleValue(String key, double def) {
 	try {
 	    return Double.parseDouble(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    return def;
 	}
     }
@@ -80,7 +80,7 @@ public class ConfigurationProperties extends Properties {
     public long getLongValue(String key) throws ParseException {
 	try {
 	    return (long)Integer.parseInt(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    throw new ParseException(e.toString(),0);
 	}
     }
@@ -89,20 +89,27 @@ public class ConfigurationProperties extends Properties {
     public long getLongValue(String key, long def) {
 	try {
 	    return (long)Integer.parseInt(getProperty(key));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    return def;
 	}
     }
 
     /** Returns the boolean value of a property for specified key.*/
+    public boolean getBooleanValue(String key, boolean def) {
+	if (getProperty(key) == null) return def;
+	return Boolean.valueOf(getProperty(key)).booleanValue();
+    }
+
+    /** Returns the boolean value of a property for specified key.*/
     public boolean getBooleanValue(String key) {
-	return Boolean.valueOf(getProperty(key)).booleanValue();}
+	return getBooleanValue(key, false);
+    }
     
     /** Returns a Date from a string version of a long.*/
     public Date getDateValue(String key) throws ParseException {
 	try {
 	    return new Date(Long.parseLong(getProperty(key)));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    throw new ParseException(e.toString(),0);
 	}
     }
@@ -111,7 +118,7 @@ public class ConfigurationProperties extends Properties {
     public Date getDateValue(String key, Date def) {
 	try {
 	    return new Date(Long.parseLong(getProperty(key)));
-	} catch (NumberFormatException e) {
+	} catch (Exception e) {
 	    return def;
 	}
     }
@@ -152,6 +159,9 @@ public class ConfigurationProperties extends Properties {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2001/07/11 10:24:23  snf
+/** backup.
+/**
 /** Revision 1.1  2000/11/21 16:11:43  snf
 /** Initial revision
 /** */

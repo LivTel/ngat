@@ -31,6 +31,9 @@ public abstract class ControlThread extends Thread {
     /** Lock to wait on for pause.*/
     BooleanLock pLock;
 
+    /** Linger timeout, set by linger(long). If 0 , wait forever.*/
+    long lingerTimeout;
+
     /** Determines whether the Thread should run its mainTask() method once only.*/
     protected boolean permanence;
 
@@ -92,9 +95,10 @@ public abstract class ControlThread extends Thread {
 	try {
 	    initialise();
 	    while (canRun()) {
+		// Wait for linger period (could be forever !).
 		if (isPaused()) {
 		    try {
-			pLock.waitUntilFalse(0);
+			pLock.waitUntilFalse(lingerTimeout);
 		    } catch (InterruptedException e) {
 		    }
 		}
@@ -145,6 +149,16 @@ public abstract class ControlThread extends Thread {
     /** Tell the Thread to go into the paused state at the end of a mainTask loop.*/
     public final void linger() {
 	synchronized(pauseLock) {
+	    lingerTimeout = 0;
+	    paused = true;
+	    pLock.setValue(true);
+	}
+    }
+
+    /** Tell the Thread to go into the paused state at the end of a mainTask loop.*/
+    public final void linger(long timeout) {
+	synchronized(pauseLock) {
+	    lingerTimeout = timeout;
 	    paused = true;
 	    pLock.setValue(true);
 	}
