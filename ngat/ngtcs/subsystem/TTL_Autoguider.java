@@ -19,7 +19,7 @@ import ngat.ngtcs.subsystem.sdb.*;
  * static method <code>getReference</code>.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TTL_Autoguider
   extends BasicSingletonMechanism
@@ -35,7 +35,7 @@ public class TTL_Autoguider
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_Autoguider.java,v 1.1 2003-09-19 16:01:09 je Exp $" );
+    new String( "$Id: TTL_Autoguider.java,v 1.2 2003-09-22 11:29:02 je Exp $" );
 
   /**
    * The single instance of this class.
@@ -552,7 +552,7 @@ public class TTL_Autoguider
    * Return the demanded filter position as an AGD_FilterPosition object.
    * @return the demanded position
    */
-  public AGD_FilterPosition getDemandedFilterPosition()
+  public AGD_FilterPosition getDemandFilterPosition()
     throws TTL_SystemException
   {
     TTL_DataValue val = amn.getValue( AGD_DataType.D_AGD_FILTER_DEMAND );
@@ -579,7 +579,7 @@ public class TTL_Autoguider
    * object.
    * @param p the new filter position demand
    */
-  public void setDemandedFilterPosition( AGD_FilterPosition p )
+  public void setDemandFilterPosition( AGD_FilterPosition p )
     throws TTL_SystemException
   {
     TTL_DataValue val = new TTL_DataValue
@@ -639,9 +639,12 @@ public class TTL_Autoguider
   }
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2003-09-22 11:29:02 $
  * $RCSfile: TTL_Autoguider.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Autoguider.java,v $
- *      $Id: TTL_Autoguider.java,v 1.1 2003-09-19 16:01:09 je Exp $
+ *      $Id: TTL_Autoguider.java,v 1.2 2003-09-22 11:29:02 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:01:09  je
+ *     Initial revision
+ *
  */
