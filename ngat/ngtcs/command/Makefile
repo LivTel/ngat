@@ -39,6 +39,7 @@ SRCS           = AGCENTROID.java \
                  OPERATIONAL.java \
                  OffsetMode.java \
                  PARK.java \
+		 POLE.java \
                  PRESSURE.java \
                  ParkPosition.java \
                  RESET.java \
@@ -64,10 +65,13 @@ SRCS           = AGCENTROID.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.6 $
-#       $Id: Makefile,v 1.6 2003-09-22 14:58:56 je Exp $
-#     $Date: 2003-09-22 14:58:56 $
+# $Revision: 1.7 $
+#       $Id: Makefile,v 1.7 2003-11-11 11:57:52 je Exp $
+#     $Date: 2003-11-11 11:57:52 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.6  2003/09/22 14:58:56  je
+#      Added AGMOVE using make_makefile.csh
+#
 #
