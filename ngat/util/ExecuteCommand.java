@@ -1,5 +1,5 @@
 // ExecuteCommand.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/ExecuteCommand.java,v 0.1 2000-02-15 13:39:28 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/ExecuteCommand.java,v 0.2 2000-02-15 14:05:54 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -10,14 +10,14 @@ import java.lang.*;
  * uses Runtime.exec to execute the command, and waits for the commands termination. The output and error streams are
  * piped to Strings which can be returned.
  * This class will not execute system commands that require typed input.
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  */
 public class ExecuteCommand implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ExecuteCommand.java,v 0.1 2000-02-15 13:39:28 cjm Exp $");
+	public final static String RCSID = new String("$Id: ExecuteCommand.java,v 0.2 2000-02-15 14:05:54 cjm Exp $");
 	/**
 	 * The command an instance of this command executes when the run method is called.
 	 */
@@ -100,7 +100,10 @@ public class ExecuteCommand implements Runnable
 				{
 					s = inputReader.readLine();
 					if(s != null)
+					{
 						outputStringBuffer.append(s);
+						outputStringBuffer.append("\n");
+					}
 					else
 						inputDone = true;
 				}
@@ -108,7 +111,10 @@ public class ExecuteCommand implements Runnable
 				{
 					s = errorReader.readLine();
 					if(s != null)
+					{
 						errorStringBuffer.append(s);
+						errorStringBuffer.append("\n");
+					}
 					else
 						errorDone = true;
 				}
@@ -186,4 +192,7 @@ public class ExecuteCommand implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/02/15 13:39:28  cjm
+// initial revision.
+//
 //
