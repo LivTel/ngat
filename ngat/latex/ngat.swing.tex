@@ -24,6 +24,7 @@ These classes are common utility classes used when writing GUIs using the javax.
 {\bf Version} & {\bf Author} & {\bf Date} & {\bf Notes} \\
 \hline
 0.0 &              C. J. Mottram & 29/11/99 & First draft \\
+0.1 &              C. J. Mottram & 27/06/99 & Added various classes. \\
 \hline
 \end{tabular}
 \end{center}
@@ -42,8 +43,14 @@ It consists of:
 \begin{itemize}
 \item The GUIDialogUnmanager class.
 \item The GUILabelSetter class.
+\item The GUIMessageDialogShower class.
 \item The GUITextAppender class.
+\item The GUITextLengthLimiter class.
+\item The LTMetalTheme class.
 \item The MinimumSizeFrame class.
+\item The SizedBoxLayout class.
+\item The SizedGridLayout class.
+\item The SplashScreen class.
 \item The TitledSmallerBorder class.
 \end{itemize}
 
@@ -80,16 +87,41 @@ The GUILabelSetter is Runnable. It is used as an argument to SwingUtilities.invo
 It sets a label's text. This should be used when a label needs to be updated out-side of the Swing
 thread.
 
+\subsection{The GUIMessageDialogShower class}
+The  GUIMessageDialogShower is Runnable. It is used as an argument to SwingUtilities.invokeLater or
+SwingUtilities.invokeAndWait. It shows a message dialog. This is needed as updating {\em must} be done
+in the Swing thread.
+
 \subsection{The GUITextAppender class}
 The GUITextAppender is Runnable. It is used as an argument to SwingUtilities.invokeLater.
 It appends some passed in text to the JTextArea. This should be used when some text needs to
 be appended to a JTextArea out-side of the Swing thread.
+
+\subsection{The GUITextLengthLimiter class}
+The GUITextLengthLimiter is Runnable. It is used as an argument to SwingUtilities.invokeLater.
+It checks the number of lines in the JTextArea, and if there are more lines in the TextArea than the
+specified limit it removes lines of text at the start of the area. 
+
+\subsection{The LTMetalTheme class}
+This class is a sub-class of swings MetalTheme class. It defines a theme to be used with the
+Metal look and feel, to give LT GUI's a consistent colour scheme and font usage.
 
 \subsection{The MinimumSizeFrame class}
 This class extends JFrame, and tries to set a minimum size for the frame.
 It does this by monitoring Component Window re-sizeing events, and checking the current size	
 against the minimum size and re-sizing if appropriate. This is not a very good mechanism
 for doing this, as the frame re-sizes smaller before this class has a chance to make it bigger again.
+
+\subsection{The SizedBoxLayout class}
+This class extends swing's BoxLayout, but tries to keep the container a specified size.
+
+\subsection{The SizedGridLayout class}
+This class extends GridLayout, but tries to keep the container a specified size.
+
+\subsection{The SplashScreen class}
+This class provides a splash screen to be used when a program is starting up.
+The splash screen stays up for a user definable length of time.
+Clicking the mouse on the splash screen unmanages it.
 
 \subsection{The TitledSmallerBorder class}
 This class extends TitledBorder, but tries to reduce the ridiculously big gap between
