@@ -1,8 +1,7 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/math/test/Makefile,v 0.5 2002-11-15 13:35:12 je Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/math/test/Makefile,v 0.6 2002-11-15 13:35:42 je Exp $ 
 
-include ../../../Makefile.common
-include ../../Makefile.common
+include $(LT_SRC_HOME)/Makefile.ngat
 
 PACKAGE_DIR	= math/test
 BINDIR 		= $(NGAT_BIN_HOME)/$(PACKAGE_DIR)
@@ -38,6 +37,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.5  2002/11/15 13:35:12  je
+# changing Makefile.common to Makefile.ngat
+#
 # Revision 0.2  2001/08/13 13:13:10  cjm
 # Upgraded ngat.OSS.utility. to ngat.util.*.
 #
