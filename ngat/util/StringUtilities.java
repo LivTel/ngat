@@ -1,5 +1,5 @@
 // StringUtilities.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.4 2002-06-20 15:25:37 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/StringUtilities.java,v 1.5 2002-10-09 10:54:30 je Exp $
 package ngat.util;
 
 import java.io.*;
@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @author Chris Mottram
  */
 public class StringUtilities
@@ -15,7 +15,7 @@ public class StringUtilities
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.4 2002-06-20 15:25:37 je Exp $");
+	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.5 2002-10-09 10:54:30 je Exp $");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.
@@ -243,25 +243,57 @@ public class StringUtilities
 	}
 
 	/**
-	 * Method to get the last (leaf) element of a path. The path is separated by <b>separator</b>s.
-	 * e.g. getLeaf("java.lang.Object",'.') returns "Object".
+	 * Method to get the last (leaf) element of a path. The path is
+	 * separated by <b>separator</b>s. e.g. getLeaf("java.lang.Object",'.')
+	 * returns "Object".
 	 * @param s The string to search.
 	 * @param separator The separator character.
-	 * @return A string. If no separator's are found the string itself is returned. If one or more
-	 * 	separator's are found, the string after the last of the separator's is returned.
+	 * @return the leaf of the string.
+	 * <p><b>NB</b>
+	 * <br>If no separator's are found the string itself is returned. If
+	 * one or more separator's are found, the string after the last of the 
+	 * separators is returned.
 	 */
-	public static String getLeaf(String s,char separator)
+	public static String getLeaf( String s, char separator )
 	{
-		int lastIndex;
+	    int lastIndex;
 
-		lastIndex = s.lastIndexOf(separator);
-		if(lastIndex < 0)
-			return s;
-		return s.substring(lastIndex+1);
+	    lastIndex = s.lastIndexOf( separator );
+	    if( lastIndex < 0 )
+		return s;
+	    return s.substring( lastIndex + 1 );
 	}
+
+
+    /**
+     * Utility method to obtain the root of fully qualified class paths,
+     * absolute file paths etc.
+     * The elements of the path are seperated by the character <b>separator</b>
+     * and this method returns everything up to the last separator e.g.
+     * <code>getLeaf( "java.lang.Object", '.' )</code> returns
+     * <code>"java.lang"</code>
+     * @param s The string to search
+     * @param separator The separator character
+     * @return the root of the string.
+     * <p><b>NB</b>
+     * <br>If no separator's are found the string itself is returned. If
+     * one or more separator's are found, the string before the last of the 
+     * separators is returned.
+     */
+    public static String getRoot( String s, char separator )
+    {
+	int lastIndex = s.lastIndexOf( separator );
+	if( lastIndex < 0 )
+	    return s;
+
+	return s.substring( 0, lastIndex - 1 );
+    }
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2002/06/20 15:25:37  je
+// Debugged getLeaf
+//
 // Revision 1.3  2002/06/20 15:21:34  je
 // *** empty log message ***
 //
