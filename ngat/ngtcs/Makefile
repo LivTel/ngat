@@ -15,7 +15,6 @@ SRCS           = AltAzPointingModel.java \
                  BasicMechanism.java \
                  CalendarType.java \
                  CammellLairdEnclosure.java \
-                 ClientConnectionThread.java \
                  Communicator.java \
                  Convert.java \
                  Data.java \
