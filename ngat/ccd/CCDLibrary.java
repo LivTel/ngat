@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.36 2002-12-03 17:47:42 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.37 2002-12-16 19:50:49 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -8,14 +8,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.36 $
+ * @version $Revision: 0.37 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.36 2002-12-03 17:47:42 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.37 2002-12-16 19:50:49 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -58,28 +58,6 @@ public class CCDLibrary
 
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
-	 * DSP exposure status number, showing that no exposure is underway at the present moment.
-	 * @see #CCDDSPGetExposureStatus
-	 */
-	public final static int CCD_DSP_EXPOSURE_STATUS_NONE = 		0;
-	/**
-	 * DSP exposure status number, showing that the CCD is being cleared at the moment.
-	 * @see #CCDDSPGetExposureStatus
-	 */
-	public final static int CCD_DSP_EXPOSURE_STATUS_CLEAR = 	1;
-	/**
-	 * DSP exposure status number, showing that an exposure is underway at the present moment.
-	 * @see #CCDDSPGetExposureStatus
-	 */
-	public final static int CCD_DSP_EXPOSURE_STATUS_EXPOSE = 	2;
-	/**
-	 * DSP exposure status number, showing that a readout is underway at the present moment.
-	 * @see #CCDDSPGetExposureStatus
-	 */
-	public final static int CCD_DSP_EXPOSURE_STATUS_READOUT = 	3;
-
-	/* These constants should be the same as those in ccd_dsp.h */
-	/**
 	 * De-interlace type. This setting does no deinterlacing, as the CCD was read out from a single readout.
 	 * @see #CCDSetupDimensions
 	 */
@@ -99,6 +77,41 @@ public class CCDLibrary
 	 * @see #CCDSetupDimensions
 	 */
 	public final static int CCD_DSP_DEINTERLACE_SPLIT_QUAD = 	3;
+
+// ccd_exposure.h
+	/* These constants should be the same as those in ccd_exposure.h */
+	/**
+	 * Exposure status number, showing that no exposure is underway at the present moment.
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_EXPOSURE_STATUS_NONE =  		0;
+	/**
+	 * Exposure status number, showing that the CCD is being cleared at the moment.
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_EXPOSURE_STATUS_CLEAR = 		1;
+	/**
+	 * Exposure status number, showing that an exposure is underway at the present moment.
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_EXPOSURE_STATUS_EXPOSE = 		2;
+	/**
+	 * Exposure status number, showing that a readout is about to start, and we should
+	 * stop sending commands to the controller that don't work during a readout.
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_EXPOSURE_STATUS_PRE_READOUT = 	3;
+	/**
+	 * Exposure status number, showing that a readout is underway at the present moment.
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_EXPOSURE_STATUS_READOUT = 		4;
+	/**
+	 * Exposure status number, showing that the readout of the exposure has been completed,
+	 * and the data is being post-processed (byte swapped/de-interlaced/saved to disc).
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_EXPOSURE_STATUS_POST_READOUT = 	5;
 
 // ccd_filter_wheel.h
 	/* These constants should be the same as those in ccd_filter_wheel.h */
@@ -247,44 +260,9 @@ public class CCDLibrary
 	 */
 	private native int CCD_DSP_Command_Read_Exposure_Time() throws CCDLibraryNativeException;
 	/**
-	 * Native wrapper to libccd routine thats returns whether an exposure is currently in progress.
-	 */
-	private native int CCD_DSP_Get_Exposure_Status();
-	/**
-	 * Native wrapper to libccd routine thats returns the length of the last exposure length set.
-	 */
-	private native int CCD_DSP_Get_Exposure_Length();
-	/**
-	 * Native wrapper to libccd routine thats returns the number of milliseconds since the EPOCH of
-	 * the exposure start time.
-	 */
-	private native long CCD_DSP_Get_Exposure_Start_Time();
-	/**
 	 * Native wrapper to return this module's error number.
 	 */
 	private native int CCD_DSP_Get_Error_Number();
-	/**
-	 * Native wrapper to libccd routine that allows us to set how many seconds before the exposure
-	 * is due to start we send the CLEAR_ARRAY command to the controller.
-	 * @param time The time in seconds. This should be greater than the time the CLEAR_ARRAY command takes to
-	 * 	clock all accumulated charge off the CCD (approx 5 seconds for a 2kx2k EEV42-40).
-	 */
-	private native void CCD_DSP_Set_Start_Exposure_Clear_Time(int time);
-	/**
-	 * Native wrapper to libccd routine to set the amount of time, in milliseconds, 
-	 * before the desired start of exposure that we should send the
-	 * START_EXPOSURE command, to allow for transmission delay.
-	 * @param time The time, in milliseconds.
-	 */
-	private native void CCD_DSP_Set_Start_Exposure_Offset_Time(int time);
-	/**
-	 * Native wrapper to libccd routine to set the amount of time, in milleseconds, 
-	 * remaining for an exposure when we stop sleeping and tell the
-	 * interface to enter readout mode. 
-	 * @param time The time, in milliseconds. Note, because the exposure time is read every second, it is best
-	 * 	not have have this constant an exact multiple of 1000.
-	 */
-	private native void CCD_DSP_Set_Readout_Remaining_Time(int time);
 
 // ccd_exposure.h
 	/**
@@ -305,12 +283,49 @@ public class CCDLibrary
 	private native void CCD_Exposure_Read_Out_CCD(String filename) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that aborts an exposure.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
 	 */
-	private native void CCD_Exposure_Abort();
+	private native void CCD_Exposure_Abort() throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that aborts the readout of an exposure.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it failed.
 	 */
-	private native void CCD_Exposure_Abort_Readout();
+	private native void CCD_Exposure_Abort_Readout() throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine thats returns whether an exposure is currently in progress.
+	 */
+	private native int CCD_Exposure_Get_Exposure_Status();
+	/**
+	 * Native wrapper to libccd routine thats returns the length of the last exposure length set.
+	 */
+	private native int CCD_Exposure_Get_Exposure_Length();
+	/**
+	 * Native wrapper to libccd routine thats returns the number of milliseconds since the EPOCH of
+	 * the exposure start time.
+	 */
+	private native long CCD_Exposure_Get_Exposure_Start_Time();
+	/**
+	 * Native wrapper to libccd routine that allows us to set how many seconds before the exposure
+	 * is due to start we send the CLR (clear array) command to the controller.
+	 * @param time The time in seconds. This should be greater than the time the CLR command takes to
+	 * 	clock all accumulated charge off the CCD.
+	 */
+	private native void CCD_Exposure_Set_Start_Exposure_Clear_Time(int time);
+	/**
+	 * Native wrapper to libccd routine to set the amount of time, in milliseconds, 
+	 * before the desired start of exposure that we should send the
+	 * SEX (start exposure) command, to allow for transmission delay.
+	 * @param time The time, in milliseconds.
+	 */
+	private native void CCD_Exposure_Set_Start_Exposure_Offset_Time(int time);
+	/**
+	 * Native wrapper to libccd routine to set the amount of time, in milleseconds, 
+	 * remaining for an exposure when we stop sleeping and tell the
+	 * interface to enter readout mode. 
+	 * @param time The time, in milliseconds. Note, because the exposure time is read every second, it is best
+	 * 	not have have this constant an exact multiple of 1000.
+	 */
+	private native void CCD_Exposure_Set_Readout_Remaining_Time(int time);
 	/**
 	 * Native wrapper to return ccd_exposure's error number.
 	 */
@@ -623,41 +638,6 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Returns whether an exposure is currently in progress. The library keeps track of whether a call to
-	 * <a href="#CCDExposureExpose">CCDExposureExpose</a> is in progress, and whether it is exposing or reading out
-	 * @return Returns the exposure status, one of 
-	 * 	<a href="#CCD_DSP_EXPOSURE_STATUS_NONE">CCD_DSP_EXPOSURE_STATUS_NONE</a>,
-	 * 	<a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a> and 
-	 *	<a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a>.
-	 * @see #CCDExposureExpose
-	 * @see #CCD_DSP_Get_Exposure_Status
-	 */
-	public int CCDDSPGetExposureStatus()
-	{
-		return CCD_DSP_Get_Exposure_Status();
-	}
-
-	/**
-	 * Method to get the exposure length the controller was last set to.
-	 * @return The exposure length.
-	 * @see #CCD_DSP_Get_Exposure_Length
-	 */
-	public int CCDDSPGetExposureLength()
-	{
-		return CCD_DSP_Get_Exposure_Length();
-	}
-
-	/**
-	 * Method to get number of milliseconds since the EPOCH to the exposure start time.
-	 * @return A long, in milliseconds.
-	 * @see #CCD_DSP_Get_Exposure_Start_Time
-	 */
-	public long CCDDSPGetExposureStartTime()
-	{
-		return CCD_DSP_Get_Exposure_Start_Time();
-	}
-
-	/**
 	 * Returns the current error number from this module of the library. A zero means there is no error.
 	 * @return Returns an error number.
 	 * @see #CCD_DSP_Get_Error_Number
@@ -665,42 +645,6 @@ public class CCDLibrary
 	public int CCDDSPGetErrorNumber()
 	{
 		return CCD_DSP_Get_Error_Number();
-	}
-
-	/**
-	 * Method to set how many seconds before the exposure
-	 * is due to start we send the CLEAR_ARRAY command to the controller.
-	 * @param time The time in seconds. This should be greater than the time the CLEAR_ARRAY command takes to
-	 * 	clock all accumulated charge off the CCD (approx 5 seconds for a 2kx2k EEV42-40).
-	 * @see #CCD_DSP_Set_Start_Exposure_Clear_Time
-	 */
-	public void CCDDSPSetStartExposureClearTime(int time)
-	{
-		CCD_DSP_Set_Start_Exposure_Clear_Time(time);
-	}
-
-	/**
-	 * Method to set the amount of time, in milliseconds, 
-	 * before the desired start of exposure that we should send the
-	 * START_EXPOSURE command, to allow for transmission delay.
-	 * @param time The time, in milliseconds.
-	 * @see #CCD_DSP_Set_Start_Exposure_Offset_Time
-	 */
-	public void CCDDSPSetStartExposureOffsetTime(int time)
-	{
-		CCD_DSP_Set_Start_Exposure_Offset_Time(time);
-	}
-
-	/**
-	 * Method to set the amount of time, in milleseconds, 
-	 * remaining for an exposure when we change status to READOUT, to stop RDM/TDL/WRMs affecting the readout.
-	 * @param time The time, in milliseconds. Note, because the exposure time is read every second, it is best
-	 * 	not have have this constant an exact multiple of 1000.
-	 * @see #CCD_DSP_Set_Readout_Remaining_Time
-	 */
-	public void CCDDSPSetReadoutRemainingTime(int time)
-	{
-		CCD_DSP_Set_Readout_Remaining_Time(time);
 	}
 
 	/**
@@ -826,34 +770,105 @@ public class CCDLibrary
 
 	/**
 	 * Routine to abort an exposure that is underway. You can see if an exposure is in progress using 
-	 * <a href="#CCDDSPGetExposureStatus">CCDDSPGetExposureStatus</a> which should return
-	 * <a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a>. If the return value is 
-	 * <a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a> then the CCD is reading out 
-	 * and <a href="#CCDExposureAbortReadout">CCDExposureAbortReadout</a> should be called instead.
+	 * CCDDSPGetExposureStatus. If the return value is CCD_EXPOSURE_STATUS_READOUT then the CCD is reading out 
+	 * and CCDExposureAbortReadout should be called instead.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
 	 * @see #CCDDSPGetExposureStatus 
 	 * @see #CCDExposureExpose 
 	 * @see #CCDExposureAbortReadout
 	 * @see #CCD_Exposure_Abort
 	 */
-	public void CCDExposureAbort()
+	public void CCDExposureAbort() throws CCDLibraryNativeException
 	{
 		CCD_Exposure_Abort();
 	}
 
 	/**
 	 * Routine to abort an exposure that is reading out. You can see if an exposure is reading out using 
-	 * <a href="#CCDDSPGetExposureStatus">CCDDSPGetExposureStatus</a> which should return
-	 * <a href="#CCD_DSP_EXPOSURE_STATUS_READOUT">CCD_DSP_EXPOSURE_STATUS_READOUT</a>. If the return value is 
-	 * <a href="#CCD_DSP_EXPOSURE_STATUS_EXPOSE">CCD_DSP_EXPOSURE_STATUS_EXPOSE</a> then the CCD is exposing and
-	 * <a href="#CCDExposureAbort">CCDExposureAbort</a> should be called instead.
+	 * CCDDSPGetExposureStatus which should return CCD_EXPOSURE_STATUS_READOUT. If the return value is 
+	 * CCD_EXPOSURE_STATUS_EXPOSE then the CCD is exposing and CCDExposureAbort should be called instead.
+	 * @exception CCDLibraryNativeException This routine throws a CCDLibraryNativeException if it fails.
 	 * @see #CCDDSPGetExposureStatus 
 	 * @see #CCDExposureExpose 
 	 * @see #CCDExposureAbort
 	 * @see #CCD_Exposure_Abort_Readout
 	 */
-	public void CCDExposureAbortReadout()
+	public void CCDExposureAbortReadout() throws CCDLibraryNativeException
 	{
 		CCD_Exposure_Abort_Readout();
+	}
+
+	/**
+	 * Returns whether an exposure is currently in progress. The library keeps track of whether a call to
+	 * <a href="#CCDExposureExpose">CCDExposureExpose</a> is in progress, and whether it is exposing or reading out
+	 * @return Returns the exposure status.
+	 * @see #CCD_EXPOSURE_STATUS_NONE
+	 * @see #CCD_EXPOSURE_STATUS_CLEAR
+	 * @see #CCD_EXPOSURE_STATUS_EXPOSE
+	 * @see #CCD_EXPOSURE_STATUS_PRE_READOUT
+	 * @see #CCD_EXPOSURE_STATUS_READOUT
+	 * @see #CCD_EXPOSURE_STATUS_POST_READOUT
+	 * @see #CCDExposureExpose
+	 * @see #CCD_Exposure_Get_Exposure_Status
+	 */
+	public int CCDExposureGetExposureStatus()
+	{
+		return CCD_Exposure_Get_Exposure_Status();
+	}
+
+	/**
+	 * Method to get the exposure length the controller was last set to.
+	 * @return The exposure length.
+	 * @see #CCD_Exposure_Get_Exposure_Length
+	 */
+	public int CCDExposureGetExposureLength()
+	{
+		return CCD_Exposure_Get_Exposure_Length();
+	}
+
+	/**
+	 * Method to get number of milliseconds since the EPOCH to the exposure start time.
+	 * @return A long, in milliseconds.
+	 * @see #CCD_Exposure_Get_Exposure_Start_Time
+	 */
+	public long CCDExposureGetExposureStartTime()
+	{
+		return CCD_Exposure_Get_Exposure_Start_Time();
+	}
+
+	/**
+	 * Method to set how many seconds before the exposure
+	 * is due to start we send the CLR command to the controller.
+	 * @param time The time in seconds. This should be greater than the time the CLR command takes to
+	 * 	clock all accumulated charge off the CCD.
+	 * @see #CCD_Exposure_Set_Start_Exposure_Clear_Time
+	 */
+	public void CCDExposureSetStartExposureClearTime(int time)
+	{
+		CCD_Exposure_Set_Start_Exposure_Clear_Time(time);
+	}
+
+	/**
+	 * Method to set the amount of time, in milliseconds, 
+	 * before the desired start of exposure that we should send the SEX command, to allow for transmission delay.
+	 * @param time The time, in milliseconds.
+	 * @see #CCD_Exposure_Set_Start_Exposure_Offset_Time
+	 */
+	public void CCDExposureSetStartExposureOffsetTime(int time)
+	{
+		CCD_Exposure_Set_Start_Exposure_Offset_Time(time);
+	}
+
+	/**
+	 * Method to set the amount of time, in milleseconds, 
+	 * remaining for an exposure when we change status to PRE_READOUT, to stop RDM/TDL/WRMs affecting the readout.
+	 * @param time The time, in milliseconds. Note, because the exposure time is read every second, it is best
+	 * 	not have have this constant an exact multiple of 1000.
+	 * @see #CCD_Exposure_Set_Readout_Remaining_Time
+	 */
+	public void CCDExposureSetReadoutRemainingTime(int time)
+	{
+		CCD_Exposure_Set_Readout_Remaining_Time(time);
 	}
 
 	/**
@@ -1598,6 +1613,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.36  2002/12/03 17:47:42  cjm
+// Added CCDSetupGetVacuumGaugeADU and CCDSetupGetVacuumGaugeMBar.
+//
 // Revision 0.35  2002/09/23 15:11:45  cjm
 // Comment change.
 //
