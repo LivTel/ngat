@@ -1,5 +1,5 @@
 // NGATProperties.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.4 2001-07-05 18:59:25 je Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.5 2001-08-16 13:55:51 cjm Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * This class extends the ngat.util.Properties class with useful load and type
  * conversion routines.
- * @version $Revision: 0.4 $
+ * @version $Revision: 0.5 $
  * @author Jason Etherton,Chris Mottram
  */
 public class NGATProperties extends Properties
@@ -19,7 +19,7 @@ public class NGATProperties extends Properties
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: NGATProperties.java,v 0.4 2001-07-05 18:59:25 je Exp $");
+	public final static String RCSID = new String("$Id: NGATProperties.java,v 0.5 2001-08-16 13:55:51 cjm Exp $");
 
 	/**
 	 * Method to load the properties.
@@ -50,6 +50,37 @@ public class NGATProperties extends Properties
 		fileInputStream = new FileInputStream(file);
 		load(fileInputStream);
 		fileInputStream.close();
+	}
+
+	/**
+	 * Method to save the properties.
+	 * @param filename The filename of the property list.
+	 * @param header The description to write at the top of the saved properties.
+	 * @exception IOException Thrown if the save failed.
+	 * @see #save(java.io.File)
+	 */
+	public void save(String filename,String header) throws IOException
+	{
+		File file = null;
+
+		file = new File(filename);
+		save(file,header);
+	}    
+
+	/**
+	 * Method to save the properties.
+	 * @param file A File object representing the filename of the property list.
+	 * @param header The description to write at the top of the saved properties.
+	 * @exception IOException Thrown if the save failed.
+	 * @see java.util.Properties#store(java.io.InputStream)
+	 */
+	public void save(File file,String header) throws IOException
+	{
+		FileOutputStream fileOutputStream = null;
+
+		fileOutputStream = new FileOutputStream(file);
+		store(fileOutputStream,header);
+		fileOutputStream.close();
 	}
 
     public short getShort( String key ) throws NGATPropertyException
@@ -281,6 +312,9 @@ public class NGATProperties extends Properties
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.4  2001/07/05 18:59:25  je
+// NullPointerExceptions caught and fed into NGATPropertyException
+//
 // Revision 0.3  2001/06/20 13:33:57  cjm
 // Fixed javadoc error.
 //
