@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.5 1999-12-10 14:23:36 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v 1.6 2000-02-02 13:32:27 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -9,7 +9,10 @@ PACKAGENAME = ngat.ccd
 JAVACFLAGS = -d $(LIBDIR) -sourcepath ../.. -classpath $(LIBDIR):$(CLASSPATH)
 DOCSDIR = $(NGAT_DOC_HOME)/javadocs/$(PACKAGEDIR)
 DOCFLAGS = -version -author -private
-SRCS = CCDLibraryDouble.java CCDLibraryFormatException.java CCDLibraryNativeException.java CCDLibrary.java
+
+SRCS = CCDLibraryDouble.java CCDLibraryFormatException.java CCDLibraryNativeException.java \
+CCDLibrarySetupWindow.javaCCDLibrary.java
+
 OBJS = $(SRCS:%.java=$(LIBDIR)/$(PACKAGEDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/$(PACKAGENAME).%.html)
 
@@ -38,6 +41,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.5  1999/12/10 14:23:36  cjm
+# Added backup target.
+#
 # Revision 1.4  1999/11/29 10:13:11  cjm
 # Changed docs rule to call javadoc only once.
 #
