@@ -1,5 +1,5 @@
-// FitsFilename.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.1 2001-06-21 11:06:27 cjm Exp $
+// FitsFilename.java
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.2 2003-06-06 16:52:15 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -23,14 +23,14 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.1 2001-06-21 11:06:27 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.2 2003-06-06 16:52:15 cjm Exp $");
 	/**
 	 * Exposure code constant - for an exposure.
 	 */
@@ -147,6 +147,7 @@ public class FitsFilename
 	/**
 	 * Set routine for the instrument code.
 	 * @param code The code to set to.
+	 * @see #instrumentCode
 	 */
 	public void setInstrumentCode(String code)
 	{
@@ -158,6 +159,7 @@ public class FitsFilename
 	 * Set routine for the directory. If the directory is not terminated with a file separator,
 	 * one is added.
 	 * @param d The directory string.
+	 * @see #directory
 	 */
 	public void setDirectory(String d)
 	{
@@ -175,11 +177,14 @@ public class FitsFilename
 	 * and instrument code have been set.
 	 * It initialises the multRunNumber to be the last one used on this night (zero if none exist), for when the
 	 * ICS has been rebooted during one nights work. This means when nextMultRunNumber is called a filename
-	 * will be generated that does not already exist.
+	 * will be generated that does not already exist. The run number is reset to zero, the window number to one.
 	 * @exception Exception Thrown if the specified directory cannot be found, or an error occurs retrieving
 	 * 	a directory listing.
 	 * @see #directory
 	 * @see FitsFilename.SubstringFilenameFilter
+	 * @see #multRunNumber
+	 * @see #runNumber
+	 * @see #windowNumber
 	 */
 	public void initialise() throws Exception
 	{
@@ -233,11 +238,13 @@ public class FitsFilename
 		}
 	// Reset runNumber to zero.
 		runNumber = 0;
+		windowNumber = 1;
 	}
 
 	/**
 	 * Set routine for the exposure code.
 	 * @param code The code to set to.
+	 * @see #exposureCode
 	 */
 	public void setExposureCode(char code)
 	{
@@ -246,22 +253,29 @@ public class FitsFilename
 
 	/**
 	 * Setup the next multi run. Should be called at the start of a multirun to increment the
-	 * multirun number and reset the run number within a multirun.
+	 * multirun number and reset the run number within a multirun. Also resets the window number to 1.
+	 * @see #multRunNumber
+	 * @see #runNumber
+	 * @see #windowNumber
 	 */
 	public void nextMultRunNumber()
 	{
 		multRunNumber++;
 		runNumber = 0;
+		windowNumber = 1;
 	}
 
 	/**
 	 * Setup the next run. Should be called just before each frames' first getFilename to increment the
-	 * run number.
+	 * run number. Note the window number is reset to 1.
 	 * @see #getFilename
+	 * @see #runNumber
+	 * @see #windowNumber
 	 */
 	public void nextRunNumber()
 	{
 		runNumber++;
+		windowNumber = 1;
 	}
 
 	/**
@@ -277,11 +291,22 @@ public class FitsFilename
 	/**
 	 * Set routine for the file extension string.
 	 * @param s The string to set the file extension to, withour the '.'.
+	 * @see #fileExtension
 	 */
 	public void setFileExtension(String s)
 	{
 		if(s != null)
 			fileExtension = new String(s);
+	}
+
+	/**
+	 * Set routine for the window number.
+	 * @param n The window number. Should be between 1 and 4.
+	 * @see #windowNumber
+	 */
+	public void setWindowNumber(int n)
+	{
+		windowNumber = n;
 	}
 
 	/**
@@ -394,4 +419,7 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2001/06/21 11:06:27  cjm
+// Initial revision
+//
 //
