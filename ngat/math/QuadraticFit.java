@@ -1,5 +1,5 @@
 // QuadraticFit.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/math/QuadraticFit.java,v 0.1 2000-08-18 17:24:43 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/math/QuadraticFit.java,v 0.2 2000-08-29 10:12:57 cjm Exp $
 package ngat.math;
 
 import java.lang.*;
@@ -9,14 +9,14 @@ import java.util.*;
  * This class does a quadratic fit for a series of (x,y) data points.
  * It works out values (a,b,c) for a quadratic fit such that y = a(x*x)+bx+c.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  */
 public class QuadraticFit
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFit.java,v 0.1 2000-08-18 17:24:43 cjm Exp $");
+	public final static String RCSID = new String("$Id: QuadraticFit.java,v 0.2 2000-08-29 10:12:57 cjm Exp $");
 	/**
 	 * The number of parameter fit for a quadratic. This is three (a,b,c).
 	 */
@@ -24,35 +24,43 @@ public class QuadraticFit
 	/**
 	 * The index in various arrays of the 'a' parameter.
 	 */
-	protected final static int PARAMETER_A = 0;
+	public final static int PARAMETER_A = 0;
 	/**
 	 * The index in various arrays of the 'b' parameter.
 	 */
-	protected final static int PARAMETER_B = 1;
+	public final static int PARAMETER_B = 1;
 	/**
 	 * The index in various arrays of the 'c' parameter.
 	 */
-	protected final static int PARAMETER_C = 2;
+	public final static int PARAMETER_C = 2;
+	/**
+	 * The name of each parameter we are fitting for. They are ordered in the
+	 * list the same as their indexs in various arrays of parameter values.
+	 * @see #PARAMETER_A
+	 * @see #PARAMETER_B
+	 * @see #PARAMETER_C
+	 */
+	public final static String PARAMETER_NAME_LIST[] = {"a","b","c"};
 	/**
 	 * Default parameter minimum start values.
 	 * @see #parameterStartMinValue
 	 */
-	protected  final static double DEFAULT_PARAMETER_START_MIN_VALUE[] = {-10.0,-100.0,-1000.0};
+	public final static double DEFAULT_PARAMETER_START_MIN_VALUE[] = {-10.0,-100.0,-1000.0};
 	/**
 	 * Default parameter maximum start values.
 	 * @see #parameterStartMaxValue
 	 */
-	protected  final static double DEFAULT_PARAMETER_START_MAX_VALUE[] = {10.0,100.0,1000.0};
+	public final static double DEFAULT_PARAMETER_START_MAX_VALUE[] = {10.0,100.0,1000.0};
 	/**
 	 * Default parameter step size start values.
 	 * @see #parameterStartStepSize
 	 */
-	protected  final static double DEFAULT_PARAMETER_START_STEP_SIZE[] = {0.2,10.0,100.0};
+	public final static double DEFAULT_PARAMETER_START_STEP_SIZE[] = {0.2,10.0,100.0};
 	/**
 	 * Default parameter step count.
 	 * @see #parameterStepCount
 	 */
-	protected  final static double DEFAULT_PARAMETER_STEP_COUNT = 50.0;
+	public final static double DEFAULT_PARAMETER_STEP_COUNT = 50.0;
 	/**
 	 * List holding the data points for the fit.
 	 */
@@ -94,7 +102,7 @@ public class QuadraticFit
 	 */
 	protected double cChiSquared;
 	/**
-	 * Update listener passed through to chi squared fir.
+	 * Update listener passed through to chi squared fit.
 	 */
 	protected ChiSquaredFitUpdateListener updateListener = null;
 	/**
@@ -110,7 +118,7 @@ public class QuadraticFit
 	 */
 	protected double parameterStartStepSize[];
 	/**
-	 * A value passed through to the Chi Squared fot. Used to determine the step size when
+	 * A value passed through to the Chi Squared fit. Used to determine the step size when
 	 * constraining the paramater(s), such that step count steps are performed in the next parameter loop.
 	 */
 	protected double parameterStepCount = DEFAULT_PARAMETER_STEP_COUNT;
@@ -191,6 +199,8 @@ public class QuadraticFit
 
 	/**
 	 * Method to set an update listener.
+	 * This method should be called after the QuadraticFit is constructed, but before the
+	 * quadraticFit method is called to do the fit.
 	 * @see #updateListener
 	 */
 	public void setUpdateListener(ChiSquaredFitUpdateListener ul)
@@ -199,9 +209,44 @@ public class QuadraticFit
 	}
 
 	/**
+	 * This method sets the minimum,maximum and step size values for one of the parameters
+	 * the quadratic fit is searching for. A good choice for these values will improve the
+	 * chance of QuadraticFit fining a good fit.
+	 * This method should be called after the QuadraticFit is constructed, but before the
+	 * quadraticFit method is called to do the fit.
+	 * @param parameterIndex Which parameter we are setting the initial start values for. This one of
+	 * 	PARAMETER_A, PARAMETER_B or PARAMETER_C.
+	 * @param min The minimum start value of the specified parameter. The default values for this
+	 * 	(overridden by this method) are specified in DEFAULT_PARAMETER_START_MIN_VALUE.
+	 * @param max The maximum start value of the specified parameter. The default values for this
+	 * 	(overridden by this method) are specified in DEFAULT_PARAMETER_START_MAX_VALUE.
+	 * @param stepSize The initial step size of the specified parameter. Subsequent loops
+	 * 	(after the first one) use parameterStepCount and the new parameter range to re-calculate the
+	 * 	step size. The default values for the step size
+	 * 	(overridden by this method) are specified in DEFAULT_PARAMETER_START_STEP_SIZE.
+	 * @see #parameterStartMinValue
+	 * @see #parameterStartMaxValue
+	 * @see #parameterStartStepSize
+	 * @see #PARAMETER_A
+	 * @see #PARAMETER_B
+	 * @see #PARAMETER_C
+	 * @see #DEFAULT_PARAMETER_START_MIN_VALUE
+	 * @see #DEFAULT_PARAMETER_START_MAX_VALUE
+	 * @see #DEFAULT_PARAMETER_START_STEP_SIZE
+	 */
+	public void setParameterStartValues(int parameterIndex,double min,double max,double stepSize)
+	{
+		parameterStartMinValue[parameterIndex] = min;
+		parameterStartMaxValue[parameterIndex] = max;
+		parameterStartStepSize[parameterIndex] = stepSize;
+	}
+
+	/**
 	 * Method to set the parameter step count. This is used by ChiSquaredFit to determine the step size
 	 * when constraining the parameters. 100.0 is a good value for the three one degree of freedom technique.
 	 * 50.0 is a good value for the three degree of freedom technoque.
+	 * This method should be called after the QuadraticFit is constructed, but before the
+	 * quadraticFit method is called to do the fit.
 	 */
 	public void setParameterStepCount(double v)
 	{
@@ -690,5 +735,8 @@ public class QuadraticFit
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/08/18 17:24:43  cjm
+// initial revision.
+//
 //
 
