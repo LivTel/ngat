@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.17 2000-02-28 19:13:47 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.18 2000-03-02 17:17:09 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.17 $
+ * @version $Revision: 0.18 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.17 2000-02-28 19:13:47 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.18 2000-03-02 17:17:09 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -269,6 +269,11 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
 	private native void CCD_Setup_Filter_Wheel(int position_one,int position_two) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that performs a hardware test data link.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native void CCD_Setup_Hardware_Test(int test_count) throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that aborts the CCD setup.
 	 */
@@ -739,6 +744,19 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Method to perform a hardware data link test, to ensure we can communicate with each board in the
+	 * controller.
+	 * This routine can be aborted with CCDSetupAbort.
+	 * @param testCount The number of times to test each board.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if the test failed.
+	 * @see #CCDSetupAbort
+	 */
+	public void CCDSetupHardwareTest(int testCount) throws CCDLibraryNativeException
+	{
+		CCD_Setup_Hardware_Test(testCount);
+	}
+
+	/**
 	 * Routine to abort a setup that is underway.
 	 * @see #CCDSetupStartup
 	 * @see #CCDSetupDimensions
@@ -968,6 +986,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.17  2000/02/28 19:13:47  cjm
+// Backup.
+//
 // Revision 0.16  2000/02/22 17:30:48  cjm
 // Added CCD_DSP_EXPOSURE_STATUS_CLEAR status.
 //
