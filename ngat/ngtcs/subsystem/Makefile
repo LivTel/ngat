@@ -11,7 +11,6 @@ DIRS_TARGET    = dirs
 SRCS           = Autoguider.java \
                  BasicMechanism.java \
                  BasicPluggableSubSystem.java \
-                 BasicSingletonMechanism.java \
                  ControllableSubSystem.java \
                  Enclosure.java \
                  Mount.java \
@@ -46,14 +45,19 @@ SRCS           = Autoguider.java \
                  Timer.java \
                  TimerFactory.java
 
+#                 BasicSingletonMechanism.java \
+
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: je $
-# $Revision: 1.4 $
-#       $Id: Makefile,v 1.4 2003-09-23 14:11:40 je Exp $
-#     $Date: 2003-09-23 14:11:40 $
+# $Revision: 1.5 $
+#       $Id: Makefile,v 1.5 2003-09-24 15:39:39 je Exp $
+#     $Date: 2003-09-24 15:39:39 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.4  2003/09/23 14:11:40  je
+#      Added TTL_Rotator and TTL_RotatorFactory.
+#
 #
