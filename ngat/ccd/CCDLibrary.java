@@ -1,18 +1,18 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.22 2000-03-09 16:35:12 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.23 2000-05-25 08:54:48 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.22 $
+ * @version $Revision: 0.23 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.22 2000-03-09 16:35:12 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.23 2000-05-25 08:54:48 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -317,6 +317,10 @@ public class CCDLibrary
 	 * Native wrapper to libccd routine that gets the setup de-interlace type.
 	 */
 	private native int CCD_Setup_Get_DeInterlace_Type();
+	/**
+	 * Native wrapper to libccd routine that gets the setup gain.
+	 */
+	private native int CCD_Setup_Get_Gain();
 	/**
 	 * Native wrapper to libccd routine that gets the setup window flags.
 	 */
@@ -892,6 +896,22 @@ public class CCDLibrary
 	}
 
 	/**
+	 * Returns which gain has been setup. This value
+	 * is got from the stored setup data, rather than querying the camera directly.
+	 * @return Returns the gain, one of:
+	 * 	<a href="#CCD_DSP_GAIN_ONE">CCD_DSP_GAIN_ONE</a>, 
+	 * 	<a href="#CCD_DSP_GAIN_TWO">CCD_DSP_GAIN_TWO</a>,
+	 * 	<a href="#CCD_DSP_GAIN_FOUR">CCD_DSP_GAIN_FOUR</a> and 
+	 * 	<a href="#CCD_DSP_GAIN_NINE">CCD_DSP_GAIN_NINE</a>.
+	 * @see #CCDSetupStartup
+	 * @see #CCD_Setup_Get_Gain
+	 */
+	public int CCDSetupGetGain()
+	{
+		return CCD_Setup_Get_Gain();
+	}
+
+	/**
 	 * Returns the window flags passed into the last setup. This value
 	 * is got from the stored setup data, rather than querying the camera directly.
 	 * @return Returns the window flags, a bit-field containing which window data is active. This consists of:
@@ -1047,6 +1067,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.22  2000/03/09 16:35:12  cjm
+// Added CCDDSPCommandReadExposureTime implementation.
+//
 // Revision 0.21  2000/03/08 10:25:59  cjm
 // Added CCDLibraryNativeException to pause and resumr methods.
 //
