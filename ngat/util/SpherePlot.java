@@ -8,7 +8,7 @@ import java.awt.*;
  * given viewing direction.
  *
  *
- * $Id: SpherePlot.java,v 1.1 2000-11-21 16:44:51 snf Exp $
+ * $Id: SpherePlot.java,v 1.2 2002-09-25 10:56:17 cjm Exp $
  *
  * */
 public class SpherePlot extends GraphPlot {
@@ -20,6 +20,18 @@ public class SpherePlot extends GraphPlot {
     /** Holds the number of points to paint in a highlight color.*/
     int nReds;
 
+    double boxth;
+    double boxphi;
+    double boxdth;
+    double boxdph;
+    boolean dobox;
+
+    float[][] xPts;
+
+    float[][] yPts;
+
+    int[] nPts;
+
     static final double PI = Math.PI;
 
     /** Construct a SphereView observed from the chosen direction.
@@ -30,6 +42,9 @@ public class SpherePlot extends GraphPlot {
 	this.th0 = th0;
 	this.phi0 = phi0;
 	this.nReds = 1;
+	nPts = new int[5];
+	xPts = new float[1000][5];
+	yPts = new float[1000][5];	
     }
     
     /** Translate from (th,phi) to projected X coordinate. */
@@ -99,16 +114,31 @@ public class SpherePlot extends GraphPlot {
 	g.setColor(Color.black);
     }
 
+    /** Draws a box of latitude lines.*/
+    public void putBox(double th, double phi, double dth, double dph) {
+	boxth  = th;
+	boxphi = phi;
+	boxdth = dth;
+	boxdph = dph;
+	dobox  = true;
+	repaint();
+    }
+
     /** Draws a single latitude line. 
      * @param th the latitude in rads. */
     protected void drawLatitude(Graphics g, double th) {
+	drawLatitude(g, th, 0.0, 2*PI);
+    }
 
-	double phi = 0.0;
+    /** Draws a latitude arc.*/
+    protected void drawLatitude(Graphics g, double th, double ph0, double ph1) {
+
+	double phi = ph0;
 
 	int xold = (int)getScreenX((float)getSphereX(th, phi));
 	int yold = (int)getScreenY((float)getSphereY(th, phi));
 	
-	while (phi < 2*PI) {
+	while (phi < ph1) {
 
 	    double xu = getSphereX(th, phi);
 	    double yu = getSphereY(th, phi);
@@ -176,9 +206,24 @@ public class SpherePlot extends GraphPlot {
 		
 	    }
 	}
+	
+	// draw any box.
+	if (dobox) {
+	    g.setColor(Color.blue);
+	    double th = boxth - boxdth;
+	    while (th < boxth + boxdth) {
+		drawLatitude(g, th, boxphi-boxdph, boxphi+boxdph);
+		th = th + (boxdth/10);
+	    }
+	    g.setColor(Color.red);
+	    g.drawLine((int)getScreenX((float)getSphereX(th0, phi0)), 
+		       (int)getScreenY((float)getSphereY(th0, phi0)),
+		       (int)getScreenX((float)getSphereX(boxth, boxphi)),
+		       (int)getScreenY((float)getSphereY(boxth,boxphi)));
+	}
+	
 	g.setColor(Color.black);
-	
-	
+
     } // paint
 
     /** Place a point at (th, phi) polar coord. 
@@ -232,7 +277,10 @@ public class SpherePlot extends GraphPlot {
     
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 16:44:51  snf
+/** Initial revision
+/** */
 
 
 
