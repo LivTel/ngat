@@ -13,7 +13,7 @@ import ngat.ngtcs.subsystem.amn.*;
  * autoguider beam.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AGFILTERImplementor
   extends CommandImplementor
@@ -28,7 +28,7 @@ public class AGFILTERImplementor
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: AGFILTERImplementor.java,v 1.2 2003-09-22 11:32:28 je Exp $" );
+    new String( "$Id: AGFILTERImplementor.java,v 1.3 2003-09-22 11:37:26 je Exp $" );
 
   /**
    * Timeout for this command, in milliseconds (60000).
@@ -148,7 +148,7 @@ public class AGFILTERImplementor
 	String err = new String
 	  ( "Autoguider position ["+actual.getName()+"] did not reach demand ["
 	    +demand+"] before timeout ["+TIMEOUT+"ms] and AGD state = "+
-	    ag.get_AGD_State().getName() );
+	    ag.get_AGD_State().getName()+" : execution terminated" );
 	logger.log( 1, logName, err );
 	commandDone.setErrorMessage( err );
 	return;
@@ -164,11 +164,14 @@ public class AGFILTERImplementor
   }
 }
 /*
- *    $Date: 2003-09-22 11:32:28 $
+ *    $Date: 2003-09-22 11:37:26 $
  * $RCSfile: AGFILTERImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFILTERImplementor.java,v $
- *      $Id: AGFILTERImplementor.java,v 1.2 2003-09-22 11:32:28 je Exp $
+ *      $Id: AGFILTERImplementor.java,v 1.3 2003-09-22 11:37:26 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 11:32:28  je
+ *     Added 'TIMEOUT' and 'slept' functionality from super-class.
+ *
  *     Revision 1.1  2003/09/19 16:10:15  je
  *     Initial revision
  *
