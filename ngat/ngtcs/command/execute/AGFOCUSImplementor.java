@@ -11,9 +11,8 @@ import ngat.ngtcs.subsystem.amn.*;
 /**
  * Set autoguider focus position.
  * 
- * 
  * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AGFOCUSImplementor extends CommandImplementor
 {
@@ -27,7 +26,7 @@ public class AGFOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGFOCUSImplementor.java,v 1.4 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: AGFOCUSImplementor.java,v 1.5 2003-09-29 11:06:03 je Exp $" );
 
   /**
    * The timeout for the AGFOCUS command (60 seconds), in milliseconds.
@@ -64,7 +63,13 @@ public class AGFOCUSImplementor extends CommandImplementor
 
 
   /**
-   *
+   * First, the focus position demand is sent to the autoguider.
+   * If the position error of the demand is within the tolerance then this
+   * method will return successful immediately.
+   * If the autoguider focus position is required to move then periodic
+   * monitoring of the actual position will take place until either the
+   * position falls within tolerance of the demand (returning a success), or
+   * the timeout is exceeded (returning a failure).
    */
   public void execute()
   {
@@ -79,10 +84,13 @@ public class AGFOCUSImplementor extends CommandImplementor
       demand = a.getPosition();
       tolerance = ag.getFocusPositionTolerance();
       posError = Math.abs( demand - actual );
+      ag.setFocusDemandPosition( actual );
 
       if( posError < tolerance )
       {
 	commandDone.setReturnMessage( "focus already in position" );
+	commandDone.setSuccessful( true );
+	return;
       }
       else
       {
@@ -138,11 +146,14 @@ public class AGFOCUSImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2003-09-29 11:06:03 $
  * $RCSfile: AGFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFOCUSImplementor.java,v $
- *      $Id: AGFOCUSImplementor.java,v 1.4 2003-09-26 09:58:41 je Exp $
+ *      $Id: AGFOCUSImplementor.java,v 1.5 2003-09-29 11:06:03 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.3  2003/09/22 14:39:45  je
  *     Added TIMEOUT and slept functionality.
  *
