@@ -1,5 +1,5 @@
 # Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.5 1999-08-26 13:20:14 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/util/Makefile,v 1.6 1999-09-08 14:32:43 cjm Exp $ 
 
 include		../../Makefile.common
 include		../Makefile.common
@@ -27,7 +27,7 @@ checkout:
 	$(CO) $(CO_OPTIONS) $(SRCS)
 
 checkin:
-	$(CI) $(SRCS)
+	-$(CI) $(CI_OPTIONS) $(SRCS)
 
 clean:
 	$(RM) $(RM_OPTIONS) $(OBJS) $(TIDY_OPTIONS)
@@ -36,6 +36,9 @@ tidy:
 	$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
 
 # $Log: not supported by cvs2svn $
+# Revision 1.5  1999/08/26 13:20:14  cjm
+# Changed to support new directory structure on ltccd1.
+#
 # Revision 1.4  1999/06/24 12:46:00  dev
 # "Backup"
 #
