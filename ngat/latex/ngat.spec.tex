@@ -1,0 +1,130 @@
+\documentclass[10pt,a4paper]{article}
+\pagestyle{plain}
+\textwidth 16cm
+\textheight 21cm
+\oddsidemargin -0.5cm
+\topmargin 0cm
+
+\title{ngat.spec package}
+\author{C. J. Mottram}
+\date{}
+\begin{document}
+\pagenumbering{arabic}
+\thispagestyle{empty}
+\maketitle
+\begin{abstract}
+This document describes classes in the ngat.spec package.
+These classes wrap the libspec library, which controls the Manchester Eschelle/NuView spectrographs.
+\end{abstract}
+
+\centerline{\Large History}
+\begin{center}
+\begin{tabular}{|l|l|l|p{15em}|}
+\hline
+{\bf Version} & {\bf Author} & {\bf Date} & {\bf Notes} \\
+\hline
+0.1 &              C. J. Mottram & 19/10/00 & First draft \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\section{Documentation Overview}
+\subsection{What is the ngat.spec package?}
+These classes wrap the {\em libspec} library, using the JNI interface to communicate with the C routines.
+The {\em libspec} library is a shared C library containing routines to communicate with either the
+Manchester Eschelle Spectrograph (MES), or the NuView spectrograph.
+Documentation on {\em libspec} is available at \cite{bib:libspec}.
+
+The ngat.spec library consists of:
+\begin{itemize}
+\item The SpecLibrary class.
+\item The SpecDoubleRange class.
+\item The SpecIntRange class.
+\item The SpecNativeException class.
+\end{itemize}
+
+\section{Class Overview}
+API documentation for these classes is available at \cite{bib:ngatspecapi}.
+
+\subsection{The SpecLibrary class}
+This is the main class of the package. It contains all the methods that actually send commands to the CCD Controller
+hardware. A static code section in the class loads the {\em libspec} shared library, which must be present in the
+{\em LD\_LIBRARY\_PATH} for the class to be loaded.
+The class has several main components:
+
+\begin{itemize}
+\item A set of public class constants, usually used as arguments to the methods. 
+	These are mainly re-definitions of constants
+	in the header files of {\em libspec}, and should be kept up to date with these definitions.
+\item A set of private native methods. These have no implementation in Java, and when invoked call the
+	relevant C routine using the JNI interface. They are usually named identically with the C functions they call,
+	with underscores (`\_') in them. These calls of course go via the JNI code in {\em libspec}, which pack
+	and unpack any Java data to C. The JNI code in {\em libspec} also causes these routine to throw an instance of
+	SpecNativeException when the underlying {\em libspec} code returns an error value. This means {\em libspec}
+	error routines do not have to be invoked from the Java layer, an Exception is returned in response to errors
+	like `normal' Java methods.
+\item A set of public methods. This is the main callable interface of this package. There is a public method
+	for each of the {\em libspec} routines wrapped by the library, which just invoke the underlying
+	private native method. Any SpecNativeException thrown in the native method is thrown up to the application
+	layer to deal with.
+\end{itemize}
+
+\subsection{The SpecDoubleRange class}
+This class allows various methods in SpecLibrary to return a double range, i.e. two double values min and max. 
+It has a constructor such that it can be constructed from {\em libspec}'s JNI layer (from C).
+
+\subsection{The SpecIntRange class}
+This class allows various methods in SpecLibrary to return an integer range, i.e. two integer values min and max. 
+It has a constructor such that it can be constructed from {\em libspec}'s JNI layer (from C).
+
+\subsection{The SpecNativeException class}
+This is an exception, which is thrown from all the public methods which call a native method that can fail.
+This allows SpecLibrary to wrap the error routines in {\em libspec}. The error routines should not
+be called from the Java layer, the native methods will automatically throw an instance of this class
+when an error occurs in {\em libspec}.
+
+\section{Using the package}
+\subsection{Threads}
+Because these routines are ultimately communicating directly with hardware, it is important to
+consider what happens when several of these routines are running concurrently in different threads. These
+routines communicate with two pieces of hardware:
+\begin{itemize}
+\item The Apogee AP7 Camera on the parallel port.
+\item An A/D IO card via a device driver.
+\end{itemize}
+Neither of these pieces of hardware support more than one thing talking to them at once, therefore it is 
+important not to call two SpecLibrary routines at once from different threads. Note there are some exceptions to this,
+especially routines that abort procedures underway. The full list of concurrent capable routines is documented
+in the {\em libspec} documentation \cite{bib:libspec}.
+
+\subsection{Instantiation of SpecLibrary}
+The SpecLibrary class uses all class (static) methods to access the Spectrograph. This is because the 
+underlying {\em libspec} is designed to communicate with one instance of a spectrograph only (i.e. it holds all it's
+spectrograph data internally, rather than via some application data structure). Therefore it does not make
+sense to have two instances of a class that connects to the library, so all the methods are class methods.
+
+\section{Conventions/Abbreviations}
+\begin{itemize}
+\item API - Application Programming Interface. The set of routines the library provides.
+\item JNI - Java Native Interface. A Java mechanism for communicating with shared C libraries.
+\item JVM - Java Virtual Machine. A program to actually run the Java program.
+\item MES - Manchester Eschelle Spectrograph. A spectrograph.
+\item RCS - Revision Control System. A set of operating system commands for controlling developer access to
+source files. Type {\em man rcsintro} for details.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{Bibliography}
+\bibitem{bib:libspec}{\bf Spectrograph Control System Library}
+Liverpool John Moores University \newline{\em http://ltobs5.livjm.ac.uk/\verb'~'dev/spec/latex/libspec.ps}
+\bibitem{bib:ngatspecapi}{\bf Ngat.Spec Generated API Documentation}
+Liverpool John Moores University \newline{\em http://ltobs5.livjm.ac.uk/\verb'~'dev/ngat/javadocs/ngat/spec/index.html}
+\end{thebibliography}
+
+\end{document}

@@ -1,38 +1,79 @@
 // SpecLibrary.java -*- mode: Fundamental;-*-
 // libspec Java wrapper.
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.1 2000-10-16 17:37:13 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/SpecLibrary.java,v 0.2 2000-10-19 13:48:14 cjm Exp $
 package ngat.spec;
 
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.1 2000-10-16 17:37:13 cjm Exp $");
+	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.2 2000-10-19 13:48:14 cjm Exp $");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 
+	 * This value should be kept in line with the C hash definition of the same name in spec.h.
 	 * @see #open
 	 */
 	public final static int SPEC_OPEN_DAIO_BIT			= (1<<0);
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the 
 	 * Apogee CCD camera hardware. 
+	 * This value should be kept in line with the C hash definition of the same name in spec.h.
 	 * @see #open
 	 */
 	public final static int SPEC_OPEN_APOGEE_BIT			= (1<<1);
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with all the hardware. 
+	 * This value should be kept in line with the C hash definition of the same name in spec.h.
 	 * @see #SPEC_OPEN_DAIO_BIT
 	 * @see #SPEC_OPEN_APOGEE_BIT
 	 * @see #open
 	 */
 	public final static int SPEC_OPEN_ALL_BIT			= (SPEC_OPEN_DAIO_BIT|SPEC_OPEN_APOGEE_BIT);
+// camera exposure constants
+	/**
+	 * Value returned from cameraExposeGetStatus, specifying the status of a camera exposure.
+	 * SPEC_EXPOSURE_STATUS_NONE means the library is not currently performing an exposure. 
+	 * This value should be kept in line with the C enum SPEC_EXPOSURE_STATUS in spec_exposure.h.
+	 * @see #cameraExposeGetStatus
+	 */
+	public final static int SPEC_EXPOSURE_STATUS_NONE		= 0;
+	/**
+	 * Value returned from cameraExposeGetStatus, specifying the status of a camera exposure.
+	 * SPEC_EXPOSURE_STATUS_WAIT_START means the library is waiting for the correct time to 
+	 * start the exposure to occur. 
+	 * This value should be kept in line with the C enum SPEC_EXPOSURE_STATUS in spec_exposure.h.
+	 * @see #cameraExposeGetStatus
+	 */
+	public final static int SPEC_EXPOSURE_STATUS_WAIT_START		= 1;
+	/**
+	 * Value returned from cameraExposeGetStatus, specifying the status of a camera exposure.
+	 * SPEC_EXPOSURE_STATUS_EXPOSE means the library is currently performing an exposure. 
+	 * This value should be kept in line with the C enum SPEC_EXPOSURE_STATUS in spec_exposure.h.
+	 * @see #cameraExposeGetStatus
+	 */
+	public final static int SPEC_EXPOSURE_STATUS_EXPOSE		= 2;
+	/**
+	 * Value returned from cameraExposeGetStatus, specifying the status of a camera exposure.
+	 * SPEC_EXPOSURE_STATUS_READOUT means the library is currently reading out data from the ccd. 
+	 * This value should be kept in line with the C enum SPEC_EXPOSURE_STATUS in spec_exposure.h.
+	 * @see #cameraExposeGetStatus
+	 */
+	public final static int SPEC_EXPOSURE_STATUS_READOUT		= 3;
+	/**
+	 * Value returned from cameraExposeGetStatus, specifying the status of a camera exposure.
+	 * SPEC_EXPOSURE_STATUS_SAVE means the library is currently saving the data to disc.
+	 * This value should be kept in line with the C enum SPEC_EXPOSURE_STATUS in spec_exposure.h.
+	 * @see #cameraExposeGetStatus
+	 */
+	public final static int SPEC_EXPOSURE_STATUS_SAVE		= 4;
+
 // daio constants
 	/**
 	 * Enumerated constant, used to select which Digital Analogue IO card to
@@ -49,136 +90,232 @@ public class SpecLibrary
 // general native methods
 	/**
 	 * Native wrapper to libspec SPEC_Open routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Open(int open_bits) throws SPECNativeException;
+	private static native void SPEC_Open(int open_bits) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Close routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Close() throws SPECNativeException;
+	private static native void SPEC_Close() throws SpecNativeException;
 // arc lamp native methods
 	/**
 	 * Native wrapper to libspec SPEC_Arc_Lamp_Set_Lamp routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Arc_Lamp_Set_Lamp(int lamp_number) throws SPECNativeException;
+	private static native void SPEC_Arc_Lamp_Set_Lamp(int lamp_number) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Arc_Lamp_Set routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Arc_Lamp_Set(boolean on) throws SPECNativeException;
+	private static native void SPEC_Arc_Lamp_Set(boolean on) throws SpecNativeException;
 // filter native methods
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Configure_Position routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native void SPEC_Filter_Configure_Position(int position,int ad_count) 
-		throws SPECNativeException;
+		throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Auto_Configure_Position routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Filter_Auto_Configure_Position() throws SPECNativeException;
+	private static native void SPEC_Filter_Auto_Configure_Position() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_Position_AD_Count routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native int SPEC_Filter_Get_Position_AD_Count(int position) throws SPECNativeException;
+	private static native int SPEC_Filter_Get_Position_AD_Count(int position) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Set_Position routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Filter_Set_Position(int position) throws SPECNativeException;
+	private static native void SPEC_Filter_Set_Position(int position) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_Position routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native int SPEC_Filter_Get_Position() throws SPECNativeException;
+	private static native int SPEC_Filter_Get_Position() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Configure_Wavelength_Range routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native void SPEC_Filter_Configure_Wavelength_Range(double min_wavelength,
-		double max_wavelength) throws SPECNativeException;
+		double max_wavelength) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Configure_AD_Range routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native void SPEC_Filter_Configure_AD_Range(int min_ad_count,int max_ad_count) 
-		throws SPECNativeException;
+		throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Auto_Configure_AD_Range routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Filter_Auto_Configure_AD_Range() throws SPECNativeException;
+	private static native void SPEC_Filter_Auto_Configure_AD_Range() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_Wavelength_Range routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native SpecDoubleRange SPEC_Filter_Get_Wavelength_Range() throws SPECNativeException; 
+	private static native SpecDoubleRange SPEC_Filter_Get_Wavelength_Range() throws SpecNativeException; 
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_AD_Range routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native SpecIntRange SPEC_Filter_Get_AD_Range() throws SPECNativeException;
+	private static native SpecIntRange SPEC_Filter_Get_AD_Range() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Set_Wavelength routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Filter_Set_Wavelength(double wavelength) throws SPECNativeException;
+	private static native void SPEC_Filter_Set_Wavelength(double wavelength) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_Wavelength routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native double SPEC_Filter_Get_Wavelength() throws SPECNativeException;
+	private static native double SPEC_Filter_Get_Wavelength() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Configure_AD_Count_Error routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Filter_Configure_AD_Count_Error(int ad_count) throws SPECNativeException;
+	private static native void SPEC_Filter_Configure_AD_Count_Error(int ad_count) throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Configure_Switch_AD_Count routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Filter_Configure_Switch_AD_Count(int ad_count)  throws SPECNativeException;
+	private static native void SPEC_Filter_Configure_Switch_AD_Count(int ad_count)  throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Configure_Position_Timeout_Count routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
 	private static native void SPEC_Filter_Configure_Position_Timeout_Count(int timeout_number) 
-		throws SPECNativeException;
+		throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_AD_Count_Error routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native int SPEC_Filter_Get_AD_Count_Error() throws SPECNativeException;
+	private static native int SPEC_Filter_Get_AD_Count_Error() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_Switch_AD_Count routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native int SPEC_Filter_Get_Switch_AD_Count() throws SPECNativeException;
+	private static native int SPEC_Filter_Get_Switch_AD_Count() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_Position_Timeout_Count routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native int SPEC_Filter_Get_Position_Timeout_Count() throws SPECNativeException;
+	private static native int SPEC_Filter_Get_Position_Timeout_Count() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Get_AD_Count routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native int SPEC_Filter_Get_AD_Count() throws SPECNativeException;
+	private static native int SPEC_Filter_Get_AD_Count() throws SpecNativeException;
 	/**
 	 * Native wrapper to libspec SPEC_Filter_Abort routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_Filter_Abort() throws SPECNativeException;
+	private static native void SPEC_Filter_Abort() throws SpecNativeException;
+// camera setup
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Startup routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Setup_Startup(boolean gain,boolean cable_length)  throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Shutdown routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Setup_Shutdown() throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Dimensions routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Setup_Dimensions(int ncols,int nrows,int hbin,int vbin)  
+		throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Abort routine.
+	 */
+	private static native void SPEC_Setup_Abort();
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Get_NCols routine.
+	 */
+	private static native int SPEC_Setup_Get_NCols();
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Get_NRows routine.
+	 */
+	private static native int SPEC_Setup_Get_NRows();
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Get_HBin routine.
+	 */
+	private static native int SPEC_Setup_Get_HBin();
+	/**
+	 * Native wrapper to libspec SPEC_Setup_Get_VBin routine.
+	 */
+	private static native int SPEC_Setup_Get_VBin();
+// camera exposure
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Expose routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Exposure_Expose(boolean open_shutter,boolean readout_ccd,
+		long start_time,int exposure_time,String filename) throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Bias routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Exposure_Bias(String filename) throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Abort routine.
+	 */
+	private static native void SPEC_Exposure_Abort();
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Get_Status routine.
+	 */
+	private static native int SPEC_Exposure_Get_Status();
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Set_Start_Offset_Time routine.
+	 */
+	private static native void SPEC_Exposure_Set_Start_Offset_Time(int time);
+	/**
+	 * Native wrapper to libspec SPEC_Exposure_Get_Start_Offset_Time routine.
+	 */
+	private static native int SPEC_Exposure_Get_Start_Offset_Time();
+// camera temperature control
+	/**
+	 * Native wrapper to libspec SPEC_Temperature_Ambient routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Temperature_Ambient() throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Temperature_Set routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Temperature_Set(double target_temperature) throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Temperature_Off routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Temperature_Off() throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Temperature_Get routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native double SPEC_Temperature_Get() throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Temperature_Regulate routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native void SPEC_Temperature_Regulate() throws SpecNativeException;
+	/**
+	 * Native wrapper to libspec SPEC_Temperature_Get_Status routine.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 */
+	private static native String SPEC_Temperature_Get_Status() throws SpecNativeException;
 // daio specific native methods
 	/**
 	 * Native wrapper to libspec SPEC_DAIO_Select_Device routine.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 */
-	private static native void SPEC_DAIO_Select_Device(int device) throws SPECNativeException;
+	private static native void SPEC_DAIO_Select_Device(int device) throws SpecNativeException;
 
 // static code block
 	/**
@@ -195,21 +332,21 @@ public class SpecLibrary
 	 * Method to open a connection to the hardware.
 	 * @param openBits A bitfield, specifying which parts of the Spectrograph hardware to open.
 	 * 	SPEC_OPEN_ALL_BIT opens all the hardware (CCD camera and IO card).
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Open
 	 * @see #SPEC_OPEN_ALL_BIT
 	 */
-	public static void open(int openBits) throws SPECNativeException
+	public static void open(int openBits) throws SpecNativeException
 	{
 		SPEC_Open(openBits);
 	}
 
 	/**
 	 * Method to close the opened connections to the hardware.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Close
 	 */
-	public static void close() throws SPECNativeException
+	public static void close() throws SpecNativeException
 	{
 		SPEC_Close();
 	}
@@ -218,10 +355,10 @@ public class SpecLibrary
 	 * Routine to determine which lamp to switch on and off. 
 	 * @param lampNumber Which lamp to switch on and off. 
 	 * 	There are two lamps, the value passed in here should be either one or zero. 
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Arc_Lamp_Set_Lamp
 	 */
-	public static void arcLampSetLamp(int lampNumber) throws SPECNativeException
+	public static void arcLampSetLamp(int lampNumber) throws SpecNativeException
 	{
 		SPEC_Arc_Lamp_Set_Lamp(lampNumber);
 	}
@@ -230,10 +367,10 @@ public class SpecLibrary
 	 * Routine to switch the lamp on or off. The lamp should be selected with arcLampSetLamp
 	 * @param on This parameter should be set to TRUE to switch the lamp on, 
 	 * 	and FALSE to switch the lamp off. 
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Arc_Lamp_Set
 	 */
-	public static void arcLampSet(boolean on) throws SPECNativeException
+	public static void arcLampSet(boolean on) throws SpecNativeException
 	{
 		SPEC_Arc_Lamp_Set(on);
 	}
@@ -249,10 +386,10 @@ public class SpecLibrary
 	 * @param ad_count The A/D count, which when returned from the analogue inputs, 
 	 * 	indicates the filter slide has achieved the required position. 
 	 * 	An int in the range 0..(1<<Analogue_Bit_Resolution).
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Configure_Position
 	 */
-	public static void filterConfigurePosition(int position,int adCount) throws SPECNativeException
+	public static void filterConfigurePosition(int position,int adCount) throws SpecNativeException
 	{
 		SPEC_Filter_Configure_Position(position,adCount); 
 	}
@@ -261,10 +398,10 @@ public class SpecLibrary
 	 * Routine to automatically determine the filter slide A/D count positions.
 	 * This is done by driving the filter slide between the two limits, noting at what position A/D counts
 	 * the filter indexer is set.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Auto_Configure_Position
 	 */
-	public static void filterAutoConfigurePosition() throws SPECNativeException
+	public static void filterAutoConfigurePosition() throws SpecNativeException
 	{
 		SPEC_Filter_Auto_Configure_Position();
 	}
@@ -275,10 +412,10 @@ public class SpecLibrary
 	 * 	An integer between 0 and the number of filters minus one. 
 	 * @return An A/D count is returned, which when returned from the position potentiometer, 
 	 * 	indicates the filter slide has achieved the required position.
- 	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+ 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_Position_AD_Count
 	 */
-	public static int filterGetPositionADCount(int position) throws SPECNativeException
+	public static int filterGetPositionADCount(int position) throws SpecNativeException
 	{
 		return SPEC_Filter_Get_Position_AD_Count(position);
 	}
@@ -287,13 +424,13 @@ public class SpecLibrary
 	 * Routine to move the filter slide until it has achieved the required position. 
 	 * This routine is only used for the MES, where there are set positions to be set.
 	 * The Nu-View should use filterSetWavelength.
- 	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+ 	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @param position The position number, between zero and the number of filters minus one, 
 	 * 	that the slide should be moved to. 
 	 * @see #SPEC_Filter_Set_Position
 	 * @see #filterSetWavelength
 	 */
-	public static void filterSetPosition(int position) throws SPECNativeException
+	public static void filterSetPosition(int position) throws SpecNativeException
 	{
 		SPEC_Filter_Set_Position(position);
 	}
@@ -304,10 +441,10 @@ public class SpecLibrary
 	 * is returned.
 	 * @return This routine returns the filter position between 0 and the number of position minus one,
 	 * 	or -1 if the filter slide is between positions.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_Position
 	 */
-	public static int filterGetPosition() throws SPECNativeException
+	public static int filterGetPosition() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_Position();
 	}
@@ -319,11 +456,11 @@ public class SpecLibrary
 	 * not position filter slides (MES). 
 	 * @param minWavelength A double representing the minimum wavelength, in Angstroms. 
 	 * @param maxWavelength A double representing the maximum wavelength, in Angstroms. 
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Configure_Wavelength_Range
 	 */
 	public static void filterConfigureWavelengthRange(double minWavelength,
-		double maxWavelength) throws SPECNativeException
+		double maxWavelength) throws SpecNativeException
 	{
 		SPEC_Filter_Configure_Wavelength_Range(minWavelength,maxWavelength);
 	}
@@ -335,10 +472,10 @@ public class SpecLibrary
 	 * not position filter slides (MES). 
 	 * @param minADCount An integer representing the minimum A/D count. 
 	 * @param maxADCount An integer representing the maximum A/D count. 
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Configure_AD_Range
 	 */
-	public static void filterConfigureADRange(int minADCount,int maxADCount) throws SPECNativeException
+	public static void filterConfigureADRange(int minADCount,int maxADCount) throws SpecNativeException
 	{
 		SPEC_Filter_Configure_AD_Range(minADCount,maxADCount);
 	}
@@ -347,10 +484,10 @@ public class SpecLibrary
 	 * Try to automaticaly configure the A/D range a continuous variable filter slide operates over. 
 	 * This is done by driving the filter slide into each limit in turn, 
 	 * and reading the A/D count at these locations. 
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Auto_Configure_AD_Range
 	 */
-	public static void filterAutoConfigureADRange() throws SPECNativeException
+	public static void filterAutoConfigureADRange() throws SpecNativeException
 	{
 		SPEC_Filter_Auto_Configure_AD_Range();
 	}
@@ -361,10 +498,10 @@ public class SpecLibrary
 	 * The variables this routine gets are only used for continuously varaible filter slides (Nu-View). 
 	 * @return An allocated instance of SpecDoubleRange is returned, with the minimum and maximum wavelength's
 	 * 	set.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_Wavelength_Range
 	 */
-	public static SpecDoubleRange filterGetWavelengthRange() throws SPECNativeException
+	public static SpecDoubleRange filterGetWavelengthRange() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_Wavelength_Range();
 	}
@@ -375,10 +512,10 @@ public class SpecLibrary
 	 * The variables this routine gets are only used for continuously varaible filter slides (Nu-View). 
 	 * @return An allocated instance of SpecIntRange is returned, with the A/D count range contained
 	 * 	within it.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_AD_Range
 	 */
-	public static SpecIntRange filterGetADRange() throws SPECNativeException
+	public static SpecIntRange filterGetADRange() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_AD_Range();
 	}
@@ -388,11 +525,11 @@ public class SpecLibrary
 	 * This routine is only used for the Nu-View, where there is a continous filter slide with no positions. 
 	 * The MES should use filterSetPosition. 
 	 * @param wavelength The wavelength to drive to.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Set_Wavelength
 	 * @see #filterSetPosition
 	 */
-	public static void filterSetWavelength(double wavelength) throws SPECNativeException
+	public static void filterSetWavelength(double wavelength) throws SpecNativeException
 	{
 		SPEC_Filter_Set_Wavelength(wavelength);
 	}
@@ -401,10 +538,10 @@ public class SpecLibrary
 	 * Routine to get the current wavelength a continuously variable filter slide is currently at. 
 	 * This routine should only be used with continuously variable filter slides (Nu-View). 
 	 * @return The current wavelength the filter slide is driven to.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_Wavelength
 	 */
-	public static double filterGetWavelength() throws SPECNativeException
+	public static double filterGetWavelength() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_Wavelength();
 	}
@@ -421,10 +558,10 @@ public class SpecLibrary
 	 * range of positions before the value is digitised. 
 	 * Too large a value and filter positioning becomes innaccurate. 
 	 * @param adCount The A/D Count Error.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Configure_AD_Count_Error
 	 */
-	public static void filterConfigureADCountError(int adCount) throws SPECNativeException
+	public static void filterConfigureADCountError(int adCount) throws SpecNativeException
 	{
 		SPEC_Filter_Configure_AD_Count_Error(adCount);
 	}
@@ -435,10 +572,10 @@ public class SpecLibrary
 	 * This value is used for both the limit switches and index switches. 
 	 * It should not be too big, otherwise switches will appear to have been tripped when they are not set.
 	 * @param adCount An A/D count, below which a switch is meant to be tripped.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Configure_Switch_AD_Count
 	 */
-	public static void filterConfigureSwitchADCount(int adCount) throws SPECNativeException
+	public static void filterConfigureSwitchADCount(int adCount) throws SpecNativeException
 	{
 		SPEC_Filter_Configure_Switch_AD_Count(adCount);
 	}
@@ -451,10 +588,10 @@ public class SpecLibrary
 	 * This number is the number of times through the loop that the A/D count is the same value, 
 	 * before we time out. 
 	 * @param timeoutNumber The number of times round a movement loop returning the same position A/D count is OK.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Configure_Position_Timeout_Count
 	 */
-	public static void filterConfigurePositionTimeoutCount(int timeoutNumber) throws SPECNativeException
+	public static void filterConfigurePositionTimeoutCount(int timeoutNumber) throws SpecNativeException
 	{
 		SPEC_Filter_Configure_Position_Timeout_Count(timeoutNumber);
 	}
@@ -464,10 +601,10 @@ public class SpecLibrary
 	 * which determines how close the A/D count has to be to a target A/D count to be at that target position. 
 	 * This allows us some potential slop in positions to allows for digitisation times etc.
 	 * @return The current value of A/D Count Error.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_AD_Count_Error
 	 */
-	public static int filterGetADCountError() throws SPECNativeException
+	public static int filterGetADCountError() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_AD_Count_Error();
 	}
@@ -476,10 +613,10 @@ public class SpecLibrary
 	 * Routine to get the current switch A/D count configuration.
 	 * A returned A/D count lower than this value means the relevant switch has been tripped. 
 	 * @return The current value of Switch A/D count.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_Switch_AD_Count
 	 */
-	public static int filterGetSwitchADCount() throws SPECNativeException
+	public static int filterGetSwitchADCount() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_Switch_AD_Count();
 	}
@@ -490,10 +627,10 @@ public class SpecLibrary
 	 * number this many times, it is assumed the motor has failed or the position pot is slipping, 
 	 * and an error occurs. 
 	 * @return The current configuration of the Position Timeout Number.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_Position_Timeout_Count
 	 */
-	public static int filterGetPositionTimeoutCount() throws SPECNativeException
+	public static int filterGetPositionTimeoutCount() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_Position_Timeout_Count();
 	}
@@ -501,22 +638,267 @@ public class SpecLibrary
 	/**
 	 * Simple routine to get the current A/D count of the potentiometer monitoring the filter slide position. 
 	 * @return The A/D count of the potentiometer monitoring the filter slide position.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Get_AD_Count
 	 */
-	public static int filterGetADCount() throws SPECNativeException
+	public static int filterGetADCount() throws SpecNativeException
 	{
 		return SPEC_Filter_Get_AD_Count();
 	}
 
 	/**
 	 * This routine sets the filter abort, which stops any filter slide movement operation currently underway.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_Filter_Abort
 	 */
-	public static void filterAbort() throws SPECNativeException
+	public static void filterAbort() throws SpecNativeException
 	{
 		SPEC_Filter_Abort();
+	}
+
+// camera setup
+	/**
+	 * This routine starts the spectrograph camera setup.
+	 * @param gain The gain setting the camera is to use. This should be TRUE for high gain,
+	 * 	FALSE for low gain. This value is only important for dual gain cameras.
+	 * @param cableLength The cable length. This turns the cable length bit on or off,
+	 * 	and should be set to TRUE or FALSE.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Setup_Startup
+	 */
+	public static void cameraSetupStartup(boolean gain,boolean cableLength) throws SpecNativeException
+	{
+		SPEC_Setup_Startup(gain,cableLength);
+	}
+
+	/**
+	 * This routine shuts down the spectrograph camera.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Setup_Shutdown
+	 */
+	public static void cameraSetupShutdown() throws SpecNativeException
+	{
+		SPEC_Setup_Shutdown();
+	}
+
+	/**
+	 * This method sets the apogee camera dimensions.
+	 * @param ncols Total number of image columns.
+	 * @param nrows Total number of image rows.
+	 * @param hbin The horizontal binning factor.
+	 * @param vbin The vertical binning factor.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Setup_Dimensions
+	 */
+	public static void cameraSetupDimensions(int ncols,int nrows,int hbin, int vbin) throws SpecNativeException
+	{
+ 		SPEC_Setup_Dimensions(ncols,nrows,hbin,vbin);
+	}
+
+	/**
+	 * Apogee camera setup abort routine.
+	 * @see #SPEC_Setup_Abort
+	 */
+	public static void cameraSetupAbort()
+	{
+		SPEC_Setup_Abort();
+	}
+
+	/**
+	 * Method to get the number of columns currently configured for the Apogee camera.
+	 * @return The currently configured number of columns.
+	 * @see #SPEC_Setup_Get_NCols
+	 */
+	public static int cameraSetupGetNumberCols()
+	{
+		return SPEC_Setup_Get_NCols();
+	}
+
+	/**
+	 * Method to get the number of rows currently configured for the Apogee camera.
+	 * @return The currently configured number of rows.
+	 * @see #SPEC_Setup_Get_NRows
+	 */
+	public static int cameraSetupGetNumberRows()
+	{
+		return SPEC_Setup_Get_NRows();
+	}
+
+	/**
+	 * Method to get the horizontal(column) binning factor currently configured for the Apogee camera.
+	 * @return The currently configured horizontal binning factor.
+	 * @see #SPEC_Setup_Get_HBin
+	 */
+	public static int cameraSetupGetHorizontalBinning()
+	{
+		return SPEC_Setup_Get_HBin();
+	}
+
+	/**
+	 * Method to get the vertical(row) binning factor currently configured for the Apogee camera.
+	 * @return The currently configured vertical binning factor.
+	 * @see #SPEC_Setup_Get_VBin
+	 */
+	public static int cameraSetupGetVerticalBinning()
+	{
+		return SPEC_Setup_Get_VBin();
+	}
+
+// camera exposure
+	/**
+	 * This method takes an exposure with the camera.
+	 * @param openShutter Whether to open the shutter or not (perform a dark frame). Should be set to
+	 * 	true to open the shutter and false to not open the shutter.
+	 * @param readoutCCD Whether to read out the data once the exposure has taken place.
+	 * @param startTime The start time, in milliseconds since the epoch (1st January 1970) to start the exposure.
+	 * 	Passing the value -1 will start the exposure as soon as possible.
+	 * @param exposureTime The length of time to open the shutter for in milliseconds.
+	 * @param filename The filename to save the exposure into. The FITS headers should have previously been saved
+	 * 	in this file.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Exposure_Expose
+	 */
+	public static void cameraExpose(boolean openShutter,boolean readoutCCD,
+		long startTime,int exposureTime,String filename) throws SpecNativeException
+	{
+		SPEC_Exposure_Expose(openShutter,readoutCCD,startTime,exposureTime,filename);
+	}
+
+	/**
+	 * This method takes an exposure with the camera. It is an overloaded method, it calls through
+	 * to SPEC_Exposure_Expose with openShutter true (open shutter), readoutCCD true (readout) 
+	 * and startTime -1 (start at any time).
+	 * @param exposureTime The length of time to open the shutter for in milliseconds.
+	 * @param filename The filename to save the exposure into. The FITS headers should have previously been saved
+	 * 	in this file.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Exposure_Expose
+	 */
+	public static void cameraExpose(int exposureTime,String filename) throws SpecNativeException
+	{
+		SPEC_Exposure_Expose(true,true,-1,exposureTime,filename);
+	}
+
+	/**
+	 * This method takes an bias frame with the camera.
+	 * @param filename The filename to save the exposure into. The FITS headers should have previously been saved
+	 * 	in this file.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Exposure_Bias
+	 */
+	public static void cameraBias(String filename) throws SpecNativeException
+	{
+		SPEC_Exposure_Bias(filename);
+	}
+
+	/**
+	 * This method trys to abort an exposure or bias frame that is underway.
+	 * @see #SPEC_Exposure_Abort
+	 */
+	public static void cameraExposeAbort()
+	{
+		SPEC_Exposure_Abort();
+	}
+
+	/**
+	 * This method gets the current status of an exposure. 
+	 * @return The status is returned.
+	 * @see #SPEC_Exposure_Get_Status
+	 * @see #SPEC_Exposure_Get_Status
+ 	 * @see #SPEC_EXPOSURE_STATUS_NONE
+ 	 * @see #SPEC_EXPOSURE_STATUS_WAIT_START
+ 	 * @see #SPEC_EXPOSURE_STATUS_EXPOSE
+ 	 * @see #SPEC_EXPOSURE_STATUS_READOUT
+ 	 * @see #SPEC_EXPOSURE_STATUS_SAVE
+	 */
+	public static int cameraExposeGetStatus()
+	{
+		return SPEC_Exposure_Get_Status();
+	}
+
+	/**
+	 * Method to set the start offset time for an exposure. 
+	 * This time is the amount of time before an exposure is required to start to send the command to open
+	 * the shutter, to allow for transmission delays etc. 
+	 * @param time The new start offset time, in milliseconds.
+	 * @see #SPEC_Exposure_Set_Start_Offset_Time
+	 */
+	public static void cameraExposeSetStartOffsetTime(int time)
+	{
+		SPEC_Exposure_Set_Start_Offset_Time(time);
+	}
+
+	/**
+	 * Routine to get the start offset time for an exposure.
+	 * @return The current value of the start offset time, in milliseconds.
+	 * @see #SPEC_Exposure_Get_Start_Offset_Time
+	 */
+	public static int cameraExposeGetStartOffsetTime()
+	{
+		return SPEC_Exposure_Get_Start_Offset_Time();
+	}
+
+// camera temperature control
+	/**
+	 * This method tells the temperature module to return to ambient temperature.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Temperature_Ambient
+	 */
+	public static void cameraTemperatureAmbient() throws SpecNativeException
+	{
+		SPEC_Temperature_Ambient();
+	}
+
+	/**
+	 * This method sets the temperature to attain.
+	 * @param targetTemperature The temperature to attain, in degrees C. 
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Temperature_Set
+	 */
+	public static void cameraTemperatureSet(double targetTemperature) throws SpecNativeException
+	{
+		SPEC_Temperature_Set(targetTemperature);
+	}
+
+	/**
+	 * This method switches off temperature control.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Temperature_Off
+	 */
+	public static void cameraTemperatureOff() throws SpecNativeException
+	{
+		SPEC_Temperature_Off();
+	}
+
+	/**
+	 * This method gets the current temperature of the camera.
+	 * @return The current temperature in degrees Centigrade.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Temperature_Get
+	 */
+	public static double cameraTemperatureGet() throws SpecNativeException
+	{
+		return SPEC_Temperature_Get();
+	}
+
+	/**
+	 * This method tells the temperature control system to control itself towards the desired temperature.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Temperature_Regulate
+	 */
+	public static void cameraTemperatureRegulate() throws SpecNativeException
+	{
+		SPEC_Temperature_Regulate();
+	}
+
+	/**
+	 * This method gets the status of the temperature control system.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
+	 * @see #SPEC_Temperature_Get_Status
+	 */
+	public static String cameraTemperatureGetStatus() throws SpecNativeException
+	{
+		return SPEC_Temperature_Get_Status();
 	}
 
 //Digital Analogue IO card selection
@@ -526,7 +908,7 @@ public class SpecLibrary
 	 * @param deviceNumber A number specifying which IO device to talk to. One of:
 	 * 	DAIO_INTERFACE_DEVICE_NONE, DAIO_INTERFACE_DEVICE_TEXT, DAIO_INTERFACE_DEVICE_DAS08JR,
 	 * 	DAIO_INTERFACE_DEVICE_PC104_DAS08.
-	 * @exception SPECNativeException Thrown if the underlying C routine failed.
+	 * @exception SpecNativeException Thrown if the underlying C routine failed.
 	 * @see #SPEC_DAIO_Select_Device
 	 * @see #DAIO_INTERFACE_DEVICE_NONE
 	 * @see #DAIO_INTERFACE_DEVICE_TEXT
@@ -534,7 +916,7 @@ public class SpecLibrary
 	 * @see #DAIO_INTERFACE_DEVICE_PC104_DAS08
 	 * @see #open
 	 */
-	public static void selectIODevice(int deviceNumber) throws SPECNativeException
+	public static void selectIODevice(int deviceNumber) throws SpecNativeException
 	{
 		SPEC_DAIO_Select_Device(deviceNumber);
 	}
@@ -542,4 +924,7 @@ public class SpecLibrary
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  2000/10/16 17:37:13  cjm
+// initial revision.
+//
 //
