@@ -10,7 +10,7 @@ import ngat.ngtcs.command.*;
  * be implemented by the telescope control system.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class CommandImplementor
 {
@@ -24,7 +24,7 @@ public abstract class CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: CommandImplementor.java,v 1.4 2003-09-29 11:50:28 je Exp $" );
+    new String( "$Id: CommandImplementor.java,v 1.5 2003-09-29 13:12:18 je Exp $" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -97,12 +97,6 @@ public abstract class CommandImplementor
 
 
   /**
-   * The command-specific execution method.
-   */
-  public abstract void execute();
-
-
-  /**
    * Return the CommandDone (or sub-class) that resulted from this
    * command implementation.
    * @return commandDone
@@ -133,16 +127,46 @@ public abstract class CommandImplementor
     return command;
   }
 
+
   /**
    * Returns the timeout for the specific command implementation, in ms.
    */
   public abstract int calcAcknowledgeTime();
+
+
+  /**
+   * The command-specific execution method.
+   */
+  public abstract void execute();
+
+
+  /**
+   * Sleep the current thread for the specified time (in milliseconds),
+   * increment the slept variable accordingly and log any InterruptedExceptions
+   * to the logger.
+   * @param ms the time to sleep, in ms
+   */
+  protected void sleep( int ms )
+  {
+    try
+    {
+      Thread.sleep( ms );
+    }
+    catch( InterruptedException ie )
+    {
+      logger.log( 1, logName, ie.toString() );
+    }
+    slept += ms;
+  }
 }
 /*
- *    $Date: 2003-09-29 11:50:28 $
+ *    $Date: 2003-09-29 13:12:18 $
  * $RCSfile: CommandImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/CommandImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/29 11:50:28  je
+ *     Added documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *
