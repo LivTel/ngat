@@ -10,12 +10,16 @@ import java.io.*;
 /**
  * Represents a user (observer) in the Phase II database.
  * <br>
- * $Id: User.java,v 1.2 2000-11-23 18:44:56 snf Exp $
+ * $Id: User.java,v 1.3 2001-02-23 18:45:20 snf Exp $
  *
  */
 public class User extends DBObject implements Serializable {
     
-    // Variables.
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -5949186439364520929L;
+    
+	// Variables.
     
     /**  The user's email address for contact. */
     protected String email;
@@ -174,7 +178,7 @@ public class User extends DBObject implements Serializable {
     
     // NP -> P Translator.
     /** Create a User from an NPUser.*/
-    public User(NPUser npUser) {
+    public User(NPUser npUser) throws InvocationTargetException {
 	super(npUser);
 	Iterator it;
 	email = npUser.getEmail();
@@ -190,53 +194,41 @@ public class User extends DBObject implements Serializable {
 	
 	proposals = new OSHashMap();
 	it = npUser.listAllNPProposals();
-	while (it.hasNext()) {
+	while (it.hasNext()) { 
+	    String npName = null;
 	    try {
 		NPProposal npProposal = (NPProposal)it.next();
 		Class npClazz = npProposal.getClass();
-		String npName = npClazz.getName();
+		npName = npClazz.getName();
 		int k = npName.indexOf("nonpersist.NP");
 		String pName = npName.substring(0,k).concat(npName.substring(k+13));
 		Class pClazz = Class.forName(pName);
 		Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
 		Proposal proposal = (Proposal)pCon.newInstance(new Object[]{npProposal});
 		addProposal(proposal);
-	    } catch (ClassNotFoundException re1){
-		System.out.println("Translation Error: "+re1);
-	    } catch (NoSuchMethodException re2) {
-		System.out.println("Translation Error: "+re2);
-	    } catch (InvocationTargetException re3) {
-		System.out.println("Translation Error: "+re3);
-	    } catch (IllegalAccessException re4) {
-		System.out.println("Translation Error: "+re4);
-	    } catch (InstantiationException re5) {
-		System.out.println("Translation Error: "+re5);
-	    }
+	    } catch (Exception e) {
+		throw new InvocationTargetException(e, "Translating User ["+name+"] pi-proposal ["+
+						    npName+"] from NP to P version.");
+	    } 
 	}
 	coIProposals = new OSHashMap();
 	it = npUser.listAllNPCoIProposals();
 	while (it.hasNext()) {
+	    String npName = null;
 	    try {
 		NPProposal npCoIProposal = (NPProposal)it.next();
 		Class npClazz = npCoIProposal.getClass();
-		String npName = npClazz.getName();
+		npName = npClazz.getName();
 		int k = npName.indexOf("nonpersist.NP");
 		String pName = npName.substring(0,k).concat(npName.substring(k+13));
 		Class pClazz = Class.forName(pName);
 		Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
 		Proposal coIProposal = (Proposal)pCon.newInstance(new Object[]{npCoIProposal});
 		addCoIProposal(coIProposal);
-	    } catch (ClassNotFoundException re1){
-		System.out.println("Translation Error: "+re1);
-	    } catch (NoSuchMethodException re2) {
-		System.out.println("Translation Error: "+re2);
-	    } catch (InvocationTargetException re3) {
-		System.out.println("Translation Error: "+re3);
-	    } catch (IllegalAccessException re4) {
-		System.out.println("Translation Error: "+re4);
-	    } catch (InstantiationException re5) {
-		System.out.println("Translation Error: "+re5);
-	    }
+	    } catch (Exception e) {
+		throw new InvocationTargetException(e, "Translating User ["+name+"] coi-proposal ["+
+						    npName+"] from NP to P version.");
+	    } 
 	}
     } // end (NP -> P Translator).
     
@@ -383,6 +375,7 @@ public class User extends DBObject implements Serializable {
 	    Proposal proposal = (Proposal)it.next();
 	    if (!proposal.isLocked() && !proposal.deleted()) {
 		ScheduleDescriptor sd = proposal.schedule();
+		sd = applyScheduling(sd);
 		if (sd.getGroup() != null) {
 		    if (sd.getScore() > best.getScore()) {
 			best.setGroup(sd.getGroup());
@@ -392,7 +385,7 @@ public class User extends DBObject implements Serializable {
 		}
 	    }
 	}
-	return applyScheduling(best);
+	return best;
     } // end (schedule).
     
     // Scheduling Algorithm.
@@ -411,6 +404,9 @@ public class User extends DBObject implements Serializable {
 } // end class def [User].
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2000/11/23 18:44:56  snf
+/** Debug.
+/**
 /** Revision 1.1  2000/11/23 14:21:49  snf
 /** Initial revision
 /** */

@@ -12,343 +12,72 @@ import java.io.*;
 
 
 public class IRCamConfig extends InstrumentConfig implements Serializable {
-
-     // Variables.
-
-
-
-     /** no comment. */
-     protected String upperFilterWheel;
-
-
-     /** no comment. */
-     protected String lowerFilterWheel;
-
-
-     /** no comment. */
-     protected int xBin;
-
-
-     /** no comment. */
-     protected int yBin;
-
-
-     /** no comment. */
-     protected int windowFlags;
-
-
-     /** no comment. */
-     protected int xe1;
-
-
-     /** no comment. */
-     protected int xe2;
-
-
-     /** no comment. */
-     protected int xe3;
-
-
-     /** no comment. */
-     protected int xe4;
-
-
-     /** no comment. */
-     protected int xs1;
-
-
-     /** no comment. */
-     protected int xs2;
-
-
-     /** no comment. */
-     protected int xs3;
-
-
-     /** no comment. */
-     protected int xs4;
-
-
-     /** no comment. */
-     protected int ye1;
-
-
-     /** no comment. */
-     protected int ye2;
-
-
-     /** no comment. */
-     protected int ye3;
-
-
-     /** no comment. */
-     protected int ye4;
-
-
-     /** no comment. */
-     protected int ys1;
-
-
-     /** no comment. */
-     protected int ys2;
-
-
-     /** no comment. */
-     protected int ys3;
-
-
-     /** no comment. */
-     protected int ys4;
-
-     // Constructor.
-
-     public IRCamConfig() {this("untitled");}
-
-     public IRCamConfig(String name) {
-          super(name);
-     }
-
-     // Accessors.
-
-
-
-     /** Sets the no comment .*/
-     public void setUpperFilterWheel(String in) { this.upperFilterWheel = in;}
-
-
-     /** Returns the no comment. */
-     public String getUpperFilterWheel() { return upperFilterWheel;}
-
-
-     /** Sets the no comment .*/
-     public void setLowerFilterWheel(String in) { this.lowerFilterWheel = in;}
-
-
-     /** Returns the no comment. */
-     public String getLowerFilterWheel() { return lowerFilterWheel;}
-
-
-     /** Sets the no comment .*/
-     public void setXBin(int in) { this.xBin = in;}
-
-
-     /** Returns the no comment. */
-     public int getXBin() { return xBin;}
-
-
-     /** Sets the no comment .*/
-     public void setYBin(int in) { this.yBin = in;}
-
-
-     /** Returns the no comment. */
-     public int getYBin() { return yBin;}
-
-
-     /** Sets the no comment .*/
-     public void setWindowFlags(int in) { this.windowFlags = in;}
-
-
-     /** Returns the no comment. */
-     public int getWindowFlags() { return windowFlags;}
-
-
-     /** Sets the no comment .*/
-     public void setXe1(int in) { this.xe1 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXe1() { return xe1;}
-
-
-     /** Sets the no comment .*/
-     public void setXe2(int in) { this.xe2 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXe2() { return xe2;}
-
-
-     /** Sets the no comment .*/
-     public void setXe3(int in) { this.xe3 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXe3() { return xe3;}
-
-
-     /** Sets the no comment .*/
-     public void setXe4(int in) { this.xe4 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXe4() { return xe4;}
-
-
-     /** Sets the no comment .*/
-     public void setXs1(int in) { this.xs1 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXs1() { return xs1;}
-
-
-     /** Sets the no comment .*/
-     public void setXs2(int in) { this.xs2 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXs2() { return xs2;}
-
-
-     /** Sets the no comment .*/
-     public void setXs3(int in) { this.xs3 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXs3() { return xs3;}
-
-
-     /** Sets the no comment .*/
-     public void setXs4(int in) { this.xs4 = in;}
-
-
-     /** Returns the no comment. */
-     public int getXs4() { return xs4;}
-
-
-     /** Sets the no comment .*/
-     public void setYe1(int in) { this.ye1 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYe1() { return ye1;}
-
-
-     /** Sets the no comment .*/
-     public void setYe2(int in) { this.ye2 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYe2() { return ye2;}
-
-
-     /** Sets the no comment .*/
-     public void setYe3(int in) { this.ye3 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYe3() { return ye3;}
-
-
-     /** Sets the no comment .*/
-     public void setYe4(int in) { this.ye4 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYe4() { return ye4;}
-
-
-     /** Sets the no comment .*/
-     public void setYs1(int in) { this.ys1 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYs1() { return ys1;}
-
-
-     /** Sets the no comment .*/
-     public void setYs2(int in) { this.ys2 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYs2() { return ys2;}
-
-
-     /** Sets the no comment .*/
-     public void setYs3(int in) { this.ys3 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYs3() { return ys3;}
-
-
-     /** Sets the no comment .*/
-     public void setYs4(int in) { this.ys4 = in;}
-
-
-     /** Returns the no comment. */
-     public int getYs4() { return ys4;}
-
-
-     // Descendant Mutators.
-
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -1885321170923597100L;
      
-     // NP -> P Translator.
+    public static final int maxDetectorCount = 1;
 
-     public IRCamConfig(NPIRCamConfig npIRCamConfig) {
-          super(npIRCamConfig);
-          Iterator it;
-          upperFilterWheel = npIRCamConfig.getUpperFilterWheel();
-          lowerFilterWheel = npIRCamConfig.getLowerFilterWheel();
-          xBin = npIRCamConfig.getXBin();
-          yBin = npIRCamConfig.getYBin();
-          windowFlags = npIRCamConfig.getWindowFlags();
-          xe1 = npIRCamConfig.getXe1();
-          xe2 = npIRCamConfig.getXe2();
-          xe3 = npIRCamConfig.getXe3();
-          xe4 = npIRCamConfig.getXe4();
-          xs1 = npIRCamConfig.getXs1();
-          xs2 = npIRCamConfig.getXs2();
-          xs3 = npIRCamConfig.getXs3();
-          xs4 = npIRCamConfig.getXs4();
-          ye1 = npIRCamConfig.getYe1();
-          ye2 = npIRCamConfig.getYe2();
-          ye3 = npIRCamConfig.getYe3();
-          ye4 = npIRCamConfig.getYe4();
-          ys1 = npIRCamConfig.getYs1();
-          ys2 = npIRCamConfig.getYs2();
-          ys3 = npIRCamConfig.getYs3();
-          ys4 = npIRCamConfig.getYs4();
-          
-          // Recursively call Daughter Translators.
+    // Variables.
 
+    /** no comment. */
+    protected String upperFilterWheel;
+    
+    /** no comment. */
+    protected String lowerFilterWheel;
+    
+    // Constructor.
+    
+    public IRCamConfig() {this("untitled");}
+    
+    public IRCamConfig(String name) {
+	super(name);
+	detectors = new IRCamDetector[1];
+	detectors[0] = new IRCamDetector();
+    }
+
+    // Accessors.
+    
+    /** Sets the no comment .*/
+    public void setUpperFilterWheel(String in) { this.upperFilterWheel = in;}   
+    
+    /** Returns the no comment. */
+    public String getUpperFilterWheel() { return upperFilterWheel;}
+        
+    /** Sets the no comment .*/
+    public void setLowerFilterWheel(String in) { this.lowerFilterWheel = in;}
+    
+    /** Returns the no comment. */
+    public String getLowerFilterWheel() { return lowerFilterWheel;}
+
+    public int getMaxDetectorCount() { return maxDetectorCount; }
+   
+    // NP -> P Translator.
+    public IRCamConfig(NPIRCamConfig npIRCamConfig) {
+	super(npIRCamConfig);
+	Iterator it;
+	upperFilterWheel = npIRCamConfig.getUpperFilterWheel();
+	lowerFilterWheel = npIRCamConfig.getLowerFilterWheel();
+	detectors[0] = new CCDDetector(npIRCamConfig.getDetector(0));	
      } // end (NP -> P Translator).
      
-     // P -> NP Translator.
-
-     public void stuff(NPIRCamConfig npIRCamConfig) {
-          super.stuff(npIRCamConfig);
-          Iterator it;
-          npIRCamConfig.setUpperFilterWheel(getUpperFilterWheel());
-          npIRCamConfig.setLowerFilterWheel(getLowerFilterWheel());
-          npIRCamConfig.setXBin(getXBin());
-          npIRCamConfig.setYBin(getYBin());
-          npIRCamConfig.setWindowFlags(getWindowFlags());
-          npIRCamConfig.setXe1(getXe1());
-          npIRCamConfig.setXe2(getXe2());
-          npIRCamConfig.setXe3(getXe3());
-          npIRCamConfig.setXe4(getXe4());
-          npIRCamConfig.setXs1(getXs1());
-          npIRCamConfig.setXs2(getXs2());
-          npIRCamConfig.setXs3(getXs3());
-          npIRCamConfig.setXs4(getXs4());
-          npIRCamConfig.setYe1(getYe1());
-          npIRCamConfig.setYe2(getYe2());
-          npIRCamConfig.setYe3(getYe3());
-          npIRCamConfig.setYe4(getYe4());
-          npIRCamConfig.setYs1(getYs1());
-          npIRCamConfig.setYs2(getYs2());
-          npIRCamConfig.setYs3(getYs3());
-          npIRCamConfig.setYs4(getYs4());
-     } // end (P -> NP Translator).
-     
-     // P -> NP Translator.
-
-     public NPDBObject makeNP() {
-          NPIRCamConfig npIRCamConfig = new NPIRCamConfig();
-          stuff(npIRCamConfig);
-          return npIRCamConfig;
-     } // end (makeNp).
-
-
+    // P -> NP Translator.
+    public void stuff(NPIRCamConfig npIRCamConfig) {
+	super.stuff(npIRCamConfig);
+	npIRCamConfig.setUpperFilterWheel(getUpperFilterWheel());
+	npIRCamConfig.setLowerFilterWheel(getLowerFilterWheel());
+	try {
+	    npIRCamConfig.setNPDetector(0, (NPIRCamDetector)(detectors[0].makeNP()));
+	} catch (IllegalArgumentException iae) {	    
+	}
+    } // end (P -> NP Translator).
+    
+    // P -> NP Translator.
+    public NPDBObject makeNP() {
+	NPIRCamConfig npIRCamConfig = new NPIRCamConfig();
+	stuff(npIRCamConfig);
+	return npIRCamConfig;
+    } // end (makeNp).
+    
 } // end class def [IRCamConfig].

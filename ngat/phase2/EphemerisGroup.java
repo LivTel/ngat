@@ -12,22 +12,21 @@ import java.io.*;
 
 
 public class EphemerisGroup extends Group implements Serializable {
-
-     // Variables.
-
-
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -8848209037477185241L;
+     
+    // Variables.
 
      /**  date/time of the first observation period. */
      protected long start;
 
-
      /**  length of the phase period. */
      protected long period;
 
-
      /**  specific phase to carry out observations. */
      protected float phase;
-
 
      /**  record of last successfully observed period number. */
      protected int lastPeriod;
@@ -42,45 +41,33 @@ public class EphemerisGroup extends Group implements Serializable {
 
      // Accessors.
 
-
-
      /** Sets the  date/time of the first observation period .*/
      public void setStart(long in) { this.start = in;}
-
 
      /** Returns the  date/time of the first observation period. */
      public long getStart() { return start;}
 
-
      /** Sets the  length of the phase period .*/
      public void setPeriod(long in) { this.period = in;}
-
 
      /** Returns the  length of the phase period. */
      public long getPeriod() { return period;}
 
-
      /** Sets the  specific phase to carry out observations .*/
      public void setPhase(float in) { this.phase = in;}
-
 
      /** Returns the  specific phase to carry out observations. */
      public float getPhase() { return phase;}
 
-
      /** Sets the  record of last successfully observed period number .*/
      public void setLastPeriod(int in) { this.lastPeriod = in;}
-
 
      /** Returns the  record of last successfully observed period number. */
      public int getLastPeriod() { return lastPeriod;}
 
-
      // Descendant Mutators.
-
      
      // NP -> P Translator.
-
      public EphemerisGroup(NPEphemerisGroup npEphemerisGroup) {
           super(npEphemerisGroup);
           Iterator it;
@@ -94,7 +81,6 @@ public class EphemerisGroup extends Group implements Serializable {
      } // end (NP -> P Translator).
      
      // P -> NP Translator.
-
      public void stuff(NPEphemerisGroup npEphemerisGroup) {
           super.stuff(npEphemerisGroup);
           Iterator it;
@@ -105,7 +91,6 @@ public class EphemerisGroup extends Group implements Serializable {
      } // end (P -> NP Translator).
      
      // P -> NP Translator.
-
      public NPDBObject makeNP() {
           NPEphemerisGroup npEphemerisGroup = new NPEphemerisGroup();
           stuff(npEphemerisGroup);

@@ -12,6 +12,10 @@ import java.io.*;
 
 public class ExtraSolarSource extends Source implements Serializable {
 
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -4942161864226138846L;
+    
     // Variables
 
     /** RA (rads).*/

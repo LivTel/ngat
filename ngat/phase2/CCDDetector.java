@@ -8,14 +8,18 @@ import ngat.phase2.nonpersist.*;
 
 /** Subclass of Detector to represent the RATCam EEV42-40 CCD Detector.
  *
- * $Id: CCDDetector.java,v 1.1 2000-11-23 12:31:23 snf Exp $
+ * $Id: CCDDetector.java,v 1.2 2001-02-23 18:45:20 snf Exp $
  *
  */
 public class CCDDetector extends Detector implements Serializable {
 
     /** The name of the detector.*/
     public static final String name = "EEV42-40";
-
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 1834287133204619671L;
+   
     /** The maximum window count: 4.*/
     public static final int maxWindowCount = 4;
     
@@ -32,6 +36,9 @@ public class CCDDetector extends Detector implements Serializable {
     public static final int maxYBins = 8;
 
     public final String getName() { return name ; }
+
+    /** Subclasses should override to return the correct value. */
+    public int getMaxDetectorCount() { return 1;}
 
     public final int getMaxWindowCount() { return maxWindowCount;}
 
@@ -59,25 +66,23 @@ public class CCDDetector extends Detector implements Serializable {
 	// #### to get the correct subclass.
 	NPCCDDetector npDetector = new NPCCDDetector();
 	npDetector.setXBin(xBin);
-	npDetector.setYBin(yBin); 
-	
+	npDetector.setYBin(yBin); 	
 	// Copy all Windows across, ignore TooManyWindows.
-	for (int i = 0; i < getMaxWindowCount(); i++) {
-	    
+	for (int i = 0; i < getMaxWindowCount(); i++) {	    
 	    try {
 		if ( windows[i] != null) {
-		    NPWindow npWindow = windows[i].makeNP();
-		   
-		    npDetector.setNPWindow(i, npWindow);
-		    
+		    NPWindow npWindow = windows[i].makeNP();		   
+		    npDetector.setNPWindow(i, npWindow);		    
 		}
 	    } catch(IllegalArgumentException twe) {
 		System.out.println("CCDDetector.Translation Error doing Window to NPWindow::"+twe.getMessage());}
-	}
-	
+	}	
 	return npDetector;
     }
     
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/23 12:31:23  snf
+/** Initial revision
+/** */

@@ -7,10 +7,14 @@ import java.io.*;
 /** 
  * A top level object from which all database objects are derived. Contains
  * generic variables and methods.
- * $Id: DBObject.java,v 1.1 2000-11-23 11:38:08 snf Exp $
+ * $Id: DBObject.java,v 1.2 2001-02-23 18:45:20 snf Exp $
  */
 public class DBObject implements Serializable {
 
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 3059223912664057529L;
+    
     /** The unique (at a given subtree level) name/ident for this object. */
     protected String name;
 
@@ -135,6 +139,9 @@ public class DBObject implements Serializable {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/23 11:38:08  snf
+/** Initial revision
+/**
 /** Revision 1.1  2000/05/25 10:14:41  snf
 /** Initial revision
 /** */

@@ -11,7 +11,11 @@ import java.io.*;
 
 /** Encapsulates information about comets.*/
 public class Comet extends SolarSystemSource implements Serializable {
-
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 1272919295968610713L;
+    
     // Variables.
 
     /** Epoch at which the elements are/were measured (mjd).*/

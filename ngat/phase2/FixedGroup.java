@@ -13,9 +13,11 @@ import java.io.*;
 
 public class FixedGroup extends Group implements Serializable {
 
-     // Variables.
-
-
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 2835412734902740563L;
+     
+    // Variables.
 
      /**  the date/time at which this FixedGroup should be carried out. */
      protected long fixedTime;

@@ -3,6 +3,7 @@ package ngat.phase2;
 import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 import ngat.phase2.util.*;
+import ngat.util.logging.*;
 
 import com.odi.*;
 import com.odi.util.*;
@@ -13,20 +14,21 @@ import java.text.*;
 import java.io.*;
 
 /**  
- *
- *
- *
- *
- *
- *
- *
- *
+ * A Group contains details of a set of Observations to perform. This is
+ * the minumum schedulable entity as regards robotic operation. The schedule()
+ * method is used to calculate a score for the Group and performs any vetoing
+ * with respect to current observing environment and predefined constraints.
+ * The folowing fields are used in scoring:- ##TBD ##
+ * <br><br>
+ * $Id: Group.java,v 1.3 2001-02-23 18:45:20 snf Exp $
  */
 public class Group extends DBObject implements Serializable {
-
-     // Variables.
-
-    private transient boolean logging;
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 2728957598013116145L;
+     
+    // Variables.
     
     /**  Indicator to whether this Group has been successfully scheduled. */
     protected boolean done;
@@ -39,11 +41,13 @@ public class Group extends DBObject implements Serializable {
     
     /**  Bitmask to identify poorest conditions under which this Group can be scheduled. */
     protected int minimumConditions;
+
+    /** Holds the set of Observations for this Group.*/
     protected OSHashMap observations;
-    
+
     // Constructor.
     
-    public Group() {super();}
+    public Group() {this("untitled");}
     
     public Group(String name) {
 	super(name);
@@ -69,7 +73,7 @@ public class Group extends DBObject implements Serializable {
     
     /** Returns the  date this Group was scheduled (if Done). */
     public long getDoneDate() { return doneDate;}
-
+    
     /** Sets the  bitmask to identify poorest conditions under which this Group can be scheduled .*/
     public void setMinimumConditions(int in) { this.minimumConditions = in;}
     
@@ -105,7 +109,7 @@ public class Group extends DBObject implements Serializable {
     public OSHashMap getObservations() { return observations;}
     
     // NP -> P Translator.
-    public Group(NPGroup npGroup) {
+    public Group(NPGroup npGroup) throws InvocationTargetException {
 	super(npGroup);
 	Iterator it;
 	done = npGroup.isDone();
@@ -117,27 +121,21 @@ public class Group extends DBObject implements Serializable {
 	observations = new OSHashMap();
 	it = npGroup.listAllNPObservations();
 	while (it.hasNext()) {
+	    String npName = null;
 	    try {
 		NPObservation npObservation = (NPObservation)it.next();
 		Class npClazz = npObservation.getClass();
-		String npName = npClazz.getName();
+		npName = npClazz.getName();
 		int k = npName.indexOf("nonpersist.NP");
 		String pName = npName.substring(0,k).concat(npName.substring(k+13));
 		Class pClazz = Class.forName(pName);
 		Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
 		Observation observation = (Observation)pCon.newInstance(new Object[]{npObservation});
 		addObservation(observation);
-	    } catch (ClassNotFoundException re1){
-		System.out.println("Translation Error: "+re1);
-	    } catch (NoSuchMethodException re2) {
-		System.out.println("Translation Error: "+re2);
-	    } catch (InvocationTargetException re3) {
-		System.out.println("Translation Error: "+re3);
-	    } catch (IllegalAccessException re4) {
-		System.out.println("Translation Error: "+re4);
-	    } catch (InstantiationException re5) {
-		System.out.println("Translation Error: "+re5);
-	    }
+	    } catch (Exception re1){
+		throw new InvocationTargetException(e,"Translating Group ["+name+
+						    "] observation ["+npName+"] from NP to P version");
+	    } 
 	}
     } // end (NP -> P Translator).
     
@@ -204,11 +202,10 @@ public class Group extends DBObject implements Serializable {
     /**
      * Group's scheduling algorithm  - handcoded. Insert in the O2J generated Group.java source.
      */
-    public ScheduleDescriptor schedule(Proposal proposal,StringBuffer buffer, boolean dolog) {
-     	
+    public ScheduleDescriptor schedule(Proposal proposal) {
+     	Logger logger = LogManager.getLogger("SCHEDULE");
+
 	SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss - dd/MM/yyyy");
-	
-	this.logging = dolog;
 	
 	double time = 0.0;
 	float score = 0.0f;
@@ -266,34 +263,34 @@ public class Group extends DBObject implements Serializable {
 	TelescopeConfig  nextTelescopeConfig    = null;
 	PipelineConfig   nextPipelineConfig     = null;
 	
-	log(buffer,"Group: "+getFullPath());
-	log(buffer,"****************");
+	logger.log(1,"Group: "+getFullPath());
+	logger.log(1,"****************");
 	// Iterate over all observations to calculate total expected exec time.
-	log(buffer,"Checking observations for exec time:");
-	log(buffer,"Current Time: "+sdf.format(new Date(Scheduling.getNow())));
-	log(buffer,"Current LST:  "+Position.toHMSString(Scheduling.getLST()));
+	logger.log(1,"Checking observations for exec time:");
+	logger.log(1,"Current Time: "+sdf.format(new Date()));
+	// XXXXXlogger.log(1,"Current LST:  "+Position.toHMSString(Astrometry.computeLST(XXXlongitudeXXX)));
 	Iterator it = listAllObservations();    
 	while (it.hasNext()) {	     
 	    moves++;
 	    
 	    Observation observation = (Observation)it.next();
-	    log(buffer,"Observation: "+observation.getName());
+	    logger.log(1,"Observation: "+observation.getName());
 	    Source source = observation.getSource();
 	    if (source == null) return new ScheduleDescriptor(null, 0.0f, 0); // Can't be done.
-	    log(buffer,"source: "+source.getName());
+	    logger.log(1,"source: "+source.getName());
 
 	    // Get the obo's Position and configuration.
 	    nextTelescopePosition = source.getPosition();
-	    log(buffer,"Posn@: "+source.getPosition());
+	    logger.log(1,"Posn: "+source.getPosition().toString());
 	    
 	    nextInstrumentConfig  = observation.getInstrumentConfig();
-	    log(buffer,"I/c: "+observation.getInstrumentConfig().getName());
+	    logger.log(1,"I/c: "+observation.getInstrumentConfig().getName());
 
 	    nextTelescopeConfig   = observation.getTelescopeConfig();
-	    log(buffer,"T/c: "+ observation.getTelescopeConfig().getName());
+	    logger.log(1,"T/c: "+ observation.getTelescopeConfig().getName());
 
 	    nextPipelineConfig    = observation.getPipelineConfig();
-	    log(buffer,"P/c: "+ observation.getPipelineConfig().getName());
+	    logger.log(1,"P/c: "+ observation.getPipelineConfig().getName());
 	    // Add up all the contributions to Obo's time.
 	    
 	    // First Obo, get slew and reconfig times from current position/configs to first obo's.
@@ -324,11 +321,11 @@ public class Group extends DBObject implements Serializable {
 		(observation.isMosaicArray()) {
 		mosaic = observation.getMosaicRACells()*observation.getMosaicDecCells();
 	    }
-	    log(buffer,"Mosaics: "+mosaic);
+	    logger.log(1,"Mosaics: "+mosaic);
 	    
 	    // Multruns.
 	    multruns = observation.getNumRuns();
-	    log(buffer,"Multruns: "+multruns);
+	    logger.log(1,"Multruns: "+multruns);
 	    
 	    
 	    // Exposure Time contributions.
@@ -337,12 +334,12 @@ public class Group extends DBObject implements Serializable {
 	    mosaicTime  = mosaic*mosaicRepositionTime;
 	    exposeTime  = mosaic*multruns*observation.getExposeTime();
 	    
-	    log(buffer,"Readout time: "+multrunTime/1000.0);
-	    log(buffer,"Mosaic moves: "+mosaicTime/1000.0);
-	    log(buffer,"Expose  time: "+exposeTime/1000.0);
+	    logger.log(1,"Readout time: "+multrunTime/1000.0);
+	    logger.log(1,"Mosaic moves: "+mosaicTime/1000.0);
+	    logger.log(1,"Expose  time: "+exposeTime/1000.0);
 
 	    totalExposeTime += multrunTime + mosaicTime + exposeTime;
-	    log(buffer,"Total for obs: "+totalExposeTime/1000.0);
+	    logger.log(1,"Total for obs: "+totalExposeTime/1000.0);
 
 	    // Reposition and reconfigure the Telescope between Obs.
 	    currentTelescopePosition = nextTelescopePosition;
@@ -352,7 +349,7 @@ public class Group extends DBObject implements Serializable {
 	    
 	}
     
-	log(buffer,"Done checking observations for exec time:");
+	logger.log(1,"Done checking observations for exec time:");
 
 	// Add on time to allow slewing and reconfiguration to next FixedGroup.
 	// if the time constraint is such. ### these just return a fixed amount for now.
@@ -361,11 +358,11 @@ public class Group extends DBObject implements Serializable {
 	finalInstrumentReconfigTime = currentInstrumentConfig.getReconfigurationTime(null);
 	finalTelescopeReconfigTime  = currentTelescopeConfig.getReconfigurationTime(null);
 	finalPipelineReconfigTime   = currentPipelineConfig.getReconfigurationTime(null);
-	log(buffer,"Total reposition and reconfiguration times:");
-	log(buffer,"Slew  reposn time: "+totalSlewTime/1000.0);
-	log(buffer,"I/c reconfig time: "+totalInstrumentReconfigTime/1000.0);
-	log(buffer,"T/c reconfig time: "+totalTelescopeReconfigTime/1000.0);
-	log(buffer,"P/c reconfig time: "+totalPipelineReconfigTime/1000.0);
+	logger.log(1,"Total reposition and reconfiguration times:");
+	logger.log(1,"Slew  reposn time: "+totalSlewTime/1000.0);
+	logger.log(1,"I/c reconfig time: "+totalInstrumentReconfigTime/1000.0);
+	logger.log(1,"T/c reconfig time: "+totalTelescopeReconfigTime/1000.0);
+	logger.log(1,"P/c reconfig time: "+totalPipelineReconfigTime/1000.0);
 	    
 	// OR ignore if its a SUN or MOON constraint
 	// OR work out a probability based estimate if we have a sliding
@@ -377,28 +374,28 @@ public class Group extends DBObject implements Serializable {
 	    totalTelescopeReconfigTime+
 	    totalPipelineReconfigTime;
 
-	log(buffer,"Total exec time: "+totalExecutionTime/1000.0);
+	logger.log(1,"Total exec time: "+totalExecutionTime/1000.0);
 
 	// Iterate over all observations.
 	it = listAllObservations();
-	log(buffer,"Scoring observations:");
-	log(buffer,"--------------------");
+	logger.log(1,"Scoring observations:");
+	logger.log(1,"--------------------");
 	int numObs = 0;
 	while (it.hasNext()) {	 
 	    numObs++;
 	    Observation observation = (Observation)it.next();   
 	    // obs needs total exectime to find out if the source will remain
 	    // above the dome limits for the full period ..
-	    log(buffer,"Scoring observation...");
-	    score = score + observation.getScore(buffer, totalExecutionTime, dolog);
+	    logger.log(1,"Scoring observation...");
+	    score = score + observation.getScore(totalExecutionTime);
 	    
-	    log(buffer,"Vetoing observation...");
+	    logger.log(1,"Vetoing observation...");
 	    // AND the Observation veto functions. ## WATCH THIS !!
-	    allow = allow & (observation.getAllow(buffer, totalExecutionTime, dolog));
+	    allow = allow & (observation.getAllow(totalExecutionTime));
 	} 
 	score /= numObs;
-	log(buffer,"after all obo scores ALLOW: "+allow);
-	log(buffer,"after all obo scores SCORE: "+score);
+	logger.log(1,"After all obo scores ALLOW: "+allow);
+	logger.log(1,"After all obo scores SCORE: "+score);
 
 	// Apply Group's contribution to scoring.
 	// -------------------------------------
@@ -406,13 +403,13 @@ public class Group extends DBObject implements Serializable {
 	// 1. Slew time function. (only use the internal slewing time between sources).	 
 	WeightingParameters slewParams = Scheduling.getSlewFnParams();	
 	score += slewParams.evaluate(initSlewTime + totalSlewTime);
-	log(buffer,"..Scores:  SLEW: "+slewParams.evaluate(initSlewTime + totalSlewTime));
+	logger.log(1,"..Scores:  SLEW: "+slewParams.evaluate(initSlewTime + totalSlewTime));
 	
 	// 2. Lateness function.         
 	WeightingParameters latenessParams = Scheduling.getLatenessFnParams();	
 	score += latenessParams.evaluate(expiryDate - Scheduling.getNow());
-	log(buffer,"lateness: "+((expiryDate - Scheduling.getNow())/1000.0));
-	log(buffer,"..Scores:  LATENESS: "+latenessParams.evaluate(expiryDate - Scheduling.getNow()));
+	logger.log(1,"lateness: "+((expiryDate - Scheduling.getNow())/1000.0));
+	logger.log(1,"..Scores:  LATENESS: "+latenessParams.evaluate(expiryDate - Scheduling.getNow()));
 	
 	// 3. Reconfig function.
 	//  WeightingParameters reconfigParams = Scheduling.getReconfigFnParams();
@@ -425,7 +422,7 @@ public class Group extends DBObject implements Serializable {
 	
 	// Apply generic schedule-coefft.
 	score = score*schedCoeff; // ## For now. 
-	log(buffer,"..Scores:  PRIORITY: "+ schedCoeff);
+	logger.log(1,"..Scores:  PRIORITY: "+ schedCoeff);
 	
 	// Do any Group level vetoing.
 	// --------------------------
@@ -433,36 +430,36 @@ public class Group extends DBObject implements Serializable {
 	// 1. FixedGroup time veto (OR other time-constraint).
 	// ### Uses NOW from SIMULATION ie NOT REAL TIME ###     
 	allow = allow & (totalExecutionTime + Scheduling.getNow() < Scheduling.getNextFGroupTime());
-	log(buffer,"..Allow:   EXEC: "+ (totalExecutionTime + Scheduling.getNow() < Scheduling.getNextFGroupTime()));
+	logger.log(1,"..Allow:   EXEC: "+ (totalExecutionTime + Scheduling.getNow() < Scheduling.getNextFGroupTime()));
 	
 	// 2. Excessive slew time veto.      
 	allow = allow & (slewParams.inRange(slew));
-	log(buffer,"..Allow:   SLEW: "+(slewParams.inRange(slew)));
+	logger.log(1,"..Allow:   SLEW: "+(slewParams.inRange(slew)));
 	
 	// 3. Expiry date exceeded veto.    
 	allow = allow & (expiryDate > Scheduling.getNow());
-	log(buffer,"..Allow: EXPIRY: "+(expiryDate > Scheduling.getNow()));
+	logger.log(1,"..Allow: EXPIRY: "+(expiryDate > Scheduling.getNow()));
 
 	// 4. Already Done veto.      
 	allow = allow & (!isDone());
-	log(buffer,"..Allow:   DONE: "+!isDone());
+	logger.log(1,"..Allow:   DONE: "+!isDone());
  
 	// 5. if (group needs GOOD seeing and moon will rise before group is done -> veto)
 	if ((minimumConditions & 0x0008) == 0x0008) {
-	    log(buffer, "Group requires DARK CONDITIONS");
+	    logger.log(1, "Group requires DARK CONDITIONS");
 	    Position moon = Astrometry.getLunarPosition();
 	    if (moon.isRisen()) {
-		log(buffer,"Moon is up  -> sky is BRIGHT -> VETO");
-		log(buffer,"..Allow   MOON: false");
+		logger.log(1,"Moon is up  -> sky is BRIGHT -> VETO"+
+			   "..Allow   MOON: false");
 		allow = false;
 	    }
 	    
 	    if (moon.isSet()) {
-		log(buffer,"Moon is Below Horizon. - sky is DARK");
-		log(buffer,"Time left till moonrise: "+(moon.getDownTimeMillis()/1000.0)+"secs");
+		logger.log(1,"Moon is Below Horizon. - sky is DARK");
+		logger.log(1,"Time left till moonrise: "+(moon.getDownTimeMillis()/1000.0)+"secs");
 		if (moon.getDownTimeMillis() < totalExecutionTime) {
-		    log(buffer, "Moon will rise before group has finished");
-		    log(buffer,"..Allow   MOON: false");
+		    logger.log(1, "Moon will rise before group has finished"+
+			       "..Allow   MOON: false");
 		    allow = false;
 		}
 	    }
@@ -471,23 +468,15 @@ public class Group extends DBObject implements Serializable {
 	// 6. if group uses min-conditions X and will take time T and time-left under conditons X
 	//    in Proposal < T -> veto.
 	
-	log(buffer,"*Finally  ALLOW: "+allow);
-	log(buffer,"*Finally  SCORE: "+score);
-	log(buffer,"-------------------");
+	logger.log(1,"*Finally  ALLOW: "+allow);
+	logger.log(1,"*Finally  SCORE: "+score);
+	logger.log(1,"-------------------");
 	if (allow) { 
 	    return new ScheduleDescriptor(this, score, (long)time); // Nominate this Group.
 	}
 	
 	return new ScheduleDescriptor(null, 0.0f, 0); // Can't be done.
 	
-    }
-    
-    private void log(StringBuffer buffer, String text) { 
-	if (logging)
-	    if (buffer != null) 
-		buffer.append("\n"+text);
-	    else
-		System.out.println(text);
     }
     
 } // end class def [Group].

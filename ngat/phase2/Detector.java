@@ -11,11 +11,15 @@ import com.odi.util.*;
  * This class is a base class and should always be subclassed to provide
  * implementations of the accessor methods.
  * <br>
- * $Id: Detector.java,v 1.1 2000-11-23 12:15:56 snf Exp $
+ * $Id: Detector.java,v 1.2 2001-02-23 18:45:20 snf Exp $
  *
  */
 public class Detector implements Serializable {
-
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 9195725272547947756L;
+    
     /** Override to return the name of the Detector. */
     public String getName() { return "Detector";}
    
@@ -178,8 +182,7 @@ public class Detector implements Serializable {
      * Bit positions > getMaxWindowCount() are undefined.*/
     public int getWindowFlags() { 
 	int mask = 0;
-	for (int i = 0; i < getMaxWindowCount(); i++) {	   
-	  
+	for (int i = 0; i < getMaxWindowCount(); i++) {	   	  
 	    if (windows[i] != null) {
 		mask |= (windows[i].isActive() ? (1 << i) : 0);
 	    }
@@ -202,4 +205,7 @@ public class Detector implements Serializable {
 
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/23 12:15:56  snf
+/** Initial revision
+/** */

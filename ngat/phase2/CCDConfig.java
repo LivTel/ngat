@@ -16,8 +16,10 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
      // Variables.
 
     public static final int maxDetectorCount = 1;
-
-    public int getMaxDetectorCount() { return maxDetectorCount; }
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 759627829525815554L;
     
     /** Identity of filter in upper wheel. */
     protected String upperFilterWheel;
@@ -32,10 +34,8 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
     /** Make a CCD-Config, Adds 1 CCD-Detector only.*/
     public CCDConfig(String name) {
 	super(name);
-	try {
-	    addDetector(new CCDDetector());
-	} catch (IllegalArgumentException iae) {
-	}
+	detectors = new CCDDetector[maxDetectorCount];
+	detectors[0] = new CCDDetector();
     }
     
     // Accessors.
@@ -51,6 +51,8 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
     
     /** Returns the Identity of filter in lower wheel . */
     public String getLowerFilterWheel() { return lowerFilterWheel;}
+
+    public int getMaxDetectorCount() { return maxDetectorCount; }
     
     // Descendant Mutators.
          
@@ -59,32 +61,17 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
 	super(npCCDConfig);
 	upperFilterWheel = npCCDConfig.getUpperFilterWheel();
 	lowerFilterWheel = npCCDConfig.getLowerFilterWheel();
-	description = npCCDConfig.getDescription();
-	Iterator it = npCCDConfig.listAllNPDetectors();
-	while (it.hasNext()) {
-	    try {
-		addDetector(new CCDDetector((NPCCDDetector)it.next()));
-	    } catch (IllegalArgumentException iae) {
-	    }
-	}
+	detectors[0] = new CCDDetector(npCCDConfig.getDetector(0));
     } // end (NP -> P Translator).
-    
-    
+        
     // P -> NP Translator.
     public void stuff(NPCCDConfig npCCDConfig) {
 	super.stuff(npCCDConfig);
 	npCCDConfig.setUpperFilterWheel(getUpperFilterWheel());
-	npCCDConfig.setLowerFilterWheel(getLowerFilterWheel());
-	npCCDConfig.setSetupTime(getSetupTime());
-	npCCDConfig.setDescription(getDescription());
-	// Copy all detector references to NP
-	Iterator it = listAllDetectors();
-	while (it.hasNext()) { 
-	    try {
-		npCCDConfig.addNPDetector((NPCCDDetector)(((CCDDetector)it.next()).makeNP()));
-	    } catch (IllegalArgumentException iae) {
-		
-	    }
+	npCCDConfig.setLowerFilterWheel(getLowerFilterWheel());	
+	try {
+	    npCCDConfig.setNPDetector(0, (NPCCDDetector)(detectors[0].makeNP()));
+	} catch (IllegalArgumentException iae) {	    
 	}
     } // end (P -> NP Translator).
     

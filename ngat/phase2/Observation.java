@@ -3,6 +3,7 @@ package ngat.phase2;
 import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 import ngat.phase2.util.*;
+import ngat.util.logging.*;
 
 import com.odi.*;
 import com.odi.util.*;
@@ -68,9 +69,9 @@ public class Observation extends DBObject implements Serializable {
     
     /**  reference to the observed Source object. */
     protected Source source;
-    
+
      // Constructor.
-    public Observation() {super();}
+    public Observation() {this("untitled");}
     
     public Observation(String name) {
 	super(name);
@@ -221,73 +222,80 @@ public class Observation extends DBObject implements Serializable {
     } // end (makeNp).     
     
     /**
-     * Observation schedule scoring methods. Handcoded. Insert in O2J generated Source.java file.
+     * Observation schedule scoring methods. Handcoded.
      */    
-    public float getScore(StringBuffer buffer, double execTime, boolean dolog) {
+    public float getScore(double execTime) {
+	Logger logger = LogManager.getLogger("SCHEDULE");
 	
 	// Implement Observation Level efficiency weighting functions.
 	// ----------------------------------------------------------
 	float score = 0.0f;
 	Position target = getSource().getPosition();
 	double low = 0.34906585; // 20 degs
-	
-	logging = dolog; // ###TEMP
 
-	log(buffer,"Observation: "+getName());
-	log(buffer,"Source: RA: "+Position.toHMSString(target.getRA())+" dec: "+Position.toDMSString(target.getDec()));
-	log(buffer,"       alt: "+Math.toDegrees(target.getAltitude())+" az: "+Math.toDegrees(target.getAzimuth()));
-	log(buffer,"        HA: "+Position.toHMSString(target.getHA())+" transits at: "+Math.toDegrees(target.getTransitHeight()));
-	if (target.isRisen(low)) log(buffer,"star is ABOVE dome limit.");
-	if (target.isSet(low)) log(buffer,"star is BELOW dome limit.");
-	if (target.isRising()) log(buffer,"star is RISING.");
-	if (target.isSetting()) log(buffer,"star is SETTING.");
+	logger.log(1, "Observation: "+getName()+
+		   "\nSource: RA: "+Position.toHMSString(target.getRA())+
+		   " Dec: "+Position.toDMSString(target.getDec())+
+		   "\nAlt: "+Math.toDegrees(target.getAltitude())+
+		   " Az: "+Math.toDegrees(target.getAzimuth())+
+		   "\nHA: "+Position.toHMSString(target.getHA())+
+		   " Transits at: "+Math.toDegrees(target.getTransitHeight()));
+	if (target.isRisen(low)) logger.log(1, "Star is ABOVE dome limit.");
+	if (target.isSet(low))   logger.log(1, "Star is BELOW dome limit.");
+	if (target.isRising())   logger.log(1, "Star is RISING.");
+	if (target.isSetting())  logger.log(1, "Star is SETTING.");
 	
 	if (!target.neverRises(low)) {
-	    log(buffer,"star rises: "+Position.toHMSString(target.getRiseTime()));
+	    logger.log(1, "Star rises: "+Position.toHMSString(target.getRiseTime()));
 	} else {
-	    log(buffer,"star NEVER RISES.");
+	    logger.log(1, "Star NEVER RISES.");
 	}
 	
 	if (!target.neverSets(low)) {
-	    log(buffer,"star  sets: "+Position.toHMSString(target.getSetTime()));
+	    logger.log(1, "Star  sets: "+Position.toHMSString(target.getSetTime()));
 	} else {
-	    log(buffer,"star NEVER SETS.");
+	    logger.log(1, "Star NEVER SETS.");
 	}
 
-	log(buffer,"Twilight usage: "+twilightUsageMode);
+	logger.log(1, "Twilight usage: "+twilightUsageMode);
 	
 	// Check sunrise/set
 	Position sun = Astrometry.getSolarPosition();
 	
-	log(buffer,"Sun:   RA: "+Position.toHMSString(sun.getRA())+
-	    " dec: "+Position.toDMSString(sun.getDec()));
-	log(buffer,"       alt: "+Math.toDegrees(sun.getAltitude())+
-	    "  az: "+Math.toDegrees(sun.getAzimuth()));
-	log(buffer,"        HA: "+Position.toHMSString(sun.getHA())+
-	    " transits at: "+Math.toDegrees(sun.getTransitHeight()));
+	logger.log(1, "Sun:   RA: "+Position.toHMSString(sun.getRA())+
+		   " Dec: "+Position.toDMSString(sun.getDec())+
+		   "\nAlt: "+Math.toDegrees(sun.getAltitude())+
+		   " Az: "+Math.toDegrees(sun.getAzimuth())+
+		   "        HA: "+Position.toHMSString(sun.getHA())+
+		   " transits at: "+Math.toDegrees(sun.getTransitHeight()));
 	if (sun.isRisen()) {
-	    log(buffer,"sun is ABOVE Horizon.");
-	    log(buffer,"Time left till sunset: "+Position.toHMSString(sun.getUpTimeMillis()/13750987.08));
-	    log(buffer,"End of evening twilight: "+Position.toHMSString(sun.getUpTimeMillis(-Math.toRadians(18.0))/13750987.08));
+	    logger.log(1, "sun is ABOVE Horizon."+
+		       "Time left till sunset: "+
+		       Position.toHMSString(sun.getUpTimeMillis()/13750987.08)+
+		       "End of evening twilight: "+
+		       Position.toHMSString(sun.getUpTimeMillis(-Math.toRadians(18.0))/13750987.08));
 	}
 	
 	if (sun.isSet()) {
-	    log(buffer,"sun is BELOW Horizon.");
+	    logger.log(1, "Sun is BELOW Horizon.");
 	    if (sun.isRisen(-Math.toRadians(18.0))) {
 		if (sun.isSetting()) {
-		    log(buffer,"EVENING TWILIGHT TIME"); 
-		    log(buffer,"Time till end of evening twilight: "+Position.toHMSString(sun.getUpTimeMillis(-Math.toRadians(18.0))/13750987.08));
+		    logger.log(1, "EVENING TWILIGHT TIME"+
+			       "Time till end of evening twilight: "+
+			       Position.toHMSString(sun.getUpTimeMillis(-Math.toRadians(18.0))/13750987.08));
 		} else if
 		    (sun.isRising()) {
-		    log(buffer,"MORNING TWILIGHT TIME");
-		    log(buffer,"Time till end of morning twilight: "+Position.toHMSString(sun.getDownTimeMillis(-Math.toRadians(18.0))/13750987.08));
+		    logger.log(1, "MORNING TWILIGHT TIME"+
+			       "Time till end of morning twilight: "+
+			       Position.toHMSString(sun.getDownTimeMillis(-Math.toRadians(18.0))/13750987.08));
 		} 
 	    }
-	    log(buffer,"Time left till sunrise: "+Position.toHMSString(sun.getDownTimeMillis()/13750987.08));
+	    logger.log(1, "Time left till sunrise: "+
+		       Position.toHMSString(sun.getDownTimeMillis()/13750987.08));
 	   
 	}
-	if (sun.isRising()) log(buffer,"sun is RISING.");
-	if (sun.isSetting()) log(buffer,"sun is SETTING.");
+	if (sun.isRising()) logger.log(1, "Sun is RISING.");
+	if (sun.isSetting()) logger.log(1, "Sun is SETTING.");
 	
 
 	// 1. Height function.         
@@ -296,7 +304,7 @@ public class Observation extends DBObject implements Serializable {
 	double ht = target.getAltitude();
 	
 	score += heightParams.evaluate(ht);
-	log(buffer,"..Scores:  HEIGHT: "+heightParams.evaluate(ht));
+	logger.log(1, "..Scores:  HEIGHT: "+heightParams.evaluate(ht));
 	// OR Scheduling.calculateHeightFn(ht);
 	
 	// 2. Transit Height function.        
@@ -305,7 +313,7 @@ public class Observation extends DBObject implements Serializable {
 	double th = target.getAltitude()/target.getTransitHeight();
 	
 	score += transitParams.evaluate(th);
-	log(buffer,"..Scores: TRANSIT: "+transitParams.evaluate(th));
+	logger.log(1, "..Scores: TRANSIT: "+transitParams.evaluate(th));
 	// OR Scheduling.calculateTransitFn(th);
 	
 	// 3. Lunar angular distance.
@@ -313,14 +321,14 @@ public class Observation extends DBObject implements Serializable {
 	// 4. Meridian limits.
 	
 	// 5. Twilight. I,R,Z band and PUST.
-	log(buffer,"..Scores: TOTAL: "+score);
+	logger.log(1, "..Scores: TOTAL: "+score);
 	
 	return score;
     }
     
     
-    public boolean getAllow(StringBuffer buffer, double execTime, boolean dolog) {
-	logging = dolog; // ###TEMP
+    public boolean getAllow(double execTime) {
+	Logger logger = LogManager.getLogger("SCHEDULE");
 
 	// Implement Veto functions.	
 	boolean allow = true;
@@ -331,14 +339,14 @@ public class Observation extends DBObject implements Serializable {
 	double ht = target.getAltitude();
 	
 	allow &= heightParams.inRange(ht);
-	log(buffer,"..Allow:   HEIGHT: "+heightParams.inRange(ht))
+	logger.log(1, "..Allow:   HEIGHT: "+heightParams.inRange(ht))
 ;
 	// 2. Transit veto function.  (do we need this!)   
 	WeightingParameters transitParams = Scheduling.getTransitFnParams();          
 	double th = target.getAltitude()/target.getTransitHeight();
 	 
 	allow &= transitParams.inRange(ht);
-	log(buffer,"..Allow:  TRANSIT: "+transitParams.inRange(th));
+	logger.log(1, "..Allow:  TRANSIT: "+transitParams.inRange(th));
 	
 	// 3. Lunar angular distance veto function.
 	// ##For now this is a sharp cutoff at 2.5 degrees.
@@ -347,37 +355,37 @@ public class Observation extends DBObject implements Serializable {
 	
 	Position moon = Astrometry.getLunarPosition();
 	
-	log(buffer,"Moon:   RA: "+Position.toHMSString(moon.getRA())+
-	    " dec: "+Position.toDMSString(moon.getDec()));
-	log(buffer,"       alt: "+Math.toDegrees(moon.getAltitude())+
-	    "  az: "+Math.toDegrees(moon.getAzimuth()));
-	log(buffer,"        HA: "+Position.toHMSString(moon.getHA())+
-	    " transits at: "+Math.toDegrees(moon.getTransitHeight()));
+	logger.log(1, "Moon:   RA: "+Position.toHMSString(moon.getRA())+
+		   " Dec: "+Position.toDMSString(moon.getDec())+
+		   "\nAlt: "+Math.toDegrees(moon.getAltitude())+
+		   " Az: "+Math.toDegrees(moon.getAzimuth())+
+		   "\nHA: "+Position.toHMSString(moon.getHA())+
+		   " Transits at: "+Math.toDegrees(moon.getTransitHeight()));
 	if (moon.isRisen()) {
-	    log(buffer,"moon is ABOVE Horizon.");
-	    log(buffer,"Time left till DARK: "+(moon.getUpTimeMillis()/1000.0)+"secs");
+	    logger.log(1, "Moon is ABOVE Horizon.");
+	    logger.log(1, "Time left till DARK: "+(moon.getUpTimeMillis()/1000.0)+"secs");
 	}
 
 	if (moon.isSet()) {
-	    log(buffer,"moon is BELOW Horizon.");
-	    log(buffer,"Time left till BRIGHT: "+(moon.getDownTimeMillis()/1000.0)+"secs");
+	    logger.log(1, "Moon is BELOW Horizon."+
+		       "Time left till BRIGHT: "+(moon.getDownTimeMillis()/1000.0)+"secs");
 	}
-	if (moon.isRising()) log(buffer,"moon is RISING.");
-	if (moon.isSetting()) log(buffer,"moon is SETTING.");
+	if (moon.isRising()) logger.log(1, "Moon is RISING.");
+	if (moon.isSetting()) logger.log(1, "Moon is SETTING.");
 	
 	double lunarAngularDistance = target.getAngularDistance(moon);
-	log(buffer, "lunar angle distance: "+Position.toDMSString(lunarAngularDistance));
+	logger.log(1,  "Lunar angle distance: "+Position.toDMSString(lunarAngularDistance));
 	if (lunarAngularDistance < 0.0436) {
-	    log(buffer,"..Allow: LUNAR DIST: false");
+	    logger.log(1, "..Allow: LUNAR DIST: false");
 	    allow = false;
 	}
 	
 	// 4. Meridian veto.
 	long meridianDistance = (long)(target.getHA()*43200000.0/Math.PI);// in msecs
-	log(buffer,"Meridian distance: "+meridianDistance+" msecs");
+	logger.log(1, "Meridian distance: "+meridianDistance+" msecs");
 	if (meridianDistance > 43200000) meridianDistance = 86400000 - meridianDistance;
 	if (meridianLimit > 1 &&  meridianDistance > meridianLimit) allow = false;
-	log(buffer,"..Allow: MERIDIAN: "+(!( meridianLimit > 1 &&  meridianDistance > meridianLimit)));
+	logger.log(1, "..Allow: MERIDIAN: "+(!( meridianLimit > 1 &&  meridianDistance > meridianLimit)));
 	
 	
 	
@@ -385,21 +393,11 @@ public class Observation extends DBObject implements Serializable {
 	
 	// 6. Visible over full executionTime veto.
 	// source must be above horizon for the full exectime.
-	log(buffer,"Time left above dome limits: "+(target.getUpTimeMillis()/1000.0)+"secs");
-	log(buffer,"Time needed for execution:   "+(execTime/1000.0)+"secs");
+	logger.log(1, "Time left above dome limits: "+(target.getUpTimeMillis()/1000.0)+"secs"+
+		   " Time needed for execution:   "+(execTime/1000.0)+"secs");
 	if (target.getUpTimeMillis() < execTime) allow = false;
-	log(buffer,"..Allow:  HORIZON: "+(target.getUpTimeMillis() > execTime));
+	logger.log(1, "..Allow:  HORIZON: "+(target.getUpTimeMillis() > execTime));
 	return allow;
     }
-
-
-    private void log(StringBuffer buffer, String text) { 
-	if (logging)
-	    if (buffer != null) 
-		buffer.append("\n"+text);
-	    else
-		System.out.println(text);
-    }    
-
 
 } // end class def [Observation].

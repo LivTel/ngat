@@ -12,14 +12,16 @@ import java.io.*;
 
 
 public class Proposal extends DBObject implements Serializable {
+    
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -7049581884132556442L;
 
-     // Variables.
-
-
-
-     /**  fraction of time used so far during BrightSky/ExcellentSeeing conditions. */
-     protected float usedFraction_BX;
-
+    // Variables.
+    
+    /**  fraction of time used so far during BrightSky/ExcellentSeeing conditions. */
+    protected float usedFraction_BX;
+    
      /**  fraction of time used so far during BrightSky/AverageSeeing conditions. */
      protected float usedFraction_BA;
 
@@ -105,11 +107,11 @@ public class Proposal extends DBObject implements Serializable {
 
      public Proposal(String name) {
           super(name);
-          groups = new OSHashMap();
-          telescopeConfigs = new OSHashMap();
+          groups            = new OSHashMap();
+          telescopeConfigs  = new OSHashMap();
           instrumentConfigs = new OSHashMap();
-          pipelineConfigs = new OSHashMap();
-          sources = new OSHashMap();
+          pipelineConfigs   = new OSHashMap();
+          sources           = new OSHashMap();
      }
 
      // Accessors.
@@ -385,159 +387,132 @@ public class Proposal extends DBObject implements Serializable {
      public OSHashMap getSources() { return sources;}
      
      // NP -> P Translator.
-     public Proposal(NPProposal npProposal) {
+     public Proposal(NPProposal npProposal) throws InvocationTargetException {
           super(npProposal);
-          Iterator it;
+        
           usedFraction_BX = npProposal.getUsedFraction_BX();
           usedFraction_BA = npProposal.getUsedFraction_BA();
           usedFraction_BP = npProposal.getUsedFraction_BP();
           usedFraction_DX = npProposal.getUsedFraction_DX();
           usedFraction_DA = npProposal.getUsedFraction_DA();
           usedFraction_DP = npProposal.getUsedFraction_DP();
+
           allocatedFraction_BX = npProposal.getAllocatedFraction_BX();
           allocatedFraction_BA = npProposal.getAllocatedFraction_BA();
           allocatedFraction_BP = npProposal.getAllocatedFraction_BP();
           allocatedFraction_DX = npProposal.getAllocatedFraction_DX();
           allocatedFraction_DA = npProposal.getAllocatedFraction_DA();
           allocatedFraction_DP = npProposal.getAllocatedFraction_DP();
-          allocatedTime = npProposal.getAllocatedTime();
-          usedTime = npProposal.getUsedTime();
+
+          allocatedTime      = npProposal.getAllocatedTime();
+          usedTime           = npProposal.getUsedTime();
           instrumentsAllowed = npProposal.getInstrumentsAllowed();
-          activationDate = npProposal.getActivationDate();
-          expiryDate = npProposal.getExpiryDate();
-          pustAbstract = npProposal.getPustAbstract();
-          scienceAbstract = npProposal.getScienceAbstract();
-          lastUnLocked = npProposal.getLastUnLocked();
-          lastLocked = npProposal.getLastLocked();
-          lastEditor = npProposal.getLastEditor();
-	  lastRegId = npProposal.getLastRegId();
-          exported = npProposal.isExported();
-          
+          activationDate     = npProposal.getActivationDate();
+          expiryDate         = npProposal.getExpiryDate();
+          pustAbstract       = npProposal.getPustAbstract();
+          scienceAbstract    = npProposal.getScienceAbstract();
+          lastUnLocked       = npProposal.getLastUnLocked();
+          lastLocked         = npProposal.getLastLocked();
+          lastEditor         = npProposal.getLastEditor();
+	  lastRegId          = npProposal.getLastRegId();
+          exported           = npProposal.isExported();
+
+	  Iterator it;
           // Recursively call Daughter Translators.
           groups = new OSHashMap();
           it = npProposal.listAllNPGroups();
-          while (it.hasNext()) {
+          while (it.hasNext()) { 
+	      String npName = null;
                try {
                     NPGroup npGroup = (NPGroup)it.next();
                     Class npClazz = npGroup.getClass();
-                    String npName = npClazz.getName();
+                    npName = npClazz.getName();
                     int k = npName.indexOf("nonpersist.NP");
                     String pName = npName.substring(0,k).concat(npName.substring(k+13));
                     Class pClazz = Class.forName(pName);
                     Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
                     Group group = (Group)pCon.newInstance(new Object[]{npGroup});
                     addGroup(group);
-               } catch (ClassNotFoundException re1){
-                    System.out.println("Translation Error: "+re1);
-               } catch (NoSuchMethodException re2) {
-                    System.out.println("Translation Error: "+re2);
-               } catch (InvocationTargetException re3) {
-                    System.out.println("Translation Error: "+re3);
-               } catch (IllegalAccessException re4) {
-                    System.out.println("Translation Error: "+re4);
-               } catch (InstantiationException re5) {
-                    System.out.println("Translation Error: "+re5);
-               }
+               } catch (Exception e){
+		   throw new InvocationTargetException(e, "Translating Proposal ["+name+
+						       "] group ["+npName+"] from NP to P version.");
+	       }
           }
           telescopeConfigs = new OSHashMap();
           it = npProposal.listAllNPTelescopeConfigs();
           while (it.hasNext()) {
+	      String npName = null;
                try {
                     NPTelescopeConfig npTelescopeConfig = (NPTelescopeConfig)it.next();
                     Class npClazz = npTelescopeConfig.getClass();
-                    String npName = npClazz.getName();
+                    npName = npClazz.getName();
                     int k = npName.indexOf("nonpersist.NP");
                     String pName = npName.substring(0,k).concat(npName.substring(k+13));
                     Class pClazz = Class.forName(pName);
                     Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
                     TelescopeConfig telescopeConfig = (TelescopeConfig)pCon.newInstance(new Object[]{npTelescopeConfig});
                     addTelescopeConfig(telescopeConfig);
-               } catch (ClassNotFoundException re1){
-                    System.out.println("Translation Error: "+re1);
-               } catch (NoSuchMethodException re2) {
-                    System.out.println("Translation Error: "+re2);
-               } catch (InvocationTargetException re3) {
-                    System.out.println("Translation Error: "+re3);
-               } catch (IllegalAccessException re4) {
-                    System.out.println("Translation Error: "+re4);
-               } catch (InstantiationException re5) {
-                    System.out.println("Translation Error: "+re5);
-               }
+               } catch (Exception e){
+		   throw new InvocationTargetException(e, "Translating Proposal ["+name+
+						       "] tele-config ["+npName+"] from NP to P version.");
+	       }
           }
           instrumentConfigs = new OSHashMap();
           it = npProposal.listAllNPInstrumentConfigs();
-          while (it.hasNext()) {
+          while (it.hasNext()) { 
+	      String npName = null;
                try {
                     NPInstrumentConfig npInstrumentConfig = (NPInstrumentConfig)it.next();
                     Class npClazz = npInstrumentConfig.getClass();
-                    String npName = npClazz.getName();
+                    npName = npClazz.getName();
                     int k = npName.indexOf("nonpersist.NP");
                     String pName = npName.substring(0,k).concat(npName.substring(k+13));
                     Class pClazz = Class.forName(pName);
                     Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
                     InstrumentConfig instrumentConfig = (InstrumentConfig)pCon.newInstance(new Object[]{npInstrumentConfig});
                     addInstrumentConfig(instrumentConfig);
-               } catch (ClassNotFoundException re1){
-                    System.out.println("Translation Error: "+re1);
-               } catch (NoSuchMethodException re2) {
-                    System.out.println("Translation Error: "+re2);
-               } catch (InvocationTargetException re3) {
-		   System.out.println("P trans.Translation Error: "+re3+re3.getTargetException());
-               } catch (IllegalAccessException re4) {
-                    System.out.println("Translation Error: "+re4);
-               } catch (InstantiationException re5) {
-                    System.out.println("Translation Error: "+re5);
-               }
+               } catch (Exception e){
+		   throw new InvocationTargetException(e, "Translating Proposal ["+name+
+						       "] inst-config ["+npName+"] from NP to P version.");
+	       }
           }
           pipelineConfigs = new OSHashMap();
           it = npProposal.listAllNPPipelineConfigs();
-          while (it.hasNext()) {
+          while (it.hasNext()) { 
+	      String npName = null;
                try {
                     NPPipelineConfig npPipelineConfig = (NPPipelineConfig)it.next();
                     Class npClazz = npPipelineConfig.getClass();
-                    String npName = npClazz.getName();
+                    npName = npClazz.getName();
                     int k = npName.indexOf("nonpersist.NP");
                     String pName = npName.substring(0,k).concat(npName.substring(k+13));
                     Class pClazz = Class.forName(pName);
                     Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
                     PipelineConfig pipelineConfig = (PipelineConfig)pCon.newInstance(new Object[]{npPipelineConfig});
                     addPipelineConfig(pipelineConfig);
-               } catch (ClassNotFoundException re1){
-                    System.out.println("Translation Error: "+re1);
-               } catch (NoSuchMethodException re2) {
-                    System.out.println("Translation Error: "+re2);
-               } catch (InvocationTargetException re3) {
-                    System.out.println("Translation Error: "+re3);
-               } catch (IllegalAccessException re4) {
-                    System.out.println("Translation Error: "+re4);
-               } catch (InstantiationException re5) {
-                    System.out.println("Translation Error: "+re5);
-               }
+               } catch (Exception e){
+		   throw new InvocationTargetException(e, "Translating Proposal ["+name+
+						       "] pipeline ["+npName+"] from NP to P version.");
+	       }
           }
           sources = new OSHashMap();
           it = npProposal.listAllNPSources();
           while (it.hasNext()) {
+	      String npName = null;
                try {
                     NPSource npSource = (NPSource)it.next();
                     Class npClazz = npSource.getClass();
-                    String npName = npClazz.getName();
+		    npName = npClazz.getName();
                     int k = npName.indexOf("nonpersist.NP");
                     String pName = npName.substring(0,k).concat(npName.substring(k+13));
                     Class pClazz = Class.forName(pName);
                     Constructor pCon = pClazz.getConstructor(new Class[]{npClazz});
                     Source source = (Source)pCon.newInstance(new Object[]{npSource});
                     addSource(source);
-               } catch (ClassNotFoundException re1){
-                    System.out.println("Translation Error: "+re1);
-               } catch (NoSuchMethodException re2) {
-                    System.out.println("Translation Error: "+re2);
-               } catch (InvocationTargetException re3) {
-                    System.out.println("Translation Error: "+re3);
-               } catch (IllegalAccessException re4) {
-                    System.out.println("Translation Error: "+re4);
-               } catch (InstantiationException re5) {
-                    System.out.println("Translation Error: "+re5);
-               }
+               } catch (Exception e){
+		   throw new InvocationTargetException(e, "Translating Proposal ["+ name+
+						       "] source ["+npName+"] from NP to P version.");
+	       }
           }
 	 
 	  // Re-link Observations to tabled objects.
@@ -842,7 +817,7 @@ public class Proposal extends DBObject implements Serializable {
           while (it.hasNext()) {
                Group group = (Group)it.next();
                if (!group.isLocked() && !group.deleted()) {
-                    ScheduleDescriptor sd = group.schedule(this, null, false);
+                    ScheduleDescriptor sd = group.schedule(this);
 		    sd = applyScheduling(sd);
                     if (sd.getGroup() != null) {
                          if (sd.getScore() > best.getScore()) {
