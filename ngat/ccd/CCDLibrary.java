@@ -1,16 +1,16 @@
 // CCDLibrary.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.7 1999-07-09 12:17:09 dev Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.8 1999-09-08 10:52:40 cjm Exp $
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.7 $
+ * @version $Revision: 0.8 $
  */
 class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.7 1999-07-09 12:17:09 dev Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.8 1999-09-08 10:52:40 cjm Exp $");
 // ccd_dsp.h
 	/**
 	 * DSP exposure status number, showing that no exposure is underway at the present moment.
@@ -756,9 +756,13 @@ class CCDLibrary
 		throw new CCDLibraryFormatException(this.getClass().getName(),"CCDTextPrintLevelFromString",s);
 	}
 }
-
+ 
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.7  1999/07/09 12:17:09  dev
+// JNI Routines to get the number of rows/columns the CCD was setup to
+// use.
+//
 // Revision 0.6  1999/06/07 16:56:41  dev
 // String to Number parse routines
 //
