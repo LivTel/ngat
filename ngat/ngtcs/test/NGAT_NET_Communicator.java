@@ -7,176 +7,223 @@ import java.util.*;
 import ngat.net.*;
 import ngat.util.*;
 import ngat.util.logging.*;
+import ngat.message.base.*;
 import ngat.ngtcs.*;
 import ngat.ngtcs.command.*;
 
 /**
- * 
+ * This class implements the <code>ngat.message</code> and
+ * <code>ngat.net</code> method of client<->server communication for the NGTCS.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
 public class NGAT_NET_Communicator implements Communicator
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=======================================================================*/
+  /*                                                                       */
+  /* CLASS FIELDS.                                                         */
+  /*                                                                       */
+  /*=======================================================================*/
 
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String RevisionString =
+    new String( "$Id: NGAT_NET_Communicator.java,v 1.2 2003-09-23 11:58:09 je Exp $" );
+
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT FIELDS.                                                        */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   * The shutdown flag.
+   */
+  protected boolean shutdown = false;
+
+  protected Logger logger;
+
+  protected String logName;
+
+  protected Telescope telescope;
+
+  protected TCPServerExtension tcp;
+
+  protected PrintWriter pw = new PrintWriter( System.err, true );
+
+  protected Hashtable commandReplyHash = new Hashtable();
+
+  /*=======================================================================*/
+  /*                                                                       */
+  /* OBJECT METHODS.                                                       */
+  /*                                                                       */
+  /*=======================================================================*/
+
+  /**
+   * Create the <code>ngat.net</code> implementing NGTCS
+   * <code>Communicator</code>
+   */
+  public NGAT_NET_Communicator()
+  {
+  }
+
+
+  /**
+   * Initialise this Communicator.  This reads properties from a config file,
+   * falling back on default values
+   */
+  public void initialise( Telescope t ) throws InitialisationException
+  {
+    telescope = t;
+
+    logger = telescope.getLogger( this.getClass() );
+    logName = logger.getName();
+
+    int timeout, port;
+
+    NGATProperties np = new NGATProperties();
+
+    try
+    {
+      np.load( telescope.getName()+"-"+
+	       StringUtilities.getLeaf( this.getClass().getName(), '.' )
+	       +".cfg" );
+    }
+    catch( Exception e )
+    {
+      logger.log( 1, logName, e.toString() );
+      throw new InitialisationException( this.getClass().toString()+" : "+e );
+    }
+
+    timeout = np.getInt( "timeout", 10000 );
+    port = np.getInt( "port", 29574 );
+
+    tcp = new TCPServerExtension( telescope.getName(), port, timeout );
+    tcp.setErrorStream( pw );
+    tcp.start();
+
+    return;
+  }
+
+
+  /**
+   * This adds the Command:TestExecutionThread key:value pair to a Hashtable
+   * to allow routing of all relevant replies.
+   * @param c the initial command
+   * @param tet the TestExecutionThread replying to the Command-issuer
+   */
+  public void setReplyPath( Command c, TestExecutionThread tet )
+  {
+    commandReplyHash.put( c, tet );
+  }
+
+
+  /**
+   * Handle the <code>Acknowledge</code> returned from
+   * <code>telescope</code>.
+   * @param ack the <code>Acknowledge</code> to handle
+   */
+  public void handleAcknowledge( Acknowledge ack )
+  {
+    Command c = ack.getCommand();
+    TestExecutionThread t =
+      (TestExecutionThread)( commandReplyHash.get( c ) );
+    try
+    {
+      System.err.println( "about to send ack ["+c+"] using "+t );
+      t.sendAcknowledge( ack );
+    }
+    catch( IOException ioe )
+    {
+      logger.log( 1, logName, ioe );
+    }
+    return;
+  }
+
+
+  /**
+   * Handle the <code>Done</code> returned from
+   * <code>telescope</code>.
+   * @param done the <code>Done</code> to handle
+   */
+  public void handleDone( CommandDone done )
+  {
+    Command c = done.getCommand();
+    TestExecutionThread t =
+      (TestExecutionThread)( commandReplyHash.get( c ) );
+    try
+    {
+      System.err.println( "about to send done ["+c+"] using "+t );
+
+      System.err.println( "done = "+done+" "+this );
+
+      t.sendDone();
+    }
+    catch( IOException ioe )
+    {
+      logger.log( 1, logName, ioe );
+    }
+    return;
+  }
+
+
+  /**
+   * Return whether this Communicator is active
+   */
+  public boolean isActive()
+  {
+    return( !shutdown );
+  }
+
+
+  /**
+   * Set the shutdown flag and close the TTL_CIL.
+   */
+  public void shutdown()
+  {
+    shutdown = true;
+    tcp.close();
+  }
+
+
+  /**
+   *
+   */
+  protected class TCPServerExtension extends TCPServer
+  {
     /**
-     * String used to identify RCS revision details.
+     *
      */
-    public static final String RevisionString =
-	new String( "$Id: NGAT_NET_Communicator.java,v 1.1 2003-07-01 10:13:54 je Exp $" );
+    protected TCPServerExtension( String name, int portNumber, int timeout )
+    {
+      super( name, portNumber, timeout );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+      System.err.println( "TCPServer ["+name+"] listening on port "+
+			  portNumber+", with timeout = "+timeout );
+    }
 
-    /**
-     * The shutdown flag.
-     */
-    protected boolean shutdown = false;
-
-    protected Logger logger;
-
-    protected String logName;
-
-    protected Telescope telescope;
-
-    protected TCPServerExtension tcp;
-
-    protected PrintWriter pw = new PrintWriter( System.err, true );
-
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
 
     /**
      *
      */
-    public NGAT_NET_Communicator()
+    public void startConnectionThread( Socket s )
     {
-
+      TestExecutionThread thread = new TestExecutionThread
+	( s, telescope, NGAT_NET_Communicator.this );
+      thread.setErrorStream( pw );
+      thread.start();
     }
-
-
-    /**
-     *
-     */
-    public void initialise( Telescope t )
-    {
-	telescope = t;
-
-	logger = telescope.getLogger( this.getClass() );
-	logName = logger.getName();
-
-	int timeout, port;
-
-	NGATProperties np = new NGATProperties();
-
-	try
-	    {
-		np.load
-		    ( telescope.getName()+"-"+
-		      StringUtilities.getLeaf( this.getClass().getName(), '.' )
-		      +".cfg" );
-	    }
-	catch( Exception e )
-	    {
-
-	    }
-
-	timeout = np.getInt( "timeout", 10000 );
-	port = np.getInt( "port", 29574 );
-
-	tcp = new TCPServerExtension( telescope.getName(), port, timeout );
-	tcp.setErrorStream( pw );
-	tcp.start();
-
-	return;
-    }
-
-
-    /**
-     * Handle the <code>Acknowledge</code> returned from
-     * <code>telescope</code>.
-     * @param ack the <code>Acknowledge</code> to handle
-     */
-    public void handleAcknowledge( Acknowledge ack )
-    {
-	return;
-    }
-
-
-    /**
-     * Handle the <code>Done</code> returned from
-     * <code>telescope</code>.
-     * @param done the <code>Done</code> to handle
-     */
-    public void handleDone( CommandDone done )
-    {
-        return;
-    }
-
-
-    /**
-     *
-     */
-    public boolean isActive()
-    {
-	return( !shutdown );
-    }
-
-
-    /**
-     * Set the shutdown flag and close the TTL_CIL.
-     */
-    public void shutdown()
-    {
-	shutdown = true;
-	tcp.close();
-    }
-
-
-    /**
-     *
-     */
-    private class TCPServerExtension extends TCPServer
-    {
-	/**
-	 *
-	 */
-	private TCPServerExtension( String name, int portNumber, int timeout )
-	{
-	    super( name, portNumber, timeout );
-
-	    System.err.println( "TCPServer ["+name+"] listening on port "+
-				portNumber+", with timeout = "+timeout );
-	}
-
-
-	/**
-	 *
-	 */
-	public void startConnectionThread( Socket s )
-	{
-	    TestExecutionThread thread = new TestExecutionThread
-		( s, telescope, NGAT_NET_Communicator.this );
-	    thread.setErrorStream( pw );
-	    thread.start();
-	}
-    }
+  }
 }
 /*
- * $Date: 2003-07-01 10:13:54 $
+ * $Date: 2003-09-23 11:58:09 $
  * $RCSfile: NGAT_NET_Communicator.java,v $
  * $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/NGAT_NET_Communicator.java,v $
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2003/07/01 10:13:54  je
+ * Initial revision
+ *
  */
