@@ -1,5 +1,5 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.39 2003-06-06 16:50:40 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.40 2003-12-08 15:03:47 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.39 $
+ * @version $Revision: 0.40 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.39 2003-06-06 16:50:40 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.40 2003-12-08 15:03:47 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -88,32 +88,37 @@ public class CCDLibrary
 	 */
 	public final static int CCD_EXPOSURE_STATUS_NONE =  		0;
 	/**
+	 * Exposure status number, showing that the library is waiting for the right moment to open the shutter.
+	 * @see #CCDDSPGetExposureStatus
+	 */
+	public final static int CCD_EXPOSURE_STATUS_WAIT_START = 	1;
+	/**
 	 * Exposure status number, showing that the CCD is being cleared at the moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_EXPOSURE_STATUS_CLEAR = 		1;
+	public final static int CCD_EXPOSURE_STATUS_CLEAR = 		2;
 	/**
 	 * Exposure status number, showing that an exposure is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_EXPOSURE_STATUS_EXPOSE = 		2;
+	public final static int CCD_EXPOSURE_STATUS_EXPOSE = 		3;
 	/**
 	 * Exposure status number, showing that a readout is about to start, and we should
 	 * stop sending commands to the controller that don't work during a readout.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_EXPOSURE_STATUS_PRE_READOUT = 	3;
+	public final static int CCD_EXPOSURE_STATUS_PRE_READOUT = 	4;
 	/**
 	 * Exposure status number, showing that a readout is underway at the present moment.
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_EXPOSURE_STATUS_READOUT = 		4;
+	public final static int CCD_EXPOSURE_STATUS_READOUT = 		5;
 	/**
 	 * Exposure status number, showing that the readout of the exposure has been completed,
 	 * and the data is being post-processed (byte swapped/de-interlaced/saved to disc).
 	 * @see #CCDDSPGetExposureStatus
 	 */
-	public final static int CCD_EXPOSURE_STATUS_POST_READOUT = 	5;
+	public final static int CCD_EXPOSURE_STATUS_POST_READOUT = 	6;
 
 // ccd_filter_wheel.h
 	/* These constants should be the same as those in ccd_filter_wheel.h */
@@ -838,6 +843,7 @@ public class CCDLibrary
 	 * <a href="#CCDExposureExpose">CCDExposureExpose</a> is in progress, and whether it is exposing or reading out
 	 * @return Returns the exposure status.
 	 * @see #CCD_EXPOSURE_STATUS_NONE
+	 * @see #CCD_EXPOSURE_STATUS_WAIT_START
 	 * @see #CCD_EXPOSURE_STATUS_CLEAR
 	 * @see #CCD_EXPOSURE_STATUS_EXPOSE
 	 * @see #CCD_EXPOSURE_STATUS_PRE_READOUT
@@ -1680,6 +1686,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.39  2003/06/06 16:50:40  cjm
+// Added windowing implementation.
+//
 // Revision 0.38  2003/01/28 16:25:35  cjm
 // New filter wheel code.
 //
