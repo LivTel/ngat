@@ -16,7 +16,7 @@ import ngat.ngtcs.command.execute.*;
  * implement the JMS protocol for NGTCS command communication.
  * 
  * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TestExecutionThread extends TCPServerConnectionThread
 {
@@ -30,7 +30,7 @@ public class TestExecutionThread extends TCPServerConnectionThread
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TestExecutionThread.java,v 1.2 2003-09-19 16:10:27 je Exp $" );
+    new String( "$Id: TestExecutionThread.java,v 1.3 2003-09-23 11:48:45 je Exp $" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -147,9 +147,6 @@ public class TestExecutionThread extends TCPServerConnectionThread
       Acknowledge ack = executor.generateAcknowledge();
       communicator.handleAcknowledge( ack );
       processCommand();
-
-      System.err.println( "done = "+done+" "+this );
-
       communicator.handleDone( (CommandDone)done );
 
       // close the streams etc.
@@ -179,7 +176,9 @@ public class TestExecutionThread extends TCPServerConnectionThread
 
 
   /**
-   *
+   * Over-ride the method in the super-class to log the specified error, create
+   * a CommandDone, set the error message in the CommandDone, and return it.
+   * @param err the error message
    */
   protected void processError( String err )
   {
@@ -193,11 +192,14 @@ public class TestExecutionThread extends TCPServerConnectionThread
   }
 }
 /*
- *    $Date: 2003-09-19 16:10:27 $
+ *    $Date: 2003-09-23 11:48:45 $
  * $RCSfile: TestExecutionThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/TestExecutionThread.java,v $
- *      $Id: TestExecutionThread.java,v 1.2 2003-09-19 16:10:27 je Exp $
+ *      $Id: TestExecutionThread.java,v 1.3 2003-09-23 11:48:45 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/19 16:10:27  je
+ *     Updated Command tx/rx and TTL subsystem interfaces.
+ *
  *     Revision 1.1  2003/07/01 10:13:54  je
  *     Initial revision
  *
