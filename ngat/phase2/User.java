@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * Represents a user (observer) in the Phase II database.
  * <br>
- * $Id: User.java,v 1.1 2000-11-23 14:21:49 snf Exp $
+ * $Id: User.java,v 1.2 2000-11-23 18:44:56 snf Exp $
  *
  */
 public class User extends DBObject implements Serializable {
@@ -112,7 +112,7 @@ public class User extends DBObject implements Serializable {
     // Descendant Mutators.
 
     // Proposal Methods.
-    /** Add a Proposal for which this user is PI
+    /** Add a Proposal for which this user is PI.*/
     public void addProposal(Proposal proposal) {
 	proposals.put(proposal.getName(), proposal);
 	proposal.setPath(getPath() + "/" + getName());
@@ -410,4 +410,7 @@ public class User extends DBObject implements Serializable {
       
 } // end class def [User].
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/23 14:21:49  snf
+/** Initial revision
+/** */
