@@ -1,22 +1,21 @@
 // CCDLibrary.java
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.33 2002-09-19 11:21:50 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibrary.java,v 0.34 2002-09-19 13:59:04 cjm Exp $
 package ngat.ccd;
 
 import java.lang.*;
-
 import ngat.util.logging.*;
 
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.33 $
+ * @version $Revision: 0.34 $
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.33 2002-09-19 11:21:50 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.34 2002-09-19 13:59:04 cjm Exp $");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**
@@ -496,6 +495,11 @@ public class CCDLibrary
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 */
 	private native void CCD_Temperature_Set(double target_temperature) throws CCDLibraryNativeException;
+	/**
+	 * Native wrapper to libccd routine that gets the ADU counts from the utility board temperature sensor.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 */
+	private native int CCD_Temperature_Get_Utility_Board_ADU() throws CCDLibraryNativeException;
 	/**
 	 * Native wrapper to libccd routine that gets the current heater ADU counts.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
@@ -1475,7 +1479,18 @@ public class CCDLibrary
 	}
 
 	/**
-	 * Routine to get the current CCD header Analogue to Digital count, a measure of how much
+	 * Routine to get the Analogue to Digital count from the utility board temperature sensor, 
+	 * a measure of the temperature of the utility board electronics.
+	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
+	 * @see #CCD_Temperature_Get_Utility_Board_ADU
+	 */
+	public int CCDTemperatureGetUtilityBoardADU() throws CCDLibraryNativeException
+	{
+		return CCD_Temperature_Get_Utility_Board_ADU();
+	}
+
+	/**
+	 * Routine to get the current CCD heater Analogue to Digital count, a measure of how much
 	 * heat is being put into the dewar to control the temperature.
 	 * @exception CCDLibraryNativeException This method throws a CCDLibraryNativeException if it failed.
 	 * @see #CCD_Temperature_Get_Heater_ADU
@@ -1552,6 +1567,9 @@ public class CCDLibrary
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.33  2002/09/19 11:21:50  cjm
+// Added voltage monitoring methods in ccd_setup.h.
+//
 // Revision 0.32  2001/07/13 10:10:23  cjm
 // Added CCDTemperatureGetHeaterADU.
 //
