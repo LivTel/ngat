@@ -1,5 +1,5 @@
 // FitsHeader.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.2 2000-06-14 10:50:36 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.3 2001-07-11 10:29:00 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -11,7 +11,7 @@ import java.util.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -19,7 +19,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.2 2000-06-14 10:50:36 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.3 2001-07-11 10:29:00 cjm Exp $");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -143,45 +143,69 @@ public class FitsHeader
 	}
 
 	/**
+	 * This routine adds a card image to the FITS card image list.
+	 * If the keyword already has an associated card image it will be overwritten with it's new values.
+	 * @param cardImage The card image to add to the list.
+	 */
+	public void add(FitsHeaderCardImage cardImage)
+	{
+		int index;
+
+	// does a card image with this keyword already exist?
+		index = cardImageList.indexOf(cardImage);
+		if(index > -1)
+			cardImageList.set(index,cardImage);
+		else
+			cardImageList.add(cardImage);
+	}
+
+	/**
+	 * Method to return the current card image for the specified keyword.
+	 * @param keyword The keyword string to get the card image for.
+	 * @return The card image with the specified keyword is returned, or null if the
+	 * 	card image with that keyword cannot be found.
+	 */
+	public FitsHeaderCardImage get(String keyword)
+	{
+		FitsHeaderCardImage cardImage = null;
+		int index;
+
+	// construct card image with keyword set to test against
+		cardImage = new FitsHeaderCardImage(keyword,null,null,null,1);
+	// search for the index in the list, of a card image with the same keyword.
+		index = cardImageList.indexOf(cardImage);
+		if(index > -1)
+			cardImage = (FitsHeaderCardImage)(cardImageList.get(index));
+		return cardImage;
+	}
+
+	/**
 	 * This routine will add the list of keyword-value pairs to the fits keyword-value list.
 	 * Any keyword that already have values will be overwritten with their new values.
 	 * @param list The list of keyword-value pairs to add to the list held by this object.
+	 * 	This list should contain only instances of ngat.fits.FitsHeaderCardImage.
+	 * @param orderNumberOffset A number, which is added to each orderNumber in the list.
+	 * 	This allows each subsystem to start it's orderNumber's at one, and this
+	 * 	routine will offset them by a sensible amount whilst merging lists of FitsHeaderCardImages.
+	 * @see ngat.fits.FitsHeaderCardImage
 	 */
-// diddly add/amend to addKeywordValueList(Vector list)
-	public void addKeywordValueList(Hashtable list)
+	public void addKeywordValueList(Vector list,int orderNumberOffset)
 	{
 		FitsHeaderCardImage cardImage = null;
-		String keyword = null;
-		Object value = null;
-		Object o = null;
-		Enumeration e = null;
-		String comment = null;
-		String units = null;
-		int index,orderNumber = 255;
+		int orderNumber,index;
 
-		for (e = list.keys(); e.hasMoreElements();)
+		for (int i=0; i < list.size(); i++)
 		{
-		// get keyword and value from hashtable
-			o = e.nextElement();
-			if(o instanceof String)
-			{
-				keyword = (String)o;
-				value = list.get(o);
-			// get default comment for this keyword
-//diddly
-			// get default units for this keyword
-//diddly
-			// get default orderNumber for this keyword
-//diddly
-			// construct card image
-				cardImage = new FitsHeaderCardImage(keyword,value,comment,units,orderNumber);
-			// does a card image with this keyword already exist?
-				index = cardImageList.indexOf(cardImage);
-				if(index > -1)
-					cardImageList.set(index,cardImage);
-				else
-					cardImageList.add(cardImage);
-			}// if key is a string
+			cardImage = (FitsHeaderCardImage)(list.get(i));
+		// add an offset to the orderNumber
+			orderNumber = cardImage.getOrderNumber();
+			cardImage.setOrderNumber(orderNumber+orderNumberOffset);
+		// does a card image with this keyword already exist?
+			index = cardImageList.indexOf(cardImage);
+			if(index > -1)
+				cardImageList.set(index,cardImage);
+			else
+				cardImageList.add(cardImage);
 		}// for on keys in hashtable
 	}
 
@@ -319,6 +343,9 @@ public class FitsHeader
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  2000/06/14 10:50:36  cjm
+// Added keyword/value null reference test in writeFitsField.
+//
 // Revision 0.1  2000/05/30 14:37:28  cjm
 // initial revision.
 //
