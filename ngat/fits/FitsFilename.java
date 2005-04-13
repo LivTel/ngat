@@ -1,5 +1,5 @@
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.4 2005-04-13 13:07:56 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.5 2005-04-13 14:13:29 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -23,14 +23,14 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.4 2005-04-13 13:07:56 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.5 2005-04-13 14:13:29 cjm Exp $");
 	/**
 	 * Instrument code constant - RATCAM/Dillcam N/S.
 	 */
@@ -340,6 +340,7 @@ public class FitsFilename
 			instrumentCode = INSTRUMENT_CODE_CCD_CAMERA;
 			exposureCode = EXPOSURE_CODE_EXPOSURE;
 			dateString = getDateString();
+			return; // finished parsing
 		}
 		else
 			isTelfocus = false;
@@ -360,6 +361,7 @@ public class FitsFilename
 			instrumentCode = INSTRUMENT_CODE_CCD_CAMERA;
 			exposureCode = EXPOSURE_CODE_SKY_FLAT;
 			dateString = getDateString();
+			return; // finished parsing
 		}
 		else
 			isTwilightCalibrate = false;
@@ -762,6 +764,9 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2005/04/13 13:07:56  cjm
+// Attempted to fix bug in setPipelineProcessing flag test.
+//
 // Revision 1.3  2005/03/31 13:16:20  cjm
 // Added INSTRUMENT_CODE constants.
 // Added _TOKEN_NUMBER constants for parsing.
