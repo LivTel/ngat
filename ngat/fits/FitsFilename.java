@@ -1,5 +1,5 @@
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.3 2005-03-31 13:16:20 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.4 2005-04-13 13:07:56 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -23,14 +23,14 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.3 2005-03-31 13:16:20 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.4 2005-04-13 13:07:56 cjm Exp $");
 	/**
 	 * Instrument code constant - RATCAM/Dillcam N/S.
 	 */
@@ -594,8 +594,9 @@ public class FitsFilename
 		{
 			throw new Exception(this.getClass().getName()+":setPipelineProcessing:Flag was NULL. ");
 		}
-		if((s != PIPELINE_PROCESSING_FLAG_NONE) && (s != PIPELINE_PROCESSING_FLAG_REAL_TIME) && 
-		   (s != PIPELINE_PROCESSING_FLAG_OFF_LINE))
+		if((s.equals(PIPELINE_PROCESSING_FLAG_NONE) == false) && 
+		   (s.equals(PIPELINE_PROCESSING_FLAG_REAL_TIME) == false) && 
+		   (s.equals(PIPELINE_PROCESSING_FLAG_OFF_LINE) == false))
 		{
 			throw new Exception(this.getClass().getName()+":setPipelineProcessing:Illegal pipeline flag "+
 					    s+".");
@@ -761,6 +762,20 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2005/03/31 13:16:20  cjm
+// Added INSTRUMENT_CODE constants.
+// Added _TOKEN_NUMBER constants for parsing.
+// instrumentCode now a char.
+// dateString generation changed - internal string now used.
+// Specialist checks for telFocus and twilight_calibrate filenames.
+// Added filename parsing method.
+// setInstrumentCode now throws exception is argument is illegal.
+// setExposureCode now throws exception is argument is illegal.
+// setPipelineProcessing now throws exception is argument is illegal.
+// getFilename now uses previously set dateSTring internal variable.
+// getFilename now checks isTelfocus and isTwilightCalibrate variables and returns different filenames.
+// All this added for support for filename locking.
+//
 // Revision 1.2  2003/06/06 16:52:15  cjm
 // Windowing implementation.
 //
