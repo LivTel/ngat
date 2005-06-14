@@ -1,5 +1,5 @@
 // NGATProperties.java
-// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.10 2005-06-02 10:26:04 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/util/NGATProperties.java,v 0.11 2005-06-14 13:16:34 cjm Exp $
 package ngat.util;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.util.*;
  * For all methods taking a default value, the default value is returned if
  * parsing of the value returned on the key search fails.
  *
- * @version $Revision: 0.10 $
+ * @version $Revision: 0.11 $
  * @author Jason Etherton,Chris Mottram
  */
 public class NGATProperties extends Properties
@@ -24,7 +24,7 @@ public class NGATProperties extends Properties
 	 * Revision Control System id string, showing the version of the Class.
 	 */
 	public final static String RCSID = new String
-		("$Id: NGATProperties.java,v 0.10 2005-06-02 10:26:04 cjm Exp $");
+		("$Id: NGATProperties.java,v 0.11 2005-06-14 13:16:34 cjm Exp $");
 
 	/**
 	 * Method to load the properties.
@@ -466,6 +466,32 @@ public class NGATProperties extends Properties
 		}
 	}
 
+	/**
+	 * Create a distinct instance of NGATProperties, containing the same keyword/values
+	 * as this instance. Note keywords contained in the defaults list for this instance will be put
+	 * into the main list of the new instance - see ngat.util.Properties, method propertyNames for details.
+	 * @return A new instance of NGATProperties, containing the same keyword->value pairs as this instance.
+	 * @see ngat.util.Properties#propertyNames
+	 */
+	public NGATProperties copy()
+	{
+		NGATProperties newProperties = null;
+		Enumeration propertyKeywords = null;
+		String keyword = null;
+		String value = null;
+
+		newProperties = new NGATProperties();
+		// get a list of all the keywords in this instance of NGATProperties.
+		propertyKeywords = propertyNames();
+		// copy from this instance into newProperties
+		while(propertyKeywords.hasMoreElements())
+		{
+			keyword = (String)(propertyKeywords.nextElement());
+			value = getProperty(keyword);
+			newProperties.setProperty(keyword,value);
+		}
+		return newProperties;
+	}
 
 	/**
 	 * Print the specified exception to stderr, along with the key and
@@ -481,6 +507,9 @@ public class NGATProperties extends Properties
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.10  2005/06/02 10:26:04  cjm
+// Added exception documentation.
+//
 // Revision 0.9  2002/10/23 10:20:33  je
 // Finished with printError - no duplicate printing.
 //
