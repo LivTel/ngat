@@ -1,5 +1,5 @@
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.5 2005-04-13 14:13:29 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.6 2005-11-29 11:00:51 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -23,34 +23,58 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.5 2005-04-13 14:13:29 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.6 2005-11-29 11:00:51 cjm Exp $");
+	/**
+	 * Instrument code constant - FrodoSpec blue arm.
+	 */
+	public final static char INSTRUMENT_CODE_FRODOSPEC_BLUE 	= 'b';
 	/**
 	 * Instrument code constant - RATCAM/Dillcam N/S.
 	 */
 	public final static char INSTRUMENT_CODE_CCD_CAMERA 		= 'c';
 	/**
+	 * Instrument code constant - Dillcam North CCD Camera (originally/currently 'c').
+	 */
+	public final static char INSTRUMENT_CODE_DILLCAM_NORTH 		= 'd';
+	/**
+	 * Instrument code constant - Dillcam South CCD Camera (originally/currently 'c').
+	 */
+	public final static char INSTRUMENT_CODE_DILLCAM_SOUTH 		= 'e';
+	/**
+	 * Instrument code constant - FTSpec (North).
+	 */
+	public final static char INSTRUMENT_CODE_FTSPEC_NORTH 	        = 'f';
+	/**
+	 * Instrument code constant - FTSpec (South).
+	 */
+	public final static char INSTRUMENT_CODE_FTSPEC_SOUTH 	        = 'g';
+	/**
+	 * Instrument code constant - Manchester Eschelle Spectrograph.
+	 */
+	public final static char INSTRUMENT_CODE_MES 		        = 'm';
+	/**
 	 * Instrument code constant - NuView.
 	 */
 	public final static char INSTRUMENT_CODE_NUVIEW 		= 'n';
 	/**
-	 * Instrument code constant - MES.
+	 * Instrument code constant - Ringo Star / Grope Polarimeter.
 	 */
-	public final static char INSTRUMENT_CODE_MES 		        = 'm';
+	public final static char INSTRUMENT_CODE_RINGO_STAR 	        = 'o';
+	/**
+	 * Instrument code constant - FrodoSpec red arm.
+	 */
+	public final static char INSTRUMENT_CODE_FRODOSPEC_RED 	        = 'r';
 	/**
 	 * Instrument code constant - SupIRCam.
 	 */
 	public final static char INSTRUMENT_CODE_SUPIRCAM        	= 's';
-	/**
-	 * Instrument code constant - FTSpec.
-	 */
-	public final static char INSTRUMENT_CODE_FTSPEC        	        = 'f';
 	/**
 	 * Exposure code constant - for an exposure.
 	 */
@@ -437,11 +461,17 @@ public class FitsFilename
 	 * @param code The code to set to.
 	 * @see #instrumentCode
 	 * @exception Exception Thrown if code is NULL, is not of length 1 or is not a valid instrument code.
+	 * @see #INSTRUMENT_CODE_FRODOSPEC_BLUE
 	 * @see #INSTRUMENT_CODE_CCD_CAMERA
-	 * @see #INSTRUMENT_CODE_SUPIRCAM
+	 * @see #INSTRUMENT_CODE_DILLCAM_NORTH
+	 * @see #INSTRUMENT_CODE_DILLCAM_SOUTH
+	 * @see #INSTRUMENT_CODE_FTSPEC_NORTH
+	 * @see #INSTRUMENT_CODE_FTSPEC_SOUTH
 	 * @see #INSTRUMENT_CODE_MES
 	 * @see #INSTRUMENT_CODE_NUVIEW
-	 * @see #INSTRUMENT_CODE_FTSPEC
+	 * @see #INSTRUMENT_CODE_RINGO_STAR
+	 * @see #INSTRUMENT_CODE_FRODOSPEC_RED
+	 * @see #INSTRUMENT_CODE_SUPIRCAM
 	 */
 	public void setInstrumentCode(String code) throws Exception
 	{
@@ -458,8 +488,12 @@ public class FitsFilename
 					    code+" with length "+code.length()+".");
 		}
 		ch = code.charAt(0);
-		if((ch != INSTRUMENT_CODE_CCD_CAMERA) && (ch != INSTRUMENT_CODE_SUPIRCAM) && 
-		   (ch != INSTRUMENT_CODE_MES) && (ch != INSTRUMENT_CODE_NUVIEW) && (ch != INSTRUMENT_CODE_FTSPEC))
+		if((ch != INSTRUMENT_CODE_FRODOSPEC_BLUE) && (ch != INSTRUMENT_CODE_CCD_CAMERA) && 
+		   (ch != INSTRUMENT_CODE_DILLCAM_NORTH) && (ch != INSTRUMENT_CODE_DILLCAM_SOUTH) && 
+		   (ch != INSTRUMENT_CODE_FTSPEC_NORTH) && (ch != INSTRUMENT_CODE_FTSPEC_SOUTH) &&
+		   (ch != INSTRUMENT_CODE_MES) && (ch != INSTRUMENT_CODE_NUVIEW) && 
+		   (ch != INSTRUMENT_CODE_RINGO_STAR) && 
+		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM))
 		{
 			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
 					    ch+".");
@@ -764,6 +798,9 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2005/04/13 14:13:29  cjm
+// Added returns in parse for telFocus and twilight_calibrate parsing.
+//
 // Revision 1.4  2005/04/13 13:07:56  cjm
 // Attempted to fix bug in setPipelineProcessing flag test.
 //
