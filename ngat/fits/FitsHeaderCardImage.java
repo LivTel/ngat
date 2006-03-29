@@ -1,5 +1,5 @@
-// FitsHeaderCardImage.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderCardImage.java,v 0.2 2001-07-11 10:29:00 cjm Exp $
+// FitsHeaderCardImage.java 
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderCardImage.java,v 0.3 2006-03-29 11:16:30 cjm Exp $
 package ngat.fits;
 
 import java.io.Serializable;
@@ -10,7 +10,7 @@ import java.util.*;
  * This class holds data relating to one FITS header card image. A sequence of these card images make up a FITS
  * header. The FitsHeader class uses a list of instances of this class to represent a FITS header unit.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  * @see ngat.fits.FitsHeader
  */
 public class FitsHeaderCardImage implements Serializable
@@ -18,7 +18,7 @@ public class FitsHeaderCardImage implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderCardImage.java,v 0.2 2001-07-11 10:29:00 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeaderCardImage.java,v 0.3 2006-03-29 11:16:30 cjm Exp $");
 	/**
 	 * Variable holding the keyword this card image represents.
 	 */
@@ -160,7 +160,7 @@ public class FitsHeaderCardImage implements Serializable
 	/**
 	 * Method to get the order number for this card image. This will determine the card image's position
 	 * in the FITS header, when it is sorted.
-	 * @param o An order number.
+	 * @return An order number.
 	 */
 	public int getOrderNumber()
 	{
@@ -203,6 +203,10 @@ public class FitsHeaderCardImage implements Serializable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  2001/07/11 10:29:00  cjm
+// Added Serializable support for FitsHeaderCardImage, so
+// that GET_FITS can supply a list of card images.
+//
 // Revision 0.1  2000/05/30 14:37:28  cjm
 // initial revision.
 //

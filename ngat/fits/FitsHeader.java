@@ -1,5 +1,5 @@
-// FitsHeader.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.3 2001-07-11 10:29:00 cjm Exp $
+// FitsHeader.java
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.4 2006-03-29 11:16:31 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -11,7 +11,7 @@ import java.util.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -19,7 +19,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.3 2001-07-11 10:29:00 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.4 2006-03-29 11:16:31 cjm Exp $");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -98,7 +98,6 @@ public class FitsHeader
 		String comment,String units);
 	/**
 	 * Native wrapper to a libccsfits routine to close the file.
-	 * @param filename The filename to open.
 	 * @return Returns true if the operation succeeds, false if it fails.
 	 */
 	private native boolean Fits_Header_Close();
@@ -343,6 +342,9 @@ public class FitsHeader
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2001/07/11 10:29:00  cjm
+// Changes so that addKeywordValueList takes a Vector.
+//
 // Revision 0.2  2000/06/14 10:50:36  cjm
 // Added keyword/value null reference test in writeFitsField.
 //
