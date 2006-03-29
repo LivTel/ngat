@@ -1,5 +1,5 @@
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.6 2005-11-29 11:00:51 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.7 2006-03-29 11:25:40 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -23,14 +23,14 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.6 2005-11-29 11:00:51 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.7 2006-03-29 11:25:40 cjm Exp $");
 	/**
 	 * Instrument code constant - FrodoSpec blue arm.
 	 */
@@ -309,7 +309,7 @@ public class FitsFilename
 
 	/**
 	 * This method should be called after the object has been constructed and the directory path has been set.
-	 * This method parses an already existing filename string into it's omponent parts and sets the fields
+	 * This method parses an already existing filename string into it's component parts and sets the fields
 	 * in this object accordingly.
 	 * @exception Exception Thrown if the specified directory cannot be found, or an error occurs
 	 * 	during the parsing.
@@ -520,7 +520,7 @@ public class FitsFilename
 
 	/**
 	 * Set routine for the exposure code.
-	 * @param code The code to set to.
+	 * @param codeString The code to set to.
 	 * @see #exposureCode
 	 * @exception Exception Thrown if codeString is NULL, is not of length 1 or is not a valid exposure code.
 	 * @see #EXPOSURE_CODE_EXPOSURE
@@ -583,7 +583,7 @@ public class FitsFilename
 
 	/**
 	 * Setup the next multi run. Should be called at the start of a multirun to increment the
-	 * multirun number and reset the run number within a multirun. Also resets the window number to 1.
+	 * multrun number and reset the run number within a multrun. Also resets the window number to 1.
 	 * And resets dateString.
 	 * @see #multRunNumber
 	 * @see #runNumber
@@ -593,10 +593,23 @@ public class FitsFilename
 	 */
 	public void nextMultRunNumber()
 	{
+		String newDateString = null;
+
+		newDateString = getDateString();
+		// assume dateString can never be null at this point, 
+		// according to constructor/initialise this is true.
+		// has the night date changed since last multrun/initialise?
+		if(dateString.equals(newDateString) == false)
+		{
+			// new night date rollover detected - reset to multrun 1 of night
+			multRunNumber = 0;
+			runNumber = 0;
+			windowNumber = 1;
+		}
+		dateString = newDateString;
 		multRunNumber++;
 		runNumber = 0;
 		windowNumber = 1;
-		dateString = getDateString();
 	}
 
 	/**
@@ -798,6 +811,9 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2005/11/29 11:00:51  cjm
+// Updated instrument codes.
+//
 // Revision 1.5  2005/04/13 14:13:29  cjm
 // Added returns in parse for telFocus and twilight_calibrate parsing.
 //
