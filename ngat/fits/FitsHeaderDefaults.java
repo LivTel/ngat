@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // FitsHeaderDefaults.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderDefaults.java,v 0.3 2001-07-11 10:29:00 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderDefaults.java,v 0.4 2006-05-16 17:42:23 cjm Exp $
 package ngat.fits;
 
 import java.io.*;
@@ -21,14 +40,14 @@ import java.util.*;
  * </ul>
  * A list of keywords can also optionally be specified, using:<b>ngat.fits.keyword.&lt;number&gt;</b>.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  */
 public class FitsHeaderDefaults
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderDefaults.java,v 0.3 2001-07-11 10:29:00 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeaderDefaults.java,v 0.4 2006-05-16 17:42:23 cjm Exp $");
 	/**
 	 * Default value to put in the FITS header, against the OBSTYPE keyword, when the
 	 * image is an Arc.
@@ -436,6 +455,13 @@ public class FitsHeaderDefaults
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2001/07/11 10:29:00  cjm
+// Standard OBSTYPE added.
+// getCardImage added. getCardImageList added.
+// getKeyword, getValueDouble added.
+// getValue changed to throw a common FitsHeaderException rather than
+// lots of different types of exception.
+//
 // Revision 0.2  2000/07/13 09:10:24  cjm
 // Added getValueInteger method.
 //

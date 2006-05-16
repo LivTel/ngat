@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // CCDLibraryNativeException.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryNativeException.java,v 1.3 2001-04-05 16:50:46 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryNativeException.java,v 1.4 2006-05-16 17:41:34 cjm Exp $
 package ngat.ccd;
 
 /**
@@ -7,14 +26,14 @@ package ngat.ccd;
  * error. The individual parts of the error generated are stored in the exception as well as the complete message.
  * The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class CCDLibraryNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryNativeException.java,v 1.3 2001-04-05 16:50:46 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibraryNativeException.java,v 1.4 2006-05-16 17:41:34 cjm Exp $");
 	/**
 	 * A type of error that can cause this exception to be created. This type is when the error type
 	 * is unknown.
@@ -309,6 +328,10 @@ public class CCDLibraryNativeException extends Exception
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2001/04/05 16:50:46  cjm
+// Added new constructor and local copies of libccd error codes,
+// so that exceptions can contain gettable error codes as integers.
+//
 // Revision 1.2  1999/09/23 10:45:49  cjm
 // Changed message going into super constructor.
 //

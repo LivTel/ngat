@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // FitsHeaderCardImage.java 
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderCardImage.java,v 0.3 2006-03-29 11:16:30 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeaderCardImage.java,v 0.4 2006-05-16 17:42:22 cjm Exp $
 package ngat.fits;
 
 import java.io.Serializable;
@@ -10,7 +29,7 @@ import java.util.*;
  * This class holds data relating to one FITS header card image. A sequence of these card images make up a FITS
  * header. The FitsHeader class uses a list of instances of this class to represent a FITS header unit.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  * @see ngat.fits.FitsHeader
  */
 public class FitsHeaderCardImage implements Serializable
@@ -18,7 +37,7 @@ public class FitsHeaderCardImage implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderCardImage.java,v 0.3 2006-03-29 11:16:30 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeaderCardImage.java,v 0.4 2006-05-16 17:42:22 cjm Exp $");
 	/**
 	 * Variable holding the keyword this card image represents.
 	 */
@@ -203,6 +222,9 @@ public class FitsHeaderCardImage implements Serializable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2006/03/29 11:16:30  cjm
+// Comment fix.
+//
 // Revision 0.2  2001/07/11 10:29:00  cjm
 // Added Serializable support for FitsHeaderCardImage, so
 // that GET_FITS can supply a list of card images.

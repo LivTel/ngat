@@ -1,19 +1,38 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // CCDLibraryFormatException.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryFormatException.java,v 0.4 1999-09-13 13:56:34 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/ccd/CCDLibraryFormatException.java,v 0.5 2006-05-16 17:41:33 cjm Exp $
 package ngat.ccd;
 
 /**
  * This class extends java.lang.IllegalArgumentException. Objects of this class are thrown when an illegal
  * format argument is passed into various parse routines in CCDLibrary.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision: 0.5 $
  */
 public class CCDLibraryFormatException extends IllegalArgumentException
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryFormatException.java,v 0.4 1999-09-13 13:56:34 cjm Exp $");
+	public final static String RCSID = new String("$Id: CCDLibraryFormatException.java,v 0.5 2006-05-16 17:41:33 cjm Exp $");
 
 	/**
 	 * Constructor for the exception.
@@ -30,6 +49,9 @@ public class CCDLibraryFormatException extends IllegalArgumentException
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.4  1999/09/13 13:56:34  cjm
+// Class is now public.
+//
 // Revision 0.3  1999/09/10 15:33:29  cjm
 // Changed package to ngat.ccd.
 //
