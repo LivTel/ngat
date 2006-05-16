@@ -1,17 +1,13 @@
 #!/bin/csh
-# $Header: /space/home/eng/cjm/cvs/ngat/scripts/ngat_make_source_tar,v 1.1 2006-05-16 12:07:51 snf Exp $
-# Version: $Revision: 1.1 $
+# $Header: /space/home/eng/cjm/cvs/ngat/scripts/ngat_make_source_tar,v 1.2 2006-05-16 12:12:24 snf Exp $
+# Version: $Revision: 1.2 $
 # By $Author: snf $
 # Make a source tar for Wayne
 # This contains:
-# 	The Ccs
-# 	The DpRt
-#	The IcsGUI
-#	Associated libraries and test programs
-#	Startup scripts
-#	Appropriate configuration
+#	NGAT libraries and test programs
+#       Makefiles
 # Usage:
-# 	ccs_make_source_tar
+# 	ngat_make_source_tar
 # dev root directory
 set dev_dir 		= "/home/dev"
 # dev src directory
@@ -19,16 +15,16 @@ set dev_src_dir 	= "${dev_dir}/src"
 # directory script was run in
 set current_dir		= `pwd`
 # temporary directory containing root of deployment tree (which becomes root of tar).
-set deployment_dir 	= "/tmp/ccs_source"
+set deployment_dir 	= "/tmp/ngat_source"
 # temporary directory containing root of deployment tree (which becomes root of tar).
-set deployment_src_dir 	= "/tmp/ccs_source/src"
+set deployment_src_dir 	= "/tmp/ngat_source/src"
 # temporary directory for deployment temporary files
-set deployment_tmp_dir 	= "/tmp/ccs_source/tmp"
+set deployment_tmp_dir 	= "/tmp/ngat_source/tmp"
 # directory to put source tar into
-set source_tar_dir = "/home/dev/public_html/ccs/deployment"
+set source_tar_dir = "/home/dev/public_html/ngat/deployment"
 # name of tar file
 set date_string = `/bin/date +"%Y-%m-%d"`
-set source_tar 	= "ccs_source_${date_string}.tar"
+set source_tar 	= "ngat_source_${date_string}.tar"
 #
 # Delete any half created deployments
 #
@@ -55,8 +51,8 @@ echo "${dir_count} directories created."
 # Copy src directories
 #
 echo "Copying src directories..."
-set src_dir_list = "ngat/ccd ngat/fits ngat/math ngat/message/base ngat/message/INST_DP ngat/message/ISS_INST ngat/net ngat/phase2 ngat/sound ngat/swing ngat/util lt/java/dev/lt autobooter/java ccs/java ccs/test dprt/test dprt/java/ngat/dprt ccs_gui/java ccd libdprt/ccs libdprt/jni_general libdprt/rjs libdprt/object ngatastro ngatfits ngatutil "
-# ngat/math/test ngat/util/logging dprt/java/ngat/dprt/ccs config sdsu/astro-cam/1.7/ngat
+set src_dir_list = "ngat/astrometry ngat/fits ngat/math ngat/message/base ngat/message/INST_DP ngat/message/ISS_INST ngat/message/RCS_TCS ngat/message/POS_RCS ngat/message/GUI_RCS /ngat/net ngat/phase2 ngat/sound ngat/swing ngat/util lt/java/dev/lt  ngatastro ngatfits ngatutil "
+
 set src_dir_count = 0
 foreach src_dir ( ${src_dir_list} )
 	echo "src_dir : ${src_dir}"
@@ -124,6 +120,9 @@ echo "Deployment tar : ${source_tar_dir}/${source_tar}.gz"
 rm -rf ${deployment_dir}
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2006/05/16 12:07:51  snf
+# Initial revision
+#
 # Revision 1.1  2006/04/11 16:36:13  cjm
 # Initial revision
 #
