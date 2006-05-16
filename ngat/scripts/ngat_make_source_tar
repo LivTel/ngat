@@ -1,6 +1,6 @@
 #!/bin/csh
-# $Header: /space/home/eng/cjm/cvs/ngat/scripts/ngat_make_source_tar,v 1.2 2006-05-16 12:12:24 snf Exp $
-# Version: $Revision: 1.2 $
+# $Header: /space/home/eng/cjm/cvs/ngat/scripts/ngat_make_source_tar,v 1.3 2006-05-16 12:14:22 snf Exp $
+# Version: $Revision: 1.3 $
 # By $Author: snf $
 # Make a source tar for Wayne
 # This contains:
@@ -21,7 +21,7 @@ set deployment_src_dir 	= "/tmp/ngat_source/src"
 # temporary directory for deployment temporary files
 set deployment_tmp_dir 	= "/tmp/ngat_source/tmp"
 # directory to put source tar into
-set source_tar_dir = "/home/dev/public_html/ngat/deployment"
+set source_tar_dir = "/home/dev/public_html/ngatlib/deployment"
 # name of tar file
 set date_string = `/bin/date +"%Y-%m-%d"`
 set source_tar 	= "ngat_source_${date_string}.tar"
@@ -120,6 +120,9 @@ echo "Deployment tar : ${source_tar_dir}/${source_tar}.gz"
 rm -rf ${deployment_dir}
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.2  2006/05/16 12:12:24  snf
+# Modified to deploy NGAT source.
+#
 # Revision 1.1  2006/05/16 12:07:51  snf
 # Initial revision
 #
