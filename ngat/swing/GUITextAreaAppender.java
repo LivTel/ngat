@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // GUITextAreaAppender.java
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUITextAreaAppender.java,v 1.1 2003-08-21 13:04:16 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUITextAreaAppender.java,v 1.2 2006-05-16 18:15:27 cjm Exp $
 package ngat.swing;
 
 import java.lang.*;
@@ -14,7 +33,7 @@ import javax.swing.text.BadLocationException;
  * It appends some passed in text to the JTextArea. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUITextAreaAppender implements Runnable
@@ -22,7 +41,7 @@ public class GUITextAreaAppender implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUITextAreaAppender.java,v 1.1 2003-08-21 13:04:16 cjm Exp $");
+	public final static String RCSID = new String("$Id: GUITextAreaAppender.java,v 1.2 2006-05-16 18:15:27 cjm Exp $");
 	/**
 	 * The Swing JTextAreacomponent to append to.
 	 */
@@ -81,6 +100,9 @@ public class GUITextAreaAppender implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2003/08/21 13:04:16  cjm
+// Initial revision
+//
 // Revision 0.5  2003/08/14 16:40:56  cjm
 // Removed fundamental.
 //

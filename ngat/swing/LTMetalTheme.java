@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // LTMetalTheme.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/LTMetalTheme.java,v 0.1 1999-12-02 17:19:54 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/LTMetalTheme.java,v 0.2 2006-05-16 18:15:30 cjm Exp $
 package ngat.swing;
 
 import java.lang.*;
@@ -13,14 +32,14 @@ import javax.swing.plaf.metal.MetalTheme;
 /**
  * This class is an LT specific theme.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision: 0.2 $
  */
 public class LTMetalTheme extends MetalTheme
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LTMetalTheme.java,v 0.1 1999-12-02 17:19:54 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTMetalTheme.java,v 0.2 2006-05-16 18:15:30 cjm Exp $");
 	/**
 	 * Selected foreground colour.
 	 */
@@ -152,4 +171,7 @@ public class LTMetalTheme extends MetalTheme
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.1  1999/12/02 17:19:54  cjm
+// initial revision.
+//
 //

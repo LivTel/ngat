@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // LTLookAndFeel.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/LTLookAndFeel.java,v 0.2 1999-12-10 14:54:27 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/LTLookAndFeel.java,v 0.3 2006-05-16 18:15:30 cjm Exp $
 package ngat.swing;
 
 import java.lang.*;
@@ -16,14 +35,14 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 /**
  * This class is an LT specific look and feel.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision: 0.3 $
  */
 public class LTLookAndFeel extends MetalLookAndFeel
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LTLookAndFeel.java,v 0.2 1999-12-10 14:54:27 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTLookAndFeel.java,v 0.3 2006-05-16 18:15:30 cjm Exp $");
 
 	/**
 	 * Return a string that identifies this look and feel. 
@@ -232,6 +251,9 @@ public class LTLookAndFeel extends MetalLookAndFeel
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  1999/12/10 14:54:27  cjm
+// backup.
+//
 // Revision 0.1  1999/11/30 14:05:33  cjm
 // initial revision.
 //

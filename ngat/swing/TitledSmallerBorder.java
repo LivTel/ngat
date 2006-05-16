@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // TitledSmallerBorder.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/TitledSmallerBorder.java,v 0.2 1999-11-29 11:52:46 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/TitledSmallerBorder.java,v 0.3 2006-05-16 18:15:35 cjm Exp $
 package ngat.swing;
 
 import java.awt.Component;
@@ -48,6 +67,9 @@ public class TitledSmallerBorder extends TitledBorder
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.2  1999/11/29 11:52:46  cjm
+// Changed package to ngat.swing.
+//
 // Revision 0.1  1999/11/22 09:53:49  cjm
 // initial revision.
 //

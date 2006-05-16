@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // GUILabelSetter.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUILabelSetter.java,v 0.3 1999-11-29 11:40:01 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUILabelSetter.java,v 0.4 2006-05-16 18:15:25 cjm Exp $
 package ngat.swing;
 
 import java.lang.*;
@@ -13,7 +32,7 @@ import javax.swing.*;
  * It sets a label's text. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUILabelSetter implements Runnable
@@ -21,7 +40,7 @@ public class GUILabelSetter implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUILabelSetter.java,v 0.3 1999-11-29 11:40:01 cjm Exp $");
+	public final static String RCSID = new String("$Id: GUILabelSetter.java,v 0.4 2006-05-16 18:15:25 cjm Exp $");
 	/**
 	 * The Swing JLabel to append to.
 	 */
@@ -55,6 +74,9 @@ public class GUILabelSetter implements Runnable
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  1999/11/29 11:40:01  cjm
+// Added package statement.
+//
 // Revision 0.2  1999/11/24 12:50:41  cjm
 // Changed @see clause.
 //

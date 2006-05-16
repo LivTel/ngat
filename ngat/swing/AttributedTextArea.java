@@ -1,5 +1,24 @@
+/*   
+    Copyright 2006, Astrophysics Research Institute, Liverpool John Moores University.
+
+    This file is part of NGAT.
+
+    NGAT is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    NGAT is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with NGAT; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 // AttributedTextArea.java
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/AttributedTextArea.java,v 1.4 2003-09-04 15:54:33 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/AttributedTextArea.java,v 1.5 2006-05-16 18:15:22 cjm Exp $
 package ngat.swing;
 
 import java.awt.*;
@@ -9,14 +28,14 @@ import javax.swing.text.*;
 /** 
  * Subclass of JTextPane allowing colour attributes.
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AttributedTextArea extends JTextPane
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: AttributedTextArea.java,v 1.4 2003-09-04 15:54:33 cjm Exp $");
+	public final static String RCSID = new String("$Id: AttributedTextArea.java,v 1.5 2006-05-16 18:15:22 cjm Exp $");
 	/**
 	 * Document model, used to add coloured text.
 	 */
@@ -213,6 +232,9 @@ public class AttributedTextArea extends JTextPane
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.4  2003/09/04 15:54:33  cjm
+** Added RCSID.
+**
 ** Revision 1.3  2003/08/26 13:22:45  cjm
 ** Changed initialiseDocument, so that defaultStyledDocument is checked
 ** EVERY TIME, as setText in old Solaris JVM's (v1.2.1) changed the JTextPane's associated document.
