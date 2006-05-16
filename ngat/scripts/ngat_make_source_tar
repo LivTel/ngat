@@ -1,6 +1,6 @@
 #!/bin/csh
-# $Header: /space/home/eng/cjm/cvs/ngat/scripts/ngat_make_source_tar,v 1.3 2006-05-16 12:14:22 snf Exp $
-# Version: $Revision: 1.3 $
+# $Header: /space/home/eng/cjm/cvs/ngat/scripts/ngat_make_source_tar,v 1.4 2006-05-16 12:22:04 snf Exp $
+# Version: $Revision: 1.4 $
 # By $Author: snf $
 # Make a source tar for Wayne
 # This contains:
@@ -51,7 +51,7 @@ echo "${dir_count} directories created."
 # Copy src directories
 #
 echo "Copying src directories..."
-set src_dir_list = "ngat/astrometry ngat/fits ngat/math ngat/message/base ngat/message/INST_DP ngat/message/ISS_INST ngat/message/RCS_TCS ngat/message/POS_RCS ngat/message/GUI_RCS /ngat/net ngat/phase2 ngat/sound ngat/swing ngat/util lt/java/dev/lt  ngatastro ngatfits ngatutil "
+set src_dir_list = "ngat/astrometry ngat/fits ngat/math ngat/message/base ngat/message/INST_DP ngat/message/ISS_INST ngat/message/RCS_TCS ngat/message/POS_RCS ngat/message/GUI_RCS /ngat/net ngat/phase2 ngat/instrument ngat/sound ngat/swing ngat/util lt/java/dev/lt  ngatastro ngatfits ngatutil "
 
 set src_dir_count = 0
 foreach src_dir ( ${src_dir_list} )
@@ -120,6 +120,9 @@ echo "Deployment tar : ${source_tar_dir}/${source_tar}.gz"
 rm -rf ${deployment_dir}
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.3  2006/05/16 12:14:22  snf
+# Changed deployment dir
+#
 # Revision 1.2  2006/05/16 12:12:24  snf
 # Modified to deploy NGAT source.
 #
