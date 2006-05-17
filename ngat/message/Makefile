@@ -1,4 +1,4 @@
-DIRS = base OSS RCS_TCS INST_DP ISS_INST POS_RCS
+DIRS = base OSS RCS_TCS INST_DP ISS_INST POS_RCS GUI_RCS
 DIRS_TARGET    = dirs
 
 
@@ -10,9 +10,12 @@ checkin:
 checkout:
 	echo "checkout not needed for makeamess generated sources."
 
-# $Header: /space/home/eng/cjm/cvs/ngat/message/Makefile,v 1.5 2003-11-14 15:35:05 cjm Exp $ 
+# $Header: /space/home/eng/cjm/cvs/ngat/message/Makefile,v 1.6 2006-05-17 16:29:30 cjm Exp $ 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.5  2003/11/14 15:35:05  cjm
+# Makefile for ngat.message.
+#
 # Revision 1.4  2003/03/11 11:45:12  cjm
 # Fixed checkin and checkout, so they do not checkin/out the Java sources.
 #
