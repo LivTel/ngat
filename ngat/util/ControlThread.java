@@ -34,6 +34,9 @@ public abstract class ControlThread extends Thread {
     /** Linger timeout, set by linger(long). If 0 , wait forever.*/
     long lingerTimeout;
 
+    /** Delay period per main loop at start after checking for pause flag.*/
+    protected long taskDelay;
+
     /** Determines whether the Thread should run its mainTask() method once only.*/
     protected boolean permanence;
 
@@ -98,6 +101,7 @@ public abstract class ControlThread extends Thread {
 	try {
 	    initialise();
 	    while (canRun()) {
+
 		// Wait for linger period (could be forever !).
 		if (isPaused()) {
 		    try {
@@ -105,6 +109,7 @@ public abstract class ControlThread extends Thread {
 		    } catch (InterruptedException e) {
 		    }
 		}
+		
 		mainTask();		
 		if (isTransient()) terminate();
 	    }
