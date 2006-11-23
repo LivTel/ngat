@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 
+/** Basic graph implementation.*/
 public class Graph implements ChartConstants {
 
 
