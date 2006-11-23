@@ -3,8 +3,8 @@ package ngat.phase2;
 import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 
 import java.util.*;
 import java.io.*;
@@ -14,6 +14,10 @@ import java.io.*;
 
 
 public class MinorPlanet extends SolarSystemSource implements Serializable {
+
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -6546781914031276010L;
 
     // Variables.
 
@@ -38,16 +42,6 @@ public class MinorPlanet extends SolarSystemSource implements Serializable {
     /** Mean distance (orbital radius), (au). */
     protected double meanDistance;
     
-    /** Cache RA locally. */
-    private double cacheRA;
-    
-    /** Cache Dec locally. */
-    private double cacheDec;
-    
-    /** The last time at which currently cached values can be relied on.*/
-    protected long cacheExpiry;
-    
-    
     // Constructor.
     
     public MinorPlanet() {super();}
@@ -57,70 +51,63 @@ public class MinorPlanet extends SolarSystemSource implements Serializable {
     }
     
     // Accessors.
-    public double getElementEpoch() { return elementEpoch;}
-    public double getLongAscNode() { return longAscNode;}
-    public double getArgPeri() { return argPeri;}
+    public double getElementEpoch() {  return elementEpoch;}
+    public double getLongAscNode() {  return longAscNode;}
+    public double getArgPeri() {  return argPeri;}
    
-    public double getOrbitalInc() { return orbitalInc;}
-    public double getEccentricity() { return eccentricity;}
-    public double getMeanAnomaly() { return meanAnomaly;}
-    public double getMeanDistance() { return meanDistance;}
+    public double getOrbitalInc() {  return orbitalInc;}
+    public double getEccentricity() {  return eccentricity;}
+    public double getMeanAnomaly() {  return meanAnomaly;}
+    public double getMeanDistance() {  return meanDistance;}
    
     // Mutators.
-    public void setElementEpoch(double in) { elementEpoch = in;}
-    public void setLongAscNode(double in) { longAscNode = in;}
-    public void setArgPeri(double in) {  argPeri = in;}
+    public void setElementEpoch(double in) {  elementEpoch = in;}
+    public void setLongAscNode(double in) {  longAscNode = in;}
+    public void setArgPeri(double in) {   argPeri = in;}
    
-    public void setOrbitalInc(double in) {  orbitalInc = in;}
-    public void setEccentricity(double in) { eccentricity = in;}
-    public void setMeanAnomaly(double in) {  meanAnomaly = in;}
-    public void setMeanDistance(double in) {  meanDistance = in;}
+    public void setOrbitalInc(double in) {   orbitalInc = in;}
+    public void setEccentricity(double in) {  eccentricity = in;}
+    public void setMeanAnomaly(double in) {   meanAnomaly = in;}
+    public void setMeanDistance(double in) {   meanDistance = in;}
     
     /** Returns the source's current position. This is calculated using
      * the orbital elements and obtained via ngat.astrometry.Astrometry*/
-    public Position getPosition() { 	
+    public Position getPosition() {
+	 	
 	Position position = Astrometry.getPlanetPosition(this);
 	return position;
     }
     
     /** Returns the current Non-sidereal tracking in RA.*/
-    public double getNsTrackRA() { return 0.0;}
+    public double getNsTrackRA() {  return 0.0;}
     
     /** Returns the current Non-sidereal tracking in dec.*/
-    public double getNsTrackDec() { return 0.0;}
+    public double getNsTrackDec() {  return 0.0;}
+
+    // Clone Constructor.    
+    public NPDBObject copy() {
+	try {
+	    return (MinorPlanet)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
+   
+    /** Returns readable description. ##TBD##*/
+    public String toString() {
+	return "MinorPlanet: "+name+
+	    " : Epoch "+elementEpoch+" ..ns tracking is not currently available";
+    }
     
-    // NP -> P Translator.  
-    public MinorPlanet(NPMinorPlanet npMinorPlanet) {
-	super(npMinorPlanet);
-	Iterator it;
-	elementEpoch = npMinorPlanet.getElementEpoch();
-	longAscNode  = npMinorPlanet.getLongAscNode();
-	argPeri      = npMinorPlanet.getArgPeri();
-	orbitalInc   = npMinorPlanet.getOrbitalInc();
-	eccentricity = npMinorPlanet.getEccentricity();
-	meanAnomaly  = npMinorPlanet.getMeanAnomaly();
-	meanDistance = npMinorPlanet.getMeanDistance();
-    } // end (NP -> P Translator).
-    
-    // P -> NP Translator.   
-    public void stuff(NPMinorPlanet npMinorPlanet) {
-	super.stuff(npMinorPlanet);
-	npMinorPlanet.setElementEpoch(elementEpoch);
-	npMinorPlanet.setLongAscNode(longAscNode);
-	npMinorPlanet.setArgPeri(argPeri);
-	npMinorPlanet.setOrbitalInc(orbitalInc);
-	npMinorPlanet.setEccentricity(eccentricity);
-	npMinorPlanet.setMeanAnomaly(meanAnomaly);
-	npMinorPlanet.setMeanDistance(meanDistance);
-    } // end (P -> NP Translator).
-    
-    // P -> NP Translator.
-    
-    public NPDBObject makeNP() {
-	NPMinorPlanet npMinorPlanet = new NPMinorPlanet();
-	stuff(npMinorPlanet);
-	return npMinorPlanet;
-    } // end (makeNp).
-    
+    // Formatted Text Output.   
+    public void writeXml(PrintStream out, int level) {
+	out.println(tab(level)+"<minorPlanet name = '"+name+"'>");
+	out.println(tab(level+1)+"<elementEpoch>"+elementEpoch+"</elementEpoch>");
+	out.println(tab(level+1)+"<longAscNode>" +Position.toDegrees(longAscNode,3)+"</longAscNode>");
+	out.println(tab(level+1)+"<inclination>" +Position.toDegrees(orbitalInc,3)+"</inclination>");
+	out.println(tab(level+1)+"<eccentricity>"+eccentricity+"</eccentricity>");
+	out.println(tab(level+1)+"<meanDistance>"+meanDistance+"</meanDistance>");
+	out.println(tab(level+1)+"<argPeri>"     +Position.toDegrees(argPeri,3)+"</argPeri>");
+	out.println(tab(level+1)+"<meanAnomaly>" +Position.toDegrees(meanAnomaly,3)+"</meanAnomaly>");
+	out.println(tab(level)+"</minorPlanet>");
+    } // end (write).
     
 } // end class def [MinorPlanet].

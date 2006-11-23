@@ -2,8 +2,8 @@ package ngat.phase2;
 
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -38,34 +38,46 @@ public class LowResSpecConfig extends SpecConfig implements Serializable {
     // Accessors.
     
     /** Sets the central wavelength.*/
-    public void setWavelength(double wavelength) { this.wavelength; }
+    public void setWavelength(double wavelength) { this.wavelength = wavelength; }
     
     /** Returns the central wavelength.*/
-    public double getWavelength() { return wavelength; }
+    public double getWavelength() {  return wavelength; }
     
-    // NP -> P Translator.
-    public LowResSpecConfig(NPLowResSpecConfig npLowResSpecConfig) {
-	super(npLowResSpecConfig);
-	wavelength = npLowResSpecConfig.getGratePosn();Wavelength();
-	detectors[0] = new LowResSpecDetector(npLowResSpecConfig.getDetector(0));
-    } // end (NP -> P Translator).
-    
-    // P -> NP Translator.   
-    public void stuff(NPLowResSpecConfig npLowResSpecConfig) {
-	super.stuff(npLowResSpecConfig);
-	npLowResSpecConfig.setWavelength(wavelength);
+    public int getMaxDetectorCount() {	
+	return maxDetectorCount; 
+    }
+
+    /** Compares with another InstConfig to see if they are effectively the same.*/
+    public boolean sameAs(InstrumentConfig other) {
+	System.err.println("Checking LRSC with another one: "+
+			   this.toString()+" with "+other.toString());
+	if (! super.sameAs(other))
+	    return false;
+	
+	LowResSpecConfig cother = (LowResSpecConfig)other;
+
+	if (wavelength != cother.getWavelength())
+	    return false;
+	
+	if (detectors[0].getXBin() != cother.getDetector(0).getXBin())
+	    return false;
+	if (detectors[0].getYBin() != cother.getDetector(0).getYBin())
+	    return false;
+	// Remember to look at CalBef and CalAft.
+	return true;
+    }
+
+    /** Clone Constructor.*/
+    public NPDBObject copy() {
 	try {
-	    npLowResSpecConfig.setNPDetector(0, (NPLowResSpecDetector)(detectors[0].makeNP()));
-	} catch (IllegalArgumentException iae) {	    
-	}
-    } // end (P -> NP Translator).
+	    return (LowResSpecConfig)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
     
-    // P -> NP Translator.
-    public NPDBObject makeNP() {
-	NPLowResSpecConfig npLowResSpecConfig = new NPLowResSpecConfig();
-	stuff(npLowResSpecConfig);
-	return npLowResSpecConfig;
-    } // end (makeNp).
-       
+    public String toString() { return "LowResSpecConfig: "+name+
+				   " : Wavelength "+wavelength+
+				   ", Bin ["+detectors[0].getXBin()+", "+detectors[0].getYBin()+"]";
+    }
+  
 } // end class def [LowResSpecConfig].
 

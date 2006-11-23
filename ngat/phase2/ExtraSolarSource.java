@@ -3,8 +3,8 @@ package ngat.phase2;
 import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.io.*;
@@ -53,70 +53,68 @@ public class ExtraSolarSource extends Source implements Serializable {
     public double getRA() { return RA; }
 
     /** Set the source dec.*/
-    public void setDec(double in) { this.dec = dec; }
+    public void setDec(double in) { this.dec = in; }
     
     /** Return the source dec.*/
-    public double getDec() { return dec; }
+    public double getDec() {  return dec; }
     
     /** Sets the  proper motion in RA -(sec/year) .*/
     public void setPmRA(double in) { this.pmRA = in;}
     
     /** Returns the  proper motion in RA -(sec/year). */
-    public double getPmRA() { return pmRA;}
+    public double getPmRA() {  return pmRA;}
     
     /** Sets the  proper motion in Dec -(arcsec/year) .*/
     public void setPmDec(double in) { this.pmDec = in;}
     
     /** Returns the  proper motion in Dec -(arcsec/year). */
-    public double getPmDec() { return pmDec;}   
+    public double getPmDec() {  return pmDec;}   
    
     /** Sets the Parallax of the source.*/
     public void setParallax(double in) { this.parallax = in;}
     
     /** Returns the Parallax of the source.*/
-    public double getParallax() { return parallax;}
+    public double getParallax() {  return parallax;}
     
     /** Set the source radial velocity.*/
     public void setRadialVelocity(double in) { this.radialVelocity = in; }
 
     /** Returns the source radial velocity.*/
-    public double getRadialVelocity() { return radialVelocity; }
+    public double getRadialVelocity() {  return radialVelocity; }
 
     /** Returns the source's current position.*/
-    public Position getPosition() { return new Position(RA, dec); }
+    public Position getPosition() {  return new Position(RA, dec); }
 
-    // Descendant Mutators.
-     
-    // NP -> P Translator.
-    public ExtraSolarSource(NPExtraSolarSource npExtraSolarSource) {
-	super(npExtraSolarSource);
-	RA = npExtraSolarSource.getRA();
-	dec = npExtraSolarSource.getDec();
-	pmRA = npExtraSolarSource.getPmRA();
-	pmDec = npExtraSolarSource.getPmDec();
-	parallax = npExtraSolarSource.getParallax();
-	radialVelocity =  npExtraSolarSource.getRadialVelocity();
-	// Recursively call Daughter Translators.
+    // Clone Constructor.    
+    public NPDBObject copy() {
+	try {
+	    return (ExtraSolarSource)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
+    
+    public String toString() {
+	return "ExtraSolar: "+name+
+	    " : RA "+Position.toHMSString(RA)+
+	    ", Dec "+Position.toDMSString(dec)+
+	    ", pmRA "+pmRA+
+	    ", pmDec "+pmDec+
+	    ", px "+parallax+
+	    ", RV "+radialVelocity;
 	
-    } // end (NP -> P Translator).
+	// ExtraSolar: SA3 : RA 12h 23m 12.2, Dec 243 34 43.4, Pm RA 2.3, Pm Dec 0.2, px 0.02, RV 23.3
+	
+    }
     
-    // P -> NP Translator.
-    public void stuff(NPExtraSolarSource npExtraSolarSource) {
-	super.stuff(npExtraSolarSource);
-	npExtraSolarSource.setRA(getRA());
-	npExtraSolarSource.setDec(getDec());
-	npExtraSolarSource.setPmRA(getPmRA());
-	npExtraSolarSource.setPmDec(getPmDec());
-	npExtraSolarSource.setParallax(getParallax());
-	npExtraSolarSource.setRadialVelocity(getRadialVelocity());
-    } // end (P -> NP Translator).
-    
-    // P -> NP Translator.
-    public NPDBObject makeNP() {
-	NPExtraSolarSource npExtraSolarSource = new NPExtraSolarSource();
-	stuff(npExtraSolarSource);
-	return npExtraSolarSource;
-    } // end (makeNp).
-    
-
+    /** Basic Formatted Text Output as XML.*/
+    public void writeXml(PrintStream out, int level) {
+	out.println(tab(level)+"<extraSolarSource name = '"+name+"'>");
+	out.println(tab(level+1)+"<ra>"            +Position.toHMSString(RA)+"</ra>");
+	out.println(tab(level+1)+"<dec>"           +Position.toDMSString(dec)+"</dec>");
+	out.println(tab(level+1)+"<pmRA>"          +pmRA+"</pmRA>");
+	out.println(tab(level+1)+"<pmDec>"         +pmDec+"</pmDec>");
+	out.println(tab(level+1)+"<parallax>"      +parallax+"</parallax>");
+	out.println(tab(level+1)+"<radialVelocity>"+radialVelocity+"</radialVelocity>");
+	out.println(tab(level)+"</extraSolarSource>");
+    } // end (write).
+     
 } // end class def [ExtraSolarSource].

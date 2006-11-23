@@ -3,8 +3,8 @@ package ngat.phase2;
 import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 import java.util.*;
 import java.io.*;
 
@@ -36,16 +36,6 @@ public class Comet extends SolarSystemSource implements Serializable {
     /** Eccentricity of orbit ( =1, circle, <1, >1,  ). */
     protected double eccentricity;
     
-    /** Cache RA locally. */
-    private double cacheRA;
-    
-    /** Cache Dec locally. */
-    private double cacheDec;
-    
-    /** The last time at which currently cached values can be relied on.*/
-    protected long cacheExpiry;
-    
-    
     // Constructor.
     
     public Comet() {super();}
@@ -55,62 +45,101 @@ public class Comet extends SolarSystemSource implements Serializable {
     }
     
     // Accessors. 
-    public double getElementEpoch() { return elementEpoch;}
-    public double getLongAscNode() { return longAscNode;}
-    public double getArgPeri() { return argPeri;}
-    public double getPeriDist() { return periDist;}
-    public double getOrbitalInc() { return orbitalInc;}
-    public double getEccentricity() { return eccentricity;}
-   
+    public double getElementEpoch() { 
+	
+	return elementEpoch;
+    }
+    public double getLongAscNode() {
+	 
+	return longAscNode;
+    }
+    public double getArgPeri() { 
+	
+	return argPeri;
+    }
+    public double getPeriDist() {
+	 
+	return periDist;
+    }
+    public double getOrbitalInc() {
+	 
+	return orbitalInc;
+    }
+    public double getEccentricity() {
+	 
+	return eccentricity;
+    }
+    
     // Mutators.
-    public void setElementEpoch(double in) { elementEpoch = in;}
-    public void setLongAscNode(double in) { longAscNode = in;}
-    public void setArgPeri(double in) {  argPeri = in;}
-    public void setPeriDist(double in) {  periDist = in;}
-    public void setOrbitalInc(double in) {  orbitalInc = in;}
-    public void setEccentricity(double in) { eccentricity = in;} 
+    public void setElementEpoch(double in) {
+	
+	elementEpoch = in;
+    }
+    public void setLongAscNode(double in) { 
+	
+	longAscNode = in;
+    }
+    public void setArgPeri(double in) {  
+	
+	argPeri = in;
+    }
+    public void setPeriDist(double in) {  
+	
+	periDist = in;
+    }
+    public void setOrbitalInc(double in) {  
+	
+	orbitalInc = in;
+    }
+    public void setEccentricity(double in) { 
+	
+	eccentricity = in;
+    } 
     
     /** Returns the source's current position. This is calculated using
      * the orbital elements and obtained via ngat.astrometry.Astrometry*/
-    public Position getPosition() { 	
+    public Position getPosition() {
+	 	
 	Position position = Astrometry.getPlanetPosition(this);
 	return position;
     }
-
+    
     /** Returns the current Non-sidereal tracking in RA.*/
-    public double getNsTrackRA() { return 0.0;}
+    public double getNsTrackRA() { 
+	
+	return 0.0;
+    }
     
     /** Returns the current Non-sidereal tracking in dec.*/
-    public double getNsTrackDec() { return 0.0;}
+    public double getNsTrackDec() {
+	
+	return 0.0;
+    }
     
-    // NP -> P Translator.    
-    public Comet(NPComet npComet) {
-	super(npComet);
-	elementEpoch = npComet.getElementEpoch();
-	longAscNode  = npComet.getLongAscNode();
-	argPeri      = npComet.getArgPeri();
-	periDist     = npComet.getPeriDist();
-	orbitalInc   = npComet.getOrbitalInc();
-	eccentricity = npComet.getEccentricity();
-    } // end (NP -> P Translator).
+    // Clone Constructor.
+    public NPDBObject copy() {
+	try {
+	    return (Comet)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
     
-    // P -> NP Translator.   
-    public void stuff(NPComet npComet) {
-	super.stuff(npComet);
-	npComet.setElementEpoch(elementEpoch);
-	npComet.setLongAscNode(longAscNode);
-	npComet.setArgPeri(argPeri);
-	npComet.setPeriDist(periDist);
-	npComet.setOrbitalInc(orbitalInc);
-	npComet.setEccentricity(eccentricity);
-    } // end (P -> NP Translator).
-    
-    // P -> NP Translator.  
-    public NPDBObject makeNP() {
-	NPComet npComet = new NPComet();
-	stuff(npComet);
-	return npComet;
-    } // end (makeNp).
+    /** Returns readable description. ##TBD##*/
+    public String toString() {
+	return "Comet: "+name+
+	    " : Epoch "+elementEpoch+" ..ns tracking is not currently available";
+    }
 
-
+    // Formatted Text Output.
+    public void writeXml(PrintStream out, int level) {
+	out.println(tab(level)+"<comet name = '"+name+"'>");
+	out.println(tab(level+1)+"<elementEpoch>"+elementEpoch+"</elementEpoch>");
+	out.println(tab(level+1)+"<longAscNode>" +Position.toDegrees(longAscNode,3)+"</longAscNode>");
+	out.println(tab(level+1)+"<argPeri>"     +Position.toDegrees(argPeri,3)+"</argPeri>");
+	out.println(tab(level+1)+"<periDist>"    +periDist+"</periDist>");
+	out.println(tab(level+1)+"<orbitalInc>"  +Position.toDegrees(orbitalInc,3)+"</orbitalInc>");
+	out.println(tab(level+1)+"<eccentricity>"+eccentricity+"</eccentricity>");	
+	out.println(tab(level)+"</comet>");
+    } // end (write).
+   
 } // end class def [Comet].
+

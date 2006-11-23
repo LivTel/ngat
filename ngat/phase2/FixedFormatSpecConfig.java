@@ -15,9 +15,10 @@ import java.io.*;
  */
 public class FixedFormatSpecConfig extends SpecConfig implements Serializable {
 
-    ///** Serial version UID - used to maintain serialization compatibility
-    //* across modifications of the class's structure.*/
-    //private static final long serialVersionUID = 
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.
+     */
+    private static final long serialVersionUID = 6586864834989546802L;
 
     public static final int maxDetectorCount = 1;
        

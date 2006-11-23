@@ -3,15 +3,15 @@ package ngat.phase2;
 import ngat.phase2.nonpersist.*;
 import java.io.*;
 import java.util.*;
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 
 /**
  * Encapsulates properties of the detector component of an instrument.
  * This class is a base class and should always be subclassed to provide
  * implementations of the accessor methods.
  * <br>
- * $Id: Detector.java,v 1.2 2001-02-23 18:45:20 snf Exp $
+ * $Id: Detector.java,v 1.3 2006-11-23 10:43:05 snf Exp $
  *
  */
 public class Detector implements Serializable {
@@ -53,33 +53,17 @@ public class Detector implements Serializable {
     public Detector() {
 	windows = new Window[getMaxWindowCount()];
     }
-
-    /** Create a Detector from a nonpersistent NPDetector.*/
-    public Detector(NPDetector npDetector) {
-	this();
-	setXBin(npDetector.getXBin());
-	setYBin(npDetector.getYBin());
-	// Copy all Windows across, ignore TooManyWindows.
-	for (int i = 0; i < getMaxWindowCount(); i++) {
-	    try {
-		if (npDetector.getWindow(i) == null) {
-		    setWindow(i, null);
-		} else {
-		    setWindow(i, new Window(npDetector.getWindow(i)));
-		}
-	    } catch(IllegalArgumentException twe) {
-		System.out.println("Detector.Translation Error doing NPWindow to Window");
-	    }
-	}
-    }
-    
    
     /** Set the windows reference to the supplied array.
      * @param windows A predefined set of window settings.*/
-    public void setWindows(Window[] windows) { this.windows = windows;}
+    public void setWindows(Window[] windows) {	
+	this.windows = windows;
+    }
     
     /** Return a reference to the windowing information.*/
-    public Window[] getWindows() { return windows;}
+    public Window[] getWindows() { 	
+	return windows;
+    }
     
     /** Add a window to the list. 
      * @param winNo The number of the window to set.
@@ -87,6 +71,7 @@ public class Detector implements Serializable {
      * @exception IllegalArgumentException If the window number is < 0 or > getMaxWindowCount().*/
     public void setWindow(int winNo, Window window) 
 	throws IllegalArgumentException {
+	
 	if (winNo < 0 || winNo >= getMaxWindowCount()){
 	    throw new  IllegalArgumentException("Window number "+winNo);
 	}
@@ -104,6 +89,7 @@ public class Detector implements Serializable {
      * X end value is > getXPixelCount() or the Y end value is > getYPixelCount().*/
     public void setWindow(int winNo, int xs, int ys, int xe, int ye)
 	throws IllegalArgumentException {
+	
 	if (winNo < 0 || winNo >= getMaxWindowCount()){
 	    throw new  IllegalArgumentException("Window number "+winNo);
 	}
@@ -112,11 +98,11 @@ public class Detector implements Serializable {
 	}
 	windows[winNo] = new Window(xs, ys, xe, ye);
     }
-
+    
     /** Remove a window from the list -  is made null.
      * @param winNo The number of the window to clear.
      * @exception IllegalArgumentException If the window number is < 0 or > getMaxWindowCount().*/
-    public void clearWindow(int winNo) throws IllegalArgumentException {
+    public void clearWindow(int winNo) throws IllegalArgumentException {	
 	if (winNo < 0 || winNo >= getMaxWindowCount()){
 	    throw new IllegalArgumentException("Window number "+winNo);
 	}
@@ -124,7 +110,7 @@ public class Detector implements Serializable {
     }
     
     /** Remove all windows i.e.clear them from the list and set to null.*/
-    public void clearAllWindows() {
+    public void clearAllWindows() {	
 	for (int i = 0; i < getMaxWindowCount(); i++) {
 	    windows[i] = null;
 	}
@@ -143,36 +129,42 @@ public class Detector implements Serializable {
     
     /** Sets the nominated window active. 
      * You should only access the window's active flag via this method. 
+     * If the specifed window is not set this method returns silently.
+     * Use the method getWindow(winNo) to test for a null window first.
      * @param winNo The number of the window to activate.
      * @exception IllegalArgumentException If the window number is < 0 or > getMaxWindowCount().*/
-    public void activateWindow(int winNo) throws IllegalArgumentException {
+    public void activateWindow(int winNo) throws IllegalArgumentException {	
 	if (winNo < 0 || winNo >= getMaxWindowCount()){
 	    throw new IllegalArgumentException("Window number "+winNo);
 	}
+	if (windows[winNo] == null) return;	    
 	windows[winNo].setActive(true);
     }
     
     /** Sets the nominated window inactive. 
-     *  You should only access the window's active flag via this method. 
+     *  You should only access the window's active flag via this method.
+     * If the specifed window is not set this method returns silently.
+     * Use the method getWindow(winNo) to test for a null window first.
      * @param winNo The number of the window to deactivate.
      * @exception IllegalArgumentException If the window number is < 0 or > getMaxWindowCount().*/
     public void deactivateWindow(int winNo) throws IllegalArgumentException {
 	if (winNo < 0 || winNo >= getMaxWindowCount()){
 	    throw new IllegalArgumentException("Window number "+winNo);
 	}
+	if (windows[winNo] == null) return;
 	windows[winNo].setActive(false);
     }
     
     /** Returns the activation status of the specified window. 
      * @param winNo The number of the window.
      * @exception IllegalArgumentException If the window number is < 0 or > getMaxWindowCount(). 
-     * @return True if the specified window is active.*/
+     * @return True if the specified window is active. False if inactive or not set.*/
     public boolean isActiveWindow(int winNo) throws IllegalArgumentException {
 	if (winNo < 0 || winNo >= getMaxWindowCount()){
 	    throw new IllegalArgumentException("Window number "+winNo);
 	}
-	return windows[winNo].isActive();
-	// OR return (windowFlags & (1<<i) > 0);
+	if (windows[winNo] == null) return false;
+	return windows[winNo].isActive();	
     }
     
     /** Returns a bitmask to indicate which windows are active. 
@@ -189,23 +181,72 @@ public class Detector implements Serializable {
 	}
 	return mask;	
     }
-   
-  
+    
+    /**
+     * Set the activation status of all the windows for this detector.
+     * @param bits An integer, each bit representing whether a window is active or not.
+     * If a bit is set the window is active.
+     * @exception IllegalArgumentException Thrown if we try to set active a window that is null.
+     */
+    public void setWindowFlags(int bits) throws IllegalArgumentException {
+	for (int i = 0; i < getMaxWindowCount(); i++) {
+	    if((bits & (1 << i)) > 0) {
+		if(windows[i] != null)
+		    windows[i].setActive(true);
+		else
+		    throw new IllegalArgumentException(this.getClass().getName()+
+						       ":setWindowFlags failed:"+
+						       "Window "+i+" cannot be active:it is null");
+	    } else {
+		// if this window IS null, assume that means it isn't active.
+		if(windows[i] != null)
+		    windows[i].setActive(false);
+	    }
+	}
+    }
+    
     /** Sets the number of pixels to bin in X direction.*/
-    public void setXBin(int in) { this.xBin = in;}
+    public void setXBin(int in) { 	
+	this.xBin = in;
+    }
     
     /** Returns the number of pixels to bin in X direction. */
-    public int getXBin() { return xBin;}
+    public int getXBin() { 	
+	return xBin;
+    }
     
     /** Sets the number of pixels to bin in Y direction.*/
-    public void setYBin(int in) { this.yBin = in;}    
+    public void setYBin(int in) { 	
+	this.yBin = in;
+    }    
     
     /** Returns the number of pixels to bin in Y direction . */
-    public int getYBin() { return yBin;}
+    public int getYBin() { 	
+	return yBin;
+    }
+    
+    // Formatted Text Output.
+    public void writeXml(PrintStream out, int level) {
+	for (int i = 0; i < getMaxWindowCount(); i++) { 
+	    if(windows[i] != null) {
+		windows[i].writeXml(out, level+1);
+	    }
+	}
+    } // end (write).
 
+   public String tab(int level) {
+	StringBuffer buff = new StringBuffer("");
+	for (int i = 0; i < level; i++) {
+	    buff.append("   ");
+	}
+	return buff.toString();
+    }
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2001/02/23 18:45:20  snf
+/** added serialversionUID.
+/**
 /** Revision 1.1  2000/11/23 12:15:56  snf
 /** Initial revision
 /** */

@@ -3,8 +3,8 @@ package ngat.phase2;
 import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 import java.util.*;
 import java.io.*;
 
@@ -12,11 +12,27 @@ import java.io.*;
 /** Encapsulates data about a general Source / target - either a 'fixed'
  * extra-solar object or a planet, comet, moon etc.
  */
-public abstract class Source extends DBObject implements Serializable {
-
+public abstract class Source extends NPDBObject implements Serializable {
+ 
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 7467445046143920914L;
+    
     public static final int FK4 = 4;
 
     public static final int FK5 = 5;
+
+    public static final char BESSELIAN = 'B';
+
+    public static final char JULIAN = 'J';
+
+    public static final char APPARENT = 'A';
+
+    public static final int EPOCH_B1950 = 1950;
+
+    public static final int EPOCH_J2000 = 2000;
+
+    public static final int EPOCH_CURRENT = 1;
 
     // Variables.
     
@@ -28,6 +44,9 @@ public abstract class Source extends DBObject implements Serializable {
     
     /**  Year and fraction of pm measurement. */
     protected float epoch;
+
+    /** Equinox designator. - This is the preferred mechanism for setting equinox.*/
+    protected int equinoxDesignator;
 
     /** Coordinate Frame FK4 or FK5.*/
     protected int frame;
@@ -46,58 +65,49 @@ public abstract class Source extends DBObject implements Serializable {
     public void setEquinox(float in) { this.equinox = in;}
     
     /** Returns the  coordinate system for epoch measurment. */
-    public float getEquinox() { return equinox;}
+    public float getEquinox() {  return equinox;}
     
     /** Sets the  calendar designator for the coordinate system.*/
-    public void setEquinoxLetter(char in) { this.equinoxLetter = in;}
+    public void setEquinoxLetter(char in) {  this.equinoxLetter = in;}
     
     /** Returns the calendar designator for the coordinate system.*/
-    public char getEquinoxLetter() { return equinoxLetter;}
+    public char getEquinoxLetter() {  return equinoxLetter;}
     
     /** Sets the  year and fraction of RA/Dec  measurement .*/
-    public void setEpoch(float in) { this.epoch = in;}
+    public void setEpoch(float in) {  this.epoch = in;}
     
     /** Returns the  year and fraction of RA/Dec  measurement. */
-    public float getEpoch() { return epoch;}
+    public float getEpoch() {  return epoch;}
+    
+
+    /** Sets the epoch  designator.*/
+    public void setEquinox(int in) {  this.equinoxDesignator = in;}
+  
+    /** Returns the epoch designator.*/
+    public int getEpochDesignator() {  return equinoxDesignator; }    
+
 
     /** Set the coordinate frame FK4 or FK5.*/
-    public void setFrame(int in) { this.frame = in; }
-
+    public void setFrame(int in) {  this.frame = in; }
+    
     /** Returns the coordinate frame.*/
-    public int getFrame() { return frame; }
-
+    public int getFrame() {  return frame; }
+    
     /** Returns the current position. */
     public abstract Position getPosition();   
-    
-    // Descendant Mutators.
-    
-    // NP -> P Translator.
-    
-    public Source(NPSource npSource) {
-	super(npSource);
-	equinox = npSource.getEquinox();
-	equinoxLetter = npSource.getEquinoxLetter();
-	epoch = npSource.getEpoch();
-	frame = npSource.getFrame();
-    } // end (NP -> P Translator).
-    
-    // P -> NP Translator.
-    
-    public void stuff(NPSource npSource) {
-	super.stuff(npSource);
-	npSource.setEquinox(getEquinox());
-	npSource.setEquinoxLetter(getEquinoxLetter());
-	npSource.setEpoch(getEpoch());
-	npSource.setFrame(getFrame());
-    } // end (P -> NP Translator).
-    
-    // P -> NP Translator.
-    
-    public NPDBObject makeNP() {
-	NPSource npSource = new NPSource();
-	stuff(npSource);
-	return npSource;
-    } // end (makeNp).
-    
 
+    public void writeXml(PrintStream out, int level) {
+	super.writeXml(out, level);
+	out.println(tab(level+1)+"<equinox>"+equinoxLetter+equinox+"</equinox>");
+	out.println(tab(level+1)+"<epoch>"+epoch+"</epoch>");
+	out.println(tab(level+1)+"<frame>FK"+frame+"</frame>");
+    } // end (write).
+    
+    // Clone Constructor.    
+    public NPDBObject copy() {
+	try {
+	    return (Source)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
+    
 } // end class def [Source].

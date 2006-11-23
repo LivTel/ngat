@@ -1,9 +1,9 @@
 package ngat.phase2;
+
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
 import java.lang.reflect.*;
+import java.text.*;
 import java.util.*;
 import java.io.*;
 
@@ -12,29 +12,35 @@ import java.io.*;
 
 
 public class MonitorGroup extends Group implements Serializable {
+  
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = 3897348970502315612L;
 
-     // Variables.
+    // Variables.
 
+    /** Date/time observation periods should start. */
+    protected long startDate;
+    
+    /** Date/time of last observation period. */
+    protected long endDate;
+    
+    /** Period between observations. (millis)*/
+    protected long period;
+    
+    /** Fraction of period during which observation can be allowed. */
+    protected float floatFraction;
+    
+    /** Records last successfully observed period number. (Depreciated)*/
+    protected int lastPeriod;
+    
+    /** Records the last time this Group was scheduled for execution.*/
+    protected long lastScheduled;
 
+    /** Records the last time this Group was successfully completed.*/
+    protected long lastCompleted;
+    
 
-     /**  date/time observation periods should start. */
-     protected long startDate;
-
-
-     /**  date/time of last observation period. */
-     protected long endDate;
-
-
-     /**  period between observations. */
-     protected long period;
-
-
-     /**  fraction of period during which observation can be allowed. */
-     protected float floatFraction;
-
-
-     /**  record of last successfully observed period number. */
-     protected int lastPeriod;
 
      // Constructor.
 
@@ -46,88 +52,129 @@ public class MonitorGroup extends Group implements Serializable {
 
      // Accessors.
 
+    /** Sets the  date/time observation periods should start .*/
+    public void setStartDate(long in) {  this.startDate = in;}
+    
+    /** Returns the  date/time observation periods should start. */
+    public long getStartDate() {  return startDate;}
+    
+    /** Sets the  date/time of last observation period .*/
+    public void setEndDate(long in) { this.endDate = in;}
+    
+    /** Returns the  date/time of last observation period. */
+    public long getEndDate() {  return endDate;}
+    
+    /** Sets the  period between observations .*/
+    public void setPeriod(long in) { this.period = in;}
+    
+    /** Returns the  period between observations. */
+    public long getPeriod() {  return period;}
+    
+    /** Sets the  fraction of period during which observation can be allowed .*/
+    public void setFloatFraction(float in) { this.floatFraction = in;}
+    
+    /** Returns the  fraction of period during which observation can be allowed. */
+    public float getFloatFraction() {  return floatFraction;}
+    
+    /** Sets the  record of last successfully observed period number .*/
+    public void setLastPeriod(int in) { this.lastPeriod = in;}
+    
+    /** Returns the  record of last successfully observed period number. */
+    public int getLastPeriod() {  return lastPeriod;}
+       
+    
+    /** Sets the last time this Group was scheduled for execution.*/
+    public void setLastScheduled(long in) { this.lastScheduled = in;}
+    
+    /** Returns the last time this Group was successfully completed.*/
+    public long getLastScheduled() { return lastScheduled;}
 
+    /** Sets the last time this Group was successfully completed.*/
+    public void setLastCompleted(long in) { this.lastCompleted = in;}
+    
+    /** Returns last time this Group was successfully completed.*/
+    public long getLastCompleted() { return lastCompleted;}
+    
 
-     /** Sets the  date/time observation periods should start .*/
-     public void setStartDate(long in) { this.startDate = in;}
-
-
-     /** Returns the  date/time observation periods should start. */
-     public long getStartDate() { return startDate;}
-
-
-     /** Sets the  date/time of last observation period .*/
-     public void setEndDate(long in) { this.endDate = in;}
-
-
-     /** Returns the  date/time of last observation period. */
-     public long getEndDate() { return endDate;}
-
-
-     /** Sets the  period between observations .*/
-     public void setPeriod(long in) { this.period = in;}
-
-
-     /** Returns the  period between observations. */
-     public long getPeriod() { return period;}
-
-
-     /** Sets the  fraction of period during which observation can be allowed .*/
-     public void setFloatFraction(float in) { this.floatFraction = in;}
-
-
-     /** Returns the  fraction of period during which observation can be allowed. */
-     public float getFloatFraction() { return floatFraction;}
-
-
-     /** Sets the  record of last successfully observed period number .*/
-     public void setLastPeriod(int in) { this.lastPeriod = in;}
-
-
-     /** Returns the  record of last successfully observed period number. */
-     public int getLastPeriod() { return lastPeriod;}
-
-
-     // Descendant Mutators.
-
+    /** Formatted Text Output as XML.*/
+    public void writeXmlSpecial(PrintStream out, int level) {
+	out.println(tab(level)+"<monitor>");
+	out.println(tab(level+1)+"<startDate>"+sdf.format(new Date(startDate))+"</startDate>");
+	out.println(tab(level+1)+"<endDate>"+sdf.format(new Date(endDate))+"</endDate>");
+	out.println(tab(level+1)+"<period>"+period+"</period>");
+	out.println(tab(level+1)+"<fraction>"+floatFraction+"</fraction>");	
+	out.println(tab(level+1)+"<lastScheduled>"+sdf.format(new Date(lastScheduled))+"</lastScheduled>");
+	out.println(tab(level+1)+"<lastCompleted>"+sdf.format(new Date(lastCompleted))+"</lastCompleted>");
+	out.println(tab(level)+"</monitor>");
+    }
+   
+    public NPDBObject copy() {
+	try {
+	    return (MonitorGroup)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
      
-     // NP -> P Translator.
+    /** Writes the (subclass-specific) descriptor info to a String as Html. 
+     * @param protocolVersion Allows for future changes to the formatting.
+     * @param buffer The already created buffer to append to.
+     */
+    public void toHtmlStringSpecial(int protocolVersion, StringBuffer buffer) {
+	NumberFormat nf = NumberFormat.getInstance();
+	nf.setMaximumFractionDigits(3);
+	nf.setMinimumFractionDigits(1);
+	buffer.append("\n   <!-- Monitor fields --> ");
+	buffer.append("\n   <p>  ");
+	buffer.append("\n   <table border = 0 bgcolor = #ADD8E6>    ");
+	buffer.append("\n     <tr> <td colspan = 4> <b> Monitor fields </b> </td> </tr>  ");
+	buffer.append("\n     <tr>  ");
+	buffer.append("\n       <td> Start monitoring </td> <td bgcolor = white>"+ sdf.format(new Date(startDate))+ "</td>  ");
+	buffer.append("\n       <td> End montoring    </td> <td bgcolor = white>"+ sdf.format(new Date(endDate))+ "</td>  ");
+	buffer.append("\n     </tr>  ");
+	buffer.append("\n     <tr>  ");
 
-     public MonitorGroup(NPMonitorGroup npMonitorGroup) {
-          super(npMonitorGroup);
-          Iterator it;
-          startDate = npMonitorGroup.getStartDate();
-          endDate = npMonitorGroup.getEndDate();
-          period = npMonitorGroup.getPeriod();
-          floatFraction = npMonitorGroup.getFloatFraction();
-          lastPeriod = npMonitorGroup.getLastPeriod();
-          
-          // Recursively call Daughter Translators.
+	int ts = (int)(period/1000);
+        int h = ts/3600;
+        int ms = ts - 3600*h;
+        int m = ms/60;
+        int s = ms - 60*m;    
 
-     } // end (NP -> P Translator).
-     
-     // P -> NP Translator.
+	buffer.append("\n       <td> Period </td>           <td bgcolor = white>"+h+"H "+m+"M "+s+"S </td>  ");
 
-     public void stuff(NPMonitorGroup npMonitorGroup) {
-          super.stuff(npMonitorGroup);
-          Iterator it;
-          npMonitorGroup.setStartDate(getStartDate());
-          npMonitorGroup.setEndDate(getEndDate());
-          npMonitorGroup.setPeriod(getPeriod());
-          npMonitorGroup.setFloatFraction(getFloatFraction());
-          npMonitorGroup.setLastPeriod(getLastPeriod());
-     } // end (P -> NP Translator).
-     
-     // P -> NP Translator.
+	int ws = (int)((float)ts*floatFraction);
+	h = ws/3600;
+        ms = ws - 3600*h;
+        m = ms/60;
+        s = ms - 60*m;    
 
-     public NPDBObject makeNP() {
-          NPMonitorGroup npMonitorGroup = new NPMonitorGroup();
-          stuff(npMonitorGroup);
-          return npMonitorGroup;
-     } // end (makeNp).
-     // handcoded. insert in O2J generated MonitorGroup.java
-     
-     public ScheduleDescriptor schedule() {return null;}
+	buffer.append("\n       <td> Float fraction </td>   <td bgcolor = white>"+ "+/-"+nf.format(100*floatFraction)+
+		      " ("+h+"H "+m+"M "+s+"S) </td>  ");
+	buffer.append("\n     </tr>  "); 
+	 
+	int cp = (int)(( System.currentTimeMillis() - startDate ) / period );
+	buffer.append("\n     <tr> ");
+	buffer.append("\n       <td colspan = 2> Current period</td> <td colspan = 2 bgcolor = white>"+cp+"</td>");
+	buffer.append("\n     </tr>");
+	buffer.append("\n   </table>  ");
+	
+    }
 
-
+    public String toString() {
+	NumberFormat nf = NumberFormat.getInstance();
+	nf.setMaximumFractionDigits(3);
+	nf.setMinimumFractionDigits(1);
+	
+	return "[MonitorGroup: "+name+" : "+
+	    ", Monitor-start="+sdf.format(new Date(startDate))+
+	    ", Monitor-end="+sdf.format(new Date(endDate))+
+	    ", Period="+(period/1000.0)+" secs"+
+	    ", Float="+nf.format(floatFraction)+
+	    ", Last-sched="+sdf.format(new Date(lastScheduled))+
+	    ", Last-done="+sdf.format(new Date(lastCompleted))+
+	    "]";
+    }
+    
+    
 } // end class def [MonitorGroup].
+
+
+

@@ -1,8 +1,8 @@
 package ngat.phase2;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.io.*;
@@ -12,77 +12,25 @@ import java.io.*;
 
 
 public class SpecConfig extends InstrumentConfig implements Serializable {
-
-     // Variables.
-
-
-
-     /** no comment. */
-     protected boolean redArmHiRes;
-
-
-     /** no comment. */
-     protected boolean blueArmHiRes;
-
-     // Constructor.
-
-     public SpecConfig() {this("untitled");}
-
-     public SpecConfig(String name) {
-          super(name);
-     }
-
-     // Accessors.
-
-
-
-     /** Sets the no comment .*/
-     public void setRedArmHiRes(boolean in) { this.redArmHiRes = in;}
-
-
-     /** True if no comment. */
-     public boolean isRedArmHiRes() { return redArmHiRes;}
-
-
-     /** Sets the no comment .*/
-     public void setBlueArmHiRes(boolean in) { this.blueArmHiRes = in;}
-
-
-     /** True if no comment. */
-     public boolean isBlueArmHiRes() { return blueArmHiRes;}
-
-
-     // Descendant Mutators.
-
-     
-     // NP -> P Translator.
-
-     public SpecConfig(NPSpecConfig npSpecConfig) {
-          super(npSpecConfig);
-          Iterator it;
-          redArmHiRes = npSpecConfig.isRedArmHiRes();
-          blueArmHiRes = npSpecConfig.isBlueArmHiRes();
-          
-          // Recursively call Daughter Translators.
-
-     } // end (NP -> P Translator).
-     
-     // P -> NP Translator.
-
-     public void stuff(NPSpecConfig npSpecConfig) {
-          super.stuff(npSpecConfig);
-          Iterator it;
-          npSpecConfig.setRedArmHiRes(isRedArmHiRes());
-          npSpecConfig.setBlueArmHiRes(isBlueArmHiRes());
-     } // end (P -> NP Translator).
-     
-     // P -> NP Translator.
-
-     public NPDBObject makeNP() {
-          NPSpecConfig npSpecConfig = new NPSpecConfig();
-          stuff(npSpecConfig);
-          return npSpecConfig;
-     } // end (makeNp).
-
-
+ 
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/    
+    private static final long serialVersionUID = 8121000924718541727L;
+    
+    // Variables.
+    
+    // Constructor.
+    public SpecConfig() {this("untitled");}
+    
+    public SpecConfig(String name) {
+	super(name);
+    }
+    
+    // Clone Constructor.
+    public NPDBObject copy() {
+	try {
+	    return (SpecConfig)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
+    
 } // end class def [SpecConfig].

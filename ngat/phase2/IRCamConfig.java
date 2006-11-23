@@ -1,8 +1,8 @@
 package ngat.phase2;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.io.*;
@@ -17,16 +17,16 @@ public class IRCamConfig extends InstrumentConfig implements Serializable {
      * across modifications of the class's structure.*/
     private static final long serialVersionUID = -1885321170923597100L;
      
+    /** Default (blank) filter.*/
+    public static final String BLANK = "blank";
+
     public static final int maxDetectorCount = 1;
 
     // Variables.
 
-    /** no comment. */
-    protected String upperFilterWheel;
-    
-    /** no comment. */
-    protected String lowerFilterWheel;
-    
+    /** The single filterwheel. */
+    protected String filterWheel;
+       
     // Constructor.
     
     public IRCamConfig() {this("untitled");}
@@ -39,45 +39,66 @@ public class IRCamConfig extends InstrumentConfig implements Serializable {
 
     // Accessors.
     
-    /** Sets the no comment .*/
-    public void setUpperFilterWheel(String in) { this.upperFilterWheel = in;}   
+    /** Sets the filter name.*/
+    public void setFilterWheel(String in) {this.filterWheel = in;}   
     
-    /** Returns the no comment. */
-    public String getUpperFilterWheel() { return upperFilterWheel;}
-        
-    /** Sets the no comment .*/
-    public void setLowerFilterWheel(String in) { this.lowerFilterWheel = in;}
-    
-    /** Returns the no comment. */
-    public String getLowerFilterWheel() { return lowerFilterWheel;}
+    /** Returns the filter name. */
+    public String getFilterWheel() {return filterWheel;}
+           
+    public int getMaxDetectorCount() {return maxDetectorCount; }
 
-    public int getMaxDetectorCount() { return maxDetectorCount; }
-   
-    // NP -> P Translator.
-    public IRCamConfig(NPIRCamConfig npIRCamConfig) {
-	super(npIRCamConfig);
-	Iterator it;
-	upperFilterWheel = npIRCamConfig.getUpperFilterWheel();
-	lowerFilterWheel = npIRCamConfig.getLowerFilterWheel();
-	detectors[0] = new CCDDetector(npIRCamConfig.getDetector(0));	
-     } // end (NP -> P Translator).
-     
-    // P -> NP Translator.
-    public void stuff(NPIRCamConfig npIRCamConfig) {
-	super.stuff(npIRCamConfig);
-	npIRCamConfig.setUpperFilterWheel(getUpperFilterWheel());
-	npIRCamConfig.setLowerFilterWheel(getLowerFilterWheel());
+    // Clone Constructor.
+    public NPDBObject copy() {
 	try {
-	    npIRCamConfig.setNPDetector(0, (NPIRCamDetector)(detectors[0].makeNP()));
-	} catch (IllegalArgumentException iae) {	    
-	}
-    } // end (P -> NP Translator).
+	    return (IRCamConfig)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
+      
+    /** Compares with another InstConfig to see if they are effectively the same.*/
+    public boolean sameAs(InstrumentConfig other) {
+	System.err.println("Checking IRC with another one: "+
+			   this.toString()+" with "+other.toString());
+	if (! super.sameAs(other))
+	    return false;
+	// Ok we know they are the same class now..
+	IRCamConfig cother = (IRCamConfig)other;	
+	if (! filterWheel.equals(cother.getFilterWheel()))
+	    return false;	
+	if (detectors[0].getXBin() != cother.getDetector(0).getXBin())
+	    return false;
+	if (detectors[0].getYBin() != cother.getDetector(0).getYBin())
+	    return false;
+	// Remember to look at CalBef and CalAft and windows..
+	return true;
+    }
     
-    // P -> NP Translator.
-    public NPDBObject makeNP() {
-	NPIRCamConfig npIRCamConfig = new NPIRCamConfig();
-	stuff(npIRCamConfig);
-	return npIRCamConfig;
-    } // end (makeNp).
+    /** Create a Default CCDConfig.*/
+    public static IRCamConfig getDefault() {
+	IRCamConfig DEFAULT = new IRCamConfig("DEFAULT");
+	DEFAULT.setDescription("Default IRCamConfig");
+	DEFAULT.setFilterWheel(BLANK);	
+	IRCamDetector detector = new IRCamDetector();
+	detector.setXBin(1);
+	detector.setYBin(1);
+	detector.clearAllWindows();
+	DEFAULT.setDetector(0, detector); 	
+	return DEFAULT;
+    }
     
+    // Formatted Text Output.
+    public void writeXml(PrintStream out, int level) {
+	out.println(tab(level)+"<irCamConfig name = '"+name+"'>");
+	out.println(tab(level+1)+"<filterWheel>"+filterWheel+"</filterWheel>");
+	detectors[0].writeXml(out,level+1);
+	out.println(tab(level)+"</irCamConfig>");
+    } // end (write).
+    
+    public String toString() { return "IRCamConfig: "+name+
+				   " : Filter "+filterWheel+				 
+				   ", Bin: ["+detectors[0].getXBin()+" x "+detectors[0].getYBin()+"]";
+    }
+
+
+
+
 } // end class def [IRCamConfig].

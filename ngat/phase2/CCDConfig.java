@@ -1,8 +1,8 @@
 package ngat.phase2;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.io.*;
@@ -21,6 +21,9 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
      * across modifications of the class's structure.*/
     private static final long serialVersionUID = 759627829525815554L;
     
+    /** Default clear filter.*/
+    public static final String CLEAR = "clear";
+
     /** Identity of filter in upper wheel. */
     protected String upperFilterWheel;
     
@@ -41,46 +44,90 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
     // Accessors.
     
     /** Sets the Identity of filter in upper wheel.*/
-    public void setUpperFilterWheel(String in) { this.upperFilterWheel = in;}
+    public void setUpperFilterWheel(String in) {
+	
+	this.upperFilterWheel = in;
+    }
     
     /** Returns the Identity of filter in upper wheel. */
-    public String getUpperFilterWheel() { return upperFilterWheel;}
+    public String getUpperFilterWheel() {
+	
+	return upperFilterWheel;
+    }
     
     /** Sets the Identity of filter in lower wheel.*/
-    public void setLowerFilterWheel(String in) { this.lowerFilterWheel = in;}
+    public void setLowerFilterWheel(String in) {
+	 
+	this.lowerFilterWheel = in;
+    }
     
     /** Returns the Identity of filter in lower wheel . */
-    public String getLowerFilterWheel() { return lowerFilterWheel;}
+    public String getLowerFilterWheel() {
+	
+	return lowerFilterWheel;
+    }
+    
+    public int getMaxDetectorCount() {
+	
+	return maxDetectorCount; 
+    }
+        
+    /** Compares with another InstConfig to see if they are effectively the same.*/
+    public boolean sameAs(InstrumentConfig other) {
+	System.err.println("Checking CCDC with another one: "+
+			   this.toString()+" with "+other.toString());
+	if (! super.sameAs(other))
+	    return false;
+	// Ok we know they are the same class now..
+	CCDConfig cother = (CCDConfig)other;
 
-    public int getMaxDetectorCount() { return maxDetectorCount; }
+	if (! upperFilterWheel.equals(cother.getUpperFilterWheel()))
+	    return false;
+	if (! lowerFilterWheel.equals(cother.getLowerFilterWheel()))
+	    return false;
+	if (detectors[0].getXBin() != cother.getDetector(0).getXBin())
+	    return false;
+	if (detectors[0].getYBin() != cother.getDetector(0).getYBin())
+	    return false;
+	// Remember to look at CalBef and CalAft and windows..
+	return true;
+    }
     
-    // Descendant Mutators.
-         
-    // NP -> P Translator.
-    public CCDConfig(NPCCDConfig npCCDConfig) {
-	super(npCCDConfig);
-	upperFilterWheel = npCCDConfig.getUpperFilterWheel();
-	lowerFilterWheel = npCCDConfig.getLowerFilterWheel();
-	detectors[0] = new CCDDetector((NPCCDDetector)npCCDConfig.getNPDetector(0));
-    } // end (NP -> P Translator).
+    /** Create a Default CCDConfig.*/
+    public static CCDConfig getDefault() {
+	CCDConfig DEFAULT = new CCDConfig("DEFAULT");
+	DEFAULT.setDescription("Default CCDConfig");
+	DEFAULT.setUpperFilterWheel(CLEAR);
+	DEFAULT.setLowerFilterWheel(CLEAR);
+	CCDDetector detector = new CCDDetector();
+	detector.setXBin(1);
+	detector.setYBin(1);
+	detector.clearAllWindows();
+	DEFAULT.setDetector(0, detector); 	
+	return DEFAULT;
+    }
     
-    // P -> NP Translator.
-    public void stuff(NPCCDConfig npCCDConfig) {
-	super.stuff(npCCDConfig);
-	npCCDConfig.setUpperFilterWheel(getUpperFilterWheel());
-	npCCDConfig.setLowerFilterWheel(getLowerFilterWheel());	
+    // Clone Constructor.
+    public NPDBObject copy() {
 	try {
-	    npCCDConfig.setNPDetector(0, (NPCCDDetector)(detectors[0].makeNP()));
-	} catch (IllegalArgumentException iae) {	    
-	}
-    } // end (P -> NP Translator).
-    
+	    return (CCDConfig)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
 
-    // P -> NP Translator.
-    public NPDBObject makeNP() {
-	NPCCDConfig npCCDConfig = new NPCCDConfig();
-	stuff(npCCDConfig);
-	return npCCDConfig;
-    } // end (makeNP).
-    
+    // Formatted Text Output.
+    public void writeXml(PrintStream out, int level) {
+	out.println(tab(level)+"<ccdConfig name = '"+name+"'>");
+	out.println(tab(level+1)+"<upperFilterWheel>"+upperFilterWheel+"</upperFilterWheel>");
+	out.println(tab(level+1)+"<lowerFilterWheel>"+lowerFilterWheel+"</lowerFilterWheel>");
+	detectors[0].writeXml(out,level+1);
+	out.println(tab(level)+"</ccdConfig>");
+    } // end (write).
+
+    public String toString() { return "CCDConfig: "+name+
+				   " : U "+upperFilterWheel+
+				   ", L "+lowerFilterWheel+
+				   ", Bin: ["+detectors[0].getXBin()+" x "+detectors[0].getYBin()+"]";
+    }
+
 } // end class def [CCDConfig].
+
