@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: Group.java,v 1.4 2006-11-23 10:43:05 snf Exp $
+ * $Id: Group.java,v 1.5 2006-11-28 10:50:35 snf Exp $
  */
 public class Group extends NPDBObject implements Serializable {
    
@@ -167,6 +167,8 @@ public class Group extends NPDBObject implements Serializable {
     /** Stores the Group's nominal (per schedule weighting) execution time. */
     protected double nominalExecutionTime = 0.0;
 
+    protected long entryDate;
+
     /** Returns a String representing the specified seeing conditions.*/
     public static String toSeeingString(int seeing) {
 	switch (seeing) {
@@ -239,6 +241,14 @@ public class Group extends NPDBObject implements Serializable {
     
     /** Returns the  date this Group was scheduled (if Done). */
     public long getDoneDate() { return doneDate;}
+
+
+    /** Sets the  date this Group was entered.*/
+    public void setEntryDate(long in) {  this.entryDate = in;}
+    
+    /** Returns the  date this Group was entered. */
+    public long getEntryDate() { return entryDate;}
+
 
     /** Sets whether the PI should be notified on completion.*/
     public void setNotifyWhenDone(boolean in) { this.notifyWhenDone = in; }
@@ -686,6 +696,7 @@ public class Group extends NPDBObject implements Serializable {
 	    ", Use-Twilight="+toTwilightString(twilightUsageMode)+
 	    ", Meridian="+(meridianLimit < 0.0 ? "NO LIMIT" :  nf.format(Math.toDegrees(meridianLimit)*4.0)+" mins." )+
 	    ", Requires-Photom="+photometric+
+	    ", Entered/starts="+sdf.format(new Date(entryDate))+
 	    ", Expires="+sdf.format(new Date(expiryDate))+
 	    ", Sequence="+sequence+
 	    "]";
