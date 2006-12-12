@@ -72,6 +72,9 @@ public class Observation extends NPDBObject implements Serializable {
     /**  Angle offset of rotator in specified mode. */
     protected double rotatorAngle;
 
+    /** Indicates whether target should be tracked non-sidereally (if appropriate).*/
+    protected boolean nonSiderealTracking;
+
     // ### END NEW STUFF
 
 
@@ -182,6 +185,11 @@ public class Observation extends NPDBObject implements Serializable {
     /** Returns the  angle offset of rotator in specified mode. */
     public double getRotatorAngle() { return rotatorAngle;}    
 
+    /** Sets whether to track non-sidereally (if appropriate).*/
+    public void setNonSiderealTracking(boolean nst) { this.nonSiderealTracking = nst;}
+
+    /** Returns whether or not to track non-sidereally (if appropriate).*/
+    public boolean getNonSiderealTracking() { return nonSiderealTracking;}
 
     // ### END NEW STUFF
 
@@ -205,6 +213,7 @@ public class Observation extends NPDBObject implements Serializable {
 	out.println(tab(level+3)+"<angle>"+Position.toDegrees(rotatorAngle,3)+"</angle>");
 	out.println(tab(level+3)+"<mode>"+TelescopeConfig.toRotatorModeString(rotatorMode)+"</mode>");
 	out.println(tab(level+2)+"</rotator>");
+	out.println(tab(level+2)+"<tracking mode = "+(nonSiderealTracking ? "'Non-Sidereal'" : "'Sidereal'")+"/>");
 	out.println(tab(level+1)+"</telescopeConfig>");
 
 	mosaic.writeXml(out, level+1);
@@ -437,6 +446,7 @@ public class Observation extends NPDBObject implements Serializable {
 	newObservation.setAutoGuiderUsageMode(autoGuiderUsageMode);
 	newObservation.setRotatorMode(rotatorMode);
 	newObservation.setRotatorAngle(rotatorAngle);
+	newObservation.setNonSiderealTracking(nonSiderealTracking);
 	newObservation.setTelescopeConfig(telescopeConfig);
 	newObservation.setInstrumentConfig(instrumentConfig);
 	newObservation.setPipelineConfig(pipelineConfig);
@@ -455,6 +465,7 @@ public class Observation extends NPDBObject implements Serializable {
 	    ", Ag="+TelescopeConfig.toAgModeString(autoGuiderUsageMode)+
 	    ", Rot="+TelescopeConfig.toRotatorModeString(rotatorMode)+" Angle="+Position.toDegrees(rotatorAngle,3)+
 	    ", FOff="+focusOffset+
+	    ", Tracking="+(nonsiderealTracking ? "NonSidereal" : "Sidereal")+
 	    ", Mosaic="+mosaic+
 	    ", Offsets=("+sourceOffsetRA+", "+sourceOffsetDec+")"+	  
 	    "]";
