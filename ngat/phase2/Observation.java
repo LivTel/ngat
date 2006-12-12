@@ -465,7 +465,7 @@ public class Observation extends NPDBObject implements Serializable {
 	    ", Ag="+TelescopeConfig.toAgModeString(autoGuiderUsageMode)+
 	    ", Rot="+TelescopeConfig.toRotatorModeString(rotatorMode)+" Angle="+Position.toDegrees(rotatorAngle,3)+
 	    ", FOff="+focusOffset+
-	    ", Tracking="+(nonsiderealTracking ? "NonSidereal" : "Sidereal")+
+	    ", Tracking="+(nonSiderealTracking ? "NonSidereal" : "Sidereal")+
 	    ", Mosaic="+mosaic+
 	    ", Offsets=("+sourceOffsetRA+", "+sourceOffsetDec+")"+	  
 	    "]";
