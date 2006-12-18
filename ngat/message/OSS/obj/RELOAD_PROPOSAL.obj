@@ -1,0 +1,10 @@
+#Command: RELOAD_PROPOSAL
+#Attempts to retrieve a Proposal which appears to be locked but which
+#should not be - generally due to a synchronization problem. This
+#command should only be sent during automatic recovery by the PEST.
+#Module code: 702500
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
+%Path;editorPath;Path to a user already in the P2DB;The path used to locate the editor (us) in the P2DB
+%int;key;Valid (>0) key;The key to be used to lock the Proposal in the Database
+*Proposal;proposal;The ngat.phase2.Proposal requested
+$LOW_LEVEL_LOCKOUT;701501;The Proposal is locked at a lower level e.g. due to a Group being scheduled

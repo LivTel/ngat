@@ -1,0 +1,6 @@
+# Send an RCI Command to the RCS.
+#
+# Module code: 681500
+#
+%String;command;A valid RCI Command string;RCI Command
+*String;response;Response from the RCI Command execution.

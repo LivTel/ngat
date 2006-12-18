@@ -1,0 +1,2 @@
+#Instructs TCS to set the current UT1-UTC correction within pointing calculations.
+%int;value;-1.000000 to + 1.000000 secs;value to apply in UT1-UTC correction.

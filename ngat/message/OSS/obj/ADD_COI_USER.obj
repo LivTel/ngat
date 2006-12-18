@@ -1,0 +1,6 @@
+#Command: ADD_COI_USER
+#Adds a user as co-investigator to existing proposal.
+#Module code: 700100
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB. 
+%String;userId;UserId of a registered user already in the P2DB;The uid for the user who is being added as CoI.   
+*boolean;added;;True if the user was added. False if the user was already co-i.

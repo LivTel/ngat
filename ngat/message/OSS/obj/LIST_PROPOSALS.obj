@@ -1,0 +1,6 @@
+#Command: LIST_PROPOSALS
+#Returns a list of Proposals owned (or co-owned) by the user.
+#Module code: 703700  
+%Path;userPath;A valid user;The path used to identify the User in the P2DB
+*List;proposalList;A java.util.List containing the ngat.phase2.ProposalDescriptors of the Proposals belonging (PI or CoI) to this user.
+*List;userList;A java.util.List containing the ngat.phase2.UserDescriptors of the owners of the Proposals in proposalList.

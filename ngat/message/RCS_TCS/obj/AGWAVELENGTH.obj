@@ -1,0 +1,2 @@
+#Instructs the TCS to enter the specified effective wavelength for use in refraction calculations for the autoguider.
+%int;wavelength;300 to 35000 nm;wavelength to use for refraction calculations.

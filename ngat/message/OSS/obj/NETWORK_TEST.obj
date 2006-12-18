@@ -1,0 +1,5 @@
+#Command: NETWORK_TEST
+#Requests the OSS to return a number of blocks of data.
+#Currently this is broken
+#Module code: 702000
+%int;blocks;;Number of blocks of data to return

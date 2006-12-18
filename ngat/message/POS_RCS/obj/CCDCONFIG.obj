@@ -1,0 +1,7 @@
+# Supplies the information required to configure the CCD camera.
+# Module code: 692200
+#
+# Example: CCDCONFIG CB 2 340.0
+#
+%InstrumentConfig;config;a valid config for the CCD camera.
+

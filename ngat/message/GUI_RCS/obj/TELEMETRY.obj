@@ -1,0 +1,10 @@
+# Send a Telemetry connection request.
+#
+# Module code: 680900
+#
+# If the wants is left empty client will get the lot.
+
+%String;clientId;a unique ID;clients ID
+%ConnectionSetupInfo;connect;a valid connection specification;how to connect back to client
+%Vector;wants;a java.util.List of TelemetryInfo classes;list of classes client wants to receive
+

@@ -1,0 +1,7 @@
+# Terminates a specified, currently executing or pending request.
+# Pending requests are just removed from the queue. Executing requests
+# are stopped in mid action where this is possible.
+# Module code: 690100
+%int;requestCode;a valid acknowledgement reference number returned by any accepted request;reference code of request to abort.
+%boolean;all;{ True | False };True if ALL pending and executing requests should be aborted.
+$NO_SUCH_REQUEST;690101;an invalid request number.

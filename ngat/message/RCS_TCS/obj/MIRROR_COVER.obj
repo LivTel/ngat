@@ -1,0 +1,4 @@
+#Instruct TCS to open or close the mirror cover.
+%int;state;{ OPEN | CLOSE };state to place mirror cover into.
+$OPEN;mirror cover should be opened.
+$CLOSE;mirror cover should be closed.

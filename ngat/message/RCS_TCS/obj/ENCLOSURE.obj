@@ -1,0 +1,10 @@
+#Instructs the TCS to open or close the enclosure.
+#(Which shutter is which the TCS uses Shutter1 and Shutter2?)
+%int;mechanism;{ BOTH | NORTH | SOUTH };enclosure section to open or close.
+%int;state;{ OPEN | CLOSE };state to move the enclosure to.
+%int;pos;0.00 to 90.00 degs;precise angle to open/close to.
+$OPEN;the enclosure should be opened.
+$CLOSE;the enclosure should be closed.
+$BOTH;both sections should be moved.
+$NORTH;only the north section is to be moved.
+$SOUTH;only the south section is to be moved.

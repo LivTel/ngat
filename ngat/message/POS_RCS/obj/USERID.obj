@@ -1,0 +1,4 @@
+# Sets the current USerID for FITS headers Used at the start
+# of a time slot in a window to indicate that a new User is
+# now in control of the telescope.
+%String;userId;a unique (per School) ID;Id of a school or other controlling user.

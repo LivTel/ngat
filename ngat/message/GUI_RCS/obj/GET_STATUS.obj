@@ -1,0 +1,9 @@
+# Request status information.
+#
+# Module code: 680100
+#
+%String;category;a valid status category;status category.
+*StatusCategory;status;status information.
+$UNKNOWN_CATEGORY;680101;that the category was not recognized.
+$NOT_AVAILABLE;680102;that the status information is not currently available.
+$EXPIRED;680103;that the status information is out of date.

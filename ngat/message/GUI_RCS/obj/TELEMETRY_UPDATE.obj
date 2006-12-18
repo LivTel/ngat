@@ -1,0 +1,6 @@
+# Send a Telemetry connection request.
+#
+# Module code: 681800
+#
+%TelemetryInfo;data;an instance od TelemtryInfo;Serializable payload
+*long;time;time when payload was generated

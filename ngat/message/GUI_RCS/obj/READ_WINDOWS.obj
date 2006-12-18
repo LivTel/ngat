@@ -1,0 +1,7 @@
+# Request the current operations scheduled windows
+# from the RCS. The windows are returned as a
+# java.util.TreeSet containing the TimeWindows.
+#
+# Module code: 681100
+#
+*TreeSet;windows;window information

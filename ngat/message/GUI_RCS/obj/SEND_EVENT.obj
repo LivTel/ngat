@@ -1,0 +1,10 @@
+# Send an Event message.
+#
+# Module code: 680600
+#
+%int;priority;{ DEFAULT | PRIORITY };message priority
+%String;topic;a valid topic;event topic
+%boolean;timed;{ T | F };when the event is to be despatched at a later time
+%int;after;0 <= after;time in seconds until despatched
+$DEFAULT_LEVEL;680601;that the message has standard priority
+$PRIORITY_LEVEL;680602;that the message is urgent

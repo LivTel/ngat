@@ -1,0 +1,13 @@
+# Request status information.
+#
+# Module code: 680400
+#
+*int;control;process in control
+*boolean;engineering;the RCS is running in ENGINEERING mode
+*boolean;operational;the RCS is currently OPERATIONAL
+*int;lastStatus;RCS exit status on last startup attempt by RCW
+*String;agentInControl;ID of MCA currently in control or null
+*String;agentName;Name of the MCA currently in control or null
+*String;agentActivity;Activity that AIC is doing or null
+$RCS_PROCESS;680401;that the RCS is currently in control
+$WATCHDOG_PROCESS;680402;that the Watchdog is in control

@@ -1,0 +1,4 @@
+#Instructs the TCS to move the darkslide filter in/closed or out/open.
+%int;state;{ OPEN | CLOSE };state to place darkslide filter in.
+$CLOSE;the filter is to be slid in.
+$OPEN;the filter is to be slid out.

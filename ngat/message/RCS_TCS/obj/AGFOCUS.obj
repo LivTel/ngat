@@ -1,0 +1,2 @@
+#Instructs the TCS to set the autoguider focus position.
+%double;focus;0.00 to 25.00 mm;required focus position.

@@ -1,0 +1,13 @@
+# Base class for messaging between POS and RCS.
+# Module code: 690000.
+%int;requestNumber;a unique value;unique ID for this request.
+%String;controllerAddress;a valid IP Address;Address of the client (RTOC).
+$UNSPECIFIED_ERROR;690001;that a non-specific error has occurred.  
+$CLIENT_ABORTED;690002;that the client aborted this request.   
+$TASK_ABORTED;690003;that the request was aborted for some unspecified reason.
+$SERVER_BUSY;690004;that the serve is not accepting connections.
+$TIMED_OUT;690005;that the request has been queued for longer than anticipated
+$NOT_IN_CONTROL;690006;that the RTOC is not currently in control
+$INVALID_RTOC;690007;that the RTOC is not known to the RCS
+$NOT_OPERATIONAL;690008;that the RCS is not currently operational
+$NOT_PLANETARIUM_MODE;690009;that the RCS is not currently in planetarium (realtime) mode.

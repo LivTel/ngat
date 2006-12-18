@@ -1,0 +1,7 @@
+# Set the current seeing used by the OSS.
+#
+# Module code: 681900
+#
+%int;extinction;{ PHOTOMETRIC |  SPECTROSCOPIC };extinction value
+$PHOTOMETRIC;681901;that the extinction is good 
+$SPECTROSCOPIC;681902;that the extinction is bad

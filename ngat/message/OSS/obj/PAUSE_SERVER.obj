@@ -1,0 +1,9 @@
+#Command: PAUSE_SERVER
+#Requests the OSS server to pause 
+#While paused, it will only accept requests from clients of types
+# [CONTROL] or [ADMIN].
+#The OSS server is restarted by issuing a RESTART_SERVER request.
+#Module code: 702200
+%String;message;;A message to deliver to clients which try to connect while paused
+%long;expectedRestartTime;;Time when the OSS Server is 'expected' to restart - not guaranteed
+*long;implementationTime;Time when request was made to OSS server

@@ -1,0 +1,10 @@
+# Send a Log message.
+#
+# Module code: 681000
+#
+%int;level;{0 - 10};a valid log level for the message
+%String;logName;a valid logger;name of the Logger
+%String;message;a message string;log message
+%String;category;a valid log category;the category of the message
+%String;class;a class name;name of the originator class
+%String;name;an object name;name of the originator instance

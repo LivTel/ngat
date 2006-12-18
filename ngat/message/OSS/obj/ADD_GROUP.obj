@@ -1,0 +1,10 @@
+#Command: ADD_GROUP.
+#Adds a Group of observations to the named Proposal.
+#Module code: 700200
+%Group;group;A valid Group;Group to add to Proposal
+%Path;proposalPath;A valid Proposal path;path of the Proposal to add Group to
+%Map;srcMap;A mapping;mapping between Observations (in Group) and Source IDs in existing Proposal
+%Map;icMap;A mapping;mapping between Observations (in Group) and InstConfig IDs in existing Proposal
+%Map;tcMap;A mapping;mapping between Observations (in Group) and TeleConfig IDs in existing Proposal
+$CONTENT_MAPPING_ERROR;700201;One or more items in the Source,InstConfig,TeleConfig maps could not be found
+$GROUP_ALREADY_DEFINED;700202;The Specified Group already exists

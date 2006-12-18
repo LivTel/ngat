@@ -1,0 +1,26 @@
+# Controls the processing and return of CCD image data.
+# Module code: 690500
+%int;destination;{ SERVERPC (= 0) | ALTERNATIVE (= 1-n) };destination for the processed data.
+%int;type;{ COLO[U]R_JPEG | BEST_JPEG | JPEG | BEST_FITS | FITS };type of processing to perform.
+%long;startFrame;a valid frame number as returned by CCDOBSERVE;frame number of the first frame to process.
+%long;endFrame;a valid frame number as returned by CCDOBSERVE;frame number of the last frame to process.
+%int;sourceType;{ PLANETARY | STELLAR | GALACTIC };type of source object - for processing algorithm.
+$COLOR_JPEG;690501;processing to generate a color JPEG from at least 2 frames.
+$BEST_JPEG;690502;processing to return the best (based on image sharpness) of a series of JPEGs.
+$JPEG;690503;processing should return a greyscale JPEG (single frame or average of several).
+$BEST_FITS;690504;processing to return the best (based on image sharpness) of a series of FITS images.
+$FITS;690505;processing should return a greyscale FITS image (single frame or average of several).
+$MOSAIC_FITS;690506;processing should return a mosaic of the suplied images as a single FITS file.
+$MOSAIC_JPEG;690507;;processing should return a mosaic of the suplied images as a single JPEG.
+$PLANETARY;690508;a planetary source type.
+$GALACTIC;690509;an extended source type - e.g. galaxy, nebula.
+$STELLAR;690510;a stellar source type.
+$MISSING_IMAGE;690512;that one or more of the specifed images is missing or corrupted.
+$IMCOLOR_FAULT;690513;that a fault during the IMCOLOR processing.
+$IMBEST_FAULT;690514;that a fault during the IMBEST processing.
+$JPEG_FAULT;690515;that a fault occurred during JPEG processing.
+$COMPRESSION_FAULT;690516;that a fault occurred during FITS compression.
+$TRANSFER_FAULT;690517;that a fault occurred during image transfer.
+$MOSAIC_FAULT;690518;that a fault has occurred during mosaicing.
+$SERVERPC;0;that the image should be transferred to the server-pc.
+*String;filename;name or URL of the resulting image file.

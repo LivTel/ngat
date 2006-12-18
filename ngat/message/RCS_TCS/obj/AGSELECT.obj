@@ -1,0 +1,3 @@
+#Instructs the TCS to select a specified autoguider.
+%int;autoguider;{ from config file };autoguider to use.
+$CASSEGRAIN;only available autoguider for LT.

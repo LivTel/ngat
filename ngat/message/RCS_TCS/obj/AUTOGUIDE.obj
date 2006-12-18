@@ -1,0 +1,18 @@
+#Instructs TCS to switch the autoguider state.
+#see notes in RCS_TCS ICD.
+#This is ASTROGUIDE !
+%int;state;{ ON | OFF | SUSPEND | RESUME };state to put autoguider in.
+%int;mode;{ RANK Ý RANGE Ý PIXEL };guide star selection criterion.
+%int;range1;0.0 to 20.0 mag;start of magnitude range for guide star selection.
+%int;range2;0.0 to 20.0 mag;end of magnitude range for guide star selection.
+%int;rank;1 to 10;brightness ranking of star to select for guiding.
+%int;xPix;0 to 2047;x coordinate of pixel where guide star is located.
+%int;yPix;0 to 2047;y coordinate of pixel where guide star is located.
+$ON;autoguider should be switched on (closed loop).
+$OFF;autoguider should be switched off (open loop).
+$SUSPEND;autoguider should continue to send corrections but TCS should ignore.
+$RESUME;TCS should start applying autoguider corrections again (after a SUSPEND).
+$RANK;guide star should be chosen from the field of view as that with rank.
+$RANGE;guide star should be chosen from any in specified magnitude range.
+$PIXEL;guide star should be nearest to specified pixel coordinates.
+*double;guidemag;magnitude of the selected guide star.

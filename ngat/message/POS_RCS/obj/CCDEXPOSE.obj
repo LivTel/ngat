@@ -1,0 +1,6 @@
+# Supplies the information required to perform a CCD camera exposure.
+# Module code: 692300
+#
+# Example: CCDEXPOSE 300.0
+#
+%int;exposure; 0 < exposure < 7200000;exposure (millis).

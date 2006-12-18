@@ -1,0 +1,6 @@
+#Command: REGISTER_USER
+#Sent by PEST to register a new user of an installation. This request is used
+#to obtain a host-installation-user-specific registration ID.
+#Module code: 702400
+%Path;userPath;UserId of a user already in the P2DB;The path used to locate the User in the P2DB
+*long;registrationCode;The registration code for the user for this specific installation of the PEST

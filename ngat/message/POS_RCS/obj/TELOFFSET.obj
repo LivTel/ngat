@@ -1,0 +1,16 @@
+# Supplies the information required to offset the telescope from its current position.
+# The rotator is not moved by a rotation parameter it merely
+# Module code: 692100
+#
+# Example: TELOFFSET TANGENT 24.0 24.0 35.0
+#
+# Example: TELOFFSET SKY 50.0 45.0
+#
+%double;raOffset;-3600 to 3600 arcsec;offset in RA.
+%double;decOffset;-3600 to 3600 arcsec;offset in declination.
+%double;xOffset;-3600 to 3600 arcsec;offset in X direction of rotated tangent plane.
+%double;yOffset;-3600 to 3600 arcsec;offset in Y direction of rotated tangent plane.
+%double;rotation;0 to 2*PI;tangent plane rotation (from Pole cwise).
+%int;mode;{ TANGENT | SKY };indicates whether sky or tangent plane coordinates.
+$TANGENT;692101;tangent plane offset in (X, Y) rotated by r.
+$SKY;692102;sky offset in (RA, Dec).

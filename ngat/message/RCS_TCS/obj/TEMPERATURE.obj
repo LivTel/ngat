@@ -1,0 +1,2 @@
+#Instructs TCS the value of atmospheric temperature to use in refraction claculations.
+%double;temperature;-20.00 to +40.00 degs C;temperature to use in refraction calculation.

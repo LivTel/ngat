@@ -1,0 +1,7 @@
+#Command: ADD_SOURCE
+#Adds a source to an existing proposal.
+#Module code: 700500
+%Path;proposalPath;;Path to a proposal already in the P2DB;The path used to locate the Proposal in the OSS database
+%Source;source;A valid Source;The Source to add
+%boolean;replace;;True if the Source should be replaced (if it already exists)
+$SOURCE_ALREADY_DEFINED;700501;The Specified Source already exists

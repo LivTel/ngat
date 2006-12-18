@@ -1,0 +1,6 @@
+#Command: GET_NEWS
+#Retrieves the current OSS system news.
+#Module code: 701400
+%int;fromIndex;index <= current news index;The index of the earliest sequential news item required
+*List;news;A java.util.List of news items as Strings in form: Index: <index>\n Date: <date>\n Text: <text>
+ 

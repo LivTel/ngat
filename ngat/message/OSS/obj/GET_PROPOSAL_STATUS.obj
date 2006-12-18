@@ -1,0 +1,6 @@
+#Command: GET_PROPOSAL_STATUS
+#Retrieves a descriptor for a Proposal. This is used to check the current
+#status of a Proposal prior to issuing a subsequent GET_PROPOSAL command.
+#Module code: 701600
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
+*ProposalDescriptor;descriptor;An ngat.phase2.ProposalDescriptor containing details of the requested Proposal

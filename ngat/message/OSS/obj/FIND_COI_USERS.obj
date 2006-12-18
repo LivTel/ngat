@@ -1,0 +1,5 @@
+#Command: FIND_COI_USERS
+#Find the various co-investigators of a proposal.
+#Module code: 701200
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
+*List;coiUsers;A java.util.List of Strings describing the co-investigators of a proposal. These are formatted as: <TagID> (<UserId>) [<First Name> <Second Name>] email: <Email>

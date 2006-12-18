@@ -1,0 +1,19 @@
+#Command: UPDATE_GROUP
+#Updates a Group's scheduling/execution history. Sent when a Group has
+#been scheduled and either completes or fails for some reason. For a
+#FlexibleGroup there may be many scheduled records but only one done record.
+#For Monitor and Ephem Groups there can be many of each. For FixedGroups
+#there should only be one record which may be done or failed.
+#The owning Proposal and Tag have their respective block allocation times
+#,total time and fixed time updated to reflect the time used only if the
+#Group executed successfully. Proposals which have a freeTwilight allocation
+#do not have these updated if it is currently twilight.
+#Module code: 703400
+%Path;groupPath;Path to a group already in the P2DB;The path used to locate the Group in the P2DB
+%long;doneTime;A date/time ;The time/date at which the Group was completed if at all
+%int;key;Valid (>0) key;The key to unlock the Group's record
+%boolean;success;{ T | F };True if the Group was completed successfully
+%String;details; ;Information about the completion or reason for failure of the referred Group
+%int;code;A valid error-code or 0;optional code to indicate the reason for failure
+%long;usedTime;Time >= 0;amount of time the Group took to execute or fail
+%long;tabuTime; Time >= 0;amount of time this group should be considered Taboo due to systemic failure, but only if the group fails

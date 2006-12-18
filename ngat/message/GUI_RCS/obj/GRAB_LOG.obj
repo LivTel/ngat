@@ -1,0 +1,12 @@
+# Request logging to be directed to the GUI a handler will
+# then log to screen or a popup textfield. Handler may impose
+# any formatting it wishes. Multiple LogRecords will be received
+# at unpredictable times until the connection is closed at either end.
+#
+# Module code: 680300
+#
+%String;logName;a valid logger;logger name
+%int;level;{ 0 - 9, OFF, ALL };the log level for the stream handler
+*LogRecord;record;one of many logger output records
+$NO_SUCH_LOGGER;680301;the logger does not exist or cannot be found
+$INVALID_LEVEL;680302;the log level was not valid

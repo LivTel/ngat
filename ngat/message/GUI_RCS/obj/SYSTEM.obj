@@ -1,0 +1,14 @@
+# Restart, reboot, shutdown the RCS / RCW.
+#
+# The implementation matches the REBOOT command used
+# on instrument (ICS) and OSS systems.
+#
+# Module code: 680800
+#
+%int;level;{ RESTART_ENG | RESTART_AUTO | HALT | REBOOT | SHUTDOWN };level option
+$RESTART_ENGINEERING;680801;that the RCS should be restarted in ENG mode
+$RESTART_AUTOMATIC;680802;that the RCS should be restarted in AUTO mode
+$HALT;680803;that the RCS should shutdown and not be restarted by RCW
+$REBOOT;680804;that the RCW should request <b>occ</b> to reboot
+$SHUTDOWN;680805;that the RCW should request <b>occ</b> to shutdown
+$NOT_AVAILABLE;680801;that the system request cannot be actioned at this time

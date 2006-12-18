@@ -1,0 +1,7 @@
+#Command: LOGIN_TOOL
+#Checks the version/upgrade information of a PEST installation
+#against the OSS master upgrade records.
+#Module code: 701900
+%Properties;versions;Various key:value pairs defined in PEST Upgrade Doc (TBD);Stores the PEST installation's version information
+*Properties;upgrades;Stores the PEST installation upgrade information
+

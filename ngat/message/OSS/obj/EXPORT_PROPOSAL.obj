@@ -1,0 +1,10 @@
+#Command: EXPORT_PROPOSAL
+#Replaces a Proposal specification after editing. The proposal will
+#not be scheduled as some of its fields may not be set at this point.
+#This command is used to allow sharing of proposal editing task between
+#various co-investigators.
+#Module code: 701100
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
+%Proposal;replacementProposal;A valid but not neccessarily consistent or complete Proposal; The replacement (updated) Proposal to replace the one at 'proposalPath'
+%int;key;Valid (>0) key;The key to unlock the Proposal record. 
+ 

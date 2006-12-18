@@ -1,0 +1,13 @@
+# Supplies the information required to perform a mosaic 
+# exposure sequence.
+# Module code: 692500
+#
+# Example: TELMOSAIC 35.0 CB 2 3 3 240.0 240.0 10.0
+#
+%double;rotation;0 to 2*PI;tangent plane rotation.
+%InstrumentConfig;config;a valid config for the CCD camera;camera configuration
+%int;xCount;1 - 5;number of cells in rotated X direction.
+%int;yCount;1 - 5;number of cells in rotated Y direction.
+%double;xOffset;0 - 3600 arcsec;offset in rotated X direction.
+%double;yOffset;0 - 3600 arcsec;offset in rotated Y direction.
+%int;exposure; 0 < exposure < 7200000;exposure (millis).

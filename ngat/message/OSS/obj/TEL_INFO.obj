@@ -1,0 +1,13 @@
+#Command: TEL_INFO
+#Used to update the OSS with information about the current telescope position
+#and availability of autoguider (+ others later).
+#Module code: 703100
+%double;telescopeAzimuth;0 <= az <= 2*PI;The current azimuth of the telescope (rads)
+%double;telescopeAltitude;0 <= alt <= PI/2;The current altitude of the telescope (rads)
+%boolean;autoguiderAvailable;{ T | F };True if the autoguider is currently available
+%double;azNegLimit;Can be outside [ -2*PI , 2+PI ];Telescope azimuth negative wrap limit (rads)
+%double;azPosLimit;Can be outside [ -2*PI , 2+PI ];Telescope azimuth positive wrap limit (rads)
+%double;altLowLimit;[0, Pi/2];Telescope altitude low limit (rads)
+%double;altHighLimit;[0, Pi/2];Telescope altitude high limit (rads)
+%double;rotNegLimit;Can be outside [ -2*PI , 2+PI ];Telescope rotator negative wrap limit (rads)
+%double;rotPosLimit;Can be outside [ -2*PI , 2+PI ];Telescope rotator positive wrap limit (rads)

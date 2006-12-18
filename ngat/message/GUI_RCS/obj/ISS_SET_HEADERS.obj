@@ -1,0 +1,14 @@
+# Set some FITS headers when observing in manual mode.
+#
+# Headers are: TAG, USER, PROP, GRP and OBS IDs.
+#
+# Module code: 681400
+#
+%String;tagId;A valid ID;TAG Id
+%String;userId;A valid ID;User Id
+%String;proposalId;A valid ID;Proposal Id
+%String;groupId;A valid ID;Group Id
+%String;obsId;A valid ID;Observation Id
+%boolean;manual;{T|F};true if this is to set manual headers, false to reset to automatic
+
+$NOT_MANUAL_MODE;681401;that the RCS is not in manual mode at present

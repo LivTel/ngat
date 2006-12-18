@@ -1,0 +1,4 @@
+#Command: FORCE_UNLOCK_PROPOSAL
+#Forces a proposal to unlock after a synchronization problem (To be used with CAUTION).
+#Module code: 701300
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB

@@ -1,0 +1,6 @@
+#Command: REMOVE_PROPOSAL
+#Remove the Proposal at the specified path.
+#
+#Module code: 704400
+%Path;proposalPath;Path to a Proposal already in the P2DB;The path used to locate the Proposal's owner in the P2DB
+

@@ -1,0 +1,8 @@
+#Command: REGISTER_TOOL
+#Sent by PEST when a new installation is made. This request is used
+#to obtain a host-installation-specific registration ID.
+#Module code: 702300
+%String;clientAddress;Client's IP Address or host;Host address of the machine it is being installed on
+%String;clientName;A Valid UserID;Name of user who is registering this installation
+%String;installDir;Directory path;User's installation directory
+*long;registrationCode;The registration code for this specific installation of the PEST

@@ -1,0 +1,5 @@
+#Command: ADD_TAG
+#Add the TAG to the DB root.
+#
+#Module code: 704500
+%Tag;tag;A valid but not neccessarily consistent or complete Tag;The Tag to add

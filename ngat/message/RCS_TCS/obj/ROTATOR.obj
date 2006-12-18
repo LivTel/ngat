@@ -1,0 +1,9 @@
+#Instruct TCS to switch the rotator mode or move it.
+%int;mode;{ SKY | MOUNT | FLOAT | VERTICAL | VFLOAT };mode of operation.
+%double;position;SKY (0.00 to 360.00 degs) or MOUNT (-270.00 to +270.00 degs);sky position angles.
+$SKY;position angle is relative to sky.
+$MOUNT;position angle is relative to mount.
+$FLOAT;rotator is not slewed from current setting on source change.
+$VERTICAL;rotator is slewed to vertical position but stops tracking.
+$VFLOAT;rotator is slewed to vertical and tracking engaged to keep it vertical.
+

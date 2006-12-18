@@ -1,0 +1,14 @@
+# Supplies the information required to slew the telescope to 
+# a moving (Solar System) source, configure the instrument 
+# and take an exposure.
+# Module code 690300
+%int;srcId;currently {MOON} only;the id of the source to observe;
+$MOON;690301;source is the MOON.
+$MERCURY;690302;source is MERCURY.
+$VENUS;690303;source is VENUS.
+$MARS;690304;source is MARS.
+$JUPITER;690305;source is JUPITER.
+$SATURN;690306;source is SATURN.
+$URANUS;690307;source is URANUS.
+$NEPTUNE;690308;source is NEPTUNE.
+$PLUTO;690309;source is PLUTO.

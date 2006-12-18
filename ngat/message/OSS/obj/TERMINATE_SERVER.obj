@@ -1,0 +1,6 @@
+#Command: TERMINATE_SERVER
+#Requests the OSS to shutdown. The OSS will get the signal after a period
+#but may take a while for currently executing and queued requests to complete first.
+#Module code: 703200
+%long;delay;> 0 millis;Specifies the delay (millis) before the Launcher should be given the terminate signal
+*long;requestTime;Time the request was sent to the OSS - no way to tell if it worked.

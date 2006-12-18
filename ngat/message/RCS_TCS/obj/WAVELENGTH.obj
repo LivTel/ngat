@@ -1,0 +1,2 @@
+#Instructs TCS to set the wavelength used in refraction calculations.
+%double;wavelength;0.30 to 35.00 microns;

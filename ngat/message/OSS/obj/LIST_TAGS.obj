@@ -1,0 +1,4 @@
+#Command: LIST_TAGS
+#Returns a list of TAGS
+#Module code: 703900  
+*List;tagList;A java.util.List containing the ngat.phase2.TagDescriptors of the Tags

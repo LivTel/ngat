@@ -1,0 +1,2 @@
+#Instruct the TCS to slew the telescope to the spcified azimuth and stop.
+%double;angle;-270.00 to +270.00 degs;azimuth angle to slew to.

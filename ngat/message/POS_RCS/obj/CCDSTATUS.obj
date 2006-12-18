@@ -1,0 +1,6 @@
+# Requests CCD camera status information from the Robotic Control Syatem. This data is
+# only available during scheduled planetarium mode operations. Outside of
+# this period weather data is available from a dedicated web site. 
+# <a href = "http://TBD">Instrument status pages</a>.
+# Module code: 690600
+*Hashtable;status;table of name, value pairs indicating various CCD statii.

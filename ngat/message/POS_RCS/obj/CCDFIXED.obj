@@ -1,0 +1,6 @@
+# Supplies the information required to slew the telescope to a fixed (ExtraSolar) source
+# configure the instrument and take an exposure.
+# Module code 690200
+%Position;position;any valid ngat.astrometry.Position - ie. a (RA,dec) pair;position to slew to.
+%String;sourceId;a valid Id for the Target.
+%String;sourceType;a valid target class;class/type of target for FITS headers

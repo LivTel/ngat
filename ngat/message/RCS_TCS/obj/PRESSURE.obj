@@ -1,0 +1,2 @@
+#Instructs TCS the value of the barometric pressure to use in refraction calculations.
+%double;pressure;500.00 to 1200.00 mbars;pressure to use for calculations.

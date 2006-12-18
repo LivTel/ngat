@@ -1,0 +1,11 @@
+#Command: INSTRUMENT_INFO
+#Used to update the OSS with information about the current status,
+#configuration and selection of instrument. The OSS InstrumentRegistry impl
+#will select the relevant Instrument object and set it with this data.
+#Module code: 701700
+%InstrumentConfig;config;Instrument-specific config;The configuration settings for the specified Instrument
+%String;instName;The name of a valid Instrument (Registry entry);The name/id of the instrument whose config is to be set
+%boolean;current;;True if the selected instrument is current
+%int;status;Const: ngat.Instrument.{ ONLINE | OFFLINE };The current status of the Instrument
+$NO_SUCH_INSTRUMENT;701701;The instrument named by instName was not known to the OSS
+$UNSUITABLE_CONFIG;701702;The supplied InstrumentConfig was not suitable for the named instrument.

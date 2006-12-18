@@ -1,0 +1,10 @@
+# Supplies the information required to slew the telescope to a source.
+# The source can be moving or fixed with appropriate parameters.
+# Module code: 692000
+#
+# Example: TELSLEW FIXED "NGC 2525" 10 10 12.3 24 26 56.6 J2000.0
+#
+# Example: TELSLEW MOVING MARS
+#
+#
+%Source;source;any valid ngat.phase2.Source or subclass;target to slew to.

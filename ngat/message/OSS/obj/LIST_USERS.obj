@@ -1,0 +1,5 @@
+#Command: LIST_USERS
+#Returns a list of Users owned by the TAG.
+#Module code: 704200  
+%Path;tagPath;A valid TAG;The path used to identify the TAG in the P2DB
+*List;userList;A java.util.List containing the ngat.phase2.UserDescriptors of the Users belonging to this TAG.

@@ -1,0 +1,14 @@
+# Request the RCS to bind/release CIL port.
+#
+# Module code: 681200
+#
+%int;option;indicates whether to bind or relase the CIL port
+*String;host;destination host
+*int;sendPort;port RCS is sending from
+*int;destPort;port RCS is sending to
+*boolean;active;whether the socket is active (or closed)
+$BIND;681201;that the RCS should bind to the CIL port
+$RELEASE;681202;that the RCS should release the CIL port
+$SHOW;681203;that the CIL status should be returned
+$BIND_ERROR;681201;that the bind failed.
+$RELEASE_ERROR;681202;that the relase failed - bizarrely

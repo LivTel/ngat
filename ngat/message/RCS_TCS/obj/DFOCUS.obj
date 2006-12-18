@@ -1,0 +1,2 @@
+#Instructs TCS to change the focus by a specified amount. Usaually this is issued by an instrument via the ISS to allow focus offsetting to compensate for filter changes.
+%double;offset;-30.00 to +30.00 mm;amount to offset focus by.

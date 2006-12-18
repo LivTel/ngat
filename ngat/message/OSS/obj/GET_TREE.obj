@@ -1,0 +1,5 @@
+#Command: GET_TREE
+#Retreives the full Tree starting at Root and including TAGs, User, Proposals.
+# These are returned in the form of Descriptors and content lists.
+#Module code: 704600
+*ItemDescriptor;treeDescriptor;The tree descriptor containing descriptors of all content.

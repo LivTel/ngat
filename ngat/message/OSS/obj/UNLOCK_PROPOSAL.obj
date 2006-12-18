@@ -1,0 +1,6 @@
+#Command: UNLOCK_PROPOSAL
+#Unlocks a Proposal which has been locked accidentally 
+#e.g. when a network error has occurred after locking for edit.
+#Module code: 703300
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
+%int;key;Valid (>0) key;The key to unlock the Proposal

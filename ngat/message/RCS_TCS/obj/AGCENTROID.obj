@@ -1,0 +1,5 @@
+#Instructs the TCS to centroid on the current guide source.
+*double;xPixel;X -axis ixel position of guide star on CCD.
+*double;yPixel;Y -axis ixel position of guide star on CCD.
+*double;fwhm;FWHM for centroid source.
+*int;peak;Peak pixel value of source.

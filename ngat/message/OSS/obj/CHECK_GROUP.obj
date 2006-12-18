@@ -1,0 +1,7 @@
+#Command: CHECK_GROUP
+#Returns the scheduling/execution history of a group.
+#Module code: 700900
+%Path;groupPath;;The path used to identify the Group in the P2DB
+%long;startTime;Time in millis since epoch;The start of the time period to check whether Group was done
+%long;endTime;Time in millis since epoch;The end of the time period to check whether Group was done
+*List;history;A java.util.List containing zero or more ngat.phase2.Group.History objects

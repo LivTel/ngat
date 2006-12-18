@@ -1,0 +1,13 @@
+# Supplies the information required to perform a series of 3
+# exposures to form an RGB image from FITS exposures.
+# Module code: 692400
+#
+# Example: TELRGB CRCVCB 10.0 20.0 40.0
+#
+%String;redFilter;a valid filter name;redfilter.
+%String;greenFilter;a valid filter name;greenfilter.
+%String;blueFilter;a valid filter name;blue filter.
+%int;redExposure; 0 < exposure < 7200000;red exposure (millis).
+%int;greenExposure; 0 < exposure < 7200000;green exposure (millis).
+%int;blueExposure; 0 < exposure < 7200000;blue exposure (millis).
+%int;bin;a valid binning factor (1, 2, 4, 8);binning.

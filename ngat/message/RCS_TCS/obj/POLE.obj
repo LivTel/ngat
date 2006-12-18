@@ -1,0 +1,3 @@
+#Instructs TCS to set the polar motion corrections.
+%double;xPos;-1.00 to +1.000 arcsec;X axis correction for polar motion.
+%double;yPos;-1.00 to +1.000 arcsec;Y axis correction for polar motion.

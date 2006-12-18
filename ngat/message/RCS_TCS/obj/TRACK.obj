@@ -1,0 +1,11 @@
+#Instructs TCS to start or stop various mechanisms.
+%int;mechanism;{ALL | AGFOCUS | ALTITUDE | AZIMUTH | FOCUS | ROTATOR};keyword to indicate mechanism to set state of.
+%int;state;{ON | OFF};keyword to indicate state to put specified mechanism into.
+$ALL;all mechanisms.
+$AGFOCUS;autoguider focus.
+$ALTITUDE;altitude drive.
+$AZIMUTH;azimuth drive.
+$FOCUS;focus drive.
+$ROTATOR;cassegrain rotator drive.
+$ON;set mechanism on.
+$OFF;set mechanism off.

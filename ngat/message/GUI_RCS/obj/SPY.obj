@@ -1,0 +1,14 @@
+# Send a Spy  request.
+#
+# Module code: 681600
+#
+%int;category;A valid category of target {SENSOR, FILTER, RULE etc};target category
+%String;target;a valid target;name of the target object to watch
+$UNKNOWN_CATEGORY;681501;that the category was not recognized.
+$UNKNOWN_TARGET;681502;that the target was not recognized
+
+$SENSOR;681501;target is a Sensor.
+$FILTER;681502;target is a filter.
+$MONITOR;681503;target is a monitor.
+$RULE;681504;target is a rule.
+$RULESET;681505;target is a ruleset.

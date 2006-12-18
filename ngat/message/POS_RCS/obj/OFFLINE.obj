@@ -1,0 +1,5 @@
+# Requests the RCS to pass control over to the Offline mode
+# via the Science Control Agent until a specified time or
+# the end of the current RTOC window.
+%long;until;a valid (ISO 8601 Formatted date/time);time to switch to Offline mode until.
+$WINDOW_EXCEEDED;691201;that the specified time exceeds the current RTOC window.

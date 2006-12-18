@@ -1,0 +1,19 @@
+# Request RCS to switch between ENG and AUTO states.
+# 
+# If the RCS is in ENG state then AUTO will move it to INIT thence
+# depending on conditions towards operationality.
+#
+# If the RCS is running operations or waiting on conditions, then ENG
+# will return it immediately to ENG state.
+#
+# NOTE: Currently it will not perform any finalization or other tasks
+#       but will abort a running MCA - (awaiting state model changes).
+#
+# The result of this command will be observable via subsequent ID responses.
+#
+# Module code: 680700
+#
+%int;mode;{ ENG | AUTO };the state to switch to
+$ENGINEERING;680701;that the RCS should switch to ENGINEERING state
+$AUTOMATIC;680702;that the RCS should switch to AUTOMATIC/INIT state
+$NOT_IMPLEMENTED;680710;that the mode switch is not currently implemented by the RCS

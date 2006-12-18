@@ -1,0 +1,2 @@
+#Instruct the TCS to drive the focus to a specified setting.
+%double;focus;-30.00 to +30.00 mm;virtual focus position.

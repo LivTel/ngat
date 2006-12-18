@@ -1,0 +1,26 @@
+# Supplies the information required to slew the telescope to a source
+# configure the instrument and take an exposure.
+# Module code: 690400
+%String;filter1;a valid lower filter type;the filter type in the lower wheel;
+%String;filter2;a valid upper filter type;the filter type in the upper wheel;
+%double;exposure;0.000 to 7200.000;exposure time in secs.
+%int;bin;1, 2, 4 only;CCD binning factor.
+%int;mode;{ SINGLE | MOSAIC | MOSAIC_SETUP};whether the exposure is part of a mosaic.
+%double;xOffset;small +/- offset;offset in (rotated) X axis (arcsecs).
+%double;yOffset;small +/- offset;offset in (rotated) Y axis (arcsecs).
+%double;rotation;0.0 - 360.0;rotator sky position angle.
+$MOSAIC_SETUP;690401;exposure is first part of a mosaic.
+$MOSAIC;690402;exposure is (not first) part of a mosaic.
+$SINGLE;690403;exposure is a single (one-off).
+$SLEW_ONLY;690404;just a slew and no exposure.
+$SLEW_PLUS_ROT;690405;a lsew with rotation.
+
+$CCD_FAULT;690401;an error in the CCD.
+$TELESCOPE_FAULT;690402;an error with the telescope control system or a mechanism.
+$ENCLOSURE_FAULT;690403;an unspecified fault with the enclosure.
+$BAD_WEATHER;690404;that the enclosure has been closed due to extreme weather.
+$BAD_COORDS;690405;that the coordinates were dodgy.
+$BAD_BINNING;690406;that the CCD binning was not valid.
+$BAD_FILTER;690407;that the specifed filter combination was not available.
+$OBJECT_SET;690408;that the target has/will set before the exposure is complete.
+*long;frameNumber;reference number of the image frame.

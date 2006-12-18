@@ -1,0 +1,5 @@
+# Base class for messaging between GUI and RCS.
+#
+# Module code: 680000
+#
+$UNKNOWN_COMMAND;680001;that the command class is unknown

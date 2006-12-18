@@ -1,0 +1,7 @@
+#Command: INIT_SCHEDULE
+#Requests the OSS to start scheduled operations.
+#The OSS may use the opportunity to carry out any caching results of
+#regularly used but expensive calculations or searches. E.g. the
+#sequence of FixedGroups over the (rest of) the night could be 
+#determined and saved at this time.
+#Module code: 703800

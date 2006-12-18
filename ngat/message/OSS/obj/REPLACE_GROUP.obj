@@ -1,0 +1,9 @@
+#Command: REPLACE_GROUP.
+#Replaces a Group of observations in the named Proposal.
+#Module code: 703600
+%Group;group;A valid Group;Group to add to Proposal
+%Path;groupPath;A valid Group path;path of the Group to replace
+%Map;srcMap;A mapping;mapping between Observations (in Group) and Source IDs in existing Proposal
+%Map;icMap;A mapping;mapping between Observations (in Group) and InstConfig IDs in existing Proposal
+%Map;tcMap;A mapping;mapping between Observations (in Group) and TeleConfig IDs in existing Proposal
+$CONTENT_MAPPING_ERROR;703601;One or more items in the Source,InstConfig,TeleConfig maps could not be found

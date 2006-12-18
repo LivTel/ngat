@@ -1,0 +1,2 @@
+#Instructs the TCS to move the autoguider probe to a radial position.
+%double;position;0.00 to 110.00 mm;radial position from field edge.

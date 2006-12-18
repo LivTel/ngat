@@ -1,0 +1,7 @@
+# Replaces the current operations scheduled windows
+# at the RCS.
+#
+# Module code: 692700
+#
+%TreeSet;windows;sorted set of windows information;set of schedule windows
+$ILLEGAL_WINDOWS;692701;that there is an error in the windows

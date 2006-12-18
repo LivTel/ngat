@@ -1,0 +1,10 @@
+# Dynamically change a task-configuration parameter.
+#
+# Module code: 681900
+#
+%String;taskName;a valid task class name;full name of the task class.
+%String;param;a valid task configuration parameter key;task configuration key.
+%String;value;any valid value;value to associate with the key.
+$UNKNOWN_TASK;681901;that the task class was not valid.
+$MISSING_RESOURCE;681902;that some system resource was not available to carry out this operation.
+

@@ -1,0 +1,4 @@
+#Instruct TCS to change from day to night state or vice versa.
+%int;state;{ ON | OFF };state of operation.
+$ON;go into night-time mode.
+$OFF;go into day-time mode.

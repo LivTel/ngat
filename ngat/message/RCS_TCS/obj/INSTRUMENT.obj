@@ -1,0 +1,6 @@
+#Instruct TCS which instrument is to be used. This tells the TCS which focal station, rotator, fold position and autoguider to use.
+%int;instrument;{ from config file };instrument to use.
+$RAT_CAM;EEV42-40 CCD camera.
+$NUVIEW_SPEC;Nu View II spectrograph.
+$MES_SPEC;Manchester Echelle spectrograph.
+$SUPIR_CAM;Supernovae IR camera.

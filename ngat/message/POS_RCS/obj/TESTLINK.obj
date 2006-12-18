@@ -1,0 +1,8 @@
+# Tests the link between the client (Planetarium) and server (RCS)
+# and whether the RCS is actually in Planetarium Mode / functioning.
+# Module code: 691100
+*int;returnCode;{ PLANETARIUM_MODE | LINK_DOWN | NOT_PLANETARIUM_MODE | OVERRIDDEN };code to indicate the current state of the link.
+$LINK_DOWN;691101;that the link is down or some sort of internal network fault.
+$PLANETARIUM_MODE;691102;that the system is in Planetrium mode.
+$OVERRIDDEN;691103;that the PCA has been overridden by a higher priority MCA.
+$PLANETARIUM_INITIALIZING;691104;that the PCA is being initialized

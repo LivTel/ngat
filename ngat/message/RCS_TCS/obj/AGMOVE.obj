@@ -1,0 +1,6 @@
+#Instructs the TCS to move the autoguider probe to a position
+#and Rotator to a given mount position angle and guide on a pixels.
+%double;position;0.00 to 110.00 mm;radial position from field edge.
+%double;angle;-270.00 to +270.00 degs;mount position angle.
+%double;pixelX;0.00 to 1024.00;autoguider X pixel.
+%double;pixelY;0.00 to 1024.00;autoguider Y pixel.

@@ -1,0 +1,9 @@
+# Request agent (MCA) information.
+#
+# Module code: 681300
+#
+%String;agentId;a valied agent ID;ID of the MCA
+*String;agentVersion;version number of MCA
+*String;agentDesc;description of the MCA
+*Properties;agentProperties;set of MCA-specific properties
+$NO_SUCH_AGENT;680801;that the agent could not be located

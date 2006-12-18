@@ -1,0 +1,31 @@
+#Command: SCHEDULE
+#Sent by RCS in robotic mode to request the next Group of Observations
+#to perform. The Group returned may be Fixed or Flexible. The request may 
+#specify parameters (maxIdle and latestTime) to constrain the range of the
+#search performed by the Scheduling algorithm.
+#Module code: 702900
+
+%long;maxIdle;> 0 (millis);Specifies the longest period the caller (RCS) wants to remain idle if no Flexible Groups can be scheduled at this time. It is the longest period between NOW and the start of the next Fixed (or Sliding) Group that can be returned for scheduling. If no Groups can satisfy the constraint, the RCS may carry out Calibration/Focus etc before asking for another attempt at scheduling.  
+
+%long;latestTime;a future time;Specifies the latest time by which the returned observation sequence must be expected to have been completed by.
+
+%long;deltaTime;> 0 (millis);Specifies the time difference to add to the current time (now) to give an initial float period for the selected group's start time - i.e. the selected Group must be able to start any time between <i>now</i> and <i>now+deltaTime</i>.
+
+%String;schedId;{ OPTIMAL | FAST | LOOKAHEAD | CACHE | others };Identifies the scheduler which is to be used - it is up to the client and server to agree on what constitute valid scheduler IDs.  
+
+%boolean;lock;{ T | F };Determines whether the returned Group should be locked after fetching - This is normally true for robotic operations - but can be set false to allow simulations to be performed on data while leaving the records accessable to users.
+
+%String;lockOwner;A valid lock owner ID;Identifies the client who has requested the lock.
+
+*Group;group;The best (optimal) Group of observations to perform under current constraints or null.
+*double;score;The score acheived by this Group
+*long;latestTime;The latest time by which this Group must have been completed (e.g. target sets)
+*long;nominalTime;The nominal execution time of the Group
+
+
+$RCS_KEY;0xABABABAB;Key used by RCS to lock the Group selected
+$NO_SCHEDULABLE_GROUPS;702901;No Groups were available for scheduling under the specified constraints
+$IDLE_TIME_TOO_LONG;702902;No FlexibleGroups were available and the idle time before a FixedGroup becomes available is longer than allowed
+$FIXED_GROUP_NOT_FOUND;702903;The 'next FixedGroup' could not be located for some reason
+$SCHEDULER_NOT_AVAILABLE;702904;The nominated scheduler is either not loaded or not known to the OSS
+$FIXED_GROUP_CLASS_ERROR;702905;The next FixedGroup was of the wrong class

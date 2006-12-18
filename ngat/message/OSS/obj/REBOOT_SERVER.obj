@@ -1,0 +1,17 @@
+#Command: REBOOT_SERVER
+#Requests the OSS to reboot the server. 
+#The levels of reboot are:
+# 0 - Redatum (re-load config settings without stopping DO NOT USE).
+# 1 - Restart JVM (OSS watchdog).
+# 2 - Stop the JVM and watchdog.
+# 3 - Reboot the system (..sbin/reboot).
+# 4 - Shutdown the system (..sbin/shutdown -h now).
+#
+#Module code: 702100
+%int;level;A valid reboot level;Selects the appropriate level of reboot
+$REDATUM;702101;Level 0 - Redatum (re-load config settings without stopping DO NOT USE).
+$RESTARTM;702102; Level 1 - Restart JVM (OSS watchdog).
+$STOP;702103; Level 2 - Stop the JVM and watchdog.
+$REBOOT;702104; Level 3 - Reboot the system (..sbin/reboot).
+$SHUTDOWN;702105; Level 4 - Shutdown the system (..sbin/shutdown -h now).
+*long;rebootTime;Time the request was made to the OSS

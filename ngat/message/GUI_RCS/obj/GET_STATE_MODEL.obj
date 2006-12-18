@@ -1,0 +1,6 @@
+# Request state-model information.
+#
+# Module code: 680200
+#
+*HashMap;model;state model information
+$NOT_AVAILABLE;680201;that the state model information is not available

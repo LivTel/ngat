@@ -1,0 +1,6 @@
+# Requests weather status information from the telescope site. This data is
+# only available during scheduled planetarium mode operations. Outside of
+# this period weather data is available from a dedicated web site. 
+# <a href = "http://TBD">Telescope weather pages</a>.
+# Module code: 690800
+*Hashtable;status;table of name, value pairs indicating various site weather statii.

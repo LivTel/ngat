@@ -1,0 +1,2 @@
+#Instruct the TCS to slew the telescope to the specified altitude and stop.
+%double;angle;10.0 to 95.0 degs;altitude angle to move to.

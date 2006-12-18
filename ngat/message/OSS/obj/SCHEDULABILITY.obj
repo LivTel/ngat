@@ -1,0 +1,9 @@
+#Command: SCHEDULABILITY
+#Checks a group for the schedule contention over its lifetime.
+# 
+#Module code: 704700
+%Group;group;a valid group;the group whose schedulability we want to test.
+%long;start;a time;the start of the period we want to check
+%long;end;a time;the end of the period we want to check
+*double;schedulability;the schedulability of the group
+

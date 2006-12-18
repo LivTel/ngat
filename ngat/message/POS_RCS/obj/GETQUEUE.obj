@@ -1,0 +1,5 @@
+# Retrieves a list of the currently executing requests.
+# Module code: 690700
+*Vector;processList;list of the currently queued and executing requests (at the telescope).
+$EXECUTING;690701;that the specified request is currently executing.
+$PENDING;690702;that the specified request is pending in the queue.

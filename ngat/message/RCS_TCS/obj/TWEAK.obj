@@ -1,0 +1,4 @@
+#Instructs TCS to apply a given x,y rotational aperture offset to align a field on the instrument.
+%double;xOffset;-3600.00 to +3600.00 arcsec;offset in X axis.
+%double;yOffset;-3600.00 to +3600.00 arcsec;offset in Y axis.
+%double;rotation;-3600.00 to +3600.00 arcsec;rotation offset..

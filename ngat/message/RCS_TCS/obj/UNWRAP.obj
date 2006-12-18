@@ -1,0 +1,4 @@
+#Instructs TCS to unwrap the specified mechanism if possible.
+%int;mechanism;{ AZIMUTH | ROTATOR };mechanism to attempt to unwrap.
+$AZIMUTH;azimuth axis whould be unwrapped.
+$ROTATOR;rotatot axis should be unwrapped.

@@ -1,0 +1,9 @@
+#Command: ADD_USER
+#Add the User at the specified path.
+#
+#Module code: 704300
+%Path;tagPath;Path to a TAG already in the P2DB;The path used to locate the User's owner in the P2DB
+%User;user;A valid but not neccessarily consistent or complete User;The User to add
+%String;password;Valid password;The password to allow access to the User record. 
+ 
+

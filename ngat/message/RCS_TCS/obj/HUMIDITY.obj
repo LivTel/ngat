@@ -1,0 +1,2 @@
+#Instruct TCS to use the specified humidity level in its refraction calculations.
+%double;humidity;0.000 to 1.000;relative humidity.

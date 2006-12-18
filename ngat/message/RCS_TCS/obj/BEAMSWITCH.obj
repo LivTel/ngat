@@ -1,0 +1,4 @@
+#Instruct the TCS to offset the telescope from the reference position so that an image moves to a given (x,y) in the focal plane.
+%double;offsetX;-100.00 to +100.00 arcsecs;offset in x direction.
+%double;offsetY;-100.00 to +100.00 arcsecs;offset in y direction.
+

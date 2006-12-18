@@ -1,0 +1,19 @@
+#Command: UPDATE_SEEING
+#Supplies atmospheric-seeing and photometricity data collected at various times. 
+#Used to update the OSS Scheduler's atmospheric prediction model.
+#
+#Module code: 703500
+#
+$UPDATE_SEEING;703501;Indicates that the data supplied is seeing data (arcsec)
+$UPDATE_PHOTOM;703502;Indicates that the data supplied is photom data (mags)
+$EXCELLENT;703503;that the seeing/photometricity is excellent.
+$AVERAGE;703504;that the seeing/photometricity is average
+$POOR;703505;that the  seeing/photometricity is poor
+$UNKNOWN_TYPE;703501;that the type was unknown
+%int;type;One of {UPDATE_SEEING | UPDATE_PHOTOM};Determines which type of data is supplied in 'values' array
+%double[];values;An array of seeing/photom values (arcsec/mags) mapped to the times in 'times';The set of values to use for updating the model
+%long[];times;A (sequential) array of times (millis);The set of times at which the 'values' array elements were taken.
+*int;prediction;The current seeing/photom prediction (coded value)
+
+
+

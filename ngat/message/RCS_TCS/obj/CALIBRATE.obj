@@ -1,0 +1,8 @@
+#Instructs the TCS to carry out its pointing calibration.
+#1). DEFAULT mode causes the TCS to revert to the default pointing solution.
+#2). NEW mode initiates an automatic sequence which does pointing measurements on 7 stars from a pointing grid.
+%int;mode;{ DEFAULT | NEW };calibration mode.
+$DEFAULT;the default calibration is to be used.
+$NEW;a new set of pointing measures is to be taken.
+$LAST;previous pointing calibration is used.
+*double;rmsError;calibration sky sigma.

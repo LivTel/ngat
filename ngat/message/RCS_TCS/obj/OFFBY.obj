@@ -1,0 +1,10 @@
+#Instruct the TCS to make a position offset.
+#1).When mode is set to ARC offsets are made in the tangent plane.
+#2).When mode is set to TIME offsets are made with constant
+#   displacements in ra and dec whatever the altitude.
+%int;mode;{ ARC | TIME };operational mode.
+%double;offsetRA;+/- 1 arcsec;offset in RA.
+%double;offsetDec;+/- 1 arcsec;offset in dec.
+$ARC;offsets are applied in the tangent plane.
+$TIME;offsets are applied by constant amount.
+

@@ -1,0 +1,9 @@
+#Command: ADD_PROPOSAL
+#Add the Proposal at the specified path.
+#
+#Module code: 704100
+%Path;userPath;Path to a user already in the P2DB;The path used to locate the Proposal's owner in the P2DB
+%Proposal;proposal;A valid but not neccessarily consistent or complete Proposal;The Proposal to add
+%String;password;Valid password;The password to allow access to the Proposal record. 
+ 
+

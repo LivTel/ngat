@@ -1,0 +1,7 @@
+# Request the RCS to start.
+#
+# Module code: 680500
+#
+%boolean;engineering;indicates whether to start in engineering mode
+$ALREADY_RUNNING;680501;that the RCS is already running or starting up
+$WATCHDOG_ERROR;680502;some other generic RCW error

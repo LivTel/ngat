@@ -1,0 +1,7 @@
+#Command: KILL_SERVER
+#Requests the OSS to shutdown. The OSS will get the signal after a period
+#but may take a while for currently executing request to complete first.
+#Any queued requests will be zapped.
+#Module code: 701800
+%long;delay;> 0 millis;Specifies the delay (millis) before the Launcher should be given the kill signal
+*long;requestTime;Time the request was sent to the OSS - no way to tell if it worked.

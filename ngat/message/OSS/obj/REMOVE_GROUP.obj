@@ -1,0 +1,5 @@
+#Command: REMOVE_GROUP
+#Removes a Group from the database. 
+#Module code: 702600
+%Path;groupPath;Path to a valid Group;The path used to locate the Group in the P2DB
+    

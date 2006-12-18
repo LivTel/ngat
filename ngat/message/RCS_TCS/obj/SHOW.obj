@@ -1,0 +1,15 @@
+#Instructs TCS to deliver status information.
+%int;key;{ ALL | ASTROMETRY | AUTOGUIDER | CALIBRATE | FOCAL_STATION | LIMITS | MECHANISMS | METEOROLOGY | SOURCE | STATE | TIME | VERSION };keyword to indicate which set of data to deliver.
+$ALL;all status data should be delivered.
+$ASTROMETRY;atmospheric parameters for refraction calculations should be delivered.
+$AUTOGUIDER;autoguider status should be delivered.
+$CALIBRATE; calibration information should be delivered
+$FOCUS; hardware and software selection should be delivered
+$LIMITS; position limits should be delivered
+$MECHANISMS; status and positions of mechanisms should be delivered
+$METEOROLOGY; weather measurements should be delivered
+$SOURCE; current source parameters should be delivered
+$STATE; TCS and telescope state should be delivered
+$TIME; current time in various formats should be delivered
+$VERSION; TCS version information should be delivered!
+*TCS_Status.Segment;status;current TCS and telescope status information.

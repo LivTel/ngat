@@ -1,0 +1,5 @@
+# Requests telescope status information from the RCS. This can only work during
+# scheduled planetarium mode periods. Outside of this time a status service is
+# obtained via a dedicated web site. <a href = "http://TBD">Telescope status pages</a>.
+# Module code: 690900
+*Hashtable;status;table of name, value pairs indicating various telescope statii.

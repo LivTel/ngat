@@ -1,0 +1,6 @@
+#Command: DELETE_COI_USER
+#Removes a user as co-investigator of proposal.
+#Module code: 701000
+%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
+%String;userId;UserId of a registered user already in the P2DB;The uid for the user who is being deleted as CoI
+*boolean;removed;True if the user was removed as co-investigator. False if they were not co-investigator anyway

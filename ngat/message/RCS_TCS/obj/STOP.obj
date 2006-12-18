@@ -1,0 +1,10 @@
+#Instructs TCS to stop the telescope or specified mechanism.
+%int;mechanism;{ ALL | AGFOCUS | AGPROBE | ALTITUDE | AZIMUTH | ENCLOSURE | FOCUS | ROTATOR };mechanism to stop.
+$ALL;all mechanisms should be stopped.
+$AGFOCUS;autoguider focus tracking should be stopped.
+$AGPROBE;autoguider probe motion should be stopped.
+$ALTITUDE;altitude drive should be stopped.
+$AZIMUTH;azimuth drive should be stopped.
+$ENCLOSURE;enclosure motion should be stopped.
+$FOCUS;focus tracking should be stopped.
+$ROTATOR;rotator motor should be stopped.
