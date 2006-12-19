@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: Group.java,v 1.5 2006-11-28 10:50:35 snf Exp $
+ * $Id: Group.java,v 1.6 2006-12-19 11:09:00 snf Exp $
  */
 public class Group extends NPDBObject implements Serializable {
    
@@ -49,7 +49,7 @@ public class Group extends NPDBObject implements Serializable {
     public static final long DEFAULT_NOMINAL_OFFSET_TIME        = 5000L;
     
     /** Nominal value of expected instrument-readout time.*/
-    public static final long DEFAULT_NOMINAL_READOUT_TIME       = 10000L;
+    public static final long DEFAULT_NOMINAL_READOUT_TIME       = 20000L;
 
     /** Maximal value of expected instrument and telescope-configuration times.*/
     public static final long DEFAULT_MAXIMAL_CONFIGURATION_TIME = 60000L;
@@ -167,7 +167,7 @@ public class Group extends NPDBObject implements Serializable {
     /** Stores the Group's nominal (per schedule weighting) execution time. */
     protected double nominalExecutionTime = 0.0;
 
-    protected long entryDate;
+    protected long startingDate;
 
     /** Returns a String representing the specified seeing conditions.*/
     public static String toSeeingString(int seeing) {
@@ -244,10 +244,10 @@ public class Group extends NPDBObject implements Serializable {
 
 
     /** Sets the  date this Group was entered.*/
-    public void setEntryDate(long in) {  this.entryDate = in;}
+    public void setStartingDate(long in) {  this.startingDate = in;}
     
     /** Returns the  date this Group was entered. */
-    public long getEntryDate() { return entryDate;}
+    public long getStartingDate() { return startingDate;}
 
 
     /** Sets whether the PI should be notified on completion.*/
@@ -696,7 +696,7 @@ public class Group extends NPDBObject implements Serializable {
 	    ", Use-Twilight="+toTwilightString(twilightUsageMode)+
 	    ", Meridian="+(meridianLimit < 0.0 ? "NO LIMIT" :  nf.format(Math.toDegrees(meridianLimit)*4.0)+" mins." )+
 	    ", Requires-Photom="+photometric+
-	    ", Entered/starts="+sdf.format(new Date(entryDate))+
+	    ", Entered/starts="+sdf.format(new Date(startingDate))+
 	    ", Expires="+sdf.format(new Date(expiryDate))+
 	    ", Sequence="+sequence+
 	    "]";
