@@ -5,7 +5,7 @@
 PACKAGENAME    = ngat.phase2
 PACKAGEDIR     = ngat/phase2
 JAR_FILE       = ngat_phase2.jar
-DIRS           = nonpersist db
+DIRS           = nonpersist
 
 JAVAC		= /usr/java/j2sdk1.4.2/bin/javac
 
@@ -71,13 +71,16 @@ SRCS           = CatalogSource.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
-#   $Author: cjm $ 
-# $Revision: 1.3 $
-#       $Id: Makefile,v 1.3 2006-11-24 11:28:35 cjm Exp $
-#     $Date: 2006-11-24 11:28:35 $
+#   $Author: snf $ 
+# $Revision: 1.4 $
+#       $Id: Makefile,v 1.4 2007-01-09 14:02:25 snf Exp $
+#     $Date: 2007-01-09 14:02:25 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/phase2/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.3  2006/11/24 11:28:35  cjm
+#      Steves changes?
+#
 #      Revision 1.2  2002/10/02 10:03:12  je
 #      remove
 #
