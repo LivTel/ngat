@@ -17,14 +17,17 @@ SRCS           =CAMPRequestHandlerFactory.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 # Need to switch the JDK to get JSSE and JCE 
-JAVAC	       = /usr/java/j2sdk1.4.2_07/bin/javac
+JAVAC	       = $JAVA_HOME/bin/javac
 
 #
 #   $Author: snf $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2006-11-23 10:36:10 snf Exp $
-#     $Date: 2006-11-23 10:36:10 $
+# $Revision: 1.2 $
+#       $Id: Makefile,v 1.2 2007-01-09 14:08:02 snf Exp $
+#     $Date: 2007-01-09 14:08:02 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/net/camp/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.1  2006/11/23 10:36:10  snf
+#      Initial revision
+#
 #
