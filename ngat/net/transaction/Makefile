@@ -35,15 +35,15 @@ SRCS           =ConnectionInfo.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
-# Need to switch the JDK to get JSSE and JCE 
-JAVAC	       = /usr/java/j2sdk1.4.2/bin/javac
-
 #
-#   $Author: cjm $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2006-11-20 14:36:54 cjm Exp $
-#     $Date: 2006-11-20 14:36:54 $
+#   $Author: snf $
+# $Revision: 1.2 $
+#       $Id: Makefile,v 1.2 2007-01-15 07:58:14 snf Exp $
+#     $Date: 2007-01-15 07:58:14 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/net/transaction/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.1  2006/11/20 14:36:54  cjm
+#      Initial revision
+#
 #
