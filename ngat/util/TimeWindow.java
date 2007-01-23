@@ -1,7 +1,11 @@
 package ngat.util;
 
+import java.text.*;
+
 /** Temporary class for some testing - probably delete after using.*/
 public class TimeWindow {
+
+    public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     public static final TimeWindow EMPTY_WINDOW = new TimeWindow(0L,0L);
 
@@ -27,7 +31,7 @@ public class TimeWindow {
     }
 
     public String toString() {
-	return "["+start+","+end+"]";
+	return "["+sdf.format(new Date(start))+","+sdf.format(new Date(end)+"]";
     }
 
 }
