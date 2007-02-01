@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationProperties.java,v 1.4 2004-01-15 16:01:57 snf Exp $
+ * $Id: ConfigurationProperties.java,v 1.5 2007-02-01 08:13:58 snf Exp $
  *
  */
 public class ConfigurationProperties extends Properties {
@@ -43,7 +43,7 @@ public class ConfigurationProperties extends Properties {
 	try {
 	    return Integer.parseInt(getProperty(key));
 	} catch (Exception e) {
-	    throw new ParseException(e.toString(),0);
+	    throw new ParseException("Parsing key: "+key+":"+e.toString(),0);
 	}
     }
     
@@ -61,7 +61,7 @@ public class ConfigurationProperties extends Properties {
 	try {
 	    return  Float.parseFloat(getProperty(key));
 	} catch (Exception e) {
-	    throw new ParseException(e.toString(),0);
+	    throw new ParseException("Parsing key: "+key+":"+e.toString(),0);
 	}
     }
 
@@ -79,7 +79,7 @@ public class ConfigurationProperties extends Properties {
 	try {
 	    return  Double.parseDouble(getProperty(key));
 	} catch (Exception e) {
-	    throw new ParseException(e.toString(),0);
+	    throw new ParseException("Parsing key: "+key+":"+e.toString(),0);
 	}
     }
 
@@ -97,7 +97,7 @@ public class ConfigurationProperties extends Properties {
 	try {
 	    return (long)Integer.parseInt(getProperty(key));
 	} catch (Exception e) {
-	    throw new ParseException(e.toString(),0);
+	    throw new ParseException("Parsing key: "+key+":"+e.toString(),0);
 	}
     }
 
@@ -126,7 +126,7 @@ public class ConfigurationProperties extends Properties {
 	try {
 	    return new Date(Long.parseLong(getProperty(key)));
 	} catch (Exception e) {
-	    throw new ParseException(e.toString(),0);
+	    throw new ParseException("Parsing key: "+key+":"+e.toString(),0);
 	}
     }
 
@@ -175,6 +175,9 @@ public class ConfigurationProperties extends Properties {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.4  2004/01/15 16:01:57  snf
+/** Removed debugging code.
+/**
 /** Revision 1.3  2002/09/25 10:56:17  cjm
 /** rcs bug fix.
 /**
