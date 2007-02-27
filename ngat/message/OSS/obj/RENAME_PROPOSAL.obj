@@ -1,13 +1,7 @@
-#Command: REPLACE_PROPOSAL
-#Replace the Proposal at the specified path with the new supplied one.
-#This command is sent by the PEST when a user has completed editing.
-#The proposal will have been checked as far as possible for consistency
-#and should therefore be immediately schedulable. Any groups in the
-#Proposal will have their various execution time estimates updated 
-#before storing.
-#Module code: 702800
+#Command: RENAME_PROPOSAL
+# Rename a proposal
+#Module code: 704800
 %Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
-%Proposal;replacementProposal;A valid but not neccessarily consistent or complete Proposal;The replacement (updated) Proposal to replace the one at 'proposalPath'
-%int;key;Valid (>0) key;The key to unlock the Proposal record. 
- 
+%String;newName; A valid name; The new proposal name
+%Path;newPath;A valid TAG/User path;Path to new location
 
