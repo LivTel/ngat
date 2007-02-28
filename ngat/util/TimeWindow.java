@@ -1,6 +1,7 @@
 package ngat.util;
 
 import java.text.*;
+import java.util.*;
 
 /** Temporary class for some testing - probably delete after using.*/
 public class TimeWindow {
@@ -31,7 +32,7 @@ public class TimeWindow {
     }
 
     public String toString() {
-	return "["+sdf.format(new Date(start))+","+sdf.format(new Date(end)+"]";
+	return "["+sdf.format(new Date(start))+","+sdf.format(new Date(end))+"]";
     }
 
 }
