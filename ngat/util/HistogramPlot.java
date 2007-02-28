@@ -11,7 +11,7 @@ import java.awt.Color;
  * limit of the axis.
  * ## this will be changed to extend SimpleGraphPlot as only ONE channel is needed 
  *
- * $Id: HistogramPlot.java,v 1.1 2000-11-21 16:43:47 snf Exp $
+ * $Id: HistogramPlot.java,v 1.2 2007-02-28 06:12:35 snf Exp $
  * 
  **/ 
 public class HistogramPlot extends GraphPlot {
@@ -68,7 +68,7 @@ public class HistogramPlot extends GraphPlot {
 	    int xb = (int)getScreenX(xc+wc);
 	    int ys = (int)getScreenY((float)counts[i]);
 	    int y0 = (int)getScreenY(0.0f);
-	    System.out.println("count: "+counts[i]+" ys: "+ys+ " y0: "+y0);
+	    System.out.println("HG::count: "+counts[i]+" ys: "+ys+ " y0: "+y0);
 	    g.fillRect(xa, ys, xb-xa, y0-ys);
 	}
     }
@@ -81,7 +81,10 @@ public class HistogramPlot extends GraphPlot {
 }
 
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/21 16:43:47  snf
+/** Initial revision
+/** */
 
 
 
