@@ -1,10 +1,11 @@
 package ngat.util;
 
+import java.io.*;
 import java.text.*;
 import java.util.*;
 
 /** Temporary class for some testing - probably delete after using.*/
-public class TimeWindow {
+public class TimeWindow implements Serializable  {
 
     public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
