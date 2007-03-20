@@ -1,0 +1,6 @@
+#Instruct the TCS to slew the telescope to the specified position and begin tracking.
+%Source;source;any valid ngat.Phase2.Source or subclass;source object to slew to.
+%double;offsetRA;+/- 60 arcsec;offset in RA.
+%double;offsetDec;+/- 60 arcsec;offset in dec.
+
+%boolean;nstrack;t/f;whether non-sidereal tracking is wanted
