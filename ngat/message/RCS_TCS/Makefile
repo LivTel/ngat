@@ -25,6 +25,8 @@ SRCS           = AGCENTROID_DONE.java \
                  AGWAVELENGTH.java \
                  ALTITUDE_DONE.java \
                  ALTITUDE.java \
+		APERTURE.java \
+		APERTURE_DONE.java \
                  ASTROGUIDE.java \
                  AUTOGUIDE_DONE.java \
                  AUTOGUIDE.java \
@@ -65,6 +67,8 @@ SRCS           = AGCENTROID_DONE.java \
                  RCS_TO_TCS.java \
                  ROTATOR_DONE.java \
                  ROTATOR.java \
+		SET_APERTURE.java \
+		SET_APERTURE_DONE.java \
                  SHOW_DONE.java \
                  SHOW.java \
                  SLEW_DONE.java \
@@ -89,12 +93,15 @@ SRCS           = AGCENTROID_DONE.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: snf $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2006-12-18 11:58:41 snf Exp $
-#     $Date: 2006-12-18 11:58:41 $
+# $Revision: 1.2 $
+#       $Id: Makefile,v 1.2 2007-03-20 13:02:58 snf Exp $
+#     $Date: 2007-03-20 13:02:58 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/message/RCS_TCS/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.1  2006/12/18 11:58:41  snf
+#      Initial revision
+#
 #      Revision 1.4  2006/12/18 11:57:50  snf
 #      *** empty log message ***
 #
