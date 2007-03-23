@@ -9,7 +9,7 @@ import java.text.*;
  * This object holds the next schedulable group if any available and other relevant data.
  * Some of the data is packed in by the OSS after running schedule.
  *
- * $Id: ScheduleDescriptor.java,v 1.3 2006-11-23 10:43:05 snf Exp $
+ * $Id: ScheduleDescriptor.java,v 1.4 2007-03-23 20:56:42 snf Exp $
  *
  */
 public class ScheduleDescriptor implements Serializable {
@@ -155,13 +155,13 @@ public class ScheduleDescriptor implements Serializable {
 
     /** Returns a readable string representation.*/
     public String toString() {
-	StringBuffer buffer = new StringBuffer("Scheduling: ");
-	buffer.append("Metrics: Group="+(group != null ? group.getFullPath() : "null"));
-	buffer.append(", Allowed="+(allowed ? "YES" : ("NO: "+failureReason)));
-	buffer.append(", Score = "+score);
+	StringBuffer buffer = new StringBuffer("Metrics");
+	buffer.append("Group="+(group != null ? group.getFullPath() : "null"));
+	buffer.append(","+ (allowed ? "Enabled" : "Vetoed: "+failureReason));
+	buffer.append(", Score = "+score); 
 	buffer.append(", Exec="+nominalTime);
 	buffer.append(", Latest="+sdf.format(new Date(latestTime)));
-	buffer.append(", Metrics=[");
+	buffer.append(", Components=[");
 	Iterator is = metrics.keySet().iterator();
 	while (is.hasNext()) {
 	    String key = (String)is.next();
@@ -177,6 +177,9 @@ public class ScheduleDescriptor implements Serializable {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.3  2006/11/23 10:43:05  snf
+/** test
+/**
 /** Revision 1.2  2000/11/23 11:41:55  snf
 /** Added doc comments.
 /**
