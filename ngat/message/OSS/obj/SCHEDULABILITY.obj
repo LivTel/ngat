@@ -7,4 +7,5 @@
 %long;end;a time;the end of the period we want to check
 %long;resolution;a time interval in ms;the time resolution
 *double;schedulability;the schedulability of the group
-
+*double[];differentialFunction;the time varying probability
+*double[];cumulativeFunction;the cumulative probability
