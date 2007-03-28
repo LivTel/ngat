@@ -9,6 +9,7 @@
 %double;xOffset;small +/- offset;offset in (rotated) X axis (arcsecs).
 %double;yOffset;small +/- offset;offset in (rotated) Y axis (arcsecs).
 %double;rotation;0.0 - 360.0;rotator sky position angle.
+%int;filterClass;{RED | GREEN | BLUE | UNKNOWN};the variety of filter
 $MOSAIC_SETUP;690401;exposure is first part of a mosaic.
 $MOSAIC;690402;exposure is (not first) part of a mosaic.
 $SINGLE;690403;exposure is a single (one-off).
