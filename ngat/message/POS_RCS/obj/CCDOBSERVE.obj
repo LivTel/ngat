@@ -23,4 +23,9 @@ $BAD_COORDS;690405;that the coordinates were dodgy.
 $BAD_BINNING;690406;that the CCD binning was not valid.
 $BAD_FILTER;690407;that the specifed filter combination was not available.
 $OBJECT_SET;690408;that the target has/will set before the exposure is complete.
+$RED_FILTER;690410;the filter is of the RED variety.
+$GREEN_FILTER;690411;the filter is of the GREEN variety.
+$BLUE_FILTER;690412;the filter is of the BLUE variety
+$UNKNOWN_FILTER;690413;the filter variety is UNKNOWN
+
 *long;frameNumber;reference number of the image frame.
