@@ -21,7 +21,7 @@ import ngat.message.base.*;
  * </dl>
  * <br>
  */
-public class POS_TO_RCS extends COMMAND {
+public class POS_TO_RCS extends POS_TO_RCS {
 
 	// Constants.
 
@@ -51,6 +51,9 @@ public class POS_TO_RCS extends COMMAND {
 
 	/** Constant: Indicates that the RCS is not currently in planetarium (realtime) mode.*/
 	public static final int NOT_PLANETARIUM_MODE = 690009;
+
+	/** Constant: Indicates that the RCS is currently in ENGINEERING mode.*/
+	public static final int ENGINEERING_MODE = 690010;
 
 	// Variables.
 
