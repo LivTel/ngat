@@ -11,3 +11,4 @@ $NOT_IN_CONTROL;690006;that the RTOC is not currently in control
 $INVALID_RTOC;690007;that the RTOC is not known to the RCS
 $NOT_OPERATIONAL;690008;that the RCS is not currently operational
 $NOT_PLANETARIUM_MODE;690009;that the RCS is not currently in planetarium (realtime) mode.
+$ENGINEERING_MODE;690010;that the RCS is currently in ENGINEERING mode.
