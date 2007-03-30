@@ -21,7 +21,7 @@ import ngat.message.base.*;
  * </dl>
  * <br>
  */
-public class POS_TO_RCS_DONE extends COMMAND_DONE {
+public class POS_TO_RCS_DONE extends POS_TO_RCS_DONE {
 
 	/** Create a POS_TO_RCS_DONE with specified id.
 	 * @param id The unique id of this POS_TO_RCS_DONE.
