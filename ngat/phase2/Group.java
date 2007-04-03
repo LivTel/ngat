@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: Group.java,v 1.6 2006-12-19 11:09:00 snf Exp $
+ * $Id: Group.java,v 1.7 2007-04-03 07:00:59 snf Exp $
  */
 public class Group extends NPDBObject implements Serializable {
    
@@ -30,6 +30,9 @@ public class Group extends NPDBObject implements Serializable {
     /** Default minimum allowable lunar distance for observation source. */
     public static final double DEFAULT_MINIMUM_LUNAR_DISTANCE = Math.toRadians(2.5);
 
+    /** Indicates that time between Sunset and bright twilight can be used.*/
+    public static final int TWILIGHT_USAGE_DONTCARE = -1;
+
     /** Indicates that Twilight time can only be used.*/
     public static final int TWILIGHT_USAGE_ALWAYS   = 0;
 
@@ -38,6 +41,14 @@ public class Group extends NPDBObject implements Serializable {
     
     /** Indicates that Twilight time should NOT be used.*/
     public static final int TWILIGHT_USAGE_NEVER    = 2;
+
+    // Alternative Sky bright/twilight settings, USE THESE FROM NOW ON//
+    public static final int SKY_ANY             = -1;
+    public static final int SKY_BRIGHT_TWILIGHT = 0;
+    public static final int SKY_DARK_TWILIGHT   = 1;
+    public static final int SKY_NIGHT           = 2;
+    
+
 
     /** Nominal value of expected source-acquisition/slew time.*/
     public static final long DEFAULT_NOMINAL_ACQUIRE_TIME       = 60000L;
@@ -200,12 +211,14 @@ public class Group extends NPDBObject implements Serializable {
     /** Returns a String representing the specified twilight usage.*/
     public static String toTwilightString(int twilight) {
 	switch (twilight) {
-	case TWILIGHT_USAGE_NEVER:
-	    return "NEVER";
-	case TWILIGHT_USAGE_OPTIONAL:
-	    return "OPTIONAL";
-	case TWILIGHT_USAGE_ALWAYS:
-	    return "ALWAYS";
+	case SKY_ANY:
+	    return "ANY";
+	case SKY_BRIGHT_TWILIGHT:
+	    return "DARK_TWILIGHT";
+	case SKY_DARK_TWILIGHT:
+	    return "BRIGHT_TWILIGHT";
+	case SKY_NIGHT:
+	    return "NIGHT"
 	default:
 	    return "UNKNOWN";
 	}
