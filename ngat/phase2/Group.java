@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: Group.java,v 1.7 2007-04-03 07:00:59 snf Exp $
+ * $Id: Group.java,v 1.8 2007-04-03 07:01:31 snf Exp $
  */
 public class Group extends NPDBObject implements Serializable {
    
@@ -218,7 +218,7 @@ public class Group extends NPDBObject implements Serializable {
 	case SKY_DARK_TWILIGHT:
 	    return "BRIGHT_TWILIGHT";
 	case SKY_NIGHT:
-	    return "NIGHT"
+	    return "NIGHT";
 	default:
 	    return "UNKNOWN";
 	}
