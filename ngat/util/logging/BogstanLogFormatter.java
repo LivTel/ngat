@@ -9,13 +9,18 @@ import java.text.*;
  */
 public class BogstanLogFormatter extends LogFormatter {
 
+    public boolean showLogName = false;
+
     public BogstanLogFormatter() {
 	super();
     }
 
     public String format(LogRecord record) {	
-	return record.getLoggerName()+" :: "+df.format(new Date(record.getTime()))+" : "+
-	    record.getClazz()+" : "+record.getSource()+" : "+record.getMessage();
+	return (showLogName ? record.getLoggerName()+" :: " : "")
+	    +df.format(new Date(record.getTime()))+" : "+
+	    record.getClazz()+" : "+
+	    record.getSource()+" : "+
+	    record.getMessage();
     }
     
     public String getHead() {
