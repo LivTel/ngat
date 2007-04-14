@@ -4,6 +4,7 @@ import java.util.*;
 import ngat.util.*;
 import ngat.phase2.*;
 import ngat.astrometry.*;
+import ngat.message.base.*;
 /** RCS_TCS COMMAND: ROTATOR.<br>
  * Instruct TCS to switch the rotator mode or move it.<br>
  * <dl>
@@ -37,6 +38,24 @@ public class ROTATOR extends RCS_TO_TCS {
 
 	/** Constant: Indicates rotator is slewed to vertical and tracking engaged to keep it vertical.*/
 	public static final int VFLOAT = 4;
+
+	/** Constant: Indicates rotator is using cardinal points.*/
+	public static final int CARDINAL = 5;
+
+	/** Constant: Indicates sky angle 0.*/
+	public static final int CARDINAL_POINT_0 = 6;
+
+	/** Constant: Indicates sky angle 90*/
+	public static final int CARDINAL_POINT_1 = 7;
+
+	/** Constant: Indicates sky angle 180*/
+	public static final int CARDINAL_POINT_2 = 8;
+
+	/** Constant: Indicates sky angle 270*/
+	public static final int CARDINAL_POINT_3 = 9;
+
+	/** Constant: Indicates sky angle 360 -same as 0*/
+	public static final int CARDINAL_POINT_4 = 10;
 
 	// Variables.
 
@@ -85,6 +104,13 @@ public class ROTATOR extends RCS_TO_TCS {
 	 */
 	public double getPosition() { return position; }
 
+	/** Returns a String representation of the object.*/
+	public String toString() {
+		return "["+this.getClass().getName()+":"+
+			getId()+
+			", mode="+mode+
+			", position="+position+"]";
+	}
 	// Hand generated code.
 
 } // class def. [ROTATOR].
