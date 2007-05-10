@@ -28,7 +28,11 @@ SRCS           = ABORT_DONE.java \
                  OFFLINE.java \
                  POS_TO_RCS_DONE.java \
                  POS_TO_RCS.java \
-                 TELSTATUS_DONE.java \
+		 SET_WINDOWS.java \
+		 SET_WINDOWS_DONE.java \
+                 READ_WINDOWS.java \
+		 READ_WINDOWS_DONE.java \
+  		 TELSTATUS_DONE.java \
                  TELSTATUS.java \
                  TESTLINK_DONE.java \
                  TESTLINK.java \
@@ -38,11 +42,14 @@ SRCS           = ABORT_DONE.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $
-# $Revision: 1.3 $
-#       $Id: Makefile,v 1.3 2002-10-03 10:57:27 je Exp $
-#     $Date: 2002-10-03 10:57:27 $
+#   $Author: cjm $
+# $Revision: 1.4 $
+#       $Id: Makefile,v 1.4 2007-05-10 09:51:44 cjm Exp $
+#     $Date: 2007-05-10 09:51:44 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/message/POS_RCS/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.3  2002/10/03 10:57:27  je
+#      Makefiles changed to generic NGAT structure
+#
 #
