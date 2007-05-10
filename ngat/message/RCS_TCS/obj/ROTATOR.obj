@@ -6,4 +6,10 @@ $MOUNT;position angle is relative to mount.
 $FLOAT;rotator is not slewed from current setting on source change.
 $VERTICAL;rotator is slewed to vertical position but stops tracking.
 $VFLOAT;rotator is slewed to vertical and tracking engaged to keep it vertical.
+$CARDINAL;rotator is using cardinal points.
+$CARDINAL_POINT_0;sky angle 0.
+$CARDINAL_POINT_1;sky angle 90
+$CARDINAL_POINT_2;sky angle 180
+$CARDINAL_POINT_3;sky angle 270
+$CARDINAL_POINT_4;sky angle 360 -same as 0
 
