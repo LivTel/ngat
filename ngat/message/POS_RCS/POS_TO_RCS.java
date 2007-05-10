@@ -21,7 +21,7 @@ import ngat.message.base.*;
  * </dl>
  * <br>
  */
-public class POS_TO_RCS extends POS_TO_RCS {
+public class POS_TO_RCS extends COMMAND {
 
 	// Constants.
 
