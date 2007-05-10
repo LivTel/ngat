@@ -1,5 +1,5 @@
-#Command: DELETE_COI_USER
-#Removes a user as co-investigator of proposal.
+#Command: DELETE_TAG
+#Removes a TAG
 #Module code: 704900
 %Path;tagPath;Path to a TAG already in the P2DB;The path used to locate the TAG in the P2DB
 *boolean;removed;True if the TAG was removed
