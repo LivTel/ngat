@@ -64,7 +64,7 @@ public class EphemerisSource extends SolarSystemSource {
 	    Coordinate coord = (Coordinate)ie.next();
 	    coord.writeXml(out, level+1);
 	}
-	out.println(tab(level)+"</ephemerisSource)");
+	out.println(tab(level)+"</ephemerisSource");
     }
     
     public static class Coordinate implements Serializable {
