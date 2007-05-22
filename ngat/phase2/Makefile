@@ -24,6 +24,8 @@ SRCS           = CatalogSource.java \
                  FixedGroup.java \
 		 FixedFormatSpecConfig.java \
 		 FixedFormatSpecDetector.java \
+		 FrodoSpecConfig.java \
+		 FrodoSpecDetector.java \
                  Group.java \
                  HiResSpecConfig.java \
                  HiResSpecDetector.java \
@@ -72,13 +74,16 @@ SRCS           = CatalogSource.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
-#   $Author: snf $ 
-# $Revision: 1.6 $
-#       $Id: Makefile,v 1.6 2007-01-09 14:06:34 snf Exp $
-#     $Date: 2007-01-09 14:06:34 $
+#   $Author: cjm $ 
+# $Revision: 1.7 $
+#       $Id: Makefile,v 1.7 2007-05-22 09:08:14 cjm Exp $
+#     $Date: 2007-05-22 09:08:14 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/phase2/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.6  2007/01/09 14:06:34  snf
+#      added a DIRS_TARGET thingy
+#
 #      Revision 1.5  2007/01/09 14:03:28  snf
 #      changed javac
 #
