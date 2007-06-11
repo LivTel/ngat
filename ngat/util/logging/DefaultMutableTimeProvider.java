@@ -17,4 +17,7 @@ public class DefaultMutableTimeProvider implements TimeProvider {
     /** Returms the last set time.*/
     public long getTime() { return time; }
 
+    /** Returns a prefix string.*/
+    public String getPrefix() { return "!";}
+
 }
