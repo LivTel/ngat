@@ -14,7 +14,7 @@ import ngat.util.logging.*;
  * shutdown().
  */
 
-public abstract class ControlThread extends Thread {
+public abstract class ControlThread extends Thread implements ControlableThread {
 
     /** Control variable, used by Thread to determine if it should die. */
     protected volatile boolean canRun;
