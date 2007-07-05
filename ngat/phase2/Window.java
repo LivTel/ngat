@@ -2,15 +2,19 @@ package ngat.phase2;
 
 import ngat.phase2.nonpersist.*;
 import java.io.*;
-import com.odi.*;
+import jyd.storable.*;
 
 /** Represents a CCD detector window. A Subset of pixels on the CCD,
  * One or more instances of this class reside within each 
  * instance of Instrument (in the windowList field).
  * <br>
- * $Id: Window.java,v 1.1 2000-11-23 11:50:35 snf Exp $ 
+ * $Id: Window.java,v 1.2 2007-07-05 11:56:37 snf Exp $ 
  */
 public class Window implements Serializable {
+
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -2838427675614117584L;
 
     /** The X axis position of the top/left corner of the window.*/
     protected int xs;
@@ -42,50 +46,29 @@ public class Window implements Serializable {
 	active = false;
     }
   
-    /** Translate a NonPersistent Window into a Window.*/
-    public Window(NPWindow npWindow) {
-	super();
-	setXs(npWindow.getXs());
-	setYs(npWindow.getYs());
-	setXe(npWindow.getXe());
-	setYe(npWindow.getYe());
-	setActive(npWindow.isActive());
-    }
-    
-    /** Translate a Window to Nonpersistent form.*/
-    public NPWindow makeNP() {
-	NPWindow npWindow = new NPWindow();
-	npWindow.setXs(xs);
-	npWindow.setYs(ys);
-	npWindow.setXe(xe);
-	npWindow.setYe(ye);
-	npWindow.setActive(active);
-	return npWindow;
-    }
-    
     /** Return the X axis position of the top/left corner of the window.*/
     public int getXe() { return xe;}
     
     /** Set the X axis position of the top/left corner of the window.*/
-    public void setXe(int xe) {this.xe = xe;} 
+    public void setXe(int xe) { this.xe = xe;} 
     
     /** Return the Y axis position of the top/left corner of the window.*/
     public int getYe() { return ye;}
       
     /** Set the Y axis position of the top/left corner of the window.*/
-    public void setYe(int ye) {this.ye = ye;}
+    public void setYe(int ye) { this.ye = ye;}
     
     /** Return the X axis position of the bottom/right corner of the window.*/
     public int getXs() { return xs;}
     
     /** Set the X axis position of the bottom/right corner of the window.*/
-    public void setXs(int xs) {this.xs = xs;}    
+    public void setXs(int xs) { this.xs = xs;}    
     
     /** Return the Y axis position of the bottom/right corner of the window.*/
     public int getYs() { return ys;}
     
     /** Set the Y axis position of the bottom/right corner of the window.*/
-    public void setYs(int ys) {this.ys = ys;}
+    public void setYs(int ys) { this.ys = ys;}
     
     /** Return the width of the window.*/
     public int getWidth() { return xe-xs; }
@@ -99,6 +82,24 @@ public class Window implements Serializable {
     /** Set the active state of the window.*/
     public void setActive(boolean active) { this.active = active; }
 
+    public void writeXml(PrintStream out, int level) {	
+	out.println(tab(level)+
+		    "<window xs = '"+xs+"' ys = '"+ys+
+		    "' xe = '"+xe+"' ye = '"+ye+
+		    "' active = "+ (active ? "'true'" : "'false'")+"/>");
+    } 
+
+    public String tab(int level) {
+	StringBuffer buff = new StringBuffer("");
+	for (int i = 0; i < level; i++) {
+	    buff.append("   ");
+	}
+	return buff.toString();
+    }
+
 }
 
-/** $Log: not supported by cvs2svn $ */
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2000/11/23 11:50:35  snf
+/** Initial revision
+/** */

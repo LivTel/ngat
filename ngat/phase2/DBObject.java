@@ -1,5 +1,8 @@
 package ngat.phase2;
 
+import jyd.storable.*;
+import jyd.collection.*;
+
 import ngat.phase2.nonpersist.*;
 import java.util.*;
 import java.io.*;
@@ -7,9 +10,9 @@ import java.io.*;
 /** 
  * A top level object from which all database objects are derived. Contains
  * generic variables and methods.
- * $Id: DBObject.java,v 1.2 2001-02-23 18:45:20 snf Exp $
+ * $Id: DBObject.java,v 1.3 2007-07-05 11:57:58 snf Exp $
  */
-public class DBObject implements Serializable {
+public class DBObject extends StorableObject implements Serializable {
 
     /** Serial version UID - used to maintain serialization compatibility
      * across modifications of the class's structure.*/
@@ -63,6 +66,7 @@ public class DBObject implements Serializable {
     /** Translate the DBObject into a NonPersistent mirror object.
      * This method just pushes relevant stuff into an existing NPDBObject. */
     public void stuff(NPDBObject npo) {
+	this.storableFetch();
 	npo.setName(name);
 	npo.setPath(path);
 	npo.setSchedCoeff(schedCoeff);
@@ -71,6 +75,7 @@ public class DBObject implements Serializable {
 
     /** Translate to NP, creating a new NPDBObject. */
     public NPDBObject makeNP() {
+	this.storableFetch();
 	NPDBObject npo = new NPDBObject();
 	stuff(npo);
 	return npo;
@@ -78,18 +83,20 @@ public class DBObject implements Serializable {
 
     // Database locking methods.
 
-    /** Set the Lock for this object. 
-     * @return false if alreadylocked with a different key. */
+    /** Set the Lock for this object - ALWAYS locks. 
+     * @return false if already locked with a different key. */
     public boolean setLock(int key) { 
+	this.storableUpdate();
 	boolean set = true;   
 	if (isLocked() && key != getLock()) set = false;
 	this.lock = key;
 	return set;
     }
     
-    /** Unlock this object using the specified key.
+    /** Unlock this object using the specified key - ALWAYS unlocks.
      * @return false if locked with a different key. */
     public boolean unLock(int key) {
+	this.storableUpdate();
 	boolean freed = true;   
 	if (isLocked() && key != getLock()) freed = false;
 	this.lock = 0;
@@ -97,48 +104,90 @@ public class DBObject implements Serializable {
     }
 
     /** Determine whether the object is locked. */
-    public boolean isLocked() { return (lock != 0);}
-
+    public boolean isLocked() {
+	this.storableFetch(); 
+	return (lock != 0);
+    }
+    
     /** Get the key for this object's lock.*/
-    public int getLock() { return lock;}
-
+    public int getLock() {
+	this.storableFetch();
+	return lock;
+    }
+    
     // Generic Methods.
-
+    
     /** Get the object's identity. */
-    public String getName() { return name;}
+    public String getName() {
+	this.storableFetch(); 
+	return name;
+    }
     
     /** Set the Object's name (used by stuffers). */
-    public void setName(String name) { this.name = name;}
-
-    public void setId(String name) { this.name = name;}
-
-    public String getId() { return name;}
-
+    public void setName(String name) { 
+	this.storableUpdate();
+	this.name = name;
+    }
+    
+    public void setId(String name) {
+	this.storableUpdate();
+	this.name = name;
+    }
+    
+    public String getId() {
+	this.storableFetch(); 
+	return name;
+    }
+    
     /** Set the object's path - when placing in a tree. */
-    public void setPath(String path) {this.path = path;}
+    public void setPath(String path) {
+	this.storableUpdate();
+	this.path = path;
+    }
     
     /** Get the object's path expression - ie. its tree location. */
-    public String getPath() { return path;}
-
+    public String getPath() { 
+	this.storableFetch();
+	return path;
+    }
+    
     /** Get the full path anme for this Object. */
-    public String getFullPath() { return path+"/"+name;}
+    public String getFullPath() { 
+	this.storableFetch();
+	return path+"/"+name;
+    }
 
     /** Get the object's schedule coefficient. */
-    public float getSchedCoeff() { return schedCoeff;}
+    public float getSchedCoeff() {
+	this.storableFetch(); 
+	return schedCoeff;
+    }
 
     /** Set the object's schedule coefficient. */
-    public void setSchedCoeff(float schedCoeff) {this.schedCoeff = schedCoeff;}
+    public void setSchedCoeff(float schedCoeff) {
+	this.storableUpdate();
+	this.schedCoeff = schedCoeff;
+    }
 
     /** Determine whether the object is marked for deletion. */
-    public boolean deleted() { return deleted;}
+    public boolean deleted() { 
+	this.storableFetch();
+	return deleted;
+    }
 
     /** Mark the object for deletion - the time of deletion is not known
      * in advance, a future implementation may allow a period of grace to be specified.*/
-    public void setDeleted(boolean deleted) { this.deleted = deleted;}
+    public void setDeleted(boolean deleted) {
+	this.storableUpdate();
+	this.deleted = deleted;
+    }
 
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2001/02/23 18:45:20  snf
+/** added serialversionUID.
+/**
 /** Revision 1.1  2000/11/23 11:38:08  snf
 /** Initial revision
 /**

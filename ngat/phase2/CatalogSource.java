@@ -3,8 +3,8 @@ package ngat.phase2;
 import ngat.astrometry.*;
 import ngat.phase2.nonpersist.*;
 
-import com.odi.*;
-import com.odi.util.*;
+import jyd.storable.*;
+import jyd.collection.*;
 
 import java.util.*;
 import java.io.*;
@@ -66,16 +66,22 @@ public class CatalogSource extends SolarSystemSource implements Serializable {
     // Accessors.
     
     /** Set the catalog id of this source.*/
-    public void setCatalogId(int in) { this.catalogId = in; }
+    public void setCatalogId(int in) { 
+	
+	this.catalogId = in; 
+    }
     
     /** Returns the catalog id of this source.*/
-    public int getCatalogId() { return catalogId; }
+    public int getCatalogId() { 
+	
+	return catalogId;
+    }
     
     /** Returns the catalog source's current position. This is calculated 
      * via an appropriate algorithm dependant on the type of source and
      * obtained via ngat.astrometry.Astrometry.*/
     public Position getPosition() {
- 	Position position = null;
+	
 	switch (catalogId) {
 	case SUN:
 	    return Astrometry.getSolarPosition();
@@ -87,29 +93,48 @@ public class CatalogSource extends SolarSystemSource implements Serializable {
     }
     
     /** Returns the current Non-sidereal tracking in RA.*/
-    public double getNsTrackRA() { return 0.0;}
+    public double getNsTrackRA() { 
+	
+	switch (catalogId) {
+	case SUN:
+	    return Astrometry.getSolarTracking().getNsTrackRA();
+	case MOON:
+	    return Astrometry.getLunarTracking().getNsTrackRA();
+	default:
+	    return 0.0;
+	}	
+    }
     
     /** Returns the current Non-sidereal tracking in dec.*/
-    public double getNsTrackDec() { return 0.0;}
+    public double getNsTrackDec() { 
+	
+	switch (catalogId) {
+	case SUN:
+	    return Astrometry.getSolarTracking().getNsTrackDec();
+	case MOON:
+	    return Astrometry.getLunarTracking().getNsTrackDec();
+	default:
+	    return 0.0;
+	}
+    }
     
-    // NP -> P Translator.  
-    public CatalogSource(NPCatalogSource npCatSource) {
-	super(npCatSource);
-	catalogId = npCatSource.getCatalogId();
-    } // end (NP -> P Translator).
+    // Clone Constructor.   
+    public NPDBObject copy() {
+	try {
+	    return (CatalogSource)clone();
+	} catch (CloneNotSupportedException ce) {return null;}
+    } // end (copy).
     
-    // P -> NP Translator.   
-    public void stuff(NPCatalogSource npCatSource) {
-	super.stuff(npCatSource);
-	npCatSource.setCatalogId(catalogId);
-    } // end (P -> NP Translator).
+    public void writeXml(PrintStream out, int level) {
+	out.println(tab(level)+"<catalogSource name = '"+name+"'>");
+	out.println(tab(level+1)+"<catalogId>"+catalogId+"</catalogId>");
+	out.println(tab(level)+"</catalogSource>");
+    } // end (write).
     
-    // P -> NP Translator.
-    
-    public NPDBObject makeNP() {
-	NPCatalogSource npCatSource = new NPCatalogSource();
-	stuff(npCatSource);
-	return npCatSource;
-    } // end (makeNp).
-
+    /** Returns readable description. ##TBD##*/
+    public String toString() {
+	return "Cat.Source: "+name+
+	    " : Catid"+catalogId+" ..ns tracking is not currently available";
+    }
+  
 } // End class def. [CatalogSource].

@@ -21,26 +21,6 @@ public class DBObjectDescriptor implements Serializable {
 	this.key = key;
     }
 
-    // Translate into P version.
-
-    /** Make a DBObjectDescriptor from supplied NonPersistant version.*/
-    public DBObjectDescriptor(NPDBObjectDescriptor npo) {
-	this.object = new DBObject(npo.getObject());
-	this.key = npo.getKey();
-    }
-
-    // Translate into NP version.
-
-    /** Translate into a NonPersistant version. */
-    public NPDBObjectDescriptor makeNP() {
-	NPDBObjectDescriptor npd = new NPDBObjectDescriptor();
-	npd.setObject(object.makeNP());
-	npd.setKey(key);
-	return npd;
-    }
-
-    // Accessors.
-
     /** Get the reference to the contained DBObject. */
     public DBObject getObject() { return object;}
 
