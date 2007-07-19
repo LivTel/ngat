@@ -1,5 +1,5 @@
 // FrodoSpecConfig.java
-// $Header: /space/home/eng/cjm/cvs/ngat/phase2/FrodoSpecConfig.java,v 1.1 2007-05-22 09:07:31 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/phase2/FrodoSpecConfig.java,v 1.2 2007-07-19 18:38:40 cjm Exp $
 package ngat.phase2;
 
 import ngat.phase2.nonpersist.*;
@@ -20,7 +20,7 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FrodoSpecConfig.java,v 1.1 2007-05-22 09:07:31 cjm Exp $"); 
+	public final static String RCSID = new String("$Id: FrodoSpecConfig.java,v 1.2 2007-07-19 18:38:40 cjm Exp $"); 
 	/** 
 	 * Serial version UID - used to maintain serialization compatibility
 	 * across modifications of the class's structure.
@@ -181,7 +181,7 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
 
 	/**
 	 * Print a string version of the arm.
-	 * @return A string, one of "NO_ARM","RED_ARM","BLUE_ARM".
+	 * @return A string, one of "unknown","red","blue".
 	 * @exception IllegalArgumentException Thrown if arm is not a known arm number.
 	 * @see #arm
 	 * @see #NO_ARM
@@ -191,11 +191,11 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
 	public String armToString() throws IllegalArgumentException
 	{
 		if(arm == NO_ARM)
-			return "NO_ARM";
+			return "unknown";
 		else if(arm == RED_ARM)
-			return "RED_ARM";
+			return "red";
 		else if(arm == BLUE_ARM)
-			return "BLUE_ARM";
+			return "blue";
 		else
 			throw new IllegalArgumentException(this.getClass().getName()+
 							   ":armToString:Illegal arm number:"+arm);
@@ -203,7 +203,7 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
 
 	/**
 	 * Parse a string into a suitable arm number.
-	 * @param armString a String, should be one of "NO_ARM","RED_ARM","BLUE_ARM" to be successful.
+	 * @param armString a String, should be one of "unknown","red","blue" to be successful.
 	 * @exception IllegalArgumentException Thrown if armString is not a suitable string.
 	 * @see #arm
 	 * @see #NO_ARM
@@ -212,11 +212,11 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
 	 */
 	public void parseArm(String armString) throws IllegalArgumentException
 	{
-		if(armString.equals("NO_ARM"))
+		if(armString.equals("unknown"))
 			arm = NO_ARM;
-		else if(armString.equals("RED_ARM"))
+		else if(armString.equals("red"))
 			arm = RED_ARM;
-		else if(armString.equals("BLUE_ARM"))
+		else if(armString.equals("blue"))
 			arm = BLUE_ARM;
 		else
 			throw new IllegalArgumentException(this.getClass().getName()+
@@ -272,4 +272,7 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2007/05/22 09:07:31  cjm
+// Initial revision
+//
 //
