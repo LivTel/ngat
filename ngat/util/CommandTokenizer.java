@@ -74,7 +74,7 @@ public class CommandTokenizer {
 
 		    if (isKey(nextToken())) {
 			
-			System.err.println("4a; Saving as a switch: "+strip(token));
+			//System.err.println("4a; Saving as a switch: "+strip(token));
 			// This token is a switch.
 			
 			if (isNegativeSwitch(token))		
