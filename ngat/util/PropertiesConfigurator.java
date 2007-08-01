@@ -1,38 +1,35 @@
 package ngat.util;
 
 import java.io.*;
-import org.jdom.*;
-import org.jdom.input.*;
 
-/** A utility class for configuring XmlConfigurable target objects.*/
-public class XmlConfigurator {
+/** A utility class for configuring PropertiesConfigurable target objects.*/
+public class PropertiesConfigurator {
 
-    /** Root element.*/
-    private Element root;
+    /** Config.*/
+    private ConfigurationProperties config;
 
-    /** Prepare an XmlConfigurator with the supplied root element.*/
-    private XmlConfigurator(Element root) {
-	this.root = root;
+    /** Prepare a PropertiesConfigurator with the supplied config.*/
+    private PropertiesConfigurator(ConfigurationProperties config) {
+	this.config = config;
     }
 
-    /** Creates an instance of XmlConfigurator, with the tree parsed from the supplied file.
-     * The configurator can then be used to configure an XmlConfigurable target.
+    /** Creates an instance of PropertiesConfigurator, with the config parsed from the supplied file.
+     * The configurator can then be used to configure a PropertiesConfigurable target.
      */
-    public static XmlConfigurator use(File file) throws Exception {
+    public static PropertiesConfigurator use(File file) throws Exception {
 
-	SAXBuilder builder = new SAXBuilder();
-	Document doc = builder.build(file);
-	Element root = doc.getRootElement();
-	
-	return new XmlConfigurator(root);
+	ConfigurationProperties config = new ConfigurationProperties();
+	config.load(new FileInputStream(file);
+
+	return new PropertiesConfigurator(config);
 
     }
 
-    /** Configure an XmlConfigurable target object using the Configurator's root element.
-     * @param target An instance of XmlConfigurable.
+    /** Configure a PropertiesConfigurable target object using the Configurator's config.
+     * @param target An instance of PropertiesConfigurable.
      */
-    public void configure(XmlConfigurable target) throws Exception {
-	target.configure(root);
+    public void configure(PropertiesConfigurable target) throws Exception {
+	target.configure(config);
     }
 
 }
