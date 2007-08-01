@@ -19,7 +19,7 @@ public class PropertiesConfigurator {
     public static PropertiesConfigurator use(File file) throws Exception {
 
 	ConfigurationProperties config = new ConfigurationProperties();
-	config.load(new FileInputStream(file);
+	config.load(new FileInputStream(file));
 
 	return new PropertiesConfigurator(config);
 
