@@ -17,6 +17,7 @@ SRCS           = BlockingQueue.java \
                  CommandParser.java \
                  ConfigurationCache.java \
                  ConfigurationProperties.java \
+		ControlableThread.java \
                  ControlThread.java \
                  CPUScheduler.java \
                  DateParser.java \
@@ -40,6 +41,7 @@ SRCS           = BlockingQueue.java \
                  Predictor.java \
                  PredictorSample.java \
 		 PropertiesConfigurable.java \
+		PropertiesConfigurator.java \
                  QueuedSynchFlag2.java \
                  QueuedSynchFlag.java \
                  QueueEmptyException.java \
@@ -72,10 +74,13 @@ SRCS           = BlockingQueue.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
 #   $Author: snf $
-# $Revision: 1.32 $
-#       $Id: Makefile,v 1.32 2007-02-28 06:15:08 snf Exp $
-#     $Date: 2007-02-28 06:15:08 $
+# $Revision: 1.33 $
+#       $Id: Makefile,v 1.33 2007-08-01 08:36:51 snf Exp $
+#     $Date: 2007-08-01 08:36:51 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/util/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.32  2007/02/28 06:15:08  snf
+#      checkin
+#
 #
