@@ -16,17 +16,18 @@ SRCS           = DataLogger.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
-# Need to switch the JDK to get JSSE and JCE 
-JAVAC	       = /usr/java/j2sdk1.4.2_07/bin/javac
 
 #
 #   $Author: snf $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2007-08-03 06:44:09 snf Exp $
-#     $Date: 2007-08-03 06:44:09 $
+# $Revision: 1.2 $
+#       $Id: Makefile,v 1.2 2007-08-03 06:44:31 snf Exp $
+#     $Date: 2007-08-03 06:44:31 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/net/datalogger/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.1  2007/08/03 06:44:09  snf
+#      Initial revision
+#
 #      Revision 1.1  2006/11/20 14:37:07  cjm
 #      Initial revision
 #
