@@ -93,7 +93,8 @@ public class IRCamConfig extends InstrumentConfig implements Serializable {
 	out.println(tab(level)+"</irCamConfig>");
     } // end (write).
     
-    public String toString() { return "IRCamConfig: "+name+
+    public String toString() { return "IRCamConfig: "+instrumentName+"/"+
+				   name+
 				   " : Filter "+filterWheel+				 
 				   ", Bin: ["+detectors[0].getXBin()+" x "+detectors[0].getYBin()+"]";
     }
