@@ -123,7 +123,7 @@ public class CCDConfig extends InstrumentConfig implements Serializable {
 	out.println(tab(level)+"</ccdConfig>");
     } // end (write).
 
-    public String toString() { return "CCDConfig: "+name+
+    public String toString() { return "CCDConfig: "+instrumentName+"/"+name+
 				   " : U "+upperFilterWheel+
 				   ", L "+lowerFilterWheel+
 				   ", Bin: ["+detectors[0].getXBin()+" x "+detectors[0].getYBin()+"]";
