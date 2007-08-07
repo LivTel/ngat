@@ -40,6 +40,7 @@ SRCS           = CatalogSource.java \
                  MonitorGroup.java \
                  Mosaic.java \
                  Observation.java \
+		Offset.java \
                  PipelineConfig.java \
 		 PolarimeterDetector.java \
 		 PolarimeterConfig.java \
@@ -76,12 +77,15 @@ include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
 #   $Author: snf $ 
-# $Revision: 1.8 $
-#       $Id: Makefile,v 1.8 2007-07-05 11:55:04 snf Exp $
-#     $Date: 2007-07-05 11:55:04 $
+# $Revision: 1.9 $
+#       $Id: Makefile,v 1.9 2007-08-07 07:16:53 snf Exp $
+#     $Date: 2007-08-07 07:16:53 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/phase2/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.8  2007/07/05 11:55:04  snf
+#      checkin
+#
 #      Revision 1.7  2007/05/22 09:08:14  cjm
 #      Added FrodoSpecConfig.java, FrodoSpecDetector.java.
 #
