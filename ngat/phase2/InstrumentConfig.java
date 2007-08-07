@@ -34,10 +34,14 @@ public class InstrumentConfig extends NPDBObject implements Serializable {
     
     /** Holds the list of detectors for this Instrument. */
     protected Detector[] detectors;
-    
+
+    /** Name of the actual instrument.*/     
+    public String instrumentName;
+
     /** Subclasses should override to return the correct value. */
     public int getMaxDetectorCount() { return 0;}
-    
+   
+
     // Constructor.
     
     public InstrumentConfig() {this("untitled");}
@@ -47,6 +51,12 @@ public class InstrumentConfig extends NPDBObject implements Serializable {
     }
     
     // Accessors.
+
+    /** Sets the name of the instrument.*/
+    public void setInstrumentName(String name) { this.instrumentName = name; }
+
+    /** Returns the name of the instrument.*/
+    public String getInstrumentName() { return instrumentName; }
     
     /** Sets the  time (millis) required to set up this config (..Simulation only) .*/
     public void setSetupTime(float in) { this.setupTime = in;}
