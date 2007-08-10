@@ -36,7 +36,7 @@ public class CommandTokenizer {
     }
     
     /** Parse the supplied arglist.*/
-    public ConfigurationProperties void parse(String [] arglist) {
+    public ConfigurationProperties parse(String [] arglist) {
 
 	this.arglist = arglist;
 
