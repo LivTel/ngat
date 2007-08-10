@@ -25,31 +25,22 @@ public class CommandTokenizer {
     /** Arguments.*/
     String [] arglist;
 
+    public static CommandTokenizer use(String delim) {
+	CommandTokenizer ct = new CommandTokenizer(delim);
+	return ct;
+    }
+
     /** Create a new CommandTokenizer.*/
     public CommandTokenizer(String delim) {
 	this.delim = delim;
-	tokens = new ConfigurationProperties();
     }
     
-    /** Parse the supplied arg string.*/
-    public void parse(String argtext) {
-
-// 	while (moreChars()) {
-
-
-
-// 	}
-
-// 	String [] arglist = XX.toCharArray();
-
-// 	parse(arglist);
-
-    }
-
     /** Parse the supplied arglist.*/
-    public void parse(String [] arglist) {
+    public ConfigurationProperties void parse(String [] arglist) {
 
 	this.arglist = arglist;
+
+	tokens = new ConfigurationProperties();
 
 	nt = arglist.length;
 	pos = 0;
@@ -113,6 +104,8 @@ public class CommandTokenizer {
 	    }
 	    	    
 	}
+
+	return tokens;
 	
     }
 
