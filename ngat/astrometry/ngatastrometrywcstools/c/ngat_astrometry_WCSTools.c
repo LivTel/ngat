@@ -1,11 +1,11 @@
 /* ngat_astrometry_WCSTools.c
 ** Implementation of Java Class ngat.astrometry.WCSTools  native interfaces
-** $Header: /space/home/eng/cjm/cvs/ngat/astrometry/ngatastrometrywcstools/c/ngat_astrometry_WCSTools.c,v 1.1 2007-08-10 11:02:21 cjm Exp $
+** $Header: /space/home/eng/cjm/cvs/ngat/astrometry/ngatastrometrywcstools/c/ngat_astrometry_WCSTools.c,v 1.2 2007-08-13 10:42:26 cjm Exp $
 */
 /**
  * ngat_astrometry_WCSTools.c is the 'glue' between Doug Mink's libwcs.a,and ngat.astrometry.WCSTools.
  * @author Chris Mottram LJMU
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 /**
  * This hash define is needed before including source files give us POSIX.4/IEEE1003.1b-1993 prototypes
@@ -61,7 +61,7 @@ struct Handle_Map_Struct
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: ngat_astrometry_WCSTools.c,v 1.1 2007-08-10 11:02:21 cjm Exp $";
+static char rcsid[] = "$Id: ngat_astrometry_WCSTools.c,v 1.2 2007-08-13 10:42:26 cjm Exp $";
 
 /**
  * Internal list of maps between WCSToolsWorldCoorHandle jobject's (i.e. Java references), and
@@ -106,7 +106,7 @@ JNIEXPORT jobject JNICALL Java_ngat_astrometry_WCSTools_GetWCSFITS(JNIEnv *env,j
 	if(jfilename != NULL)
 		cfilename = (*env)->GetStringUTFChars(env,jfilename,0);
 	/* create wcs pointer */
-	wcs = GetWCSFITS(cfilename,(int)verbosity);
+	wcs = GetWCSFITS((char*)cfilename,(int)verbosity);
 	/* If we created the cfilename string we need to free the memory it uses */
 	if(jfilename != NULL)
 		(*env)->ReleaseStringUTFChars(env,jfilename,cfilename);
@@ -195,8 +195,7 @@ JNIEXPORT jobject JNICALL Java_ngat_astrometry_WCSTools_pix2wcs(JNIEnv *env, jcl
 		/* throws an exception on error */
 		return NULL;
 	}
-	/* do wcslib conversion
-	** pix2wcs returns an int according to wcs.h, but is void according to wcs.c */
+	/* do wcslib conversion */
 	pix2wcs(wcs,(double)xpix,(double)ypix,&xpos,&ypos);
 	/* create return object */
 	coordinate = WCSTools_Create_WCSToolsCoordinate(env,xpos,ypos);
@@ -221,7 +220,9 @@ JNIEXPORT jobject JNICALL Java_ngat_astrometry_WCSTools_wcs2pix(JNIEnv *env, jcl
 {
 	struct WorldCoor *wcs = NULL;
 	jobject coordinate = NULL;
+	char error_string[256];
 	double xpix,ypix;
+	int offscl;
 
 	/* find libwcs handle from WCSToolsWorldCoorHandle handle */
 	if(!WCSTools_Handle_Map_Find(env,handle,&wcs))
@@ -230,8 +231,15 @@ JNIEXPORT jobject JNICALL Java_ngat_astrometry_WCSTools_wcs2pix(JNIEnv *env, jcl
 		return NULL;
 	}
 	/* do wcslib conversion
-	** wcs2pix returns an int according to wcs.h, but is void according to wcs.c */
-	wcs2pix(wcs,(double)xpos,(double)ypos,&xpix,&ypix);
+	** V3.6.8 adds offscl parameter. */
+	wcs2pix(wcs,(double)xpos,(double)ypos,&xpix,&ypix,&offscl);
+	if(offscl != 0)
+	{
+		sprintf(error_string,"Position RA %.2f rads, Dec %.2f rads was off bounds (offscl=%d).",
+			xpos,ypos,offscl);
+		WCSTools_Throw_Exception_String(env,"wcs2pix",error_string);
+		return NULL;
+	}
 	/* create return object with pixel x,y pos */
 	coordinate = WCSTools_Create_WCSToolsCoordinate(env,xpix,ypix);
 	if(coordinate == NULL)
@@ -541,4 +549,7 @@ static int WCSTools_Handle_Map_Find(JNIEnv *env,jobject java_handle,struct World
 }
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.1  2007/08/10 11:02:21  cjm
+** Initial revision
+**
 */
