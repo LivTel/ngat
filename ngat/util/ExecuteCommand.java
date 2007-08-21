@@ -1,5 +1,5 @@
-// ExecuteCommand.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/util/ExecuteCommand.java,v 0.3 2000-03-02 13:59:16 cjm Exp $
+// ExecuteCommand.java
+// $Header: /space/home/eng/cjm/cvs/ngat/util/ExecuteCommand.java,v 0.4 2007-08-21 16:53:26 cjm Exp $
 package ngat.util;
 
 import java.io.*;
@@ -10,14 +10,14 @@ import java.lang.*;
  * uses Runtime.exec to execute the command, and waits for the commands termination. The output and error streams are
  * piped to Strings which can be returned.
  * This class will not execute system commands that require typed input.
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  */
 public class ExecuteCommand implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ExecuteCommand.java,v 0.3 2000-03-02 13:59:16 cjm Exp $");
+	public final static String RCSID = new String("$Id: ExecuteCommand.java,v 0.4 2007-08-21 16:53:26 cjm Exp $");
 	/**
 	 * The command an instance of this command executes when the run method is called.
 	 */
@@ -200,9 +200,24 @@ public class ExecuteCommand implements Runnable
 	{
 		return errorString;
 	}
+
+	/**
+	 * Try to abort (stop running) an executing process.
+	 * If process is non-null, it's destroy method is called.
+	 * @see #process
+	 * @see java.lang.Process#destroy
+	 */
+	public void abort()
+	{
+		if(process != null)
+			process.destroy();
+	}
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2000/03/02 13:59:16  cjm
+// Fixed error - now closes streams after command has terminated.
+//
 // Revision 0.2  2000/02/15 14:05:54  cjm
 // Added newline to output/error strings.
 //
