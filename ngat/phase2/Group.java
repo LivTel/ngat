@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: Group.java,v 1.9 2007-04-04 08:12:57 snf Exp $
+ * $Id: Group.java,v 1.10 2007-08-21 14:56:40 snf Exp $
  */
 public class Group extends NPDBObject implements Serializable {
    
@@ -60,7 +60,7 @@ public class Group extends NPDBObject implements Serializable {
     public static final long DEFAULT_NOMINAL_OFFSET_TIME        = 5000L;
     
     /** Nominal value of expected instrument-readout time.*/
-    public static final long DEFAULT_NOMINAL_READOUT_TIME       = 20000L;
+    public static final long DEFAULT_NOMINAL_READOUT_TIME       = 12000L;
 
     /** Maximal value of expected instrument and telescope-configuration times.*/
     public static final long DEFAULT_MAXIMAL_CONFIGURATION_TIME = 60000L;
