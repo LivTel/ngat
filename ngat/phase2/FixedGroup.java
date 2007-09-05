@@ -17,6 +17,9 @@ public class FixedGroup extends Group implements Serializable {
      /**  the date/time at which this FixedGroup should be carried out. */
      protected long fixedTime;
 
+    /** The size of a window in which the group can start - equal either side of fixed time.*/
+    protected long window;
+
      // Constructor.
 
      public FixedGroup() {this("untitled");}
@@ -36,6 +39,10 @@ public class FixedGroup extends Group implements Serializable {
      /** Returns the  the date/time at which this FixedGroup should be carried out. */
      public long getFixedTime() { return fixedTime;}
 
+    public void setWindow(long w) { this.window = w; }
+
+    public long getWindow() { return window; }
+
     // Clone Constructor.
     public NPDBObject copy() {
 	try {
@@ -48,7 +55,7 @@ public class FixedGroup extends Group implements Serializable {
 
 	out.println(tab(level)+"<fixed time = '"+sdf.format(new Date(fixedTime))+"'/>");
 
-    }  
+    } 
 
     /** Writes the (subclass-specific) descriptor info to a String as Html. 
      * @param protocolVersion Allows for future changes to the formatting.
@@ -62,14 +69,18 @@ public class FixedGroup extends Group implements Serializable {
 	buffer.append("\n    <tr> <td colspan = 2> <b> Fixed fields </b> </td> </tr>  ");
 	buffer.append("\n    <tr>  ");
 	buffer.append("\n      <td> Fixed-time </td> <td bgcolor = white>"+sdf.format(new Date(fixedTime))+"</td>  ");
-	buffer.append("\n    </tr>  "); 
+	buffer.append("\n    </tr>  ");
+	buffer.append("\n    <tr>  ");
+	buffer.append("\n      <td> Window </td> <td bgcolor = white>"+(window/1000)+"</td>  ");
+	buffer.append("\n    </tr>  ");
+	
 	buffer.append("\n   </table>  ");
 	
     }
     
 
     public String toString() { 
-	return "[FixedGroup: "+name+" : Fixed-time="+sdf.format(new Date(fixedTime))+"]";
+	return "[FixedGroup: "+name+" : Fixed-time="+sdf.format(new Date(fixedTime))+", Window="+(window/1000)+"s]";
     }
 
 } // end class def [FixedGroup].
