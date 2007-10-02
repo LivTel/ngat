@@ -30,6 +30,7 @@ SRCS           = BasicLogFilter.java \
                  LogManager.java \
                  LogManagerListener.java \
                  LogPanel.java \
+		LogProxy.java \
                  LogRecord.java \
                  LogServer.java \
 		LogListener.java \
