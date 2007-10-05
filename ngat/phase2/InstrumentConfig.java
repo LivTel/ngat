@@ -111,8 +111,8 @@ public class InstrumentConfig extends NPDBObject implements Serializable {
     
     /** Compares with another InstConfig to see if they are effectively the same.*/
     public boolean sameAs(InstrumentConfig other) {
-	System.err.println("IC::Checking: "+this.getClass().getName()+
-			   " Against: "+other.getClass().getName());
+	//	System.err.println("IC::Checking: "+this.getClass().getName()+
+	//	   " Against: "+other.getClass().getName());
 	if (other == null) return false;
 	return this.getClass().getName().equals(other.getClass().getName());
     }
