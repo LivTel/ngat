@@ -1,5 +1,5 @@
 // PolarimeterConfig.java
-// $Header: /space/home/eng/cjm/cvs/ngat/phase2/PolarimeterConfig.java,v 1.2 2007-08-07 08:41:14 snf Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/phase2/PolarimeterConfig.java,v 1.3 2007-10-05 09:34:52 snf Exp $
 package ngat.phase2;
 
 import ngat.phase2.nonpersist.*;
@@ -18,7 +18,7 @@ public class PolarimeterConfig extends InstrumentConfig implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PolarimeterConfig.java,v 1.2 2007-08-07 08:41:14 snf Exp $"); 
+	public final static String RCSID = new String("$Id: PolarimeterConfig.java,v 1.3 2007-10-05 09:34:52 snf Exp $"); 
 	/** 
 	 * Serial version UID - used to maintain serialization compatibility
 	 * across modifications of the class's structure.
@@ -63,8 +63,8 @@ public class PolarimeterConfig extends InstrumentConfig implements Serializable
 	 */
 	public boolean sameAs(InstrumentConfig other)
 	{
-		System.err.println("Checking PolarimterConfig with another one: "+
-				   this.toString()+" with "+other.toString());
+	    //		System.err.println("Checking PolarimterConfig with another one: "+
+	    //		   this.toString()+" with "+other.toString());
 		if (! super.sameAs(other))
 			return false;
 	
@@ -106,6 +106,9 @@ public class PolarimeterConfig extends InstrumentConfig implements Serializable
 } 
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2007/08/07 08:41:14  snf
+// added instane to string
+//
 // Revision 1.1  2006/11/20 14:51:23  cjm
 // Initial revision
 //
