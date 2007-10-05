@@ -56,8 +56,8 @@ public class IRCamConfig extends InstrumentConfig implements Serializable {
       
     /** Compares with another InstConfig to see if they are effectively the same.*/
     public boolean sameAs(InstrumentConfig other) {
-	System.err.println("Checking IRC with another one: "+
-			   this.toString()+" with "+other.toString());
+	//	System.err.println("Checking IRC with another one: "+
+	//	   this.toString()+" with "+other.toString());
 	if (! super.sameAs(other))
 	    return false;
 	// Ok we know they are the same class now..
