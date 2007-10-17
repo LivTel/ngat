@@ -9,7 +9,7 @@ import ngat.astrometry.*;
 
 /** Holds the state of the TCS and telescope systems.
  * <br><br>
- * $Id: TCS_Status.java,v 1.1 2006-12-18 11:58:47 snf Exp $
+ * $Id: TCS_Status.java,v 1.2 2007-10-17 07:29:27 snf Exp $
  */
 public class TCS_Status implements Serializable, Cloneable {
 
@@ -1697,6 +1697,13 @@ public class TCS_Status implements Serializable, Cloneable {
 	/** Records the current Source radial velocity (km/sec).*/
 	public double srcRadialVelocity;
 
+	/** Records the actual RA of the source - offsets included.*/
+	public double srcActRA;
+
+	/** Records the actual Dec of the source - offsets included.*/
+	public double srcActDec;
+
+
 	/** Returns a readable version of the TCS_Status$Segment .*/
 	public String toString() {
 	    StringBuffer buffer = new StringBuffer("Source: "+sdf.format(new Date(this.timeStamp))+"(");  
@@ -1711,6 +1718,8 @@ public class TCS_Status implements Serializable, Cloneable {
 	    buffer.append(", PM Dec="+       srcPmDec+         " (arcsec/year)");	
 	    buffer.append(", Parallax="+     srcParallax+      " (arcsec)");
 	    buffer.append(", Rad Vel="+      srcRadialVelocity+" (km/s)");
+	    buffer.append(", ActRA="+           Position.toHMSString(Math.toRadians(srcActRa)));
+            buffer.append(", ActDec="+          Position.toDMSString(Math.toRadians(srcActDec)));    
 	    buffer.append(")");
 	    return buffer.toString();
 	}
@@ -1757,6 +1766,12 @@ public class TCS_Status implements Serializable, Cloneable {
 	    else if 
 		(key.equals("radial.velocity"))
 		return srcRadialVelocity;
+	    else if
+		(key.equals("act.ra"))
+		return srcActRA;
+	    else if
+		(key.equals("act.dec"))
+		return srcActDec;
 	    else
 		throw new IllegalArgumentException("TCS_Status:Source: Unknown status key: "+key);
 	    
@@ -1955,6 +1970,9 @@ public class TCS_Status implements Serializable, Cloneable {
 
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.1  2006/12/18 11:58:47  snf
+/** Initial revision
+/**
 /** Revision 1.3  2001/01/04 11:19:18  snf
 /** Modified the System names.
 /**
