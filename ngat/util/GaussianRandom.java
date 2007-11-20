@@ -2,7 +2,7 @@ package ngat.util;
 
 /** Generates random (doubles) with a Gaussian distribution.
  * <br><br>
- * $Id: GaussianRandom.java,v 1.2 2001-02-23 18:49:14 snf Exp $
+ * $Id: GaussianRandom.java,v 1.3 2007-11-20 10:52:17 snf Exp $
  */
 public class GaussianRandom {
     
@@ -23,6 +23,9 @@ public class GaussianRandom {
 
     /** Stores the cumulative frequency distribution.*/
     protected double ff[];
+
+    /** Random number generator.*/
+    protected Random randomBastard;
 
     /** Create a GaussianRandom generator. The random numbers are
      * picked from the inverse of the cumulative distribution by linear
@@ -64,25 +67,35 @@ public class GaussianRandom {
      * @param sdev The standard deviation.
      */
     public GaussianRandom(double mean, double sdev) {
-	this(mean, sdev, DEFAULT_N);
+	//this(mean, sdev, DEFAULT_N);
+	this.mean = mean;
+	this.sdev = sdev;
     }
-    
-    
-    /** @return A random number with the specified Gaussian distribution.*/
+
+    /** New implementation using java.util.Random .*/
     public double random() {
-	double r = Math.random();
-	for (int  i = 0; i < (n-1); i++) {
-	    if ( (ff[i] < r) && (r < ff[i+1]) ) {
-		double ip = i + (r-ff[i])/(ff[i+1]-ff[i]);
-		return ip;
-	    }
-	}
-	return -1.0;
+	return randomBastard.nextGaussian()*sdev + mean;	
     }
+    
+    
+ //    /** @return A random number with the specified Gaussian distribution.*/
+//     public double random() {
+// 	double r = Math.random();
+// 	for (int  i = 0; i < (n-1); i++) {
+// 	    if ( (ff[i] < r) && (r < ff[i+1]) ) {
+// 		double ip = i + (r-ff[i])/(ff[i+1]-ff[i]);
+// 		return ip;
+// 	    }
+// 	}
+// 	return -1.0;
+//     }
 
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2001/02/23 18:49:14  snf
+/** Added linger and awaken.
+/**
 /** Revision 1.1  2000/12/11 14:35:56  snf
 /** Initial revision
 /** */
