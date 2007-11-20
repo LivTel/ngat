@@ -1,8 +1,10 @@
 package ngat.util;
 
+import java.util.*;
+
 /** Generates random (doubles) with a Gaussian distribution.
  * <br><br>
- * $Id: GaussianRandom.java,v 1.3 2007-11-20 10:52:17 snf Exp $
+ * $Id: GaussianRandom.java,v 1.4 2007-11-20 10:52:41 snf Exp $
  */
 public class GaussianRandom {
     
@@ -93,6 +95,9 @@ public class GaussianRandom {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.3  2007/11/20 10:52:17  snf
+/** changed to use java.util.Random
+/**
 /** Revision 1.2  2001/02/23 18:49:14  snf
 /** Added linger and awaken.
 /**
