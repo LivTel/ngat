@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationProperties.java,v 1.5 2007-02-01 08:13:58 snf Exp $
+ * $Id: ConfigurationProperties.java,v 1.6 2007-11-20 08:23:18 snf Exp $
  *
  */
 public class ConfigurationProperties extends Properties {
@@ -139,6 +139,14 @@ public class ConfigurationProperties extends Properties {
 	}
     }
 
+    /** Returns a Date from a string with supplied format.*/
+    public Date getDateValue(String key, String fmt) throws ParseException {
+	SimpleDateFormat sdf = new SimpleDateFormat(fmt);
+	sdf.setTimeZone(new SimpleTimeZone(0, "UTC"));
+	return sdf.parse(getProperty(key));	
+    }
+
+    	
     /** Returns an existing File from its path name in a property key.*/
     public File getFile(String key) throws FileNotFoundException {
 	if (key == null || getProperty(key) == null)
@@ -175,6 +183,9 @@ public class ConfigurationProperties extends Properties {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.5  2007/02/01 08:13:58  snf
+/** extra info on parse exception
+/**
 /** Revision 1.4  2004/01/15 16:01:57  snf
 /** Removed debugging code.
 /**
