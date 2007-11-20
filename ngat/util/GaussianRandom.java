@@ -4,7 +4,7 @@ import java.util.*;
 
 /** Generates random (doubles) with a Gaussian distribution.
  * <br><br>
- * $Id: GaussianRandom.java,v 1.4 2007-11-20 10:52:41 snf Exp $
+ * $Id: GaussianRandom.java,v 1.5 2007-11-20 11:13:44 snf Exp $
  */
 public class GaussianRandom {
     
@@ -72,6 +72,7 @@ public class GaussianRandom {
 	//this(mean, sdev, DEFAULT_N);
 	this.mean = mean;
 	this.sdev = sdev;
+	randomBastard = new Random(System.currentTimeMillis());
     }
 
     /** New implementation using java.util.Random .*/
@@ -95,6 +96,9 @@ public class GaussianRandom {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.4  2007/11/20 10:52:41  snf
+/** fixed
+/**
 /** Revision 1.3  2007/11/20 10:52:17  snf
 /** changed to use java.util.Random
 /**
