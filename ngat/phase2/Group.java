@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: Group.java,v 1.10 2007-08-21 14:56:40 snf Exp $
+ * $Id: Group.java,v 1.11 2007-11-27 09:29:42 snf Exp $
  */
 public class Group extends NPDBObject implements Serializable {
    
@@ -207,6 +207,21 @@ public class Group extends NPDBObject implements Serializable {
 	    return "UNKNOWN";
 	}
     } 
+
+    /** Returns a String representing the specified priority.*/
+    public static String toPriorityString(int priority) {
+	switch (priority) {
+	case -2:
+	    return "BGR";
+	case -1:
+	    return "STD";
+	case 0:
+	case 1:
+	    return "1";
+	default:
+	    return ""+priority;
+	}
+    }
 
     /** Returns a String representing the specified twilight usage.*/
     public static String toTwilightString(int twilight) {
