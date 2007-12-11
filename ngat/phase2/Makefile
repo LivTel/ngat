@@ -46,6 +46,8 @@ SRCS           = CatalogSource.java \
 		 PolarimeterDetector.java \
 		 PolarimeterConfig.java \
                  Proposal.java \
+		 RISEDetector.java \
+		 RISEConfig.java \
                  Root.java \
 		 RepeatableGroup.java \
 		 Revision.java \
@@ -67,13 +69,16 @@ SRCS           = CatalogSource.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
-#   $Author: snf $ 
-# $Revision: 1.10 $
-#       $Id: Makefile,v 1.10 2007-12-11 15:57:06 snf Exp $
-#     $Date: 2007-12-11 15:57:06 $
+#   $Author: cjm $ 
+# $Revision: 1.11 $
+#       $Id: Makefile,v 1.11 2007-12-11 15:59:25 cjm Exp $
+#     $Date: 2007-12-11 15:59:25 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/phase2/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.10  2007/12/11 15:57:06  snf
+#      after lock theiving
+#
 #      Revision 1.9  2007/08/07 07:16:53  snf
 #      added Offset
 #
