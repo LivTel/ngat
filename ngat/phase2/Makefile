@@ -20,7 +20,8 @@ SRCS           = CatalogSource.java \
                  Detector.java \
                  EphemerisGroup.java \
 		 EphemerisSource.java \
-                 ExtraSolarSource.java \
+                 ExecutionCosting.java \
+		 ExtraSolarSource.java \
                  FixedGroup.java \
 		 FixedFormatSpecConfig.java \
 		 FixedFormatSpecDetector.java \
@@ -40,7 +41,7 @@ SRCS           = CatalogSource.java \
                  MonitorGroup.java \
                  Mosaic.java \
                  Observation.java \
-		Offset.java \
+		 Offset.java \
                  PipelineConfig.java \
 		 PolarimeterDetector.java \
 		 PolarimeterConfig.java \
@@ -48,7 +49,7 @@ SRCS           = CatalogSource.java \
                  Root.java \
 		 RepeatableGroup.java \
 		 Revision.java \
-                 ScheduleDescriptor.java \
+		 ScheduleDescriptor.java \
                  SerializableStorableSortedDictionary.java \
                  SolarSystemSource.java \
                  Source.java \
@@ -57,32 +58,25 @@ SRCS           = CatalogSource.java \
                  TelescopeConfig.java \
                  User.java \
                  Window.java \
-		ProposalDescriptor.java \
-		UserDescriptor.java \
-		TagDescriptor.java \
-		Path.java \
-		IDPath.java \
-		ITag.java \
-		IProgram.java \
-		IUser.java \
-		IProposal.java \
-		IGroup.java \
-		ITimingConstraints.java \
-		IObservationSequence.java \
-		IObservation.java \
-		IInstrumentConfig.java \
-		ISource.java
+		 ProposalDescriptor.java \
+		 UserDescriptor.java \
+		 TagDescriptor.java \
+		 Path.java \
+		 IDPath.java
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
 #   $Author: snf $ 
-# $Revision: 1.9 $
-#       $Id: Makefile,v 1.9 2007-08-07 07:16:53 snf Exp $
-#     $Date: 2007-08-07 07:16:53 $
+# $Revision: 1.10 $
+#       $Id: Makefile,v 1.10 2007-12-11 15:57:06 snf Exp $
+#     $Date: 2007-12-11 15:57:06 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/phase2/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.9  2007/08/07 07:16:53  snf
+#      added Offset
+#
 #      Revision 1.8  2007/07/05 11:55:04  snf
 #      checkin
 #
