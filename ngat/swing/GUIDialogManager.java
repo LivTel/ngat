@@ -17,63 +17,68 @@
     along with NGAT; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-// GUIDialogUnmanager.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUIDialogManager.java,v 1.1 2008-02-29 12:35:42 cjm Exp $
+// GUIDialogManager.java
+// $Header: /space/home/eng/cjm/cvs/ngat/swing/GUIDialogManager.java,v 1.2 2008-02-29 14:47:26 cjm Exp $
 package ngat.swing;
 
+import java.awt.*;
 import java.lang.*;
 import java.io.*;
 import java.net.*;
 
 import javax.swing.*;
 
+import ngat.util.logging.*;
+
 /**
- * The GUIDialogUnmanager is Runnable. It is used as an argument to SwingUtilities.invokeLater.
- * It unmanages a JDialog. This is needed when the dialog is unmanaged from a menu item, as otherwise
- * the menu-bar the item is on complains about events from unmanaged components.
+ * The GUIDialogManager is Runnable. It is used as an argument to SwingUtilities.invokeLater.
+ * It manages a Window (JDialog and JFrame are subclasses thereof). 
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see javax.swing.SwingUtilities#invokeLater
  */
-public class GUIDialogUnmanager implements Runnable
+public class GUIDialogManager implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUIDialogManager.java,v 1.1 2008-02-29 12:35:42 cjm Exp $");
+	public final static String RCSID = new String("$Id: GUIDialogManager.java,v 1.2 2008-02-29 14:47:26 cjm Exp $");
 	/**
-	 * The Swing JDialog to unmanage.
+	 * The awt Window to manage.
 	 */
-	private JDialog dialog = null;
+	private Window window = null;
+	/**
+	 * The logger to log to.
+	 */
+	private Logger logger = null;
 
 	/**
 	 * Constructor.
-	 * @param d The dialog to unmanage.
+	 * @param w The window to pack/manage.
 	 */
-	public GUIDialogUnmanager(JDialog d)
+	public GUIDialogManager(Window w)
 	{
-		dialog = d;
+		window = w;
+		logger = LogManager.getLogger(this);
 	}
 
 	/**
-	 * Run method, hopefully called from the Swing thread. Just calls dialog.setVisible(false)
-	 * to unmanage the dialog.
-	 * @see #dialog
+	 * Run method, hopefully called from the Swing thread. Just calls window.pack() and window.setVisible(true)
+	 * to manage the dialog.
+	 * @see #window
+	 * @see #logger
+	 * @see java.awt.Window#pack
+	 * @see java.awt.Window#setVisible
 	 */
 	public void run()
 	{
-		dialog.setVisible(false);
+		logger.log(1,this.getClass().getName()+":run:Window pack.");
+		window.pack();
+		logger.log(1,this.getClass().getName()+":run:Window setVisible.");
+		window.setVisible(true);
+		logger.log(1,this.getClass().getName()+":run:Finished.");
 	}
 }
 //
 // $Log: not supported by cvs2svn $
-// Revision 0.3  2006/05/16 18:15:25  cjm
-// gnuify: Added GNU General Public License.
-//
-// Revision 0.2  1999/11/29 11:46:40  cjm
-// Changed package to ngat.swing.
-//
-// Revision 0.1  1999/11/29 11:44:21  cjm
-// initial revision.
-//
 //
