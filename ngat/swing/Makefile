@@ -11,6 +11,7 @@ SRCS           = AttributedTextArea.java \
 		 DateField.java \
                  GUIAttributedTextAreaAppender.java \
                  GUIAttributedTextAreaLengthLimiter.java \
+		 GUIDialogManager.java \
 		 GUIDialogUnmanager.java \
                  GUILabelSetter.java \
                  GUIMessageDialogShower.java \
