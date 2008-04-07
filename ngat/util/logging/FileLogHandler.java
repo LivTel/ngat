@@ -76,7 +76,7 @@ public class FileLogHandler extends LogHandler {
 	this.filename = filename;
 	recordCount = 0;	
 	fileExtension = formatter.getExtensionName();
-	out = new PrintStream(new FileOutputStream(filename+"."+fileExtension));
+	out = new PrintStream(new FileOutputStream(filename+"."+fileExtension), true);
 	out.println(formatter.getHead());
 	rotate = false;
     }
@@ -135,6 +135,7 @@ public class FileLogHandler extends LogHandler {
 	fileExtension = formatter.getExtensionName(); 
 	this.period = period;
 	Calendar cal = Calendar.getInstance();
+	cal.setTimeZone(LogFormatter.UTC);
 	String genCount = "";
 	String timCount = "";
 	switch (period) {
@@ -221,7 +222,8 @@ public class FileLogHandler extends LogHandler {
 	    if (System.currentTimeMillis() > timeLimit) {
 		// Close the current stream.
 		close();
-		Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();	
+		cal.setTimeZone(LogFormatter.UTC);
 		String genCount = "";
 		String timCount = "";
 		switch (period) {
