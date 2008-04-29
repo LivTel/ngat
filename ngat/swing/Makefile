@@ -12,6 +12,7 @@ SRCS           = AttributedTextArea.java \
                  GUIAttributedTextAreaAppender.java \
                  GUIAttributedTextAreaLengthLimiter.java \
 		 GUIBackgroundColourSetter.java \
+		 GUIForegroundColourSetter.java \
 		 GUIDialogManager.java \
 		 GUIDialogUnmanager.java \
                  GUILabelSetter.java \
