@@ -11,10 +11,10 @@ SRCS           = AttributedTextArea.java \
 		 DateField.java \
                  GUIAttributedTextAreaAppender.java \
                  GUIAttributedTextAreaLengthLimiter.java \
+		 GUIBackgroundColourSetter.java \
 		 GUIDialogManager.java \
 		 GUIDialogUnmanager.java \
                  GUILabelSetter.java \
-		 GUILabelBackgroundColourSetter.java \
                  GUIMessageDialogShower.java \
                  GUITextAreaAppender.java \
                  GUITextAreaLengthLimiter.java \
