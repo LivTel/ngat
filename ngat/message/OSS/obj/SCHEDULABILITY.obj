@@ -9,3 +9,4 @@
 *double;schedulability;the schedulability of the group
 *double[];differentialFunction;the time varying probability
 *double[];cumulativeFunction;the cumulative probability
+*String;failureReasons;reasons for failure to score
