@@ -1,25 +1,28 @@
 // FloatRead.java
-// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatRead.java,v 1.1 2008-03-06 10:46:47 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatRead.java,v 1.2 2008-06-24 15:59:03 cjm Exp $
 package ngat.df1.test;
 
 import java.lang.*;
 import java.io.*;
 import java.net.*;
+import java.text.*;
 import java.util.*;
 
 import ngat.df1.*;
+import ngat.util.*;
+import ngat.util.logging.*;
 
 /**
  * This class tests the Frodospec Df1 library, by reading a float value from a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class FloatRead
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: FloatRead.java,v 1.1 2008-03-06 10:46:47 cjm Exp $");
+	public final static String RCSID = new String("$Id: FloatRead.java,v 1.2 2008-06-24 15:59:03 cjm Exp $");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_NONE
@@ -37,6 +40,20 @@ public class FloatRead
 	 */
 	protected int portNumber = 0;
 	/**
+	 * The logger.
+	 */
+	protected Logger logger = null;
+	/**
+	 * The filter used to filter messages sent to the logger.
+	 * @see #logger
+	 */
+	protected BitFieldLogFilter logFilter = null;
+	/**
+	 * The Df1Library log level.
+	 */
+	protected int logLevel = Df1Library.LOG_BIT_SERIAL|Df1Library.LOG_BIT_SOCKET|
+		Df1Library.LOG_BIT_DF1|Df1Library.LOG_BIT_DF1_READ_WRITE;
+	/**
 	 * The PLC address of the float to read. i.e. F8:1.
 	 */
 	protected String plcAddress = null;
@@ -45,6 +62,7 @@ public class FloatRead
 	 * Run method.
 	 * <ul>
 	 * <li>Creates a Df1Library instance.
+	 * <li>Calls setLogFilterLevel with the logLevel.
 	 * <li>Calls interfaceOpen with deviceId, deviceName, portNumber to connect to the PLC.
 	 * <li>Calls getFloat with plcAddress to get the value held at the specified address on the PLC.
 	 * <li>Finally, calls interfaceClose to close the connection to the PLC.
@@ -53,7 +71,9 @@ public class FloatRead
 	 * @see #deviceId
 	 * @see #portNumber
 	 * @see #plcAddress
+	 * @see #logLevel
 	 * @see ngat.df1.Df1Library
+	 * @see ngat.df1.Df1Library#setLogFilterLevel
 	 * @see ngat.df1.Df1Library#interfaceOpen
 	 * @see ngat.df1.Df1Library#interfaceClose
 	 * @see ngat.df1.Df1Library#getFloat
@@ -64,6 +84,7 @@ public class FloatRead
 		float value;
 
 		df1 = new Df1Library();
+		df1.setLogFilterLevel(logLevel);
 		df1.interfaceOpen(deviceId,deviceName,portNumber);
 		try
 		{
@@ -77,6 +98,36 @@ public class FloatRead
 	}
 
 	/**
+	 * Method to initialise the logger.
+	 * @see #logger
+	 * @see #logFilter
+	 */
+	protected void initLoggers()
+	{
+		LogHandler handler = null;
+		BogstanLogFormatter blf = null;
+		String loggerList[] = {"ngat.df1.Df1Library"};
+
+		// setup log formatter
+		blf = new BogstanLogFormatter();
+		blf.setDateFormat(new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss.SSS z"));
+		// setup log handler
+		handler = new ConsoleLogHandler(blf);
+		handler.setLogLevel(Logging.ALL);
+		// setup log filter
+		logFilter = new BitFieldLogFilter(Logging.ALL);
+		// Apply handler and filter to each logger in the list
+		for(int i=0;i < loggerList.length;i++)
+		{
+			System.out.println(this.getClass().getName()+":initLoggers:Setting up logger:"+loggerList[i]);
+			logger = LogManager.getLogger(loggerList[i]);
+			logger.addHandler(handler);
+			logger.setLogLevel(Logging.ALL);
+			logger.setFilter(logFilter);
+		}
+	}
+
+	/**
 	 * Parse command line arguments.
 	 * @param args The command line argument list.
 	 * @see #deviceName
@@ -84,6 +135,7 @@ public class FloatRead
 	 * @see #portNumber
 	 * @see #plcAddress
 	 * @see #help
+	 * @see #logLevel
 	 */
 	private void parseArgs(String[] args)
 	{
@@ -94,6 +146,19 @@ public class FloatRead
 			{
 				help();
 				System.exit(0);
+			}
+			else if(args[i].equals("-log_level")||args[i].equals("-l"))
+			{
+				if((i+1)< args.length)
+				{
+					logLevel = Integer.parseInt(args[i+1]);
+					i++;
+				}
+				else
+				{
+					System.err.println("-log_level should have an numeric argument.");
+					System.exit(1);
+				}
 			}
 			else if(args[i].equals("-plc_address")||args[i].equals("-a"))
 			{
@@ -156,6 +221,7 @@ public class FloatRead
 		System.out.println("\t-serial <device name>");
 		System.out.println("\t-socket <hostname> <port number>");
 		System.out.println("\t-plc_address <string>");
+		System.out.println("\t-log_level <number>");
 	}
 
 	/**
@@ -164,6 +230,7 @@ public class FloatRead
 	 * <pre>java ngat.df1.test.FloatRead -socket frodospec1serialports 3040 -plc_address F8:1</pre>
 	 * <ul>
 	 * <li>Calls parseArgs to parse the command line arguments.
+	 * <li>Calls initLoggers to setup logging.
 	 * <li>Calls run method to get the value from the PLC.
 	 * </ul>
 	 * @param args Command line arguments.
@@ -172,16 +239,18 @@ public class FloatRead
 	 * @see #portNumber
 	 * @see #plcAddress
 	 * @see #parseArgs
+	 * @see #initLoggers
 	 * @see #run
 	 */
 	public static void main(String[] args)
 	{
-		FloatRead ir = new FloatRead();
+		FloatRead fr = new FloatRead();
 
-		ir.parseArgs(args);
+		fr.parseArgs(args);
+		fr.initLoggers();
 		try
 		{
-			ir.run();
+			fr.run();
 		}
 		catch(Exception e)
 		{
@@ -194,4 +263,7 @@ public class FloatRead
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/03/06 10:46:47  cjm
+// Initial revision
+//
 //
