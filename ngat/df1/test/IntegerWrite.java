@@ -1,5 +1,5 @@
 // IntegerWrite.java
-// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/IntegerWrite.java,v 1.2 2008-06-24 15:28:18 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/IntegerWrite.java,v 1.3 2008-06-24 15:59:29 cjm Exp $
 package ngat.df1.test;
 
 import java.lang.*;
@@ -15,14 +15,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the Frodospec Df1 library, by writing an integer value to a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class IntegerWrite
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: IntegerWrite.java,v 1.2 2008-06-24 15:28:18 cjm Exp $");
+	public final static String RCSID = new String("$Id: IntegerWrite.java,v 1.3 2008-06-24 15:59:29 cjm Exp $");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_NONE
@@ -66,6 +66,7 @@ public class IntegerWrite
 	 * Run method.
 	 * <ul>
 	 * <li>Creates a Df1Library instance.
+	 * <li>Calls setLogFilterLevel with the logLevel.
 	 * <li>Calls interfaceOpen with deviceId, deviceName, portNumber to connect to the PLC.
 	 * <li>Calls setInteger with plcAddress, value to set the integer value held at the specified address 
 	 *     on the PLC.
@@ -78,6 +79,7 @@ public class IntegerWrite
 	 * @see #value
 	 * @see #logLevel
 	 * @see ngat.df1.Df1Library
+	 * @see ngat.df1.Df1Library#setLogFilterLevel
 	 * @see ngat.df1.Df1Library#interfaceOpen
 	 * @see ngat.df1.Df1Library#interfaceClose
 	 * @see ngat.df1.Df1Library#setInteger
@@ -163,7 +165,7 @@ public class IntegerWrite
 				}
 				else
 				{
-					System.err.println("-value should have an argument: <true|false>.");
+					System.err.println("-log_level should have an numeric argument.");
 					System.exit(1);
 				}
 			}
@@ -262,7 +264,6 @@ public class IntegerWrite
 	 * @see #parseArgs
 	 * @see #initLoggers
 	 * @see #run
-	 * @see #initLoggers
 	 */
 	public static void main(String[] args)
 	{
@@ -285,6 +286,9 @@ public class IntegerWrite
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2008/06/24 15:28:18  cjm
+// Added proper logging code.
+//
 // Revision 1.1  2008/03/06 10:46:47  cjm
 // Initial revision
 //
