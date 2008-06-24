@@ -1,25 +1,27 @@
 // FloatWrite.java
-// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatWrite.java,v 1.2 2008-06-24 15:18:28 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatWrite.java,v 1.3 2008-06-24 15:28:19 cjm Exp $
 package ngat.df1.test;
 
 import java.lang.*;
 import java.io.*;
 import java.net.*;
+import java.text.*;
 import java.util.*;
 
 import ngat.df1.*;
+import ngat.util.logging.*;
 
 /**
  * This class tests the Frodospec Df1 library, by writing a float value to a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class FloatWrite
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FloatWrite.java,v 1.2 2008-06-24 15:18:28 cjm Exp $");
+	public final static String RCSID = new String("$Id: FloatWrite.java,v 1.3 2008-06-24 15:28:19 cjm Exp $");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_NONE
@@ -36,6 +38,20 @@ public class FloatWrite
 	 * The port number of the device to connect to. Only used when deviceId is INTERFACE_DEVICE_SOCKET.
 	 */
 	protected int portNumber = 0;
+	/**
+	 * The logger.
+	 */
+	protected Logger logger = null;
+	/**
+	 * The filter used to filter messages sent to the logger.
+	 * @see #logger
+	 */
+	protected BitFieldLogFilter logFilter = null;
+	/**
+	 * The Df1Library log level.
+	 */
+	protected int logLevel = Df1Library.LOG_BIT_SERIAL|Df1Library.LOG_BIT_SOCKET|
+		Df1Library.LOG_BIT_DF1|Df1Library.LOG_BIT_DF1_READ_WRITE;
 	/**
 	 * The PLC address of the float to write. i.e. F8:4.
 	 */
@@ -69,6 +85,7 @@ public class FloatWrite
 		Df1Library df1 = null;
 
 		df1 = new Df1Library();
+		df1.setLogFilterLevel(logLevel);
 		df1.interfaceOpen(deviceId,deviceName,portNumber);
 		try
 		{
@@ -85,6 +102,36 @@ public class FloatWrite
 	}
 
 	/**
+	 * Method to initialise the logger.
+	 * @see #logger
+	 * @see #logFilter
+	 */
+	protected void initLoggers()
+	{
+		LogHandler handler = null;
+		BogstanLogFormatter blf = null;
+		String loggerList[] = {"ngat.df1.Df1Library"};
+
+		// setup log formatter
+		blf = new BogstanLogFormatter();
+		blf.setDateFormat(new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss.SSS z"));
+		// setup log handler
+		handler = new ConsoleLogHandler(blf);
+		handler.setLogLevel(Logging.ALL);
+		// setup log filter
+		logFilter = new BitFieldLogFilter(Logging.ALL);
+		// Apply handler and filter to each logger in the list
+		for(int i=0;i < loggerList.length;i++)
+		{
+			System.out.println(this.getClass().getName()+":initLoggers:Setting up logger:"+loggerList[i]);
+			logger = LogManager.getLogger(loggerList[i]);
+			logger.addHandler(handler);
+			logger.setLogLevel(Logging.ALL);
+			logger.setFilter(logFilter);
+		}
+	}
+
+	/**
 	 * Parse command line arguments.
 	 * @param args The command line argument list.
 	 * @see #deviceName
@@ -93,6 +140,7 @@ public class FloatWrite
 	 * @see #plcAddress
 	 * @see #value
 	 * @see #help
+	 * @see #logLevel
 	 */
 	private void parseArgs(String[] args)
 	{
@@ -103,6 +151,19 @@ public class FloatWrite
 			{
 				help();
 				System.exit(0);
+			}
+			else if(args[i].equals("-log_level")||args[i].equals("-l"))
+			{
+				if((i+1)< args.length)
+				{
+					logLevel = Integer.parseInt(args[i+1]);
+					i++;
+				}
+				else
+				{
+					System.err.println("-value should have an argument: <true|false>.");
+					System.exit(1);
+				}
 			}
 			else if(args[i].equals("-plc_address")||args[i].equals("-a"))
 			{
@@ -179,6 +240,7 @@ public class FloatWrite
 		System.out.println("\t-socket <hostname> <port number>");
 		System.out.println("\t-plc_address <string>");
 		System.out.println("\t-value <number>");
+		System.out.println("\t-log_level <number>");
 	}
 
 	/**
@@ -187,6 +249,7 @@ public class FloatWrite
 	 * <pre>java ngat.df1.test.FloatWrite -socket frodospec1serialports 3040 -plc_address F8:1 -value 1.2</pre>
 	 * <ul>
 	 * <li>Calls parseArgs to parse the command line arguments.
+	 * <li>Calls initLoggers to setup logging.
 	 * <li>Calls run method to set the float value to the PLC.
 	 * </ul>
 	 * @param args Command line arguments.
@@ -196,12 +259,14 @@ public class FloatWrite
 	 * @see #plcAddress
 	 * @see #parseArgs
 	 * @see #run
+	 * @see #initLoggers
 	 */
 	public static void main(String[] args)
 	{
 		FloatWrite fw = new FloatWrite();
 
 		fw.parseArgs(args);
+		fw.initLoggers();
 		try
 		{
 			fw.run();
@@ -217,6 +282,9 @@ public class FloatWrite
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2008/06/24 15:18:28  cjm
+// Fixed -value parameter parsing.
+//
 // Revision 1.1  2008/03/06 10:46:47  cjm
 // Initial revision
 //
