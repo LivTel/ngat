@@ -1,5 +1,5 @@
 // FloatWrite.java
-// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatWrite.java,v 1.1 2008-03-06 10:46:47 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatWrite.java,v 1.2 2008-06-24 15:18:28 cjm Exp $
 package ngat.df1.test;
 
 import java.lang.*;
@@ -12,14 +12,14 @@ import ngat.df1.*;
 /**
  * This class tests the Frodospec Df1 library, by writing a float value to a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class FloatWrite
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FloatWrite.java,v 1.1 2008-03-06 10:46:47 cjm Exp $");
+	public final static String RCSID = new String("$Id: FloatWrite.java,v 1.2 2008-06-24 15:18:28 cjm Exp $");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_NONE
@@ -150,7 +150,7 @@ public class FloatWrite
 			{
 				if((i+1)< args.length)
 				{
-					value = Float.parseFloat(args[i+2]);
+					value = Float.parseFloat(args[i+1]);
 					i++;
 				}
 				else
@@ -217,4 +217,7 @@ public class FloatWrite
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/03/06 10:46:47  cjm
+// Initial revision
+//
 //
