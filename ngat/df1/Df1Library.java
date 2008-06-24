@@ -1,5 +1,5 @@
 // Df1Library.java
-// $Header: /space/home/eng/cjm/cvs/ngat/df1/Df1Library.java,v 1.1 2008-03-06 10:46:40 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/df1/Df1Library.java,v 1.2 2008-06-24 15:17:12 cjm Exp $
 package ngat.df1;
 
 import java.lang.*;
@@ -9,14 +9,14 @@ import ngat.util.logging.*;
  * This class supports an interface to a Micrologix 1100 PLC, using thr DF1 protocol either over a 
  * serial link, or over a socket conenction via an Arcom ESS.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Df1Library
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: Df1Library.java,v 1.1 2008-03-06 10:46:40 cjm Exp $");
+	public final static String RCSID = new String("$Id: Df1Library.java,v 1.2 2008-06-24 15:17:12 cjm Exp $");
 // df1_general.h
 	/* These constants should be the same as those in df1_general.h */
 	/**
@@ -202,6 +202,27 @@ public class Df1Library
 		Df1_Set_Log_Filter_Level(level);
 	}
 
+	/**
+	 * Print some information out on this classes logger.
+	 */
+	public void logDebug()
+	{
+		LogHandler handlerList[];
+		LogHandler handler = null;
+
+		System.out.println("Logger = "+logger);
+		System.out.println("Logger log level is: "+logger.getLogLevel());
+		System.out.println("Logger log filter is: "+logger.getFilter());
+		handlerList = logger.getHandlers();
+		for(int i = 0; i < handlerList.length; i++)
+		{
+			handler = handlerList[i];
+			System.out.println("Logger handler "+i+" is:"+handler+" and called "+handler.getName());
+			System.out.println("Logger handler "+i+" has filter:"+handler.getFilter());
+			System.out.println("Logger handler "+i+" has log level:"+handler.getLogLevel());
+		}
+	}
+
 // df1_interface.h
 	/**
 	 * Routine to open the interface. 
@@ -344,4 +365,7 @@ public class Df1Library
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/03/06 10:46:40  cjm
+// Initial revision
+//
 //
