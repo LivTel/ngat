@@ -5,8 +5,10 @@
 PACKAGENAME    = ngat.ccd
 PACKAGEDIR     = ngat/ccd
 JAR_FILE       = ngat_ccd.jar
-DIRS           = test
-DIRS_TARGET    = dirs
+DIRS           = 
+#test
+DIRS_TARGET    = 
+#dirs
 
 SRCS           = CCDLibraryDouble.java \
                  CCDLibraryFormatException.java \
@@ -16,13 +18,16 @@ SRCS           = CCDLibraryDouble.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $ 
-# $Revision: 1.16 $
-#       $Id: Makefile,v 1.16 2002-12-05 15:56:00 je Exp $
-#     $Date: 2002-12-05 15:56:00 $
+#   $Author: cjm $ 
+# $Revision: 1.17 $
+#       $Id: Makefile,v 1.17 2008-06-26 14:20:49 cjm Exp $
+#     $Date: 2008-06-26 14:20:49 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ccd/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.16  2002/12/05 15:56:00  je
+#      re-added test after fixing for cjm, the dummy!
+#
 #      Revision 1.15  2002/12/05 15:53:25  cjm
 #      Removed dirs from DIRS_TARGET.
 #
