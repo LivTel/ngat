@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/astrometry/ngatastrometrywcstools/c/Makefile,v 1.1 2007-09-27 15:35:14 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/astrometry/ngatastrometrywcstools/c/Makefile,v 1.2 2008-06-27 17:35:23 cjm Exp $
 
 include ../../../../Makefile.common
 
@@ -52,7 +52,7 @@ checkin:
 	#-(cd $(INCDIR); $(CI) $(HEADERS);) (machine generated headers only atm)
 
 depend:
-	makedepend -- $(CFLAGS) -- $(SRCS)
+	makedepend $(MAKEDEPENDFLAGS) -- $(CFLAGS) -- $(SRCS)
 
 lint:
 	$(LINT)	$(LINTFLAGS) $(SRCS)
@@ -69,4 +69,29 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2007/09/27 15:35:14  cjm
+# Initial revision
 #
+#
+# DO NOT DELETE
+
+ngat_astrometry_WCSTools.o: /usr/include/stdio.h /usr/include/features.h
+ngat_astrometry_WCSTools.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
+ngat_astrometry_WCSTools.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stddef.h
+ngat_astrometry_WCSTools.o: /usr/include/bits/types.h
+ngat_astrometry_WCSTools.o: /usr/include/bits/wordsize.h
+ngat_astrometry_WCSTools.o: /usr/include/bits/typesizes.h
+ngat_astrometry_WCSTools.o: /usr/include/libio.h /usr/include/_G_config.h
+ngat_astrometry_WCSTools.o: /usr/include/wchar.h /usr/include/bits/wchar.h
+ngat_astrometry_WCSTools.o: /usr/include/gconv.h
+ngat_astrometry_WCSTools.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stdarg.h
+ngat_astrometry_WCSTools.o: /usr/include/bits/stdio_lim.h
+ngat_astrometry_WCSTools.o: /usr/include/bits/sys_errlist.h
+ngat_astrometry_WCSTools.o: /usr/include/stdlib.h /usr/include/string.h
+ngat_astrometry_WCSTools.o: /usr/java/j2sdk1.4.2_06/include/jni.h
+ngat_astrometry_WCSTools.o: /usr/java/j2sdk1.4.2_06/include/linux/jni_md.h
+ngat_astrometry_WCSTools.o: /usr/include/time.h /usr/include/bits/time.h
+ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.6.8/libwcs/wcs.h
+ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.6.8/libwcs/wcslib.h
+ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.6.8/libwcs/fitshead.h
+ngat_astrometry_WCSTools.o: /usr/include/sys/types.h
