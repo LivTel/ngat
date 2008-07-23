@@ -1,0 +1,1762 @@
+package ngat.net;
+
+import ngat.util.*;
+import ngat.util.logging.*;
+
+import java.util.*;
+import java.io.*;
+import java.net.*;
+import java.text.*;
+import java.security.*;
+import javax.net.ssl.*;
+import javax.security.cert.*;
+import com.sun.net.ssl.*;
+
+/**File Transfer Server/Client - with SSL. 
+ * Primarily intended for image transfer between Telescope and
+ * data-archives / web servers.
+ *
+ * The inner classes Server and Client can be instantiated as part of an 
+ * application by calling the respective factory constructors then calling 
+ * bind() and start() (Server) or any of the transfer methods (Client).
+ *
+ * The SSLFileTransfer Server can be stopped by calling terminate().
+ *
+ * Files are transferred by calling the (Client) methods:
+ * 
+ * <ul>
+ *   <li> get <src-file>
+ *   <li> put <dest-file>
+ *   <li> fwd <host> <port> <dest-file>
+ *   <li> nab <host> <port> <src-file> ## TBD ##
+ * </ul>
+ *
+ * Command line usage: 
+ *
+ * <dl>
+ *  <dt>(Server)
+ *     <dd><i>java SSLFileTransfer [-bind] -id&lt;id&gt; -port&lt;port&gt; [&lt;-secure&gt;]</i>
+ *
+ *  <dt>(Client)
+ *     <dd><i>java SSLFileTransfer [-client] -put &lt;dest-file&gt;
+ *     <dd><i>java SSLFileTransfer [-client] -get &lt;src-file&gt; 
+ *     <dd><i>java SSLFileTransfer [-client] -fwd -host&lt;host&gt; -port&lt;port&gt; -file&lt;dest-file&gt;
+ *     <dd><i>java SSLFileTransfer [-client] -nab -host&lt;host&gt; -port&lt;port&gt; -file&lt;src-file&gt;
+ * </dl>
+ *
+ * The Logger is initially setup as: <i>ngat.util.SSLFileTransfer</i> but can be
+ * changed by public method setLogger(String name). 
+ *
+ * <dl>
+ *  <dt><b>RCS:</b>
+ *   <dd>$Id: SSLFileTransfer.java.old,v 1.1 2008-07-23 12:41:17 eng Exp $
+ *  <dt><b>Source:</b>
+ *   <dd>$Source: /space/home/eng/cjm/cvs/ngat/net/SSLFileTransfer.java.old,v $
+ * </dl>
+ * @author $Author: eng $
+ * @version $Revision: 1.1 $
+ */
+public class SSLFileTransfer implements Logging{
+
+    public static final String CLASS = "SSLFileTransfer";
+
+    // Error return codes from server.
+
+    /** A file could not be found.*/
+    public static final long FILE_NOT_FOUND      = -12L;
+
+    /** Server not able to create a file.*/
+    public static final long FILE_UNABLE_CREATE  = -15L;
+
+    /** SOme of the call parameters were incorrect/missing.*/
+    public static final long ILLEGAL_PARAMETERS  = -18L;
+
+    /** Server is not capable of acting as a relay.*/
+    public static final long RELAY_NOT_AVAILABLE = -21L;
+    
+    /** A problem with the ongoing relay connection.*/
+    public static final long RELAY_CONNECTION    = -24L;
+
+    /** This is the expected available (max) transfer rate over the internet (KBytes/sec).*/
+    public static int           KBPS_RATE        = 300;
+ 
+    public static int           BUFFER_LENGTH    = 4096;
+
+    public static final int     DEFAULT_TIMEOUT  = 20000;
+    
+    public static final String  DEFAULT_LOGGER = "SSLFileTransfer";
+
+    public static final String  DEFAULT_HOST = "localhost";
+    
+    public static final int     DEFAULT_PORT = 8473;
+
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd HH:mm z");
+
+    public static final SimpleDateFormat rdf = new SimpleDateFormat("HHmmss");
+
+    /** All class logging.*/
+    static Logger classLogger;
+  
+    /** Parser for command line usage.*/
+    static CommandParser parser; 
+    
+    /** Set the Logger to be used. 
+     * @param name The name of the Logger. This should have been setup in advance.
+     * In order to catch all relevant Log messages, this method should be called
+     * immediately after calling the Constructor.
+     */
+    public static void setLogger(String name) {
+	classLogger = LogManager.getLogger(name);
+    }
+
+    /** Sets up the default class logger.*/
+    static {
+	classLogger =  LogManager.getLogger(CLASS);
+    }
+
+    /** Create a (Secure) Server instance.
+     * @param id The name/id of this Server (for logging purposes).  
+     */
+    public static Server createServer(String id) {
+	Server server = new Server(id);
+	return server;
+    }
+
+
+    // -----------------------------------------------------------------------
+    //            SERVER
+    // -----------------------------------------------------------------------
+
+    /** SSLFileTransfer Server.*/
+    public static class Server extends ControlThread implements Logging { 
+
+	/** Class ID for logging.*/
+	final String CLASS = "SSLFileTransfer.Server";
+
+	/** The ServerSocket.*/
+	ServerSocket serverSocket;
+
+	/** Count number of connections.*/
+	int connectCount;
+
+	/** Port to bind to.*/
+	int port;
+
+	String command;
+
+	/** Directory where received files will be placed if not absolute paths.*/
+	File baseDirectory;
+
+	/** File containing server's KeyStore.*/
+	File keyFile;
+
+	/** File containing server's TrustStore.*/
+	File trustFile;
+
+	/** True if the server can be a relay.*/
+	boolean relay;
+
+	/** Temporary directory to store relay images in before forwarding.*/
+	File tempDir;
+
+	/** Create a Server using specified settings. File base-directory is set initially
+	 * to the current working directory.
+	 * @param id The name/id of this Server (for logging purposes).
+	 * @param secure true if a secure connection is required.*/
+	public Server(String id) {
+	    super(id, true);	  	
+	    baseDirectory = new File(System.getProperty("user.dir"));
+	}
+	
+	/** Bind the server to the specified port.
+	 * @param port The port on which the server listens.
+	 * @param auth Set true if Client Authentication is required.
+	 * @exception IOException if the bind operation fails for any reason.
+	 */
+	public void bind(int port, boolean auth, boolean relay) throws Exception {
+	    this.port  = port;
+	    this.relay = relay;
+
+	    KeyManager []   kms = getKeyManagers();
+	    TrustManager [] tms = getTrustManagers();
+	    
+	    SSLContext context = SSLContext.getInstance("TLS");
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", "Got SSL Context");
+	    context.init(kms, tms, null);
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", "Context inited");
+
+	    SSLServerSocketFactory sf = context.getServerSocketFactory();
+	    //SSLSocketFactory sf = (SSLSocketFactory)SSLSocketFactory.getDefault();
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", "Got a SSLSocketFty");
+
+
+	     //SSLServerSocketFactory sslSrvFact =
+	     //(SSLServerSocketFactory)
+	     //SSLServerSocketFactory.getDefault();
+
+	    serverSocket = sf.createServerSocket(port);
+
+	    //set this when client auth is required.
+	    if (auth) {
+		((SSLServerSocket)serverSocket).setNeedClientAuth(true);
+	    }
+	    String [] suites = ((SSLServerSocket)serverSocket).getSupportedCipherSuites();
+	   
+	    ((SSLServerSocket)serverSocket).setEnabledCipherSuites(suites);
+
+	    // Check if we can see or make a temp dir under 'user.dir'
+	    // If neither then fail.
+	    if (relay) {
+		File userDir = new File(System.getProperty("user.dir"));
+		tempDir = new File(userDir, "tmp_relay");
+		if ((! tempDir.exists())) {		   
+		    tempDir.mkdir();
+		} else {
+		    if (! tempDir.isDirectory())
+			throw new FileNotFoundException("Temp directory: "+tempDir.getPath()+" is not a directory.");
+		}
+	    }
+	    
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", 
+			    "Started SSLFileTransfer Server: "+ getName()+
+			    "\n\tBound to port:  "+port+ 
+			    "\n\tBase-directory: "+baseDirectory.getPath()+
+			    "\n\tAuthentication: "+(auth ? "*Client certificate*" : 
+						    "*None*"));
+	}
+
+	/** Retrieve the list of KeyManagers.*/
+	private KeyManager [] getKeyManagers() throws Exception {
+	    String alg = KeyManagerFactory.getDefaultAlgorithm();
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gK: Got algorithm: "+alg);
+	    KeyManagerFactory kmf = KeyManagerFactory.getInstance(alg);
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gK: Got KMF");
+	    // Uses "server.private" or equivalant.
+	    FileInputStream fis = new FileInputStream(keyFile);
+	    KeyStore ks = KeyStore.getInstance("jks");
+	    ks.load(fis, "geronimo".toCharArray());
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gK: Loaded KS");
+	    fis.close();
+	    kmf.init(ks, "geronimo".toCharArray());
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gK: KMF inited");
+	    KeyManager [] kms = kmf.getKeyManagers();
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gK: Got KMs");
+	    return kms;
+	}
+
+	/** Retrieve the list of trustManagers.*/
+	private TrustManager [] getTrustManagers() throws Exception {
+	    String alg = TrustManagerFactory.getDefaultAlgorithm();
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gT: Got algorithm: "+alg);
+	    TrustManagerFactory tmf = TrustManagerFactory.getInstance(alg);
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gT: Got TMF");
+	    // Uses "client.public" or equivalant.
+	    FileInputStream fis = new FileInputStream(trustFile);
+	    KeyStore ks = KeyStore.getInstance("jks");
+	    ks.load(fis, "public".toCharArray());
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gT: Loaded TS");
+	    fis.close();
+	    tmf.init(ks);
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gT: TMF inited");
+	    TrustManager [] tms = tmf.getTrustManagers();
+	    classLogger.log(INFO, 1, CLASS, getName(), "init","gT: Got TMs");
+	    return tms;
+	}
+	
+	/** Setup the server.*/
+	public void initialise() {
+	    
+	}
+
+	/** Run the server.*/
+	public void mainTask() {
+	    Socket clientSocket = null;
+	    
+	    // Listen for Client connections. Timeout regularly to check for termination signal.
+	    while (canRun() && !isInterrupted()) {  
+		try {
+		    clientSocket = serverSocket.accept();
+		    //clientSocket.setSoLinger(true, 200);
+		    classLogger.log(INFO, 1, CLASS, getName(), "mainTask",
+			       "Client attached from: " + clientSocket.getInetAddress()+
+			       " : " + clientSocket.getPort());
+		} catch (InterruptedIOException iie1) {
+		    // Socket timed-out so try again
+		} catch (IOException iox) {
+		    if (canRun()) 
+			classLogger.log(ERROR, 1, CLASS, getName(), "mainTask", 
+					"Error connecting to client", null, iox);
+		    clientSocket = null;
+		}
+		if (clientSocket != null) break; // got a connection.
+	    }
+	    // 
+	    if (clientSocket != null) {
+		classLogger.log(INFO, 2, CLASS, getName(), "mainTask",
+			   "Creating Connection Thread for Client at: ["+
+			   clientSocket.getInetAddress() + "] on local port: " + 
+			   clientSocket.getLocalPort());
+		ServerConnectionThread connectionThread = new ServerConnectionThread(getName(), clientSocket);
+		
+		if (connectionThread == null) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "mainTask", 
+			       "Unable to generate Connection Thread for client: ");
+		} else {
+		    classLogger.log(INFO, 2, CLASS, getName(), "mainTask", 
+			       "Starting Connection Thread for client connection: ");
+		    connectionThread.start();
+		}
+	    }
+	    
+	}
+	
+	/** Release resources.*/
+	public void shutdown() {
+	    
+	}
+	
+	/** Override terminator.*/
+	public void close() {
+	    synchronized (runLock) {
+		terminate();
+		try {
+		    serverSocket.close(); 
+		    classLogger.log(INFO, 2, CLASS, getName(), "mainTask",
+				    "Closed server socket.");
+		} catch (IOException iox) {
+		    classLogger.log(WARNING, 1, CLASS, getName(), "terminate", "Error closing ServerSocket.");
+		}
+	    }
+	}
+
+	/** Sets the current base-directory. Files specified in put/get operations
+	 * with relative paths are relative to this directory.
+	 * @param baseDir The base directory for all relative file names.
+	 */
+	public void setBaseDirectory(File baseDir) {
+	    this.baseDirectory = baseDir; 
+	     classLogger.log(INFO, 1, CLASS, getName(), "setBaseDir", 
+			     "Reset Base-Directory: "+baseDirectory.getPath());
+	}
+	
+	/** Sets the file to use as KeyStore.
+	 * @param keyFile The KeyStore.
+	 */
+	public void setKeyFile(File keyFile) {
+	    this.keyFile = keyFile;
+	}
+	
+	/** Sets the file to use as TrustStore.
+	 * @param keyFile The TrustStore.
+	 */
+	public void setTrustFile(File trustFile) {
+	    this.trustFile = trustFile;
+	}
+
+	// -----------------------------------------------------------------------
+	//            SERVER_CONNECTION_THREAD
+	// -----------------------------------------------------------------------
+	
+	/** Create a Thread to handle a client connection.*/
+	public class ServerConnectionThread extends ControlThread {
+	    
+	    /** Socket associated with current client connection. */
+	    protected Socket clientSocket;
+	    
+	    /** Input stream from client.*/
+	    DataInputStream cin;
+	    
+	    /** Output stream to client.*/
+	    DataOutputStream cout;	
+
+	    final String CLASS = "SSLFileTransfer.Server.ConnectionThread";
+	    
+	    long sessionStart;
+	    
+	    Date date;
+	    
+	    /** Create a ServerConnctionThread.*/
+	    public ServerConnectionThread(String id, Socket clientSocket) {	    
+		super(id, false);
+		setPriority(9);
+		setName(getName()+(connectCount++));
+		this.clientSocket = clientSocket;	 	
+		sessionStart = System.currentTimeMillis();
+				
+		String [] suites = ((SSLSocket)clientSocket).getSupportedCipherSuites();
+		
+		((SSLSocket)clientSocket).setEnabledCipherSuites(suites);		
+	    } // (Constructor).
+	    
+	    /** Set up I/O streams between here and client. */
+	    protected void initialise() {
+		
+		// Make connections to Client.
+		try {
+		    //clientSocket.setSoTimeout(20000);
+		    clientSocket.setTcpNoDelay(true);   // send small packets immediately.
+		    //clientSocket.setSoLinger(true, 600); // give up and close after 5mins.
+		    cin = new DataInputStream(clientSocket.getInputStream());
+		    classLogger.log(INFO, 2, CLASS, getName(), "init",
+				    "Opened INPUT stream from Client: " + clientSocket.getInetAddress()+":"+
+				    clientSocket.getPort()+" timeout: "+clientSocket.getSoTimeout()+" secs.");	   
+		} catch (IOException ie1) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "init",
+				    "Error opening input stream from Client: " + 
+				    clientSocket.getInetAddress()+
+				    " : "+clientSocket.getPort());
+		    classLogger.dumpStack(2, ie1);
+		    terminate(); // cant send Error message as connect failed. Client will see IOException.
+		}
+		
+		try {
+		    cout = new DataOutputStream(clientSocket.getOutputStream());
+		    cout.flush();
+		    classLogger.log(INFO, 1, CLASS, getName(), "init",
+				    "Opened OUTPUT stream to Client: " + clientSocket.getInetAddress()+" : "+
+				    clientSocket.getPort()+" and flushed header:");
+		} catch (IOException ie2) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "init",
+				    "Error opening output stream to Client: " + clientSocket.getInetAddress() +
+				    ":" + clientSocket.getPort());
+		    classLogger.dumpStack(2, ie2);
+		    terminate(); // cant send Error message as connect failed. Client will see IOException.
+		}		    
+		
+	    } // (initialise).
+	    
+	    protected void mainTask() {
+		
+		String command = null;
+		String reply   = null;
+		
+		// 1. Read the data from the Client.
+		try {
+		    StringBuffer buff = new StringBuffer();
+		    byte b = cin.readByte();
+		    while (b != 10 && b != 13) {
+			buff.append((char)b);
+			b = cin.readByte();		  
+		    }
+		    
+		    command = buff.toString();
+		    
+		    classLogger.log(INFO, 1, CLASS, getName(), "init", 
+			       "Read Command from Client: "+command);	
+		    
+		    if (command == null) return;	
+		    
+		} catch (IOException ie3) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "init", 
+			       "Error reading request from Client - IOError: "+ie3);
+		    classLogger.dumpStack(2, ie3);
+		    terminate();
+		}
+		
+		date = new Date();
+		
+		// 2. Process.
+		if (command.startsWith("get")) {
+		    processGet(command);
+		} else if
+		    (command.startsWith("put")) {
+		    processPut(command);
+		} else if
+		    (command.startsWith("fwd")) {
+		    processFwd(command);
+		}
+		
+		
+	    } //  main().
+	    
+	    protected void shutdown() {
+		classLogger.log(INFO, 1, CLASS, getName(), "mainTask", "Shutting down now."); 
+		try {
+		    cout.close();
+		    cin.close();
+		    clientSocket.close();
+		} catch (IOException iox) {
+		    classLogger.log(INFO, 1, CLASS, getName(), "mainTask", 
+				    "Error shutting down: "+iox);
+		}
+	    } // shutdown().
+	    
+	    /** Return a file from named location over the I/O stream.
+	     * Usage: get <srcfilename>.*/
+	    private void processGet(String command) {
+		String  filename    = command.substring(4).trim();
+		
+		DataInputStream fin = null; 
+		
+		byte[] bb     = new byte[BUFFER_LENGTH];
+		int    len    = 0;
+		long   size   = 0;
+		int    blocks = 0;
+		
+		try {
+		    File file = new File(filename);
+		    if (! file.isAbsolute())
+			file = new File(baseDirectory, filename);		   
+		    fin = new DataInputStream(new FileInputStream(file));		    
+		    size      = file.length();
+		    blocks    = (int)(size/BUFFER_LENGTH) + 1;
+		    cout.writeLong(size);
+		} catch (IOException fx) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "init", 
+			       "Opening file: ", null, fx);		    
+		    try {
+			cout.writeLong(FILE_NOT_FOUND);			
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "init", 
+				   "Closing output file: ", null, iox);
+		    }	
+		    return;
+		}
+		
+		long bytes = 0L;
+		long start = System.currentTimeMillis();
+		
+		try {
+		    for (int ib = 0; ib < blocks; ib++) {
+			len = fin.read(bb);		   
+			cout.write(bb, 0, len);		    
+		    }
+		    
+		} catch (IOException iox) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "init", 
+			       "Transferring file: ", null, iox);		  
+		} 
+	    }	
+	    
+	    /** Save the data on the I/O stream to the named location.
+	     * Usage: put <destfilename>.*/
+	    private void processPut(String command) {
+		classLogger.log(INFO, 1, CLASS, getName(), "processPut", "Start Exec FWD");
+		try {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processPut", 
+				    "****************** Send 666");
+		    cout.writeLong(555L);	
+		    cout.flush();
+		} catch (IOException iox) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processPut", 
+				    "Sending report to client: ", null, iox);
+		}
+
+		DataOutputStream fout = null; 
+
+		String destFilename =  command.substring(4).trim();
+
+		File   file = null;
+		byte[] bb = new byte[BUFFER_LENGTH];
+		int    len = 0;
+		
+		try { 
+		    file = new File(destFilename);
+		    if (! file.isAbsolute())
+			file = new File(baseDirectory, destFilename);			 
+		    fout = new DataOutputStream(new FileOutputStream(file));		
+		} catch (IOException fx) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processPut", 
+				    "Opening destination file: ", null, fx);
+		    
+		    try {
+			cout.writeLong(FILE_UNABLE_CREATE);			
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processPut", 
+					"Closing output file: ", null, iox);
+		    }	
+		    return;
+		}
+		
+		try {		    
+		    boolean data = true;
+		    while (data) {
+			int code = cin.readInt();
+			System.err.println("Code: "+code);
+			if (code != -555) {
+			    len = cin.read(bb);
+			    System.err.println("Read: "+len+" bytes");
+			    if (len != -1)					
+				fout.write(bb, 0, len);
+			} else 
+			    data = false;
+		    }
+		   
+		    // Write the no of bytes received/saved for the client to confirm.
+		    long size = file.length();
+		    cout.writeLong(size);
+		} catch (IOException iox) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processPut", 
+			   "Transferring file: ", null, iox);
+		    return;
+		} finally {		   
+		    try {
+			fout.close();
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processPut", 
+				   "Closing destination file: ", null, iox);
+		    }				
+		}  
+	    }		    
+	    
+	    /** Handles the FWD operation.*/
+	    private void processFwd(String command) {
+		classLogger.log(INFO, 1, CLASS, getName(), "processFwd", "Start Exec FWD");
+		
+	
+		// Fail if the server has not been setup for relay duties.
+		if (! relay) {
+		    try {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Server is not  relay-capable");
+			cout.writeLong(RELAY_NOT_AVAILABLE);	
+			cout.flush();
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Sending report to client: ", null, iox);
+		    }	
+		    return;
+		}
+		
+		DataOutputStream fout = null;
+		
+		String args = command.substring(4).trim();
+		
+		StringTokenizer tok = new  StringTokenizer(args, " ");
+		
+		// Check params: FWD <rhost> <rport> <destFileName>
+		classLogger.log(INFO, 1, CLASS, getName(), "processFwd", "checking FWD params");
+		if (tok.countTokens() != 3) {
+		    try {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Error wrong number params: ");
+			cout.writeLong(ILLEGAL_PARAMETERS);	
+			cout.flush();
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Error Closing (client) output stream: ", null, iox);
+		    }	
+		    return;		
+		}
+		
+		String rhost = tok.nextToken();
+		int    rport = 0;
+		
+		// check remote server port.
+		try {
+		    rport = Integer.parseInt(tok.nextToken());
+		} catch (NumberFormatException nx) {
+		    try {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd",
+					"Illegal rport number: ");
+			cout.writeLong(ILLEGAL_PARAMETERS);	
+			cout.flush();	   
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Error Closing (client) output stream: ", null, iox);
+		    }	
+		    return;
+		}
+		
+		String destFileName = tok.nextToken();
+
+		long startTime = System.currentTimeMillis();
+		
+		byte[] bb    = new byte[BUFFER_LENGTH];
+		int    len   = 0;
+		int    bytes = 0;
+		
+		// Create a temporary file.
+		File tempFile = new File(tempDir, "file_"+rdf.format(new Date()));
+		
+		// Attempt to open for output.
+		try { 		   	 
+		    fout = new DataOutputStream(new FileOutputStream(tempFile));		
+		} catch (IOException fx) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+				    "Opening temporary file: ", null, fx);
+		    
+		    try {
+			cout.writeLong(FILE_UNABLE_CREATE);	
+			cout.flush();
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Opening temporary file: ", null, iox);
+		    }	
+		    return;
+		}
+
+		// Confirm ready to accept file
+		try {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+				    "****************** Send 666");
+		    cout.writeLong(666L);	
+		    cout.flush();
+		} catch (IOException iox) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+				    "Sending report to client: ", null, iox);
+		}
+
+		
+		// Read bytes from client and store to temp file.
+		classLogger.log(INFO, 1, CLASS, getName(), "processFwd", 
+				"About to read bytes from client.");
+		try {
+		    boolean data = true;
+		    while (data) {
+			int code = cin.readInt();
+			System.err.println("Code: "+code);
+			if (code != -555) {
+			    len = cin.read(bb);
+			    System.err.println("Read: "+len+" bytes");
+			    if (len != -1)					
+				fout.write(bb, 0, len);
+			} else 
+			    data = false;
+		    }
+
+		    // XXXXXX DO NOT YET Write the no of bytes received/saved for the client to confirm.
+		    bytes = (int)tempFile.length();
+		    classLogger.log(INFO, 1, CLASS, getName(), "processFwd", 
+				   "Stored "+bytes+" bytes in temp file: "+tempFile.getPath());
+		} catch (IOException iox) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+			   "Storing file: ", null, iox);
+		    try {
+			cout.writeLong(FILE_UNABLE_CREATE);	
+			cout.flush();
+		    } catch (IOException iox2) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Sending report to client: ", null, iox2);
+		    }
+		    return;
+		} finally {		   
+		    try {
+			fout.close();
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+				   "Closing destination file: ", null, iox);
+		    }				
+		}  
+		
+		classLogger.log(INFO, 1, CLASS, getName(), "processFwd",
+				"Creating PROPER relay client.");
+		
+//  		try {
+//  		    Thread.sleep(5000L);
+//  		}catch (InterruptedException ix) {
+//  		    System.err.println("Intx: While snoozing");
+//  		}
+
+		
+		// Create a client to handle the ongoing send.
+		Client relayClient = new Client("RELAY", rhost, rport);
+		
+		// Create the SSL connection.
+		try {
+		    relayClient.initialize(keyFile, "geronimo", trustFile);
+		    classLogger.log(INFO, 1, CLASS, getName(), "processFwd",
+				    "Initialized relay client.");
+		} catch (Exception ex) {	
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Initializing relay client: ", null, ex);
+		    try {
+			cout.writeLong(RELAY_CONNECTION);	
+			cout.flush();
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Sending report to client", null, ex);
+		    }
+		    return;
+		}
+		
+		// Send the tempfile.
+		try {
+		    relayClient.send(tempFile.getPath(), destFileName); 
+		    classLogger.log(INFO, 1, CLASS, getName(), "processFwd",
+				    "Sent file onwards.");
+		} catch (IOException iox) {
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+				    "Transferring file: ", null, iox);
+		    try {
+			System.err.println("Sending error code: "+RELAY_CONNECTION+" to client");
+			cout.writeLong(RELAY_CONNECTION);	
+			cout.flush();
+		    } catch (IOException iox2) { 			
+			classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+					"Sending report to client", null, iox2);
+		    } 
+		    return;
+		}
+
+		// How many bytes sent onward.
+		try {
+		    System.err.println("Sending bytes report: "+bytes+" to client");
+		    cout.writeLong((long)bytes);	
+		    cout.flush();
+		} catch (IOException iox2) { 			
+		    classLogger.log(ERROR, 1, CLASS, getName(), "processFwd", 
+				    "Sending report to client", null, iox2);
+		} 
+
+		double time = ((double)(System.currentTimeMillis() - startTime))/1000.0;
+		double mbytes = (((double)bytes)/(1024*1024));
+		System.err.println("Transferred "+mbytes+" MBytes in "+(time)+" secs - ["+
+				   (mbytes/time)+" MBytes/sec].");
+	    	
+	    }
+	    
+	}
+
+    }
+
+    /** Convenience method to create a create a Client instance.
+     * @param id The name/id of this Client (for logging purposes).
+     * @param host The server host name/address.
+     * @param port The server port.
+     */
+    public static Client createClient(String id, String host, int port) throws IOException {	
+	return new Client(id, host, port);
+    }
+
+    // -----------------------------------------------------------------------
+    //            CLIENT
+    // -----------------------------------------------------------------------
+
+    /** SSLFileTransfer Client.*/
+    public static class Client {
+	
+	final String CLASS = "SSLFileTransfer.Client";
+	
+	String id;
+	String host;
+	int    port;
+
+	/** File containing client's KeyStore.*/
+	File keyFile;
+	
+	/** File containing client's TrustStore.*/
+	File trustFile;
+
+	/** Keystore password - this is not very secure.*/
+	String keyPass;
+
+	/** An SSLSocketFactory for making socket connections.*/
+	SSLSocketFactory socketFactory;
+
+	/** The expected available bandwidth (KBytes/sec).
+	 * This should be for the slowest link in the chain.*/
+	int bandWidth = KBPS_RATE;
+
+	/** Create a client.*/
+	public Client(String id, String host, int port) {
+	    this.id     = id;
+	    this.host   = host;
+	    this.port   = port;	   
+	}
+
+	/** Sets the available bandwidth (KBytes/sec).*/
+	public void setBandWidth(int bandWidth) {
+	    this.bandWidth = bandWidth;
+	}
+		
+	/** Sets the file to use as KeyStore.
+	 * @param keyFile The KeyStore.
+	 */
+	public void setKeyFile(File keyFile) {
+	    this.keyFile = keyFile;
+	}
+	
+	/** Sets the file to use as TrustStore.
+	 * @param keyFile The TrustStore.
+	 */
+	public void setTrustFile(File trustFile) {
+	    this.trustFile = trustFile;
+	}
+
+	/** Sets the Keystore password.
+	 * @param keyPass The password to use.
+	 */
+	public void setKeyPass(String keyPass) {
+	    this.keyPass = keyPass;
+	}
+
+	/** Loads the clients certificates and creates a SocketFactory.
+	 */
+	public void initialize(File keyFile, String keyPass, File trustFile) throws Exception {
+	    setKeyFile(keyFile);
+	    setKeyPass(keyPass);
+	    setTrustFile(trustFile);
+
+	    KeyManager []   kms = getKeyManagers();
+	    TrustManager [] tms = getTrustManagers();
+	    
+	    SSLContext context = SSLContext.getInstance("TLS");
+	    classLogger.log(INFO, 1, CLASS, "", "init", "Got SSL Context");
+	    context.init(kms, tms, null);
+	    classLogger.log(INFO, 1, CLASS, "", "init", "Context inited");
+	    
+	    socketFactory = (SSLSocketFactory)context.getSocketFactory();
+	}
+    
+	
+	/** Retrieve the list of KeyManagers.*/
+	private KeyManager [] getKeyManagers() throws Exception {
+	    String alg = KeyManagerFactory.getDefaultAlgorithm();
+	    classLogger.log(INFO, 1, CLASS, "", "init","gK: Got algorithm: "+alg);
+	    KeyManagerFactory kmf = KeyManagerFactory.getInstance(alg);
+	    classLogger.log(INFO, 1, CLASS, "", "init","gK: Got KMF");
+	    // Uses "server.private" or equivalant.
+	    FileInputStream fis = new FileInputStream(keyFile);
+	    KeyStore ks = KeyStore.getInstance("jks");
+	    ks.load(fis, keyPass.toCharArray());
+	    classLogger.log(INFO, 1, CLASS, "", "init","gK: Loaded KS");
+	    fis.close();
+	    kmf.init(ks, keyPass.toCharArray());
+	    classLogger.log(INFO, 1, CLASS, "", "init","gK: KMF inited");
+	    KeyManager [] kms = kmf.getKeyManagers();
+	    classLogger.log(INFO, 1, CLASS, "", "init","gK: Got KMs");
+	    return kms;
+	}
+	
+	/** Retrieve the list of trustManagers.*/
+	private TrustManager [] getTrustManagers() throws Exception {
+	    String alg = TrustManagerFactory.getDefaultAlgorithm();
+	    classLogger.log(INFO, 1, CLASS, "", "init","gT: Got algorithm: "+alg);
+	    TrustManagerFactory tmf = TrustManagerFactory.getInstance(alg);
+	    classLogger.log(INFO, 1, CLASS, "", "init","gT: Got TMF");
+	    // Uses "client.public" or equivalant.
+	    FileInputStream fis = new FileInputStream(trustFile);
+	    KeyStore ks = KeyStore.getInstance("jks");
+	    ks.load(fis, "public".toCharArray());
+	    classLogger.log(INFO, 1, CLASS, "", "init","gT: Loaded TS");
+	    fis.close();
+	    tmf.init(ks);
+	    classLogger.log(INFO, 1, CLASS, "", "init","gT: TMF inited");
+	    TrustManager [] tms = tmf.getTrustManagers();
+	    classLogger.log(INFO, 1, CLASS, "", "init","gT: Got TMs");
+	    return tms;
+	}
+	    
+	/** Synchronous request operation.
+	 */
+	public void request(String srcFilename, String destFilename)  
+	    throws IOException {
+	    new Request(srcFilename, destFilename).perform();
+	}
+
+	/** Synchronous send operation.
+	 */
+	public void send(String srcFilename, String destFilename)  
+	    throws IOException {
+	    new Send(srcFilename, destFilename).perform();  
+	}
+
+	/** Synchronous forward operation.
+	 */
+	public void forward(String rhost, int rport, String srcFilename, String destFilename) 
+	    throws IOException {
+	    new Forward(rhost, rport, srcFilename, destFilename).perform(); 
+	}
+	
+	/** Asynchronous request operation.
+	 */
+	public Operation requestAsynchronous(String srcFilename, String destFilename)  
+	{
+	    Request request = new Request(srcFilename, destFilename);
+	    request.go();
+	    return request;
+	}
+
+	/** Asynchronous send operation.
+	 */
+	public Operation sendAsynchronous(String srcFilename, String destFilename)
+	{
+	    Send send = new Send(srcFilename, destFilename);
+	    send.go();
+	    return send;
+	}
+	
+	/** Asynchronous forward operation.
+	 */
+	public Operation forwardAsynchronous(String rhost, int rport, String srcFilename, String destFilename) 
+	{
+	    Forward forward = new Forward(rhost, rport, srcFilename, destFilename);
+	    forward.go();
+	    return forward;
+	}
+	
+	// -----------------------------------------------------------------------
+	//            CLIENT$OPERATION
+	// -----------------------------------------------------------------------
+
+	/** Base class - returned by all Asynchronous calls on Client as a hook.*/
+	public abstract class Operation implements Runnable {
+	    
+	    /** A Thread to perform this Operation.*/
+	    Thread runner;
+	    
+	    /** An AsynchronousHandler to receive completion callback from the Operation.*/
+	    AsynchronousHandler handler;
+
+	    /**A timeout for Socket connection .*/
+	    int socketTimeout;
+
+	    /** The connection socket.*/
+	    Socket socket;
+	
+	    /** Generic transfer operation with callback handler.*/
+	    public Operation(AsynchronousHandler handler) {
+		this.handler = handler;
+	    }
+	    
+	    /** Generic transfer operation.*/
+	    public Operation() {}
+	    
+	    /** Set the Socket timeout (millis).*/
+	    public void setSoTimeout(int to) {
+		this.socketTimeout = to;
+	    }
+
+	    /** Sets the AsynchHandler.*/
+	    public void setAsynchronousHandler(AsynchronousHandler handler) {
+		this.handler = handler;
+	    }
+	    
+	    /** Called to assign this Operation to an execution Thread and start it.
+	     * @exception IllegalThreadStateException If the Thread is already assigned whether
+	     * started or not.*/
+	    protected void go() throws IllegalThreadStateException {
+		if (runner != null)
+		    throw new IllegalThreadStateException("Thread has already been assigned.");
+		runner = new Thread(this);
+		runner.start();
+	    }
+	    
+	    /** Just calls perform() to carry out the subclass specific Operation.
+	     * If an AsynchHandler is specified it is notified of completion.
+	     * The handler is de-referenced to avoid possibility of circularity leak.
+	     */
+	    public final void run() {		
+		try {
+		    perform();
+		} catch (IOException iox) {
+		    if (handler != null)
+			handler.asynchOperationFailed(this, iox);
+		    handler = null;
+		    return;
+		}
+		if (handler != null)
+		    handler.asynchOperationCompleted(this);
+		handler = null;
+	    }
+
+	    /** Overridden by concrete classes to perform the specific operation.*/
+	    protected abstract void perform() throws IOException ;
+	    
+	    /** Wait for the Operation to complete but timeout after the specified time.
+	     * @param timeout After this time (millis) the method returns whatever.
+	     * A value of 0 causes this method to wait 'for ever'.
+	     */
+	    public void waitfor(long timeout) throws InterruptedException {
+		if (runner != null)
+		    runner.join(timeout);
+	    }
+
+	    /** Make the connection.
+	     * @exception IOException if the connect fails for any reason.
+	     */
+	    protected Socket connect(String host, int port) throws IOException {
+		
+		socket = socketFactory.createSocket(host, port);
+
+		String [] suites = ((SSLSocket)socket).getSupportedCipherSuites();
+		
+		((SSLSocket)socket).setEnabledCipherSuites(suites);	
+		classLogger.log(1, CLASS, "-", "connect", "Opened connection to: "+host+" : "+port);
+		return socket;
+	    }
+
+	   
+	   
+
+	} // [Operation].
+
+	// -----------------------------------------------------------------------
+	//            CLIENT$REQUEST
+	// -----------------------------------------------------------------------
+
+	/** Class to perform a Request operation.*/
+	public class Request extends Operation {
+	    
+	    DataInputStream  ccin;
+	    DataOutputStream ccout;
+	    DataOutputStream fout;
+	    DataInputStream  fin;
+	    Socket socket;
+	    
+	    String srcFilename;
+	    String destFilename;
+	    
+	    public Request(String srcFilename, String destFilename) {
+		super();
+		this.srcFilename  = srcFilename;
+		this.destFilename = destFilename;
+	    }
+	    
+	    protected void perform() throws IOException {   
+		
+		// Open a SocketConnection.
+		socket = connect(host, port);	   
+		classLogger.log(1, CLASS, "-", "request",
+				"Opened socket: ");
+		
+		ccout = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())); 
+		ccout.flush();
+		classLogger.log(1, CLASS, "-", "request", "Opened output stream");
+		
+		ccin = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+		classLogger.log(1, CLASS, "-", "request", "Opened input:");
+		
+		String request = "";
+		
+		request = "get "+srcFilename+"\n";
+		
+		ccout.writeBytes(request);
+		ccout.flush();
+	    
+		classLogger.log(1, CLASS, "-", "request", "Sent request "+ request);
+			    
+		fout = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(destFilename)));
+		classLogger.log(1, CLASS, "-", "request", "Opened destfile");
+		
+		byte[] bb = new byte[BUFFER_LENGTH];
+		int len = 0;
+		int bytes = 0;
+		
+		long size = ccin.readLong();
+		if (size < 0L) 
+		    throw new IOException("SSLFileTransfer: request error: Code: "+size);
+
+		long startTime = System.currentTimeMillis();
+		
+		while ( ( len = ccin.read(bb) ) != -1 ) {		
+		    fout.write(bb, 0, len);
+		    bytes += len;
+		}  
+		
+		fout.close();
+		
+		double time   = ((double)(System.currentTimeMillis() - startTime))/1000.0;
+		double mbytes = (((double)bytes)/(1024*1024));
+		System.err.println("Transferred "+mbytes+" MBytes in "+(time)+" secs - ["+
+				   (mbytes/time)+" MBytes/sec].");
+		
+	    }
+
+	    /** Return a String representation of this Request.*/
+	    public String toString() {
+		return "Request: "+srcFilename+" "+destFilename;
+	    }
+
+	}
+
+	// -----------------------------------------------------------------------
+	//            CLIENT$SEND
+	// -----------------------------------------------------------------------
+
+	/** Class to perform a Send operation.*/
+	public class Send extends Operation {
+	    DataInputStream  ccin;
+	    DataOutputStream ccout;
+	    DataOutputStream fout;
+	    DataInputStream  fin;
+	    Socket socket;
+	    
+	    String srcFilename;
+	    String destFilename;
+	    
+	    public Send(String srcFilename, String destFilename) {	
+		super(); 
+		this.srcFilename  = srcFilename;
+		this.destFilename = destFilename;
+	    }
+	    
+	    protected void perform() throws IOException {   
+		
+		// Open a SocketConnection.	   
+		socket = connect(host, port);
+		classLogger.log(1, CLASS, "-", "send", "Opened socket: ");
+		
+		ccout = new DataOutputStream(socket.getOutputStream()); 
+		ccout.flush();
+		classLogger.log(1, CLASS, "-", "send", "Opened output");
+		
+		ccin = new DataInputStream(socket.getInputStream());
+		classLogger.log(1, CLASS, "-", "send", "Opened input:");
+		
+		ccout.writeBytes("put "+destFilename+"\n");
+		ccout.flush();
+		classLogger.log(1, CLASS, "-", "send", "Sent request");
+
+		//##
+		System.err.println("Waiting to read confirm code from server....");				
+		long code = ccin.readLong();
+		System.err.println("Read confirm code: "+code);
+		if (code < 0L) 
+		    throw new IOException("SSLFileTransfer: request error: Code: "+code);
+		//##
+
+		long startTime = System.currentTimeMillis();
+		
+		fin = new DataInputStream(new BufferedInputStream(new FileInputStream(srcFilename)));
+		classLogger.log(1, CLASS, "-", "send", "Opened outfile");
+		
+		byte[] bb = new byte[BUFFER_LENGTH];
+		int len = 0;
+		int bytes = 0;
+		
+		// Read the file into buffer and forward.
+		while ( ( len = fin.read(bb) ) != -1 ) {	
+		    ccout.writeInt(1);
+		    ccout.write(bb, 0, len);
+		    bytes += len;
+		}  
+		ccout.writeInt(-555);
+		ccout.flush();
+
+		//## placeholder for size returned..
+		System.err.println("Waiting for xferred bytes confirmation....");
+		long size = ccin.readLong();
+		System.err.println("Read file size: "+size);
+		if (size < 0L) 
+		    throw new IOException("SSLFileTransfer: request error: Code: "+size);
+				
+		double time = ((double)(System.currentTimeMillis() - startTime))/1000.0;
+		double mbytes = (((double)bytes)/(1024*1024));
+		System.err.println("Transferred "+mbytes+" MBytes in "+(time)+" secs - ["+
+				   (mbytes/time)+" MBytes/sec].");
+
+
+		// Tidy up.
+
+		try {
+		    ccout.close();
+		} catch (IOException iox) {
+		   classLogger.log(1, CLASS, "-", "send", 
+				   "Error closing socket outputstream: "+iox);
+		}
+
+		try {
+		    ccin.close();
+		} catch (IOException iox) {
+		    classLogger.log(1, CLASS, "-", "send", 
+				   "Error closing socket inputstream: "+iox);
+		}
+		
+		try {
+		    fin.close();
+		} catch (IOException iox) {
+		    classLogger.log(1, CLASS, "-", "send", 
+				    "Error closing file inputstream: "+iox);
+		}
+		
+		try {
+		    socket.close();
+		} catch (IOException iox) {
+		    classLogger.log(1, CLASS, "-", "send", 
+				    "Error closing socket: "+iox);
+		}
+	    } 
+
+	    /** Return a String representation of this Send.*/
+	    public String toString() {
+		return "Send: "+srcFilename+" "+destFilename;
+	    }
+
+	}
+
+	// -----------------------------------------------------------------------
+	//            CLIENT$FORWARD
+	// -----------------------------------------------------------------------
+
+	/** Class to perform a Forward operation.*/
+	public class Forward extends Operation {
+	    
+	    DataInputStream  ccin;
+	    DataOutputStream ccout;
+	    DataOutputStream fout;
+	    DataInputStream  fin;
+	    Socket socket;
+
+	    String rhost;
+	    int    rport;
+	    String srcFilename;
+	    String destFilename;
+	    
+	    public Forward(String rhost, int rport, String srcFilename, String destFilename) {
+		super();
+		this.rhost = rhost;
+		this.rport = rport;
+		this.srcFilename  = srcFilename;
+		this.destFilename = destFilename;
+	    }
+	    
+	    protected void perform() throws IOException {	   
+		
+		// Open a SocketConnection.	   
+		socket = connect(host, port);
+		
+		
+		socket.setSoTimeout(20000); 
+		socket.setTcpNoDelay(true);
+		classLogger.log(1, CLASS, "-", "forward", "Opened socket: "+
+				"SendBuff: "+socket.getSendBufferSize()+
+				" RcvBuff: "+socket.getReceiveBufferSize());
+		
+		ccout = new DataOutputStream(socket.getOutputStream()); 
+		ccout.flush();
+		classLogger.log(1, CLASS, "-", "forward", "Opened output");
+		
+		ccin = new DataInputStream(socket.getInputStream());
+		classLogger.log(1, CLASS, "-", "forward", "Opened input: "+ccin);
+		
+		ccout.writeBytes("fwd "+rhost+" "+rport+" "+destFilename+"\n");
+		ccout.flush();
+		classLogger.log(1, CLASS, "-", "forward", "Sent request");
+		
+		//## CUT-START		
+		System.err.println("Waiting to read confirm code from server....");		
+		
+		long code = ccin.readLong();
+		System.err.println("Read confirm code: "+code);
+		if (code < 0L) 
+		    throw new IOException("SSLFileTransfer: request error: Code: "+code);
+		//## CUT-END
+		
+		fin = new DataInputStream(new BufferedInputStream(new FileInputStream(srcFilename)));
+		classLogger.log(1, CLASS, "-", "forward", "Opened file");
+		
+		byte[] bb = new byte[BUFFER_LENGTH];
+		int len = 0;
+		int bytes = 0;
+		
+		long startTime = System.currentTimeMillis();
+		
+		// Read the file into buffer and send.
+		while ( ( len = fin.read(bb) ) != -1 ) {	
+		    ccout.writeInt(1);
+		    ccout.write(bb, 0, len);
+		    bytes += len;
+		}  
+		ccout.writeInt(-555);
+		//ccout.close();
+		ccout.flush();
+
+		classLogger.log(1, CLASS, "-", "forward",
+				"Wrote file content to relay and flushed output stream,"+
+				" Expected transfer delay will be "+(bytes/(bandWidth*1000))+" secs.");
+		
+		socket.setSoTimeout(DEFAULT_TIMEOUT+(int)(3*bytes/bandWidth)); 
+		classLogger.log(1, CLASS, "-", "forward", 
+				"Resetting socket timeout: "+socket.getSoTimeout());
+		
+		//## placeholder for size returned..
+		classLogger.log(1, CLASS, "-", "forward", "Waiting for xferred bytes confirmation....");
+		long size = ccin.readLong();
+		classLogger.log(1, CLASS, "-", "forward", "Read file size: "+size);
+		if (size < 0L) 
+		    throw new IOException("SSLFileTransfer: request error: Code: "+size);
+		
+		
+		double time = ((double)(System.currentTimeMillis() - startTime))/1000.0;
+		double mbytes = (((double)bytes)/(1024*1024));
+		classLogger.log(1, CLASS, "-", "forward",
+				"Transferred "+mbytes+" MBytes in "+(time)+" secs - ["+
+				(mbytes/time)+" MBytes/sec].");
+		
+		// Tidy up.
+		
+		try {
+		    ccout.close();
+		} catch (IOException iox) {
+		    classLogger.log(1, CLASS, "-", "send", 
+				   "Error closing socket outputstream: "+iox);
+		}
+		
+		try {
+		    ccin.close();
+		} catch (IOException iox) {
+		    classLogger.log(1, CLASS, "-", "send", 
+				    "Error closing socket inputstream: "+iox);
+		}
+		
+		try {
+		    fin.close();
+		} catch (IOException iox) {
+		    classLogger.log(1, CLASS, "-", "send", 
+				    "Error closing file inputstream: "+iox);
+		}
+		
+		try {
+		    socket.close();
+		} catch (IOException iox) {
+		    classLogger.log(1, CLASS, "-", "send", 
+				    "Error closing socket: "+iox);
+		}
+		
+	    }
+	    
+	    /** Return a String representation of this Forward.*/
+	    public String toString() {
+		return "Forward: "+rhost+" : "+rport+" "+srcFilename+" "+destFilename;
+	    }
+
+	}
+
+	// -----------------------------------------------------------------------
+	//            ASYNCHRONOUS_HANDLER
+	// -----------------------------------------------------------------------
+
+	/** Interface to be implemented by any class which wishes to receive notification
+	 * that an asynchronous operation has completed.
+	 * May be extended to provide information about the progress of the operation.
+	 */
+	public interface AsynchronousHandler {
+	    
+	    /** Notify implementor that operation op is complete.*/
+	    public void asynchOperationCompleted(Operation op);
+
+	    /** Notify implementor that operation op has failed due to ex.*/
+	    public void asynchOperationFailed(Operation op, Exception ex);
+	    
+	}	
+	
+    }
+    
+    
+    /** Run a standalone instance of a SSLFileTransfer.<br><br>
+     *
+     * <pre>
+     *   java ngat.net.SSLFileTransfer <options>
+     * </pre>
+     * 
+     * @see #request
+     */
+    public static void main(String args[] ) {
+	
+	if (args.length == 0) {
+	    usage();
+	    return;
+	}
+	
+	String delim = System.getProperty("cpdelim", "@");
+
+	CommandParser parser = new CommandParser(delim);
+	
+	System.err.println("Using: ["+delim+"]");
+
+	try {
+	    parser.parse(args);	    
+	} catch (ParseException px) {
+	    System.err.println("Error parsing args:");
+	    usage();
+	    return;
+	}
+	
+	ConfigurationProperties map = parser.getMap();
+
+	// Setup logging to console.
+	String     logName = map.getProperty("logger", DEFAULT_LOGGER);
+	Logger     classLogger  = LogManager.getLogger(logName);
+	LogHandler console = new ConsoleLogHandler(new SimpleLogFormatter());
+	console.setLogLevel(Logging.ALL);
+	classLogger.setLogLevel(Logging.ALL);
+	classLogger.addHandler(console);
+	SSLFileTransfer.setLogger(logName);
+
+	classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main",
+			"Creating secure random number generator..");
+		
+	boolean doserver = map.getBooleanValue("server", false);
+	if (doserver) {
+
+	    String  id    = map.getProperty("id",   "SERVER");
+	    int     port  = map.getIntValue("port", DEFAULT_PORT);
+	    boolean auth  = map.getBooleanValue("auth",  false);
+	    boolean relay = map.getBooleanValue("relay", false);
+	   
+	    // Key-store.
+	    File   keyFile = null;
+	    String key     = map.getProperty("key");
+	    if (key != null) {
+		keyFile = new File(key);
+		if (keyFile.isFile()) {		   
+		    classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main",
+				    "Using key-store: "+keyFile.getPath());
+		} else {
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Could not locate key-store: "+keyFile.getPath());
+		    return;
+		}
+	    }
+
+	    // Trust-store.
+	    File   trustFile = null;
+	    String trust     = map.getProperty("trust");	   
+	    if (trust != null) {
+		trustFile = new File(trust);
+		if (trustFile.isFile()) {		   
+		    classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main",
+				    "Using trust-store: "+trustFile.getPath());
+		} else {
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Could not locate trust-store: "+trustFile.getPath());
+		    return;
+		}
+	    }
+
+	    // Base-dir.
+	    File   baseDir = null; 
+	    String base    = map.getProperty("base");
+	    System.err.println("Looking for basedir ["+base+"]");
+	    if (base != null) {
+		baseDir = new File(base);
+		if (! baseDir.isDirectory()) {
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Error creating server: Base Directory: ["+
+				    baseDir.getPath()+"] is NOT a proper directory");	
+		    return;
+		}
+	    }
+
+	    // Create and start the Server.  
+	    try {
+		
+		Server server = createServer(id);
+		
+		if (baseDir != null)
+		    server.setBaseDirectory(baseDir);
+
+		if (keyFile != null && trustFile != null) {
+		    server.setKeyFile(keyFile);
+		    server.setTrustFile(trustFile);
+		}
+
+		server.bind(port, auth, relay);
+			    	
+		classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main",
+				"Starting server: "+id+" on port: "+port);
+		
+		server.start();
+	    } catch (Exception x) {
+		classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				"Error starting up server: ", null, x);		
+	    }
+	    return;
+	}
+	
+	boolean doclient = map.getBooleanValue("client", false);
+	if (doclient) {
+	    
+	    String id   = map.getProperty("id",   "CLIENT");
+	    String host = map.getProperty("host", DEFAULT_HOST);    
+	    int    port = map.getIntValue("port", DEFAULT_PORT);
+
+	    int    band = map.getIntValue("band", KBPS_RATE); 
+	    
+	    // Key-store.
+	    File   keyFile = null;
+	    String key     = map.getProperty("key");
+	    if (key != null) {
+		keyFile = new File(key);
+		if (keyFile.isFile()) {		   
+		    classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main",
+				    "Using key-store: "+keyFile.getPath());
+		} else {
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Could not locate key-store: "+keyFile.getPath());
+		    return;
+		}
+	    }
+	    
+	    // Trust-store.
+	    File   trustFile = null;
+	    String trust     = map.getProperty("trust");	   
+	    if (trust != null) {
+		trustFile = new File(trust);
+		if (trustFile.isFile()) {		   
+		    classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main",
+				    "Using trust-store: "+trustFile.getPath());
+		} else {
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Could not locate trust-store: "+trustFile.getPath());
+		    return;
+		}
+	    }
+	    
+	    // KeyPass.
+	    String keyPass = map.getProperty("kpass");
+	    if (keyPass == null) {
+		classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main",
+				"No password supplied for the private KeyStore.");
+		return;
+	    }
+
+	    classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main", 
+			    "Creating Client for: "+host+" : "+port);
+
+	    Client client = null;
+	    try {
+		
+		client = new Client(id, host, port);
+		
+		if (keyFile != null && trustFile != null) {		   
+		    // creates the SSLSocketFactory ready for connect().
+		    client.initialize(keyFile, keyPass, trustFile);
+		}    	
+		    
+		classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main",
+				"Starting client: "+id+" on port: "+port);
+	    } catch (Exception x) {
+		classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				"Error initializing client: ", null, x);	
+		return;	
+	    }
+	  
+	    client.setBandWidth(band);
+		    
+	    // Do a PUT operation.
+	    String fput = map.getProperty("put");
+	    if (fput != null) {
+		classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main", 
+				"Attempting PUT");
+		String remoteFilename = map.getProperty("remote");
+		if (remoteFilename != null) {
+		    try {
+			client.send(fput, remoteFilename);
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+					"Error sending file: "+iox);
+			return; 
+		    }
+		} else
+		    usage();
+		return;
+	    }
+
+	    // Do a GET operation.
+	    String fget = map.getProperty("get");
+	    if (fget != null) {
+		classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main", 
+				"Attempting GET");
+		String localFilename = map.getProperty("local");
+		if (localFilename != null) {
+		    try {
+			client.request(fget, localFilename); 
+		    } catch (IOException iox) {
+			classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+					"Error retreiving file: "+iox);
+			return;
+		    }
+		} else 
+		    usage();
+		return;
+	    }
+
+	    // Do a FWD operation.
+	    String ffwd = map.getProperty("fwd");
+	    if (ffwd != null) { 
+		classLogger.log(INFO, 1, "SSLFileTransfer", "-", "main", 
+				"Attempting FWD");
+		String destFilename = map.getProperty("dest");
+		if (destFilename == null) { 
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Fwd: dest file was not specified.");
+		    usage();
+		    return;
+		}
+		
+		int rport = map.getIntValue("rport", DEFAULT_PORT);
+		
+		String rhost = map.getProperty("rhost");
+		if (rhost == null) {
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Fwd: rhost was not specified.");
+		    usage();
+		    return;
+		}
+		
+		try {
+		    client.forward(rhost, rport, ffwd, destFilename);
+		} catch (IOException iox) {
+		    classLogger.log(ERROR, 1, "SSLFileTransfer", "-", "main", 
+				    "Error forwarding file: "+iox);
+		    return;
+		}
+		return;
+	    }
+	    
+	    // None of the request options.
+	    usage();	    
+	}
+	
+    }
+    
+    private static void usage() {
+	System.err.println("Usage: java [-Dcpdelim=<delim-char>] SSLFileTransfer (args)"+
+			   "\n"+
+			   "\n    delim-char  : Is the charcater used for delimiting any"+
+			   "\n                  additional command line arguments."+
+			   "\n"+
+			   "\n Possible command line arguments are:"+  
+			   "\n"+
+			   "\n"+
+			   "\n   --help       : Print this help information."+
+			   "\n"+
+			   "\n Server options:"+ 
+			   "\n ---------------"+
+			   "\n"+
+			   "\n   --server [--relay] --id <id> --port <port> [--auth] --key <keyfile> --trust <trust-file> [--base <base-directory>"+
+			   "\n"+
+			   "\n   Creates a SSLFileTransfer Server with:"+
+			   "\n     id         : The ID of this server."+
+			   "\n     port       : The port to bind to."+
+			   "\n     base-dir   : Path to the base directory for file references."+
+			   "\n     key-file   : File containing Key-store."+
+			   "\n     trust-file : File containig Trust-store."+
+			   "\n     auth       : If the Client should authenticate."+
+			   "\n     relay      : Indicates that this server may relay to a remote server."+
+			   "\n"+
+			   "\n Client options:"+
+			   "\n ---------------"+ 
+			   "\n"+
+			   "\n   --client --id <id> --host <host> --port <port> --key <keyfile> --kpass <pass> --trust <trust-file> [--band <band-width>] (request options)"+ 
+			   "\n"+
+			   "\n   Creates a SSLFileTransfer Client with:"+
+			   "\n     id         : The ID of this client instantiation."+
+			   "\n     host       : The remote (Server) host address."+
+			   "\n     port       : The remote (Server) port."+ 
+			   "\n     key-file   : File containing Key-store."+
+			   "\n     pass       : Keystore password ***later this will change to something more secure***."+
+			   "\n     trust-file : File containig Trust-store."+
+			   "\n     band-width : The expected available bandwidth in (KBytes/sec)."+
+			   "\n"+
+			   "\n   Request options:"+ 
+			   "\n   ----------------"+ 
+			   "\n"+			 
+			   "\n     --put <local-file> -remote <remote-file>"+
+			   "\n              : Transfer file to destination file on remote system"+
+			   "\n     --get <remote-file> -local <local-file>"+
+			   "\n              : Retreive source file from remote system."+
+			   "\n     --fwd <local-file> -rhost <rhost> -rport <rport> -dest <dest-file>"+
+			   "\n              : Relay file to another host"); 
+    }
+   
+
+}
+
+/** $Log: not supported by cvs2svn $
+/** Revision 1.1  2008/07/23 12:02:19  eng
+/** Initial revision
+/** */

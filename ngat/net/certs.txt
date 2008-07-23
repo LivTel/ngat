@@ -1,0 +1,96 @@
+	/** Bind the server to the specified port.
+	 * @param port The port on which the server listens.
+	 * @param auth Set true if Client Authentication is required.
+	 * @exception IOException if the bind operation fails for any reason.
+	 */
+	public void bind(int port, boolean auth, boolean relay) throws Exception {
+	    this.port  = port;
+	    this.relay = relay;
+
+	    KeyManager []   kms = getKeyManagers();
+	    TrustManager [] tms = getTrustManagers();
+	    
+	    SSLContext context = SSLContext.getInstance("TLS");
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", "Got SSL Context");
+	    context.init(kms, tms, null);
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", "Context inited");
+
+	    SSLServerSocketFactory sf = context.getServerSocketFactory();
+	    //SSLSocketFactory sf = (SSLSocketFactory)SSLSocketFactory.getDefault();
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", "Got a SSLSocketFty");
+
+
+	     //SSLServerSocketFactory sslSrvFact =
+	     //(SSLServerSocketFactory)
+	     //SSLServerSocketFactory.getDefault();
+
+	    serverSocket = sf.createServerSocket(port);
+
+	    //set this when client auth is required.
+	    if (auth) {
+		((SSLServerSocket)serverSocket).setNeedClientAuth(true);
+	    }
+	    String [] suites = ((SSLServerSocket)serverSocket).getSupportedCipherSuites();
+	   
+	    ((SSLServerSocket)serverSocket).setEnabledCipherSuites(suites);
+
+	    // Check if we can see or make a temp dir under 'user.home'
+	    // If neither then fail.
+	    if (relay) {
+		File userDir = new File(System.getProperty("user.home"));
+		tempDir = new File(userDir, "tmp_relay");
+		if ((! tempDir.exists())) {		   
+		    tempDir.mkdir();
+		} else {
+		    if (! tempDir.isDirectory())
+			throw new FileNotFoundException("Temp directory: "+tempDir.getPath()+" is not a directory.");
+		}
+	    }
+	    
+	    classLogger.log(INFO, 1, CLASS, getName(), "init", 
+			    "Started SSLFileTransfer Server: "+ getName()+
+			    "\n\tBound to port:  "+port+ 
+			    "\n\tBase-directory: "+baseDirectory.getPath()+
+			    "\n\tAuthentication: "+(auth ? "*Client certificate*" : 
+						    "*None*")+
+			    "\n\t"+(getOnly ? "ReadOnly from:  "+(rootDir != null ? rootDir.getPath() : "nowhere") : "Full access"));
+	}
+
+	/** Retrieve the list of KeyManagers for the SERVER.*/
+	private KeyManager [] getKeyManagers() throws Exception {
+	    String alg = KeyManagerFactory.getDefaultAlgorithm();
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gK: Got algorithm: "+alg);
+	    KeyManagerFactory kmf = KeyManagerFactory.getInstance(alg);
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gK: Got KMF");
+	    // Uses "server.private" or equivalant.
+	    FileInputStream fis = new FileInputStream(keyFile);
+	    KeyStore ks = KeyStore.getInstance("jks");
+	    ks.load(fis, keyPass.toCharArray());
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gK: Loaded KS");
+	    fis.close();
+	    kmf.init(ks, keyPass.toCharArray());
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gK: KMF inited");
+	    KeyManager [] kms = kmf.getKeyManagers();
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gK: Got KMs");
+	    return kms;
+	}
+
+	/** Retrieve the list of trustManagers for the SERVER.*/
+	private TrustManager [] getTrustManagers() throws Exception {
+	    String alg = TrustManagerFactory.getDefaultAlgorithm();
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gT: Got algorithm: "+alg);
+	    TrustManagerFactory tmf = TrustManagerFactory.getInstance(alg);
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gT: Got TMF");
+	    // Uses "client.public" or equivalant.
+	    FileInputStream fis = new FileInputStream(trustFile);
+	    KeyStore ks = KeyStore.getInstance("jks");
+	    ks.load(fis, "public".toCharArray());
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gT: Loaded TS");
+	    fis.close();
+	    tmf.init(ks);
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gT: TMF inited");
+	    TrustManager [] tms = tmf.getTrustManagers();
+	    classLogger.log(INFO, 3, CLASS, getName(), "init","gT: Got TMs");
+	    return tms;
+	}
+	

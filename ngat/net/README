@@ -1,0 +1,10 @@
+ngat.net package directory
+--------------------------
+TCPConstants			- keeps constant values for the TCP Connection classes
+TCPServer			- socket server.
+TCPServerConnectionThread	- thread implemententing server end of protocol for 1 message transaction.
+TCPClientConnectionThread	- thread implemententing client end of protocol for 1 message transaction.
+TCPClientConnectionThreadMA	- thread implemententing client end of protocol for 1 message transaction with multiple acknowledgements.
+TCPServerPool			-  socket server for a pool of server threads
+TCPServerConnectionPoolThread	- thread implemententing server end of protocol for a pool thread.
+TCPClientConnectionPoolThread	- thread implemententing client end of protocol for a pool thread.
