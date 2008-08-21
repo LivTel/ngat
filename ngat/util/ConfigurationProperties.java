@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationProperties.java,v 1.6 2007-11-20 08:23:18 snf Exp $
+ * $Id: ConfigurationProperties.java,v 1.7 2008-08-21 09:52:53 eng Exp $
  *
  */
 public class ConfigurationProperties extends Properties {
@@ -95,7 +95,7 @@ public class ConfigurationProperties extends Properties {
     /** Returns the long value of a property for specified key.*/
     public long getLongValue(String key) throws ParseException {
 	try {
-	    return (long)Integer.parseInt(getProperty(key));
+	    return (long)Long.parseLong(getProperty(key));
 	} catch (Exception e) {
 	    throw new ParseException("Parsing key: "+key+":"+e.toString(),0);
 	}
@@ -104,7 +104,7 @@ public class ConfigurationProperties extends Properties {
     /** Returns the long value of a property for specified key or the supplied default. */
     public long getLongValue(String key, long def) {
 	try {
-	    return (long)Integer.parseInt(getProperty(key));
+	    return (long)Long.parseLong(getProperty(key));
 	} catch (Exception e) {
 	    return def;
 	}
@@ -183,6 +183,9 @@ public class ConfigurationProperties extends Properties {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.6  2007/11/20 08:23:18  snf
+/** added getDate with fmt string
+/**
 /** Revision 1.5  2007/02/01 08:13:58  snf
 /** extra info on parse exception
 /**
