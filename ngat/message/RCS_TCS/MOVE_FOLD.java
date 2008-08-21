@@ -4,13 +4,14 @@ import java.util.*;
 import ngat.util.*;
 import ngat.phase2.*;
 import ngat.astrometry.*;
+import ngat.message.base.*;
 /** RCS_TCS COMMAND: MOVE_FOLD.<br>
  * Instruct TCS to move the fold mirror to a specified position.<br>
  * (These keywords may have changed).<br>
  * <dl>
  * <dt>command params: </dt>
  * <dd>state - instrument port.</dd>
- * <dd>&nbsp;values: { STOWED | POSITION1 |  POSITION2 | POSITION3 | POSITION4 }</dd>
+ * <dd>&nbsp;values: { STOWED | POSITION1-8 }</dd>
  * <dt>ack params: </dt>
  *    none.
  * <dt>done params: </dt>
@@ -36,6 +37,18 @@ public class MOVE_FOLD extends RCS_TO_TCS {
 
 	/** Constant: Indicates place fold mirror towards port4 .*/
 	public static final int POSITION4 = 4;
+
+	/** Constant: Indicates place fold mirror towards port5 .*/
+	public static final int POSITION5 = 5;
+
+	/** Constant: Indicates place fold mirror towards port6 .*/
+	public static final int POSITION6 = 6;
+
+	/** Constant: Indicates place fold mirror towards port7 .*/
+	public static final int POSITION7 = 7;
+
+	/** Constant: Indicates place fold mirror towards port8 .*/
+	public static final int POSITION8 = 8;
 
 	// Variables.
 
@@ -68,6 +81,12 @@ public class MOVE_FOLD extends RCS_TO_TCS {
 	 */
 	public int getState() { return state; }
 
+	/** Returns a String representation of the object.*/
+	public String toString() {
+		return "["+this.getClass().getName()+":"+
+			getId()+
+			", state="+state+"]";
+	}
 	// Hand generated code.
 
 } // class def. [MOVE_FOLD].
