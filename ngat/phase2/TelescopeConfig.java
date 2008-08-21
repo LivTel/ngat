@@ -43,6 +43,13 @@ public class TelescopeConfig extends NPDBObject implements Serializable {
     
     public static final int STAR_SELECTION_PIXEL = 2;
 
+   
+    public static final int ACQUIRE_MODE_NONE      = 0;
+
+    public static final int ACQUIRE_MODE_BRIGHTEST = 1;
+
+    public static final int ACQUIRE_MODE_WCS       = 2;
+    
 
     // Variables.
 
@@ -234,6 +241,19 @@ public class TelescopeConfig extends NPDBObject implements Serializable {
 
     }
    
+    
+ public static String toAquireModeString(int mode) { 
+	switch (mode) {
+	case ACQUIRE_MODE_NONE:
+	    return "NO_ACQUIRE" ;  
+	case ACQUIRE_MODE_BRIGHTEST:
+	    return "ACQUIRE_BRIGHTEST"; 	  
+	case ACQUIRE_MODE_WCS:
+	    return "ACQUIRE_WCS"; 
+	}
+	return "UNKNOWN";
+    }
+
     public static String toAgModeString(int mode) { 
 	switch (mode) {
 	case AGMODE_NEVER:
