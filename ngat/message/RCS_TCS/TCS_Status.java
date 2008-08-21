@@ -9,7 +9,7 @@ import ngat.astrometry.*;
 
 /** Holds the state of the TCS and telescope systems.
  * <br><br>
- * $Id: TCS_Status.java,v 1.2 2007-10-17 07:29:27 snf Exp $
+ * $Id: TCS_Status.java,v 1.3 2008-08-21 10:30:48 eng Exp $
  */
 public class TCS_Status implements Serializable, Cloneable {
 
@@ -119,11 +119,24 @@ public class TCS_Status implements Serializable, Cloneable {
     /** Constant: Indicates that a mechanism is in location PORT_4.*/
     public static final int POSITION_PORT_4  = 355;
 
+    /** Constant: Indicates that a mechanism is in location PORT_5.*/
+    public static final int POSITION_PORT_5  = 356;
+    
+    /** Constant: Indicates that a mechanism is in location PORT_6.*/
+    public static final int POSITION_PORT_6  = 357;
+    
+    /** Constant: Indicates that a mechanism is in location PORT_7.*/
+    public static final int POSITION_PORT_7  = 358;
+    
+    /** Constant: Indicates that a mechanism is in location PORT_8.*/
+    public static final int POSITION_PORT_8  = 359;
+
      /** Constant: Indicates that a mechanism is in state IN_LINE.*/
-    public static final int POSITION_INLINE  = 356;
+    public static final int POSITION_INLINE  = 360;
 
     /** Constant: Indicates that a mechanism is in state RETRACT.*/
-    public static final int POSITION_RETRACT = 357;
+    public static final int POSITION_RETRACT = 361;
+
 
 
      /** Constant: Indicates that a subsystem is in state OKAY.*/
@@ -345,6 +358,11 @@ public class TCS_Status implements Serializable, Cloneable {
 	codes.put(new Integer (POSITION_PORT_2),          "PORT 2");
 	codes.put(new Integer (POSITION_PORT_3),          "PORT 3");
 	codes.put(new Integer (POSITION_PORT_4),          "PORT 4");
+	codes.put(new Integer (POSITION_PORT_5),          "PORT 5");
+	codes.put(new Integer (POSITION_PORT_6),          "PORT 6");
+	codes.put(new Integer (POSITION_PORT_7),          "PORT 7");
+	codes.put(new Integer (POSITION_PORT_8),          "PORT 8");
+
 	codes.put(new Integer (POSITION_INLINE),          "IN-LINE");
 	codes.put(new Integer (POSITION_RETRACT),         "RETRACT");
 	
@@ -1698,7 +1716,7 @@ public class TCS_Status implements Serializable, Cloneable {
 	public double srcRadialVelocity;
 
 	/** Records the actual RA of the source - offsets included.*/
-	public double srcActRA;
+	public double srcActRa;
 
 	/** Records the actual Dec of the source - offsets included.*/
 	public double srcActDec;
@@ -1768,7 +1786,7 @@ public class TCS_Status implements Serializable, Cloneable {
 		return srcRadialVelocity;
 	    else if
 		(key.equals("act.ra"))
-		return srcActRA;
+		return srcActRa;
 	    else if
 		(key.equals("act.dec"))
 		return srcActDec;
@@ -1970,6 +1988,9 @@ public class TCS_Status implements Serializable, Cloneable {
 
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.2  2007/10/17 07:29:27  snf
+/** added actual RA and Dec with offsets.
+/**
 /** Revision 1.1  2006/12/18 11:58:47  snf
 /** Initial revision
 /**
