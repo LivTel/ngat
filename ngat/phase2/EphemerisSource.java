@@ -19,6 +19,10 @@ public class EphemerisSource extends SolarSystemSource {
 	ephemeris = new Vector();
     }
 
+    public void addCoordinate(Coordinate c) {
+	ephemeris.add(c);
+    }
+
     public void addCoordinate(long time, double ra, double dec, double radot, double decdot) {
 	ephemeris.add(new Coordinate(time,ra,dec,radot,decdot));
     }
@@ -88,7 +92,10 @@ public class EphemerisSource extends SolarSystemSource {
 	/** Declination rate (rads/sec).*/
 	private double decdot;
 
+	public Coordinate() {}
+
 	public Coordinate(long time, double ra, double dec, double radot, double decdot) {
+	    this();
 	    this.time   = time;
 	    this.ra     = ra;
 	    this.dec    = dec;
@@ -101,6 +108,10 @@ public class EphemerisSource extends SolarSystemSource {
 	public double getDec()    { return dec;}
 	public double getRADot()  { return radot;}
 	public double getDecDot() { return decdot;}
+
+	public void setTime(long t) { this.time = t;}
+	public void setRA(double ra) { this.ra = ra;}
+	public void setDec(double dec) { this.dec = dec;}
 
 	/** Readable string representation.*/
 	public String toString() {
