@@ -4,7 +4,7 @@ import java.util.*;
 
 /** Generates random (doubles) with a Gaussian distribution.
  * <br><br>
- * $Id: GaussianRandom.java,v 1.5 2007-11-20 11:13:44 snf Exp $
+ * $Id: GaussianRandom.java,v 1.6 2008-08-21 09:58:14 eng Exp $
  */
 public class GaussianRandom {
     
@@ -28,6 +28,11 @@ public class GaussianRandom {
 
     /** Random number generator.*/
     protected Random randomBastard;
+
+    /** Set if NO negative values should be returned.*/
+    protected double minValue;
+    
+    protected boolean nonegatives = false;
 
     /** Create a GaussianRandom generator. The random numbers are
      * picked from the inverse of the cumulative distribution by linear
@@ -75,9 +80,24 @@ public class GaussianRandom {
 	randomBastard = new Random(System.currentTimeMillis());
     }
 
+     /** Create a GaussianRandom generator using the default
+     * granularity setting of 21.
+     * @param mean The mean of the distribution.
+     * @param sdev The standard deviation.
+     */
+    public GaussianRandom(double mean, double sdev, double min) {
+	this(mean, sdev);
+	nonegatives = true;
+	this.minValue = min;
+    }
+
+
     /** New implementation using java.util.Random .*/
     public double random() {
-	return randomBastard.nextGaussian()*sdev + mean;	
+	double dd = randomBastard.nextGaussian()*sdev + mean;
+	if (nonegatives)
+	    return Math.max(dd, minValue);
+	return dd;
     }
     
     
@@ -96,6 +116,9 @@ public class GaussianRandom {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.5  2007/11/20 11:13:44  snf
+/** initiliazed randombastard
+/**
 /** Revision 1.4  2007/11/20 10:52:41  snf
 /** fixed
 /**
