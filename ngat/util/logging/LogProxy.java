@@ -36,5 +36,9 @@ public class LogProxy {
     public void log(int level, String message) {
 	logger.log(cat, level, clazz, source, method, message);
     }
+    
+    public void setLogLevel(int level) {
+	logger.setLogLevel(level);
+    }
 
 }
