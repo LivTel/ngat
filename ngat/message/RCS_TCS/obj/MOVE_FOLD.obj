@@ -1,8 +1,12 @@
 #Instruct TCS to move the fold mirror to a specified position.
 #(These keywords may have changed).
-%int;state;{ STOWED | POSITION1 |  POSITION2 | POSITION3 | POSITION4 };instrument port.
+%int;state;{ STOWED | POSITION1-8 };instrument port.
 $STOWED;place fold into stowed position.
 $POSITION1;place fold mirror towards port1 .
 $POSITION2;place fold mirror towards port2 .
 $POSITION3;place fold mirror towards port3 .
 $POSITION4;place fold mirror towards port4 .
+$POSITION5;place fold mirror towards port5 .
+$POSITION6;place fold mirror towards port6 .
+$POSITION7;place fold mirror towards port7 .
+$POSITION8;place fold mirror towards port8 .
