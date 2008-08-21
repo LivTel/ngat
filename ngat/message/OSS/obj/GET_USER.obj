@@ -1,0 +1,5 @@
+#Command: GET_USER
+#Retreives a User from the P2DB. 
+#Module code: 705300
+%Path;userPath;Path to a User already in the P2DB;The path used to locate the User in the P2DB
+*User;user;The ngat.phase2.User requested

@@ -1,0 +1,5 @@
+#Command: EDIT_USER
+#Modify a stored User's accounting info
+#
+#Module code: 705400
+%User;user;A valid and complete User;The User to edit
