@@ -9,7 +9,7 @@ import java.text.*;
  * This object holds the next schedulable group if any available and other relevant data.
  * Some of the data is packed in by the OSS after running schedule.
  *
- * $Id: ScheduleDescriptor.java,v 1.4 2007-03-23 20:56:42 snf Exp $
+ * $Id: ScheduleDescriptor.java,v 1.5 2008-08-21 10:07:28 eng Exp $
  *
  */
 public class ScheduleDescriptor implements Serializable {
@@ -54,6 +54,9 @@ public class ScheduleDescriptor implements Serializable {
     /** Stores the reason for this schedule failing (if allowed is False).*/
     protected String failureReason;
 
+    /** Cost breakdown for execution.*/
+    protected ExecutionCosting executionCosting;
+    
     // temporary metrics.
     protected Map metrics;
 
@@ -117,6 +120,11 @@ public class ScheduleDescriptor implements Serializable {
     public void    setNominalTime(long nominalTime) 
     { this.nominalTime = nominalTime;}
 
+    public ExecutionCosting getExecutionCosting() { return executionCosting;}
+
+    public void setExecutionCosting(ExecutionCosting c) { this.executionCosting = c; }
+
+
     /** Get the count of available Groups.*/
     public int     getAvailableGroupCount() { return availableGroupCount; }
     
@@ -155,28 +163,28 @@ public class ScheduleDescriptor implements Serializable {
 
     /** Returns a readable string representation.*/
     public String toString() {
-	StringBuffer buffer = new StringBuffer("Metrics");
-	buffer.append("Group="+(group != null ? group.getFullPath() : "null"));
-	buffer.append(","+ (allowed ? "Enabled" : "Vetoed: "+failureReason));
+	StringBuffer buffer = new StringBuffer("ScheduleMetrics: ");
+	buffer.append("Group= "+(group != null ? group.getFullPath() : "null"));
+	buffer.append(", "+ (allowed ? "Status= Enabled" : "Status= Vetoed: "+failureReason));
 	buffer.append(", Score = "+score); 
-	buffer.append(", Exec="+nominalTime);
-	buffer.append(", Latest="+sdf.format(new Date(latestTime)));
-	buffer.append(", Components=[");
+	buffer.append(", Exec= "+nominalTime);
+	buffer.append(", Latest= "+sdf.format(new Date(latestTime)));
+	buffer.append(", Cost= "+(executionCosting != null ? ""+executionCosting.getTotal() : "N/A"));
 	Iterator is = metrics.keySet().iterator();
 	while (is.hasNext()) {
 	    String key = (String)is.next();
 	    double d   = getMetric(key);
-	    buffer.append(key+"="+d);
-	    if (is.hasNext())
-		buffer.append(", ");
+	    buffer.append(", M_"+key+"="+d);	 
 	}
-	buffer.append("]");
 	return buffer.toString();
     }
     
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.4  2007/03/23 20:56:42  snf
+/** changed tostring
+/**
 /** Revision 1.3  2006/11/23 10:43:05  snf
 /** test
 /**
