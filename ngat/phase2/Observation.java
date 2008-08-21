@@ -16,6 +16,9 @@ import java.text.*;
 
 
 public class Observation extends NPDBObject implements Serializable {
+
+    
+
    
     /** Serial version UID - used to maintain serialization compatibility
      * across modifications of the class's structure.*/
@@ -74,6 +77,9 @@ public class Observation extends NPDBObject implements Serializable {
 
     /** Indicates whether target should be tracked non-sidereally (if appropriate).*/
     protected boolean nonSiderealTracking;
+
+    /** Indicates which acquisition mode is to be used.*/
+    protected int acquisitionMode;
 
     // ### END NEW STUFF
 
@@ -172,6 +178,12 @@ public class Observation extends NPDBObject implements Serializable {
 
     /** Returns indicator of whether AG ahould be used. */
     public int getAutoGuiderUsageMode() { return autoGuiderUsageMode;}
+    
+    /** Sets the  indicator of which Acquire mode should be used.*/
+    public void setAcquisitionMode(int in) {  this.acquisitionMode = in;}
+    
+    /** Returns indicator of which Acquire mode should be used. */
+    public int getAcquisitionMode() { return acquisitionMode;}
     
     /** Sets the  flag to indicate mode of angle specification.*/
     public void setRotatorMode(int in) {  this.rotatorMode = in;}    
@@ -466,6 +478,7 @@ public class Observation extends NPDBObject implements Serializable {
 	    ", Rot="+TelescopeConfig.toRotatorModeString(rotatorMode)+" Angle="+Position.toDegrees(rotatorAngle,3)+
 	    ", FOff="+focusOffset+
 	    ", Tracking="+(nonSiderealTracking ? "NonSidereal" : "Sidereal")+
+	    ", Acquire="+TelescopeConfig.toAquireModeString(acquisitionMode)+
 	    ", Mosaic="+mosaic+
 	    ", Offsets=("+sourceOffsetRA+", "+sourceOffsetDec+")"+	  
 	    "]";
