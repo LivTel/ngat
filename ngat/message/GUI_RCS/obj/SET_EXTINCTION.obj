@@ -3,5 +3,9 @@
 # Module code: 681900
 #
 %int;extinction;{ PHOTOMETRIC |  SPECTROSCOPIC };extinction value
+%int;source;{ MANUAL | EXTERNAL}; extinction source
+%String;sourceName;a valid source name; source provider identity
 $PHOTOMETRIC;681901;that the extinction is good 
 $SPECTROSCOPIC;681902;that the extinction is bad
+$MANUAL_SOURCE;681910; manual source
+$EXTERNAL_SOURCE;681911; external source
