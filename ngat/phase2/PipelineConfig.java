@@ -57,6 +57,10 @@ public class PipelineConfig extends NPDBObject implements Serializable {
      /** no comment. */
      protected boolean astrometry;
 
+    protected int processPriority;
+
+    protected boolean standard;
+
      // Constructor.
 
      public PipelineConfig() {this("untitled");}
@@ -145,6 +149,21 @@ public class PipelineConfig extends NPDBObject implements Serializable {
      public boolean isAstrometry() { return astrometry;}
 
     public double getReconfigurationTime(PipelineConfig other) {  return 5.0;}
+
+    public String toString() {
+	return "PC: "+
+	    (debias ? "Debias ": "NoDebias")+
+	    (flatfield ? "FF" : "NoFF")+
+	    (idCosmic ? "IdCos" : "NoIdCos")+ 
+	    (removeCosmic ? "RemCos" : "NoRemCos")+
+	    (astroCalib ? "AstCal" :" NoAstCal")+
+	    (frameZero ? "FZero" : "NoFZero")+
+	    (photometry ? "Photom" : "NoPhotom")+
+	    (relativePhotometry ? "RelPhotom" : "NoRelPhotom")+
+	    (astrometry ? "Astrom" : "NoAstrom")+
+	    "Priority:"+processPriority+ 
+	    (standard ? "Standard" : "Science");
+    }
     
     public void writeXml(PrintStream out, int level) {
           super.writeXml(out, level);
