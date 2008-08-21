@@ -7,5 +7,6 @@
 %String;instName;The name of a valid Instrument (Registry entry);The name/id of the instrument whose config is to be set
 %boolean;current;;True if the selected instrument is current
 %int;status;Const: ngat.Instrument.{ ONLINE | OFFLINE };The current status of the Instrument
+%int;operationalStatus;Const: ngat.Instrument. {OKAY | WARN | FAIL | UNAVAILABLE};The current operational status of the Instrument
 $NO_SUCH_INSTRUMENT;701701;The instrument named by instName was not known to the OSS
 $UNSUITABLE_CONFIG;701702;The supplied InstrumentConfig was not suitable for the named instrument.

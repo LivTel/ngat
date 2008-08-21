@@ -1,16 +1,5 @@
-#Command: GET_PROPOSAL
-#Retreives a Proposal from the P2DB. The Proposal will be locked 
-#with the specified key which will be required to unlock it when
-#a subsequent EXPORT_PROPOSAL or REPLACE_PROPOSAL command is sent.
-#The userId of the editor (i.e. the sender of this command) is saved
-#in the Proposal record as lastEditor so others can see who has currently
-#got the lock. If the Proposal is already locked this command fails and
-#the uid and lock time of the current locker are returned.
-#Module code: 701500
-%Path;proposalPath;Path to a proposal already in the P2DB;The path used to locate the Proposal in the P2DB
-%Path;editorPath;Path to a user already in the P2DB;The path used to locate the editor (us) in the P2DB
-%int;key;Valid (>0) key;The key to be used to lock the Proposal in the Database
-%long;regId;Valid client registrationID;The registrationID of the client
-%boolean;dolock;{ true | false };true if the proposal is to be locked.
-*Proposal;proposal;The ngat.phase2.Proposal requested
-$LOW_LEVEL_LOCKOUT;701501;The Proposal is locked at a lower level e.g. due to a Group being scheduled
+#Command: GET_TAG
+#Retreives a TAG from the P2DB. 
+#Module code: 705200
+%Path;tagPath;Path to a TAG already in the P2DB;The path used to locate the TAG in the P2DB
+*Tag;tag;The ngat.phase2.Tag requested

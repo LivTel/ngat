@@ -1,5 +1,5 @@
-#Command: ADD_TAG
-#Add the TAG to the DB root.
+#Command: EDIT_TAG
+#Modify a stored TAG's accounting info
 #
-#Module code: 704500
-%Tag;tag;A valid but not neccessarily consistent or complete Tag;The Tag to add
+#Module code: 705000
+%Tag;tag;A valid and complete Tag;The Tag to edit
