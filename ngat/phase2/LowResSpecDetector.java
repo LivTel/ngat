@@ -8,7 +8,7 @@ import ngat.phase2.nonpersist.*;
 
 /** Subclass of Detector to represent the SITe SI-502AB Detector.
  *
- * $Id: LowResSpecDetector.java,v 1.1 2006-11-20 14:51:23 cjm Exp $
+ * $Id: LowResSpecDetector.java,v 1.2 2008-08-21 10:09:58 eng Exp $
  *
  */
 public class LowResSpecDetector extends Detector implements Serializable {
@@ -54,10 +54,25 @@ public class LowResSpecDetector extends Detector implements Serializable {
     public LowResSpecDetector() {
 	super();
     }
-    
+
+    public void writeXml(PrintStream out, int level) {
+        out.println(tab(level)+"<LowResSpecDetector name= '"+name+"'>");
+        out.println(tab(level+1)+"<xBin>"+xBin+"</xBin>");
+        out.println(tab(level+1)+"<yBin>"+yBin+"</yBin>");
+        for (int i = 0; i < getMaxWindowCount(); i++) {
+            if (windows[i] != null) {
+                windows[i].writeXml(out,level+1);
+            }
+        }
+        out.println(tab(level)+"</LowResSpecDetector>");
+    }
+
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.1  2006/11/20 14:51:23  cjm
+/** Initial revision
+/**
 /** Revision 1.1  2000/11/23 12:31:23  snf
 /** Initial revision
 /** */

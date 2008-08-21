@@ -49,8 +49,8 @@ public class LowResSpecConfig extends SpecConfig implements Serializable {
 
     /** Compares with another InstConfig to see if they are effectively the same.*/
     public boolean sameAs(InstrumentConfig other) {
-	System.err.println("Checking LRSC with another one: "+
-			   this.toString()+" with "+other.toString());
+	//	System.err.println("Checking LRSC with another one: "+
+	//	   this.toString()+" with "+other.toString());
 	if (! super.sameAs(other))
 	    return false;
 	
@@ -73,6 +73,17 @@ public class LowResSpecConfig extends SpecConfig implements Serializable {
 	    return (LowResSpecConfig)clone();
 	} catch (CloneNotSupportedException ce) {return null;}
     } // end (copy).
+
+      // Formatted Text Output.
+    public void writeXml(PrintStream out, int level) {
+        out.println(tab(level)+"<LowResSpecConfig name = '"+name+"'>");
+	out.println(tab(level+1)+"<Wavelength>"+wavelength+"</Wavelength>");
+        detectors[0].writeXml(out,level+1);
+        out.println(tab(level)+"</LowResSpecConfig>");
+    } // end (write).
+
+
+
     
     public String toString() { return "LowResSpecConfig: "+name+
 				   " : Wavelength "+wavelength+

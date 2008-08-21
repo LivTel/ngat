@@ -878,6 +878,10 @@ public class Proposal extends NPDBObject implements Serializable {
 	buffer.append("\n </html> ");
 	return buffer.toString();
     }  
+
+    public String toString() {
+	return "Proposal: "+name+" Act="+sdf.format(new Date(activationDate))+", Exp="+sdf.format(new Date(expiryDate));
+    }
     
     //      /** Scheduling enhancement Algorithm.*/
 //      public ScheduleDescriptor applyScheduling(ScheduleDescriptor sched) {	
