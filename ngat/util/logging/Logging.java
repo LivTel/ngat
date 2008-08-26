@@ -105,4 +105,26 @@ public interface Logging {
     /** Constant to indicate Logging category: COLOR=GREY.*/
     public static final String GREY_TEXT = "GREY_TEXT";
 
+    /** Severity level: FATAL.*/
+    public static final int SEVERITY_FATAL= 6;
+
+    /** Severity level: CRITICAL.*/
+    public static final int SEVERITY_CRITICAL = 5;
+    
+    /** Severity level: ERROR.*/
+    public static final int SEVERITY_ERROR = 4;
+    
+    /** Severity level: WARNING.*/
+    public static final int SEVERITY_WARNING = 3;
+    
+    /** Severity level: HARMLESS.*/
+    public static final int SEVERITY_HARMLESS = 2;
+    
+    /** Severity level:INFORMATION. */
+    public static final int SEVERITY_INFORMATION = 1 ;
+
+
+
+
+
 }
