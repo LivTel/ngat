@@ -14,6 +14,7 @@ SRCS           = BasicLogFilter.java \
                  CsvLogFormatter.java \
                  DefaultLogFilter.java \
 		DefaultMutableTimeProvider.java \
+		ExtendedLogRecord.java \
                  FileLogHandler.java \
                  HtmlLogFormatter.java \
                  HtmlTableLogFormatter.java \
