@@ -5,6 +5,11 @@ import java.io.*;
 /** Stores a mesage and associated information from a Logging call.*/
 public class LogRecord implements Serializable {
     
+   
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -8299743037667027751L;
+    
   /** The message placed in the original log call. This may contain
    * information in a format which can be parsed by a LogFormatter.*/
   protected String message;
