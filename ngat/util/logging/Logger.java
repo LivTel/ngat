@@ -54,6 +54,8 @@ public class Logger implements Logging {
     /** Provides the timestanp for the log records.*/
     protected TimeProvider timeProvider;
 
+    protected String channelID;
+
     /** Create a Logger with the specified name. You should <b>never</b> call
      * this constructor directly - <b>always</b> use the LogManager factory
      * method LogManager.getLogger(String name) as this will check to see if
@@ -143,6 +145,8 @@ public class Logger implements Logging {
 
     /** @return The name/id of this Logger.*/  
     public String getName() {return name; }
+    
+    public void setChannelID(String channelID) { this.channelID = channelID;}
 
     /** Generate a LogRecord with the supplied parameters and
      * hand off to any handlers to format and publish.
@@ -305,6 +309,7 @@ public class Logger implements Logging {
 	seqno++;
 	
 	LogRecord record = new LogRecord(level, message);
+	record.setChannelID(channelID);
 	record.setCat(cat);
 	record.setLoggerName(name);
 	record.setClazz(clazz);
