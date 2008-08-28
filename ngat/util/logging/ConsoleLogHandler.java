@@ -14,7 +14,12 @@ public class ConsoleLogHandler extends LogHandler {
     public void publish(LogRecord record) {
 	System.err.println(formatter.format(record));
     }
-    
+
+    /** Override to write a formatted LogRecord to the output stream.*/
+    public abstract void publish(ExtendedLogRecord elr) {
+	System.err.println(formatter.format(record));
+    }
+
     /** Write the tail.*/
     public void close() {
 	System.err.println(formatter.getTail());

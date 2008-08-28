@@ -196,7 +196,12 @@ public class FileLogHandler extends LogHandler {
 
     /** Sets the append flag.*/
     public void setAppend(boolean append) { this.append = append;}
-    
+
+    /** Publish a LogRecord to the output file.*/
+    public void publish(ExtendedLogRecord record) {	
+	out.println(formatter.format(record));
+    }
+
     /** Publish a LogRecord to the output file.*/
     public void publish(LogRecord record) {
 	recordCount++;

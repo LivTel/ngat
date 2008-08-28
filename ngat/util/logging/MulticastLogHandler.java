@@ -26,7 +26,10 @@ public class MulticastLogHandler extends LogHandler {
     public void publish(LogRecord record) {
 	send(formatter.format(record));
     }
-    
+
+    public void publish(ExtendedLogRecord record) {
+	send(formatter.format(record));
+    }
     public void close() {
 	send(formatter.getTail());
 	send("BYE");
