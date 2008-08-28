@@ -42,6 +42,9 @@ public class Logger implements Logging {
     /** Holds the set of LogHandlers for this Logger.*/
     protected Set handlers;
 
+   /** Holds the set of ExtendedLogHandlers for this Logger.*/
+    protected Set xhandlers;
+
     /** A LogFilter attached to this Logger.*/  
     protected LogFilter filter;
 
@@ -66,6 +69,7 @@ public class Logger implements Logging {
     protected Logger(String name) {
 	this.name = name;
 	handlers = Collections.synchronizedSet(new HashSet());
+	xhandlers = Collections.synchronizedSet(new HashSet());
 	logLevel = OFF;
 	useGlobalHandlers = false;
 	seqno = 0;
@@ -117,6 +121,48 @@ public class Logger implements Logging {
 	}
 	return handlerList;
     }
+
+/** Add the specifed handler to the set of handlers which
+     * are notified when this Logger creates a LogRecord.
+     * @param handler The handler to add.
+     */  
+    public void addExtendedHandler(ExtendedLogHandler handler) {
+	xhandlers.add(handler);
+    }
+    
+    /** Remove a handler from the set of handlers.
+     * @param handler The handler to remove.
+     */  
+    public void removeExtendedHandler(ExtendedLogHandler handler) {
+	if (xhandlers.contains(handler))
+	    xhandlers.remove(handler);
+    }
+
+    /**
+     * Get the handlers associated with this logger.
+     * The resulting array includes all Handlers set with addHandler, but excludes global
+     * Handlers.
+     * @return An array of all registered Handlers.
+     */
+    public ExtendedLogHandler[] getExtendedHandlers()
+    {
+	Object objectList[] = null;
+	ExtendedLogHandler handlerList[] = null;
+	Object o = null;
+	ExtendedLogHandler handler = null;
+
+	objectList = (handlers.toArray());
+	handlerList = new LogHandler[objectList.length];
+	for(int i = 0;i < objectList.length;i++)
+	{
+	    o = objectList[i];
+	    handler = (ExtendedLogHandler)(o);
+	    handlerList[i] = handler;
+	}
+	return handlerList;
+    }
+
+
 
     /** Set the filter for this Logger.
      * @param filter The filter to apply to this Logger.*/  
@@ -351,6 +397,25 @@ public class Logger implements Logging {
 	}
     }
     
+    /** Publish an ExtendedLogRecord.*/
+    public void xlog(ExtendedLogRecord elr) {
+	
+	// Cheap test.
+	if (elr.getlevel() != ALL)
+	    if (elr.getlevel() > logLevel) return;
+	seqno++;
+
+	ExtendedLogHandler handler = null;
+	// Iterate over handlers.
+	Iterator it = xhandlers.iterator();
+	while (it.hasNext()) {
+	    handler = (ExtendedLogHandler)it.next();	 
+	    handler.publish(elr);
+	}
+
+    }
+	
+
     /** Dump an Exception stack trace to this logger.
      * @param level The level of this message.
      * @param exception An Exception to dump to the log.  
