@@ -27,15 +27,6 @@ public class DatagramLogHandler extends LogHandler {
 	}
     }
 
-    public void publish(ExtendedLogRecord record) {
-	
-	try {
-	    send(record);
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-    }
-
    
     private void send(Object data) throws Exception {
 	ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);

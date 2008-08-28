@@ -38,39 +38,7 @@ public class SyslogHandler extends LogHandler {
 
     }
     
-    /** Overridden to write a formatted LogRecord to syslog via UDP.*/
-    public void publish(ExtendedLogRecord record) {
-	// interpret the pri and tag fields from record content..
-	int    pri = 14; // assume local0.level messages for now
-	String tag = record.getSrcCompId();
-	
-	String message = "<"+pri+">"+sysf.format(new Date())+" "+host+" "+tag+": "+formatter.format(record);
-	
-	System.err.println("Syslog Message: ["+message+"]");
-	
-	byte[] buffer = new byte[message.length()];
-	
-	try {
-
-	    ByteArrayOutputStream baos = new ByteArrayOutputStream(buffer.length);
-	    
-	    DataOutputStream dos = new DataOutputStream(baos);
-	    
-	    dos.writeBytes(message);
-	    buffer = baos.toByteArray();
-	    
-	    InetAddress address = InetAddress.getByName(logHost);
-	    
-	    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, logPort);
-	    
-	    socket.send(packet);
-	} catch (Exception e) {
-	    errc++;
-	    if (errc < 10)
-		e.printStackTrace();
-	}
-
-    }
+    
 
     /** Overridden to write a formatted LogRecord to syslog via UDP.*/
     public void publish(LogRecord record) {
