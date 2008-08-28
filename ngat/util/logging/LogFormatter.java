@@ -22,7 +22,8 @@ public abstract class LogFormatter {
  
     /** Format a LogRecord.*/
     public abstract String format(LogRecord record);
-    
+
+
     /** Return the head sequence for the formatter.*/
     public abstract String getHead();
 
