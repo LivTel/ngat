@@ -37,6 +37,9 @@ public abstract class LogHandler implements Logging {
     /** Override to write a formatted LogRecord to the output stream.*/
     public abstract void publish(LogRecord record);
 
+    /** Override to write a formatted LogRecord to the output stream.*/
+    public abstract void publish(ExtendedLogRecord record);
+
     /** @return True if no filter is specified otherwise whatever the
      * filter lets through.*/
     protected boolean isLoggable(LogRecord record) {
