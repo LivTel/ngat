@@ -1,27 +1,29 @@
 // LTAGLampUnit.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.1 2008-03-06 10:47:39 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.2 2008-10-03 09:20:00 cjm Exp $
 package ngat.lamp;
 
 import java.io.*;
 import java.lang.*;
 import java.util.*;
 import ngat.df1.*;
+import ngat.serial.arcomess.*;
 import ngat.util.*;
 import ngat.util.logging.*;
 
 /**
  * This class supports an interface to the LT A&G lamp unit. This unit is a PLC controlled device
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
- * (controlled via the ngat.df1 library).
+ * (controlled via the ngat.df1 library). The communications are currently done over a serial link
+ * via an ArcomESS ethernet to serial converter (handled by the ngat.serial.arcomess. library).
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.1 2008-03-06 10:47:39 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.2 2008-10-03 09:20:00 cjm Exp $");
 	/**
 	 * Basic unit log level.
 	 */
@@ -34,6 +36,10 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * The logger to log messages to.
 	 */
 	protected NGATProperties properties = null;
+	/**
+	 * The communications controller object, an instance of ArcomESS.
+	 */
+	protected ArcomESS arcomESS = null;
 	/**
 	 * The instance of the Df1Library which is used to control the lamp unit PLC.
 	 */
@@ -71,19 +77,22 @@ public class LTAGLampUnit implements LampUnitInterface
 	protected PLCValueSetter lowlightLevel = null;
 
 	/**
-	 * Constructor. Initialise the logger, properties, df1, lampList objects.
+	 * Constructor. Initialise the logger, properties, arcomESS, df1, lampList objects.
+	 * @exception ArcomESSNativeException Thrown if the ArcomESS constructor fails.
 	 * @exception Df1LibraryNativeException Thrown if the Df1Library constructor fails.
 	 * @see #logger
-	 * @see #properties
+	 * @see #arcomESS
 	 * @see #df1
+	 * @see #properties
 	 * @see #lampList
 	 */
-	public LTAGLampUnit() throws Df1LibraryNativeException
+	public LTAGLampUnit() throws Df1LibraryNativeException, ArcomESSNativeException
 	{
 		super();
 		logger = LogManager.getLogger(this);
 		properties = new NGATProperties();
-		df1 = new Df1Library();
+		arcomESS = new ArcomESS();
+		df1 = new Df1Library(arcomESS);
 		lampList = new Vector();
 	}
 
@@ -110,6 +119,8 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @exception NullPointerException Thrown if a property was null.
 	 * @exception Df1LibraryFormatException Thrown if the device Id was not a valid device.
 	 * @exception NGATPropertyException Thrown if the port number was not an integer.
+	 * @see #arcomESS
+	 * @see #df1
 	 * @see #properties
 	 * @see #connectionParameters
 	 * @see #lampList
@@ -146,6 +157,7 @@ public class LTAGLampUnit implements LampUnitInterface
 					   lampName+" at index "+index+".");
 				lamp = new LTLamp();
 				lamp.setName(lampName);
+				lamp.setCommunications(arcomESS);
 				lamp.setController(df1);
 				lamp.setConnectionParameters(connectionParameters);
 				lamp.loadConfig(properties);
@@ -181,6 +193,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * <li>Set the lampOnFaultTimer, if configured to do so.
 	 * <li>Set the lowlightLevel threshold, if configured to do so.
 	 * </ul>
+	 * @exception ArcomESSNativeException Thrown if the comms to the Arcom ESS fails.
 	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fail.
 	 * @see #lampList
 	 * @see #lampOnFaultTimer
@@ -188,7 +201,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see LTLamp#init
 	 * @see PLCValueSetter#setValue
 	 */
-	public void init() throws Df1LibraryNativeException
+	public void init() throws Df1LibraryNativeException, ArcomESSNativeException
 	{
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":init:Started.");
 		// initialise each lamp
@@ -201,9 +214,9 @@ public class LTAGLampUnit implements LampUnitInterface
 		}
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":init:Configuring lamp on fault timer.");
 		// configure presets, thresholds etc if configured to do so.
-		lampOnFaultTimer.setValue(df1,connectionParameters);
+		lampOnFaultTimer.setValue(arcomESS,df1,connectionParameters);
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":init:Configuring low light level.");
-		lowlightLevel.setValue(df1,connectionParameters);
+		lowlightLevel.setValue(arcomESS,df1,connectionParameters);
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":init:Finished.");
 	}
 
@@ -322,24 +335,27 @@ public class LTAGLampUnit implements LampUnitInterface
 	 *         (high light level in A&G box when alllights should be off) and a 
 	 *         <b>lamp on fault</b> (the light was switched off by the PLC because it has been left 
 	 *         switched on for too long).
+	 * @exception ArcomESSNativeException Thrown if the comms to the Arcom ESS fails.
 	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
+	 * @see #arcomESS
+	 * @see #df1
 	 * @see #highLightLevelFaultPLCAddress
 	 * @see #lampOnFaultPLCAddress
 	 */
-	public boolean isError() throws Df1LibraryNativeException
+	public boolean isError() throws Df1LibraryNativeException, ArcomESSNativeException
 	{
 		boolean highLightLevelFault,lampOnFault;
 
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Started.");
 		try
 		{
-			connectionParameters.connectToController(df1);
+			connectionParameters.connectToController(arcomESS);
 			highLightLevelFault = df1.getBoolean(highLightLevelFaultPLCAddress);
 			lampOnFault = df1.getBoolean(lampOnFaultPLCAddress);
 		}
 		finally
 		{
-			connectionParameters.closeConnection(df1);
+			connectionParameters.closeConnection(arcomESS);
 		}
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned highLightLevelFault:"+
 			   highLightLevelFault+"|lampOnFault:"+lampOnFault+".");
@@ -354,6 +370,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * <li>Call the closeConnection method of connectionParameters.
 	 * </ul>
 	 * @return An integer, the actual light level in A/D counts.
+	 * @exception ArcomESSNativeException Thrown if the comms to the Arcom ESS fails.
 	 * @exception Df1LibraryNativeException Thrown if comms to the device fails.
 	 * @see #lightLevelPLCAddress
 	 * @see #connectionParameters
@@ -362,37 +379,40 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see ConnectionParameters#closeConnection
 	 * @see ngat.df1.Df1Library#getInteger
 	 */
-	public int getLightLevel() throws Df1LibraryNativeException
+	public int getLightLevel() throws Df1LibraryNativeException, ArcomESSNativeException
 	{
 		int retval;
 
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":getLightLevel:Started.");
 		try
 		{
-			connectionParameters.connectToController(df1);
+			connectionParameters.connectToController(arcomESS);
 			retval = df1.getInteger(lightLevelPLCAddress);
 		}
 		finally
 		{
-			connectionParameters.closeConnection(df1);
+			connectionParameters.closeConnection(arcomESS);
 		}
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":getLightLevel:Returned :"+retval+".");
 		return retval;
 	}
 
 	/**
-	 * Set the log level.Sets the logger, df1 library instance, and each lamps log level.
+	 * Set the log level.Sets the logger, df1/arcomESS library instance, and each lamps log level.
 	 * @param level The log level.
 	 * @see #logger
+	 * @see #arcomESS
 	 * @see #df1
 	 * @see #lampList
 	 * @see ngat.util.logging.Logger#setLogLevel
+	 * @see ngat.serial.arcomess.ArcomESS#setLogFilterLevel
 	 * @see ngat.df1.Df1Library#setLogFilterLevel
 	 * @see ngat.lamp.LTLamp#setLogLevel
 	 */
 	public void setLogLevel(int level)
 	{
 		logger.setLogLevel(level);
+		arcomESS.setLogFilterLevel(level);
 		df1.setLogFilterLevel(level);
 		for(int i = 0; i < lampList.size(); i++)
 		{
@@ -433,4 +453,7 @@ public class LTAGLampUnit implements LampUnitInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/03/06 10:47:39  cjm
+// Initial revision
+//
 //

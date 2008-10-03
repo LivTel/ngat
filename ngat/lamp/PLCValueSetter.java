@@ -1,9 +1,10 @@
 // PLCValueSetter.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCValueSetter.java,v 1.1 2008-03-06 10:47:39 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCValueSetter.java,v 1.2 2008-10-03 09:20:00 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
 import ngat.df1.*;
+import ngat.serial.arcomess.*;
 import ngat.util.*;
 import ngat.util.logging.*;
 
@@ -11,14 +12,14 @@ import ngat.util.logging.*;
  * This class holds information about one PLC address and the value it should contain.
  * This is used to set various values in the LT A&G lamp unit PLC.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PLCValueSetter
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PLCValueSetter.java,v 1.1 2008-03-06 10:47:39 cjm Exp $");
+	public final static String RCSID = new String("$Id: PLCValueSetter.java,v 1.2 2008-10-03 09:20:00 cjm Exp $");
 	/**
 	 * A boolean, if true set the value during unit initialisation.
 	 */
@@ -71,6 +72,7 @@ public class PLCValueSetter
 	 * </ul>
 	 * @param df1 The PLC instance to communicate with.
 	 * @param connectionParameters The connection details of how to connect to the PLC.
+	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
 	 * @exception Df1LibraryNativeException Thrown if comms to the PLC has an error.
 	 * @see #set
 	 * @see #plcAddress
@@ -79,17 +81,21 @@ public class PLCValueSetter
 	 * @see ngat.df1.Df1Library#setInteger
 	 * @see ConnectionParameters#closeConnection
 	 */
-	public void setValue(Df1Library df1,ConnectionParameters connectionParameters) throws Df1LibraryNativeException
+	public void setValue(ArcomESS arcomESS,Df1Library df1,ConnectionParameters connectionParameters) throws 
+		Df1LibraryNativeException, ArcomESSNativeException
 	{
 		if(set)
 		{
-			connectionParameters.connectToController(df1);
+			connectionParameters.connectToController(arcomESS);
 			df1.setInteger(plcAddress,value);
-			connectionParameters.closeConnection(df1);
+			connectionParameters.closeConnection(arcomESS);
 		}
 	}
 
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/03/06 10:47:39  cjm
+// Initial revision
+//
 //

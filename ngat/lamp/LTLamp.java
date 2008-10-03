@@ -1,23 +1,24 @@
 // LTLamp.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.1 2008-03-06 10:47:39 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.2 2008-10-03 09:20:00 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
 import ngat.df1.*;
+import ngat.serial.arcomess.*;
 import ngat.util.*;
 import ngat.util.logging.*;
 
 /**
  * This class holds information about an individual lamp as part of a lamp unit.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LTLamp implements LampInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTLamp.java,v 1.1 2008-03-06 10:47:39 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTLamp.java,v 1.2 2008-10-03 09:20:00 cjm Exp $");
 	/**
 	 * Basic lamp log level.
 	 */
@@ -47,6 +48,10 @@ public class LTLamp implements LampInterface
 	 * How to connect to the controller.
 	 */
 	protected ConnectionParameters connectionParameters = null;
+	/**
+	 * The communications controller object, an instance of ArcomESS.
+	 */
+	protected ArcomESS arcomESS = null;
 	/**
 	 * The controller object, an instance of Df1Library.
 	 */
@@ -80,6 +85,17 @@ public class LTLamp implements LampInterface
 	public String getName()
 	{
 		return name;
+	}
+
+	/**
+	 * Set the communication controller of this lamp.
+	 * @param o The ArcomESS instance corresponding to the ArcomESS unit that is connected to the PLC.
+	 * @see #arcomESS
+	 * @see ngat.serial.arcomess.ArcomESS
+	 */
+	public void setCommunications(ArcomESS o)
+	{
+		arcomESS = o;
 	}
 
 	/**
@@ -141,23 +157,27 @@ public class LTLamp implements LampInterface
 
 	/**
 	 * Initialise the threshold and turn the lamp off.
+	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
 	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
+	 * @see #arcomESS
 	 * @see #df1
 	 * @see #connectionParameters
 	 * @see #threshold
 	 * @see #turnLampOff
 	 */
-	public void init() throws Df1LibraryNativeException
+	public void init() throws Df1LibraryNativeException, ArcomESSNativeException
 	{
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":init:Started.");
-		threshold.setValue(df1,connectionParameters);
+		threshold.setValue(arcomESS,df1,connectionParameters);
 		turnLampOff();
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":init:Finished.");
 	}
 
 	/**
 	 * Turn the lamp on.
+	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
 	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
+	 * @see #arcomESS
 	 * @see #df1
 	 * @see #onOffPLCAddress
 	 * @see #turnLampOff
@@ -165,7 +185,7 @@ public class LTLamp implements LampInterface
 	 * @see #closeConnection
 	 * @see ngat.df1.Df1Library#setBoolean
 	 */
-	public void turnLampOn() throws Df1LibraryNativeException
+	public void turnLampOn() throws Df1LibraryNativeException,ArcomESSNativeException
 	{
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOn:"+name+":Started.");
 		try
@@ -183,6 +203,7 @@ public class LTLamp implements LampInterface
 	/**
 	 * Turn the lamp off.
 	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
+	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
 	 * @see #df1
 	 * @see #onOffPLCAddress
 	 * @see #turnLampOn
@@ -190,7 +211,7 @@ public class LTLamp implements LampInterface
 	 * @see #closeConnection
 	 * @see ngat.df1.Df1Library#setBoolean
 	 */
-	public void turnLampOff() throws Df1LibraryNativeException
+	public void turnLampOff() throws Df1LibraryNativeException,ArcomESSNativeException
 	{
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOff:"+name+":Started.");
 		try
@@ -209,6 +230,7 @@ public class LTLamp implements LampInterface
 	 * Return whether the lamp is on not.
 	 * @return true if the lamp is on, false if it is not (according to the PLC, which uses the light level
 	 *         in the A&G box).
+	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
 	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
 	 * @see #df1
 	 * @see #lightLevelOnPLCAddress
@@ -217,7 +239,7 @@ public class LTLamp implements LampInterface
 	 * @see #closeConnection
 	 * @see ngat.df1.Df1Library#getBoolean
 	 */
-	public boolean isLampOn() throws Df1LibraryNativeException
+	public boolean isLampOn() throws Df1LibraryNativeException,ArcomESSNativeException
 	{
 		boolean retval;
 
@@ -247,29 +269,32 @@ public class LTLamp implements LampInterface
 
 	// protected methods
 	/**
-	 * Connect to the controller (PLC).
-	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
+	 * Connect to the controller (PLC), via the ArcomESS.
+	 * @exception ArcomESSNativeException Thrown if comms to the ArcomESS fails.
 	 * @see #connectionParameters
-	 * @see #df1
+	 * @see #arcomESS
 	 * @see ConnectionParameters#connectToController
 	 */
-	protected void connectToController() throws Df1LibraryNativeException
+	protected void connectToController() throws ArcomESSNativeException
 	{
-		connectionParameters.connectToController(df1);
+		connectionParameters.connectToController(arcomESS);
 	}
 
 	/**
-	 * Close the connection to the controller (PLC).
-	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
+	 * Close the connection to the controller (PLC), via the ArcomESS.
+	 * @exception ArcomESSNativeException Thrown if comms to the ArcomESS fails.
 	 * @see #connectionParameters
-	 * @see #df1
+	 * @see #arcomESS
 	 * @see ConnectionParameters#closeConnection
 	 */
-	protected void closeConnection() throws Df1LibraryNativeException
+	protected void closeConnection() throws ArcomESSNativeException
 	{
-		connectionParameters.closeConnection(df1);
+		connectionParameters.closeConnection(arcomESS);
 	}
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/03/06 10:47:39  cjm
+// Initial revision
+//
 //

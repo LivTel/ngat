@@ -1,30 +1,31 @@
 // ConnectionParameters.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/ConnectionParameters.java,v 1.1 2008-03-06 10:47:39 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/ConnectionParameters.java,v 1.2 2008-10-03 09:20:00 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
 import ngat.df1.*;
+import ngat.serial.arcomess.*;
 import ngat.util.*;
 import ngat.util.logging.*;
 
 /**
  * Class, an instance of which holds PLC connection details.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionParameters
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ConnectionParameters.java,v 1.1 2008-03-06 10:47:39 cjm Exp $");
+	public final static String RCSID = new String("$Id: ConnectionParameters.java,v 1.2 2008-10-03 09:20:00 cjm Exp $");
 	/**
 	 * What sort of connection is to be used to talk to the PLC.
-	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_NONE
-	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_SERIAL
-	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_SOCKET
+	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_NONE
+	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_SERIAL
+	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_SOCKET
 	 */
-	protected int deviceId = Df1Library.INTERFACE_DEVICE_NONE;
+	protected int deviceId = ArcomESS.INTERFACE_DEVICE_NONE;
 	/**
 	 * The connection name of the device.
 	 * For serial devices the device to be used: i.e. /dev/ttyS0.
@@ -57,7 +58,7 @@ public class ConnectionParameters
 			       ":loadConfig failed:Failed to find connection device in properties using key:"+
 						       "lamp.connection.device");
 		}
-		deviceId = Df1Library.interfaceDeviceFromString(deviceIDString);
+		deviceId = ArcomESS.interfaceDeviceFromString(deviceIDString);
 		// deviceName
 		deviceName = properties.getProperty("lamp.connection.device_name");
 		if(deviceName == null)
@@ -74,9 +75,9 @@ public class ConnectionParameters
 	 * Get the device ID - whether we are connecting to a serial or socket (Arcom ESS) device.
 	 * @return An integer.
 	 * @see #deviceId
-	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_NONE
-	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_SERIAL
-	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_SOCKET
+	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_NONE
+	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_SERIAL
+	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_SOCKET
 	 */
 	public int getDeviceID()
 	{
@@ -104,32 +105,35 @@ public class ConnectionParameters
 	}
 
 	/**
-	 * Open a connection (held within the Df1Library instance) using the specified connection parameters.
-	 * Calls the Df1Library interfaceOpen method.
-	 * @param df1 The Df1Library instance (PLC instance) to connect to.
-	 * @exception Df1LibraryNativeException Thrown if the connection fails.
+	 * Open a connection (held within the ArcomESS instance) using the specified connection parameters.
+	 * Calls the ArcomESS interfaceOpen method.
+	 * @param arcom The ArcomESS instance to connect to.
+	 * @exception ArcomESSNativeException Thrown if the connection fails.
 	 * @see #deviceId
 	 * @see #deviceName
 	 * @see #portNumber
-	 * @see ngat.df1.Df1Library#interfaceOpen
+	 * @see ngat.serial.arcomess.ArcomESS#interfaceOpen
 	 */
-	public void connectToController(Df1Library df1) throws Df1LibraryNativeException
+	public void connectToController(ArcomESS arcom) throws ArcomESSNativeException
 	{
-		df1.interfaceOpen(deviceId,deviceName,portNumber);
+		arcom.interfaceOpen(deviceId,deviceName,portNumber);
 	}
 
 	/**
 	 * Close the previously opened connection.
-	 * Calls the Df1Library interfaceClose method.
-	 * @param df1 The Df1Library instance (PLC instance) to close.
-	 * @exception Df1LibraryNativeException Thrown if the close fails.
-	 * @see ngat.df1.Df1Library#interfaceClose
+	 * Calls the ArcomESS interfaceClose method.
+	 * @param arcom The ArcomESS instance to close.
+	 * @exception ArcomESSNativeException Thrown if the close fails.
+	 * @see ngat.serial.arcomess.ArcomESS#interfaceClose
 	 */
-	public void closeConnection(Df1Library df1) throws Df1LibraryNativeException
+	public void closeConnection(ArcomESS arcom) throws ArcomESSNativeException
 	{
-		df1.interfaceClose();
+		arcom.interfaceClose();
 	}
 }// end class ConnectionParameters
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/03/06 10:47:39  cjm
+// Initial revision
+//
 //
