@@ -1,24 +1,23 @@
 // LTLamp.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.2 2008-10-03 09:20:00 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.3 2008-10-09 14:15:09 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
-import ngat.df1.*;
-import ngat.serial.arcomess.*;
+import ngat.eip.*;
 import ngat.util.*;
 import ngat.util.logging.*;
 
 /**
  * This class holds information about an individual lamp as part of a lamp unit.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LTLamp implements LampInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTLamp.java,v 1.2 2008-10-03 09:20:00 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTLamp.java,v 1.3 2008-10-09 14:15:09 cjm Exp $");
 	/**
 	 * Basic lamp log level.
 	 */
@@ -47,15 +46,7 @@ public class LTLamp implements LampInterface
 	/**
 	 * How to connect to the controller.
 	 */
-	protected ConnectionParameters connectionParameters = null;
-	/**
-	 * The communications controller object, an instance of ArcomESS.
-	 */
-	protected ArcomESS arcomESS = null;
-	/**
-	 * The controller object, an instance of Df1Library.
-	 */
-	protected Df1Library df1 = null;
+	protected PLCConnection connection = null;
 
 	/**
 	 * Constructor. Initialise the logger.
@@ -88,36 +79,14 @@ public class LTLamp implements LampInterface
 	}
 
 	/**
-	 * Set the communication controller of this lamp.
-	 * @param o The ArcomESS instance corresponding to the ArcomESS unit that is connected to the PLC.
-	 * @see #arcomESS
-	 * @see ngat.serial.arcomess.ArcomESS
+	 * Set the PLC connection of this lamp.
+	 * @param o The PLCConnection instance corresponding to the PLC.
+	 * @see #connection
+	 * @see PLCConnection
 	 */
-	public void setCommunications(ArcomESS o)
+	public void setConnection(PLCConnection o)
 	{
-		arcomESS = o;
-	}
-
-	/**
-	 * Set the controller of this lamp.
-	 * @param o The Df1Library instance corresponding to the PLC that controls this lamp.
-	 * @see #df1
-	 * @see ngat.df1.Df1Library
-	 */
-	public void setController(Df1Library o)
-	{
-		df1 = o;
-	}
-
-	/**
-	 * Set the connection parameters (how to connect to the PLC).
-	 * @param cp The connection parameters.
-	 * @see #connectionParameters
-	 * @see ConnectionParameters
-	 */
-	public void setConnectionParameters(ConnectionParameters cp)
-	{
-		connectionParameters = cp;
+		connection = o;
 	}
 
 	/**
@@ -128,7 +97,7 @@ public class LTLamp implements LampInterface
 	 * @see #onOffPLCAddress
 	 * @see #threshold
 	 * @see #lightLevelOnPLCAddress
-	 * @see PLCValueSetter#loadCOnfig
+	 * @see PLCValueSetter#loadConfig
 	 */
 	public void loadConfig(NGATProperties properties) throws NullPointerException, NGATPropertyException
 	{
@@ -157,72 +126,46 @@ public class LTLamp implements LampInterface
 
 	/**
 	 * Initialise the threshold and turn the lamp off.
-	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
-	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
-	 * @see #arcomESS
-	 * @see #df1
-	 * @see #connectionParameters
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #connection
 	 * @see #threshold
 	 * @see #turnLampOff
 	 */
-	public void init() throws Df1LibraryNativeException, ArcomESSNativeException
+	public void init() throws EIPNativeException
 	{
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":init:Started.");
-		threshold.setValue(arcomESS,df1,connectionParameters);
+		threshold.setValue(connection);
 		turnLampOff();
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":init:Finished.");
 	}
 
 	/**
 	 * Turn the lamp on.
-	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
-	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
-	 * @see #arcomESS
-	 * @see #df1
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #connection
 	 * @see #onOffPLCAddress
 	 * @see #turnLampOff
-	 * @see #connectToController
-	 * @see #closeConnection
-	 * @see ngat.df1.Df1Library#setBoolean
+	 * @see PLCConnection#setBoolean
 	 */
-	public void turnLampOn() throws Df1LibraryNativeException,ArcomESSNativeException
+	public void turnLampOn() throws EIPNativeException
 	{
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOn:"+name+":Started.");
-		try
-		{
-			connectToController();
-			df1.setBoolean(onOffPLCAddress,true);
-		}
-		finally
-		{
-			closeConnection();
-		}
+		connection.setBoolean(onOffPLCAddress,true);
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOn:"+name+":Finished.");
 	}
 
 	/**
 	 * Turn the lamp off.
-	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
-	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
-	 * @see #df1
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #connection
 	 * @see #onOffPLCAddress
 	 * @see #turnLampOn
-	 * @see #connectToController
-	 * @see #closeConnection
-	 * @see ngat.df1.Df1Library#setBoolean
+	 * @see PLCConnection#setBoolean
 	 */
-	public void turnLampOff() throws Df1LibraryNativeException,ArcomESSNativeException
+	public void turnLampOff() throws EIPNativeException
 	{
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOff:"+name+":Started.");
-		try
-		{
-			connectToController();
-			df1.setBoolean(onOffPLCAddress,false);
-		}
-		finally
-		{
-			closeConnection();
-		}
+		connection.setBoolean(onOffPLCAddress,false);
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOff:"+name+":Finished.");
 	}
 
@@ -230,29 +173,18 @@ public class LTLamp implements LampInterface
 	 * Return whether the lamp is on not.
 	 * @return true if the lamp is on, false if it is not (according to the PLC, which uses the light level
 	 *         in the A&G box).
-	 * @exception ArcomESSNativeException Thrown if comms to the Arcom ESS has an error.
-	 * @exception Df1LibraryNativeException Thrown if comms to the PLC fails.
-	 * @see #df1
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #connection
 	 * @see #lightLevelOnPLCAddress
 	 * @see #turnLampOn
-	 * @see #connectToController
-	 * @see #closeConnection
-	 * @see ngat.df1.Df1Library#getBoolean
+	 * @see PLCConnection#getBoolean
 	 */
-	public boolean isLampOn() throws Df1LibraryNativeException,ArcomESSNativeException
+	public boolean isLampOn() throws EIPNativeException
 	{
 		boolean retval;
 
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":isLampOn:"+name+":Started.");
-		try
-		{
-			connectToController();
-			retval = df1.getBoolean(lightLevelOnPLCAddress);
-		}
-		finally
-		{
-			closeConnection();
-		}
+		retval = connection.getBoolean(lightLevelOnPLCAddress);
 		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":isLampOn:"+name+":Finished.");
 		return retval;
 	}
@@ -266,34 +198,12 @@ public class LTLamp implements LampInterface
 	{
 		logger.setLogLevel(level);
 	}
-
-	// protected methods
-	/**
-	 * Connect to the controller (PLC), via the ArcomESS.
-	 * @exception ArcomESSNativeException Thrown if comms to the ArcomESS fails.
-	 * @see #connectionParameters
-	 * @see #arcomESS
-	 * @see ConnectionParameters#connectToController
-	 */
-	protected void connectToController() throws ArcomESSNativeException
-	{
-		connectionParameters.connectToController(arcomESS);
-	}
-
-	/**
-	 * Close the connection to the controller (PLC), via the ArcomESS.
-	 * @exception ArcomESSNativeException Thrown if comms to the ArcomESS fails.
-	 * @see #connectionParameters
-	 * @see #arcomESS
-	 * @see ConnectionParameters#closeConnection
-	 */
-	protected void closeConnection() throws ArcomESSNativeException
-	{
-		connectionParameters.closeConnection(arcomESS);
-	}
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2008/10/03 09:20:00  cjm
+// Changes relating to libdf1 using libarcom_ess handles.
+//
 // Revision 1.1  2008/03/06 10:47:39  cjm
 // Initial revision
 //

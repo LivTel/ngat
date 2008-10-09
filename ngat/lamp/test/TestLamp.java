@@ -1,5 +1,5 @@
 // TestLamp.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/test/TestLamp.java,v 1.2 2008-10-03 09:21:33 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/test/TestLamp.java,v 1.3 2008-10-09 14:17:02 cjm Exp $
 package ngat.lamp.test;
 
 import java.lang.*;
@@ -8,23 +8,22 @@ import java.net.*;
 import java.text.*;
 import java.util.*;
 
-import ngat.df1.*;
+import ngat.eip.*;
 import ngat.lamp.*;
-import ngat.serial.arcomess.*;
 import ngat.util.*;
 import ngat.util.logging.*;
 
 /**
  * This class tests the LTAGLampUnit.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TestLamp
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TestLamp.java,v 1.2 2008-10-03 09:21:33 cjm Exp $");
+	public final static String RCSID = new String("$Id: TestLamp.java,v 1.3 2008-10-09 14:17:02 cjm Exp $");
 	/**
 	 * The filename of a properties file containing the lamp unit configuration.
 	 */
@@ -71,14 +70,15 @@ public class TestLamp
 	 * Logger log level.
 	 * @see ngat.lamp.LTAGLampUnit#LOG_LEVEL_UNIT_BASIC
 	 * @see ngat.lamp.LTLamp#LOG_LEVEL_LAMP_BASIC
-	 * @see ngat.df1.Df1Library#LOG_BIT_DF1
-	 * @see ngat.df1.Df1Library#LOG_BIT_DF1_READ_WRITE
-	 * @see ngat.serial.arcomess.ArcomESS#LOG_BIT_SERIAL
-	 * @see ngat.serial.arcomess.ArcomESS#LOG_BIT_SOCKET
+	 * @see ngat.lamp.PLCConnection#LOG_LEVEL_CONNECTION_BASIC
+	 * @see ngat.eip.EIPPLC#LOG_BIT_ADDRESS
+	 * @see ngat.eip.EIPPLC#LOG_BIT_READ
+	 * @see ngat.eip.EIPPLC#LOG_BIT_WRITE
+	 * @see ngat.eip.EIPPLC#LOG_BIT_SESSION
 	 */
 	protected int logFilterLevel = LTAGLampUnit.LOG_LEVEL_UNIT_BASIC|LTLamp.LOG_LEVEL_LAMP_BASIC|
-		Df1Library.LOG_BIT_DF1|
-		Df1Library.LOG_BIT_DF1_READ_WRITE|ArcomESS.LOG_BIT_SERIAL|ArcomESS.LOG_BIT_SOCKET;
+		PLCConnection.LOG_LEVEL_CONNECTION_BASIC|
+		EIPPLC.LOG_BIT_ADDRESS|EIPPLC.LOG_BIT_READ|EIPPLC.LOG_BIT_WRITE|EIPPLC.LOG_BIT_SESSION;
 
 	/**
 	 * Constructor.
@@ -96,8 +96,7 @@ public class TestLamp
 	 * <li>Call loadConfig with configFilename as the parameter.
 	 * <li>Call the lamp unit's init method, if doInit is specified.
 	 * </ul>
-	 * @exception ArcomESSNativeException Thrown by the lamp unit's init method.
-	 * @exception Df1LibraryNativeException Thrown by the lamp unit constructor and init methods.
+	 * @exception EIPNativeException Thrown by the lamp unit constructor and init methods.
 	 * @exception FileNotFoundException Thrown by the lamp unit's loadConfig method.
 	 * @exception IOException Thrown by the lamp unit's loadConfig method.
 	 * @exception NGATPropertyException Thrown by the lamp unit's loadConfig method.
@@ -109,8 +108,7 @@ public class TestLamp
 	 * @see ngat.lamp.LTAGLampUnit#setLogLevel
 	 * @see ngat.lamp.LTAGLampUnit#init
 	 */
-	public void init() throws ArcomESSNativeException, Df1LibraryNativeException, 
-				  FileNotFoundException, IOException, NGATPropertyException
+	public void init() throws EIPNativeException,FileNotFoundException, IOException, NGATPropertyException
 	{
 		lampUnit = new LTAGLampUnit();
 		lampUnit.loadConfig(configFilename);
@@ -134,8 +132,7 @@ public class TestLamp
 	 * <li>Call the lampUnit's turnLampOff method.
 	 * <li>Call the lampUnit's isLampOn method and report the result.
 	 * </ul>
-	 * @exception ArcomESSNativeException Thrown by the lamp unit's init method.
-	 * @exception Df1LibraryNativeException Thrown by the lamp unit's getLightLevel method.
+	 * @exception EIPNativeException Thrown by the lamp unit's unit/getLightLevel method.
 	 * @exception Exception Thrown by the lamp unit's turnLampOn,isLampOn,turnLampOff method.
 	 * @see #lampUnit
 	 * @see #onLamp
@@ -147,7 +144,7 @@ public class TestLamp
 	 * @see ngat.lamp.LTAGLampUnit#getLightLevel
 	 * @see ngat.lamp.LTAGLampUnit#isLampOn
 	 */
-	public void run() throws Exception, ArcomESSNativeException, Df1LibraryNativeException
+	public void run() throws Exception, EIPNativeException
 	{
 		int index,lightLevel;
 
@@ -189,8 +186,8 @@ public class TestLamp
 	{
 		LogHandler handler = null;
 		BogstanLogFormatter blf = null;
-		String loggerList[] = {"ngat.lamp.LTAGLampUnit","ngat.lamp.LTLamp,","ngat.df1.Df1Library",
-				       "ngat.serial.arcomess.ArcomESS"};
+		String loggerList[] = {"ngat.lamp.LTAGLampUnit","ngat.lamp.LTLamp","ngat.lamp.PLCConnection",
+				       "ngat.eip.EIPPLC"};
 
 		// setup log formatter
 		blf = new BogstanLogFormatter();
