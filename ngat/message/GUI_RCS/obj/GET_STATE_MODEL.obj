@@ -2,5 +2,7 @@
 #
 # Module code: 680200
 #
-*HashMap;model;state model information
+*HashMap;variable;state model variable information
+*int;currentState;current state
+*int;currentOperation;current operation
 $NOT_AVAILABLE;680201;that the state model information is not available
