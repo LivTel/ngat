@@ -1,5 +1,5 @@
 // LTAGLampUnit.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.3 2008-10-09 14:15:09 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.4 2008-10-14 13:30:14 cjm Exp $
 package ngat.lamp;
 
 import java.io.*;
@@ -14,14 +14,14 @@ import ngat.util.logging.*;
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
  * over Ethernet/IP (controlled via the ngat.eip library). 
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.3 2008-10-09 14:15:09 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.4 2008-10-14 13:30:14 cjm Exp $");
 	/**
 	 * Basic unit log level.
 	 */
@@ -65,6 +65,10 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * Low light alarm threshold in A/D counts.
 	 */
 	protected PLCValueSetter lowlightLevel = null;
+	/**
+	 * Copy of the log Level. Used to set log levels of new objects.
+	 */
+	protected int logLevel = 0;
 
 	/**
 	 * Constructor. Initialise the logger, properties, plc, lampList objects.
@@ -107,6 +111,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #properties
 	 * @see #connection
 	 * @see #lampList
+	 * @see #logLevel
 	 * @see #highLightLevelFaultPLCAddress
 	 * @see #lampOnFaultPLCAddress
 	 * @see #lightLevelPLCAddress
@@ -128,6 +133,7 @@ public class LTAGLampUnit implements LampUnitInterface
 		// initialise connection data from properties
 		connection = new PLCConnection();
 		connection.loadConfig(properties);
+		connection.setLogLevel(logLevel);
 		// extract lamp data from list
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":loadConfig:Finding lamps.");
 		index = 0;
@@ -143,6 +149,7 @@ public class LTAGLampUnit implements LampUnitInterface
 				lamp.setName(lampName);
 				lamp.setConnection(connection);
 				lamp.loadConfig(properties);
+				lamp.setLogLevel(logLevel);
 				logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
 					   ":loadConfig:Addinging lamp: "+
 					   lampName+" to list.");
@@ -359,6 +366,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	/**
 	 * Set the log level.Sets the logger, connection, and each lamps log level.
 	 * @param level The log level.
+	 * @see #logLevel
 	 * @see #logger
 	 * @see #connection
 	 * @see #lampList
@@ -368,8 +376,10 @@ public class LTAGLampUnit implements LampUnitInterface
 	 */
 	public void setLogLevel(int level)
 	{
+		logLevel = level;
 		logger.setLogLevel(level);
-		connection.setLogLevel(level);
+		if(connection != null)
+			connection.setLogLevel(level);
 		for(int i = 0; i < lampList.size(); i++)
 		{
 			LTLamp lamp = (LTLamp)(lampList.get(i));
@@ -409,6 +419,10 @@ public class LTAGLampUnit implements LampUnitInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2008/10/09 14:15:09  cjm
+// Rewrite so ngat.lamp now does PLC comms using ngat.eip rather than
+// via ngat.df1 / ngat.serial.arcomess.
+//
 // Revision 1.2  2008/10/03 09:20:00  cjm
 // Changes relating to libdf1 using libarcom_ess handles.
 //
