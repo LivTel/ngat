@@ -1,5 +1,5 @@
 // EIPPLC.java
-// $Header: /space/home/eng/cjm/cvs/ngat/eip/EIPPLC.java,v 1.1 2008-10-09 14:14:21 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/eip/EIPPLC.java,v 1.2 2008-10-22 13:53:08 cjm Exp $
 package ngat.eip;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
  * PLCs (for instance Micrologix 1100 and Micrologix 1200). Each instance of this class represents (a connection
  * to) one of these PLCs, with methods for reading and writing integers, floats and booleans (bits).
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class EIPPLC
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: EIPPLC.java,v 1.1 2008-10-09 14:14:21 cjm Exp $");
+	public final static String RCSID = new String("$Id: EIPPLC.java,v 1.2 2008-10-22 13:53:08 cjm Exp $");
 // eip_general.h
 	/* These constants should be the same as those in eip_general.h */
 	/**
@@ -515,6 +515,11 @@ public class EIPPLC
 	/**
 	 * Open a socket connection to a PLC (and register a connected session).
 	 * The Java handle instance is updated to be <i>open</i> using <b>setOpen</b>.
+	 * Normally this is called internally to each get/set Integer/Float/Boolean call.
+	 * However, this can cause the EIP_Session_Handle_Open call to fail
+	 * when a lot of open/closes are done close together (I think due to CLOSE_WAIT on the underlying
+	 * TCP/IP socket). So this open method can be called explicity externally to EIPPLC so we can hold a session
+	 * open whilst performing an operation that requires multiple PLC manipultations.
 	 * @param handle The EIPHandle instance containing the connection information to the PLC.
 	 * @exception EIPNativeException This method throws a EIPNativeException if it failed.
 	 * @see #EIP_Session_Handle_Open
@@ -531,6 +536,11 @@ public class EIPPLC
 	/**
 	 * Close a socket connection to a PLC.
 	 * The Java handle instance is updated to be <i>closed</i> using <b>setClose</b>.
+	 * Normally this is called internally to each get/set Integer/Float/Boolean call.
+	 * However, this can cause the EIP_Session_Handle_Open call to fail
+	 * when a lot of open/closes are done close together (I think due to CLOSE_WAIT on the underlying
+	 * TCP/IP socket). So this open method can be called explicity externally to EIPPLC so we can hold a session
+	 * open whilst performing an operation that requires multiple PLC manipultations.
 	 * @param handle The EIPHandle instance containing the connection information to the PLC.
 	 * @exception EIPNativeException This method throws a EIPNativeException if it failed.
 	 * @see #EIP_Session_Handle_Open
@@ -545,4 +555,7 @@ public class EIPPLC
 };
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.1  2008/10/09 14:14:21  cjm
+** Initial revision
+**
 */
