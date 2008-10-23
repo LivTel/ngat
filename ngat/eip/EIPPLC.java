@@ -1,5 +1,5 @@
 // EIPPLC.java
-// $Header: /space/home/eng/cjm/cvs/ngat/eip/EIPPLC.java,v 1.2 2008-10-22 13:53:08 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/eip/EIPPLC.java,v 1.3 2008-10-23 13:13:24 cjm Exp $
 package ngat.eip;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
  * PLCs (for instance Micrologix 1100 and Micrologix 1200). Each instance of this class represents (a connection
  * to) one of these PLCs, with methods for reading and writing integers, floats and booleans (bits).
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class EIPPLC
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: EIPPLC.java,v 1.2 2008-10-22 13:53:08 cjm Exp $");
+	public final static String RCSID = new String("$Id: EIPPLC.java,v 1.3 2008-10-23 13:13:24 cjm Exp $");
 // eip_general.h
 	/* These constants should be the same as those in eip_general.h */
 	/**
@@ -39,7 +39,7 @@ public class EIPPLC
 	 * Logging filter bit.
 	 * @see #setLogFilterLevel
 	 */
-	public final static int LOG_BIT_ADDRESS          = (1<<18);
+	public final static int LOG_BIT_ADDRESS          = (1<<19);
 // eip_session.h
 	/* These constants should be the same as those in eip_session.h */
 	/**
@@ -555,6 +555,9 @@ public class EIPPLC
 };
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.2  2008/10/22 13:53:08  cjm
+** More documentation explaining open/close call.
+**
 ** Revision 1.1  2008/10/09 14:14:21  cjm
 ** Initial revision
 **
