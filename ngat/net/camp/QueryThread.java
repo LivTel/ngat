@@ -72,7 +72,7 @@ public class QueryThread extends ControlThread {
 
 	try {
 	    Object obj = connection.receive(timeout);
-	    System.err.println("Object recvd: "+obj);
+	    System.err.println("QT:"+name+"::Object recvd: "+obj);
 	    COMMAND_DONE update = (COMMAND_DONE)obj;	   
 	    handler.handleUpdate(update, connection);
 	} catch (ClassCastException cx) {
