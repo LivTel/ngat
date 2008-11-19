@@ -67,7 +67,7 @@ public class DataForwarder implements DataLoggerUpdateListener {
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, port);	    
 		socket.send(packet);
 		
-		//System.err.println("DFwd::Forwarded packet to: "+address+":"+port);
+		System.err.println("DFwd::Forwarded packet to: "+address+":"+port);
 		
 	    } catch (Exception e) {
 		e.printStackTrace();	
