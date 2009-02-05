@@ -1,5 +1,5 @@
 // LTLamp.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.3 2008-10-09 14:15:09 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.4 2009-02-05 14:33:32 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
@@ -10,18 +10,19 @@ import ngat.util.logging.*;
 /**
  * This class holds information about an individual lamp as part of a lamp unit.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LTLamp implements LampInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTLamp.java,v 1.3 2008-10-09 14:15:09 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTLamp.java,v 1.4 2009-02-05 14:33:32 cjm Exp $");
 	/**
 	 * Basic lamp log level.
+	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
 	 */
-	public final static int LOG_LEVEL_LAMP_BASIC = 1;
+	public final static int LOG_LEVEL_LAMP_BASIC = Logging.VERBOSITY_INTERMEDIATE;
 	/**
 	 * The logger to log messages to.
 	 */
@@ -201,6 +202,10 @@ public class LTLamp implements LampInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2008/10/09 14:15:09  cjm
+// Rewrite so ngat.lamp now does PLC comms using ngat.eip rather than
+// via ngat.df1 / ngat.serial.arcomess.
+//
 // Revision 1.2  2008/10/03 09:20:00  cjm
 // Changes relating to libdf1 using libarcom_ess handles.
 //

@@ -1,5 +1,5 @@
 // LTAGLampUnit.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.4 2008-10-14 13:30:14 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.5 2009-02-05 14:33:29 cjm Exp $
 package ngat.lamp;
 
 import java.io.*;
@@ -14,18 +14,19 @@ import ngat.util.logging.*;
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
  * over Ethernet/IP (controlled via the ngat.eip library). 
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.4 2008-10-14 13:30:14 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.5 2009-02-05 14:33:29 cjm Exp $");
 	/**
 	 * Basic unit log level.
+	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
 	 */
-	public final static int LOG_LEVEL_UNIT_BASIC = 1;
+	public final static int LOG_LEVEL_UNIT_BASIC = Logging.VERBOSITY_INTERMEDIATE;
 	/**
 	 * The logger to log messages to.
 	 */
@@ -419,6 +420,11 @@ public class LTAGLampUnit implements LampUnitInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2008/10/14 13:30:14  cjm
+// Fixed logging problems by adding internal logLevel variable.
+// Now loadConfig / setLogLevel can be called in any order, and the logging
+// should still be set correctly in the connection and lamp objects.
+//
 // Revision 1.3  2008/10/09 14:15:09  cjm
 // Rewrite so ngat.lamp now does PLC comms using ngat.eip rather than
 // via ngat.df1 / ngat.serial.arcomess.

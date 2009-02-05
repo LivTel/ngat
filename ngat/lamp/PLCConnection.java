@@ -1,5 +1,5 @@
 // PLCConnection.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCConnection.java,v 1.1 2008-10-09 14:15:09 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCConnection.java,v 1.2 2009-02-05 14:33:35 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
@@ -10,18 +10,19 @@ import ngat.util.logging.*;
 /**
  * Class, an instance of which holds PLC connection details.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PLCConnection
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PLCConnection.java,v 1.1 2008-10-09 14:15:09 cjm Exp $");
+	public final static String RCSID = new String("$Id: PLCConnection.java,v 1.2 2009-02-05 14:33:35 cjm Exp $");
 	/**
 	 * Basic connection log level.
+	 * @see ngat.util.logging.Logging#VERBOSITY_VERY_VERBOSE
 	 */
-	public final static int LOG_LEVEL_CONNECTION_BASIC = 1;
+	public final static int LOG_LEVEL_CONNECTION_BASIC = Logging.VERBOSITY_VERY_VERBOSE;
 	/**
 	 * The logger to log messages to.
 	 */
@@ -351,5 +352,8 @@ public class PLCConnection
 }// end class PLCConnection
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/10/09 14:15:09  cjm
+// Initial revision
+//
 //
 
