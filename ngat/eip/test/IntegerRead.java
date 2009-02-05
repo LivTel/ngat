@@ -1,5 +1,5 @@
 // IntegerRead.java
-// $Header: /space/home/eng/cjm/cvs/ngat/eip/test/IntegerRead.java,v 1.1 2008-10-09 14:14:27 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/eip/test/IntegerRead.java,v 1.2 2009-02-05 11:33:57 cjm Exp $
 package ngat.eip.test;
 
 import java.lang.*;
@@ -15,14 +15,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the  ngat.eip library, by reading an integer value from a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class IntegerRead
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: IntegerRead.java,v 1.1 2008-10-09 14:14:27 cjm Exp $");
+	public final static String RCSID = new String("$Id: IntegerRead.java,v 1.2 2009-02-05 11:33:57 cjm Exp $");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.eip.EIPPLC#PLC_TYPE_MICROLOGIX1100
@@ -46,19 +46,9 @@ public class IntegerRead
 	 */
 	protected Logger logger = null;
 	/**
-	 * The filter used to filter messages sent to the logger.
-	 * @see #logger
-	 */
-	protected BitFieldLogFilter logFilter = null;
-	/**
 	 * The log level.
-	 * @see ngat.eip.EIPPLC#LOG_BIT_SESSION
-	 * @see ngat.eip.EIPPLC#LOG_BIT_READ
-	 * @see ngat.eip.EIPPLC#LOG_BIT_WRITE
-	 * @see ngat.eip.EIPPLC#LOG_BIT_ADDRESS
 	 */
-	protected int logLevel = EIPPLC.LOG_BIT_SESSION|EIPPLC.LOG_BIT_READ|
-		EIPPLC.LOG_BIT_WRITE|EIPPLC.LOG_BIT_ADDRESS;
+	protected int logLevel = Logging.VERBOSITY_VERY_VERBOSE;
 	/**
 	 * The PLC address of the integer to read. i.e. N7:1.
 	 */
@@ -113,7 +103,6 @@ public class IntegerRead
 	/**
 	 * Method to initialise the logger.
 	 * @see #logger
-	 * @see #logFilter
 	 */
 	protected void initLoggers()
 	{
@@ -127,8 +116,6 @@ public class IntegerRead
 		// setup log handler
 		handler = new ConsoleLogHandler(blf);
 		handler.setLogLevel(Logging.ALL);
-		// setup log filter
-		logFilter = new BitFieldLogFilter(Logging.ALL);
 		// Apply handler and filter to each logger in the list
 		for(int i=0;i < loggerList.length;i++)
 		{
@@ -136,7 +123,6 @@ public class IntegerRead
 			logger = LogManager.getLogger(loggerList[i]);
 			logger.addHandler(handler);
 			logger.setLogLevel(Logging.ALL);
-			logger.setFilter(logFilter);
 		}
 	}
 
@@ -299,4 +285,7 @@ public class IntegerRead
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2008/10/09 14:14:27  cjm
+// Initial revision
+//
 //

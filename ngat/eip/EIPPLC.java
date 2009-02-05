@@ -1,5 +1,5 @@
 // EIPPLC.java
-// $Header: /space/home/eng/cjm/cvs/ngat/eip/EIPPLC.java,v 1.4 2008-11-20 10:46:58 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/eip/EIPPLC.java,v 1.5 2009-02-05 11:33:39 cjm Exp $
 package ngat.eip;
 
 import java.lang.*;
@@ -10,36 +10,14 @@ import ngat.util.logging.*;
  * PLCs (for instance Micrologix 1100 and Micrologix 1200). Each instance of this class represents (a connection
  * to) one of these PLCs, with methods for reading and writing integers, floats and booleans (bits).
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class EIPPLC
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: EIPPLC.java,v 1.4 2008-11-20 10:46:58 cjm Exp $");
-// eip_general.h
-	/* These constants should be the same as those in eip_general.h */
-	/**
-	 * Logging filter bit.
-	 * @see #setLogFilterLevel
-	 */
-	public final static int LOG_BIT_SESSION          = (1<<16);
-	/**
-	 * Logging filter bit.
-	 * @see #setLogFilterLevel
-	 */
-	public final static int LOG_BIT_READ             = (1<<17);
-	/**
-	 * Logging filter bit.
-	 * @see #setLogFilterLevel
-	 */
-	public final static int LOG_BIT_WRITE            = (1<<18);
-	/**
-	 * Logging filter bit.
-	 * @see #setLogFilterLevel
-	 */
-	public final static int LOG_BIT_ADDRESS          = (1<<19);
+	public final static String RCSID = new String("$Id: EIPPLC.java,v 1.5 2009-02-05 11:33:39 cjm Exp $");
 // eip_session.h
 	/* These constants should be the same as those in eip_session.h */
 	/**
@@ -502,10 +480,6 @@ public class EIPPLC
 	 * Routine that changes the libeip logging filter level.
 	 * @param level The logging filter level.
 	 * @see #EIP_Set_Log_Filter_Level
-	 * @see #LOG_BIT_SESSION
-	 * @see #LOG_BIT_READ
-	 * @see #LOG_BIT_WRITE
-	 * @see #LOG_BIT_ADDRESS
 	 */
 	public void setLogFilterLevel(int level)
 	{
@@ -561,6 +535,9 @@ public class EIPPLC
 };
 /*
 ** $Log: not supported by cvs2svn $
+** Revision 1.4  2008/11/20 10:46:58  cjm
+** Added handle synchronisation on open and close.
+**
 ** Revision 1.3  2008/10/23 13:13:24  cjm
 ** Fixed LOG_BIT_ADDRESS value.
 **
