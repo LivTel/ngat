@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.8 2006-05-16 17:42:21 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.9 2009-02-23 15:17:18 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -42,14 +42,14 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.8 2006-05-16 17:42:21 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.9 2009-02-23 15:17:18 cjm Exp $");
 	/**
 	 * Instrument code constant - FrodoSpec blue arm.
 	 */
@@ -82,6 +82,10 @@ public class FitsFilename
 	 * Instrument code constant - NuView.
 	 */
 	public final static char INSTRUMENT_CODE_NUVIEW 		= 'n';
+	/**
+	 * Instrument code constant - RISE.
+	 */
+        public final static char INSTRUMENT_CODE_RISE 	                = 'q';
 	/**
 	 * Instrument code constant - Ringo Star / Grope Polarimeter.
 	 */
@@ -491,6 +495,7 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_RINGO_STAR
 	 * @see #INSTRUMENT_CODE_FRODOSPEC_RED
 	 * @see #INSTRUMENT_CODE_SUPIRCAM
+	 * @see #INSTRUMENT_CODE_RISE
 	 */
 	public void setInstrumentCode(String code) throws Exception
 	{
@@ -511,7 +516,7 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_DILLCAM_NORTH) && (ch != INSTRUMENT_CODE_DILLCAM_SOUTH) && 
 		   (ch != INSTRUMENT_CODE_FTSPEC_NORTH) && (ch != INSTRUMENT_CODE_FTSPEC_SOUTH) &&
 		   (ch != INSTRUMENT_CODE_MES) && (ch != INSTRUMENT_CODE_NUVIEW) && 
-		   (ch != INSTRUMENT_CODE_RINGO_STAR) && 
+		   (ch != INSTRUMENT_CODE_RINGO_STAR) && (ch != INSTRUMENT_CODE_RISE) && 
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM))
 		{
 			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
@@ -830,6 +835,9 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2006/05/16 17:42:21  cjm
+// gnuify: Added GNU General Public License.
+//
 // Revision 1.7  2006/03/29 11:25:40  cjm
 // Modified nextMultRunNumber so that it detects when the new dateString is not the same as
 // the current dateString. It then resets the multrun number (etc) and assumes a date rollover has
