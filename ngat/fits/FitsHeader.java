@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // FitsHeader.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.5 2006-05-16 17:42:25 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.6 2009-10-06 15:47:08 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -30,7 +30,7 @@ import java.util.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.5 $
+ * @version $Revision: 0.6 $
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -38,7 +38,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.5 2006-05-16 17:42:25 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.6 2009-10-06 15:47:08 cjm Exp $");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -196,6 +196,29 @@ public class FitsHeader
 			cardImage = (FitsHeaderCardImage)(cardImageList.get(index));
 		return cardImage;
 	}
+
+	/**
+	 * Function to return the Keyword Value from a header (I TODD).
+	 * @param keyword The keyword string to get the card image for.
+	 * @return The keyword value as an object, or null if the keyword is not found.
+	 */
+	 public Object getKeywordValue(String keyword)
+	 {
+	   	FitsHeaderCardImage cardImage = null;
+		int index;
+
+	// construct card image with keyword set to test against
+		cardImage = new FitsHeaderCardImage(keyword,null,null,null,1);
+	// search for the index in the list, of a card image with the same keyword.
+		index = cardImageList.indexOf(cardImage);
+		if(index > -1)
+		{
+			cardImage = (FitsHeaderCardImage)(cardImageList.get(index));
+			return(cardImage.getValue());
+		}
+		else
+			return null;
+	 }
 
 	/**
 	 * This routine will add the list of keyword-value pairs to the fits keyword-value list.
@@ -361,6 +384,9 @@ public class FitsHeader
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.5  2006/05/16 17:42:25  cjm
+// gnuify: Added GNU General Public License.
+//
 // Revision 0.4  2006/03/29 11:16:31  cjm
 // Comment fix.
 //
