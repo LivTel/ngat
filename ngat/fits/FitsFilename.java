@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.9 2009-02-23 15:17:18 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.10 2009-12-18 12:01:35 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -42,14 +42,15 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.9 2009-02-23 15:17:18 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.10 2009-12-18 12:01:35 cjm Exp $");
+	// instrument codes
 	/**
 	 * Instrument code constant - FrodoSpec blue arm.
 	 */
@@ -91,6 +92,10 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_RINGO_STAR 	        = 'o';
 	/**
+	 * Instrument code constant - Ringo2 Polarimeter.
+	 */
+	public final static char INSTRUMENT_CODE_RINGO2 	        = 'p';
+	/**
 	 * Instrument code constant - FrodoSpec red arm.
 	 */
 	public final static char INSTRUMENT_CODE_FRODOSPEC_RED 	        = 'r';
@@ -98,34 +103,39 @@ public class FitsFilename
 	 * Instrument code constant - SupIRCam.
 	 */
 	public final static char INSTRUMENT_CODE_SUPIRCAM        	= 's';
-	/**
-	 * Exposure code constant - for an exposure.
-	 */
-	public final static char EXPOSURE_CODE_EXPOSURE 		= 'e';
-	/**
-	 * Exposure code constant - for an standard.
-	 */
-	public final static char EXPOSURE_CODE_STANDARD 		= 's';
-	/**
-	 * Exposure code constant - for a bias frame.
-	 */
-	public final static char EXPOSURE_CODE_BIAS 			= 'b';
-	/**
-	 * Exposure code constant - for a sky flat.
-	 */
-	public final static char EXPOSURE_CODE_SKY_FLAT 		= 'f';
-	/**
-	 * Exposure code constant - for a lamp flat.
-	 */
-	public final static char EXPOSURE_CODE_LAMP_FLAT 		= 'w';
+	// exposure codes 
 	/**
 	 * Exposure code constant - for an arc.
 	 */
 	public final static char EXPOSURE_CODE_ARC 			= 'a';
 	/**
+	 * Exposure code constant - for a bias frame.
+	 */
+	public final static char EXPOSURE_CODE_BIAS 			= 'b';
+	/**
 	 * Exposure code constant - for a dark frame.
 	 */
 	public final static char EXPOSURE_CODE_DARK 			= 'd';
+	/**
+	 * Exposure code constant - for an exposure.
+	 */
+	public final static char EXPOSURE_CODE_EXPOSURE 		= 'e';
+	/**
+	 * Exposure code constant - for a sky flat.
+	 */
+	public final static char EXPOSURE_CODE_SKY_FLAT 		= 'f';
+	/**
+	 * Exposure code constant - for an acquisition image.
+	 */
+	public final static char EXPOSURE_CODE_ACQUIRE 		        = 'q';
+	/**
+	 * Exposure code constant - for an standard.
+	 */
+	public final static char EXPOSURE_CODE_STANDARD 		= 's';
+	/**
+	 * Exposure code constant - for a lamp flat.
+	 */
+	public final static char EXPOSURE_CODE_LAMP_FLAT 		= 'w';
 	/**
 	 *  Pipeline processing flag - when the integration is first written to disc it unprocessed.
 	 */
@@ -493,6 +503,7 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_MES
 	 * @see #INSTRUMENT_CODE_NUVIEW
 	 * @see #INSTRUMENT_CODE_RINGO_STAR
+	 * @see #INSTRUMENT_CODE_RINGO2
 	 * @see #INSTRUMENT_CODE_FRODOSPEC_RED
 	 * @see #INSTRUMENT_CODE_SUPIRCAM
 	 * @see #INSTRUMENT_CODE_RISE
@@ -516,7 +527,8 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_DILLCAM_NORTH) && (ch != INSTRUMENT_CODE_DILLCAM_SOUTH) && 
 		   (ch != INSTRUMENT_CODE_FTSPEC_NORTH) && (ch != INSTRUMENT_CODE_FTSPEC_SOUTH) &&
 		   (ch != INSTRUMENT_CODE_MES) && (ch != INSTRUMENT_CODE_NUVIEW) && 
-		   (ch != INSTRUMENT_CODE_RINGO_STAR) && (ch != INSTRUMENT_CODE_RISE) && 
+		   (ch != INSTRUMENT_CODE_RINGO_STAR) && (ch != INSTRUMENT_CODE_RINGO2) && 
+		   (ch != INSTRUMENT_CODE_RISE) && 
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM))
 		{
 			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
@@ -547,13 +559,14 @@ public class FitsFilename
 	 * @param codeString The code to set to.
 	 * @see #exposureCode
 	 * @exception Exception Thrown if codeString is NULL, is not of length 1 or is not a valid exposure code.
-	 * @see #EXPOSURE_CODE_EXPOSURE
-	 * @see #EXPOSURE_CODE_STANDARD
-	 * @see #EXPOSURE_CODE_BIAS
-	 * @see #EXPOSURE_CODE_SKY_FLAT
-	 * @see #EXPOSURE_CODE_LAMP_FLAT
 	 * @see #EXPOSURE_CODE_ARC
+	 * @see #EXPOSURE_CODE_BIAS
 	 * @see #EXPOSURE_CODE_DARK
+	 * @see #EXPOSURE_CODE_EXPOSURE
+	 * @see #EXPOSURE_CODE_ACQUIRE
+	 * @see #EXPOSURE_CODE_SKY_FLAT
+	 * @see #EXPOSURE_CODE_STANDARD
+	 * @see #EXPOSURE_CODE_LAMP_FLAT
 	 */
 	public void setExposureCode(String codeString) throws Exception
 	{
@@ -570,9 +583,10 @@ public class FitsFilename
 					    codeString+" with length "+codeString.length()+".");
 		}
 		code = codeString.charAt(0);
-		if((code != EXPOSURE_CODE_EXPOSURE) && (code != EXPOSURE_CODE_STANDARD) && 
-		   (code != EXPOSURE_CODE_BIAS) && (code != EXPOSURE_CODE_SKY_FLAT) && 
-		   (code != EXPOSURE_CODE_LAMP_FLAT) && (code != EXPOSURE_CODE_ARC) && (code != EXPOSURE_CODE_DARK))
+		if ((code != EXPOSURE_CODE_ARC) && (code != EXPOSURE_CODE_BIAS) && (code != EXPOSURE_CODE_DARK) && 
+		    (code != EXPOSURE_CODE_EXPOSURE) && (code != EXPOSURE_CODE_SKY_FLAT) && 
+		    (code != EXPOSURE_CODE_ACQUIRE) && (code != EXPOSURE_CODE_STANDARD) && 
+		    (code != EXPOSURE_CODE_LAMP_FLAT))
 		{
 			throw new Exception(this.getClass().getName()+":setExposureCode:Illegal exposure code "+
 					    code+".");
@@ -585,19 +599,21 @@ public class FitsFilename
 	 * @param code The code to set to.
 	 * @exception Exception Thrown if code is not a valid exposure code.
 	 * @see #exposureCode
-	 * @see #EXPOSURE_CODE_EXPOSURE
-	 * @see #EXPOSURE_CODE_STANDARD
-	 * @see #EXPOSURE_CODE_BIAS
-	 * @see #EXPOSURE_CODE_SKY_FLAT
-	 * @see #EXPOSURE_CODE_LAMP_FLAT
 	 * @see #EXPOSURE_CODE_ARC
+	 * @see #EXPOSURE_CODE_BIAS
 	 * @see #EXPOSURE_CODE_DARK
+	 * @see #EXPOSURE_CODE_EXPOSURE
+	 * @see #EXPOSURE_CODE_ACQUIRE
+	 * @see #EXPOSURE_CODE_SKY_FLAT
+	 * @see #EXPOSURE_CODE_STANDARD
+	 * @see #EXPOSURE_CODE_LAMP_FLAT
 	 */
 	public void setExposureCode(char code) throws Exception
 	{
-		if((code != EXPOSURE_CODE_EXPOSURE) && (code != EXPOSURE_CODE_STANDARD) && 
-		   (code != EXPOSURE_CODE_BIAS) && (code != EXPOSURE_CODE_SKY_FLAT) && 
-		   (code != EXPOSURE_CODE_LAMP_FLAT) && (code != EXPOSURE_CODE_ARC) && (code != EXPOSURE_CODE_DARK))
+		if ((code != EXPOSURE_CODE_ARC) && (code != EXPOSURE_CODE_BIAS) && (code != EXPOSURE_CODE_DARK) && 
+		    (code != EXPOSURE_CODE_EXPOSURE) && (code != EXPOSURE_CODE_SKY_FLAT) && 
+		    (code != EXPOSURE_CODE_ACQUIRE) && (code != EXPOSURE_CODE_STANDARD) && 
+		    (code != EXPOSURE_CODE_LAMP_FLAT))
 		{
 			throw new Exception(this.getClass().getName()+":setExposureCode:Illegal exposure code "+
 					    code+".");
@@ -835,6 +851,9 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.9  2009/02/23 15:17:18  cjm
+// Added INSTRUMENT_CODE_RISE.
+//
 // Revision 1.8  2006/05/16 17:42:21  cjm
 // gnuify: Added GNU General Public License.
 //
