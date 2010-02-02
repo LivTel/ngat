@@ -35,6 +35,7 @@ SRCS           = BlockingQueue.java \
                  ICSDShutdownCommand.java \
                  LinkedQueue.java \
                  LockFile.java \
+                 LockFile2.java \
                  NGATProperties.java \
                  NGATPropertyException.java \
                  PersistentUniqueInteger.java \
@@ -74,13 +75,16 @@ SRCS           = BlockingQueue.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: eng $
-# $Revision: 1.34 $
-#       $Id: Makefile,v 1.34 2008-08-21 09:59:11 eng Exp $
-#     $Date: 2008-08-21 09:59:11 $
+#   $Author: cjm $
+# $Revision: 1.35 $
+#       $Id: Makefile,v 1.35 2010-02-02 15:02:34 cjm Exp $
+#     $Date: 2010-02-02 15:02:34 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/util/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.34  2008/08/21 09:59:11  eng
+#      *** empty log message ***
+#
 #      Revision 1.33  2007/08/01 08:36:51  snf
 #      added PropertiesConfigurator
 #
