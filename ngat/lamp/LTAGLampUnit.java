@@ -1,5 +1,5 @@
 // LTAGLampUnit.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.5 2009-02-05 14:33:29 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.6 2010-03-15 14:41:37 cjm Exp $
 package ngat.lamp;
 
 import java.io.*;
@@ -14,14 +14,14 @@ import ngat.util.logging.*;
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
  * over Ethernet/IP (controlled via the ngat.eip library). 
  * @author Chris Mottram
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.5 2009-02-05 14:33:29 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.6 2010-03-15 14:41:37 cjm Exp $");
 	/**
 	 * Basic unit log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
@@ -58,6 +58,30 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * A string containing the PLC address of integer used to store the actual light level in the A&G box.
 	 */
 	protected String lightLevelPLCAddress = null;
+	/**
+	 * PLC Address of the bit that moves the calibration mirror in and out of the frodospec beam.
+	 */
+	protected String mirrorInOutPLCAddress = null;
+	/**
+	 * PLC Address of the status bit that is set when the calibration mirror is in the frodospec beam.
+	 */
+	protected String mirrorStatusInPLCAddress = null;
+	/**
+	 * PLC Address of the status bit that is set when the calibration mirror is out of the frodospec beam.
+	 */
+	protected String mirrorStatusOutPLCAddress = null;
+	/**
+	 * PLC Address of the status bit that is set when a mirror movement fault has occured.
+	 */
+	protected String mirrorStatusMoveFaultPLCAddress = null;
+	/**
+	 * PLC Address of the bit to set to reset PLC faults.
+	 */
+	protected String faultResetPLCAddress = null;
+	/**
+	 * PLC Address of the status bit that is set when an internal PLC fault has occured.
+	 */
+	protected String faultStatusPLCAddress = null;
 	/**
 	 * Lamp on fault timer preset in seconds.
 	 */
@@ -118,6 +142,12 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #lightLevelPLCAddress
 	 * @see ngat.util.NGATProperties#load
 	 * @see PLCConnection#loadConfig
+	 * @see #mirrorInOutPLCAddress
+	 * @see #mirrorStatusInPLCAddress
+	 * @see #mirrorStatusOutPLCAddress
+	 * @see #mirrorStatusMoveFaultPLCAddress
+	 * @see #faultResetPLCAddress
+	 * @see #faultStatusPLCAddress
 	 */
 	public void loadConfig(File file) throws FileNotFoundException, IOException, NullPointerException,
 						 EIPFormatException, NGATPropertyException
@@ -172,6 +202,17 @@ public class LTAGLampUnit implements LampUnitInterface
 		lampOnFaultPLCAddress = properties.getProperty("lamp.light.on.fault.set.plc_address");
 		// actual light level status
 		lightLevelPLCAddress = properties.getProperty("lamp.light.level.plc_address");
+		// calibration mirror control bit
+		mirrorInOutPLCAddress = properties.getProperty("lamp.mirror.inout.plc_address");
+		// calibration mirror status bits
+		mirrorStatusInPLCAddress = properties.getProperty("lamp.mirror.status.in.plc_address");
+		mirrorStatusOutPLCAddress = properties.getProperty("lamp.mirror.status.out.plc_address");
+		// calibration move fault status bit
+		mirrorStatusMoveFaultPLCAddress = properties.getProperty("lamp.mirror.move_fault.plc_address");
+		// fault reset 
+		faultResetPLCAddress = properties.getProperty("lamp.plc.fault.reset.plc_address");
+		// PLC fault status address
+		faultStatusPLCAddress = properties.getProperty("lamp.plc.fault.plc_address");
 		// and finish
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":loadConfig:Finished.");
 	}
@@ -179,11 +220,16 @@ public class LTAGLampUnit implements LampUnitInterface
 	/**
 	 * Initialise the unit.
 	 * <ul>
+	 * <li>Try to reset any faults in the PLC with a faultReset.
+	 * <li>Try to move th calibration mirror out of the beam.
 	 * <li>For each lamp in lampList, calls it's init method.
 	 * <li>Set the lampOnFaultTimer, if configured to do so.
 	 * <li>Set the lowlightLevel threshold, if configured to do so.
 	 * </ul>
 	 * @exception EIPNativeException Thrown if comms to the PLC fail.
+	 * @exception Exception Thrown if the mirror fails to stow.
+	 * @see #faultReset
+	 * @see #stowMirror
 	 * @see #lampList
 	 * @see #lampOnFaultTimer
 	 * @see #lowlightLevel
@@ -191,9 +237,13 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see LTLamp#init
 	 * @see PLCValueSetter#setValue
 	 */
-	public void init() throws EIPNativeException
+	public void init() throws Exception
 	{
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":init:Started.");
+		// fault reset
+		faultReset();
+		// move calibration mirror out of beam
+		stowMirror();
 		// initialise each lamp
 		for(int i = 0; i < lampList.size(); i++)
 		{
@@ -208,6 +258,134 @@ public class LTAGLampUnit implements LampUnitInterface
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":init:Configuring low light level.");
 		lowlightLevel.setValue(connection);
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":init:Finished.");
+	}
+
+	/**
+	 * Method to try to reset any PLC faults.
+	 * @exception EIPNativeException Thrown if comms to the PLC fail.
+	 * @see #faultResetPLCAddress
+	 * @see #connection
+	 * @see ngat.lamp.PLCConnection#setBoolean
+	 */
+	public void faultReset() throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":faultReset:Starting.");
+		connection.setBoolean(faultResetPLCAddress,true);
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":faultReset:Finished.");
+	}
+
+	/**
+	 * Method to move mirror into the beam.
+	 * <ul>
+	 * <li>We set mirrorInOutPLCAddress PLC address to true, to tell the PLC to move the mirror inline
+	 * <li>We enter a loop:
+	 *     <ul>
+	 *     <li>We test whether the mirror is currenly in the beam by reading mirrorStatusInPLCAddress,
+	 *         and exit the loop successfully if that is the case
+	 *     <li>We test whether the move fault bit is set at mirrorStatusMoveFaultPLCAddress, and throw
+	 *         an exception if that is the case.
+	 *     <li>We test whether the PLC fault bit is set at faultStatusPLCAddress, and throw
+	 *         an exception if that is the case.
+	 *     </ul>
+	 * </ul>
+	 * @exception EIPNativeException Thrown if comms to the PLC fail.
+	 * @exception Exception Thrown if the PLC fault status bit is set, or the PLC move fault status bit is set..
+	 * @see #mirrorInOutPLCAddress
+	 * @see #mirrorStatusInPLCAddress
+	 * @see #mirrorStatusMoveFaultPLCAddress
+	 * @see #faultStatusPLCAddress
+	 * @see #connection
+	 * @see ngat.lamp.PLCConnection#setBoolean
+	 * @see ngat.lamp.PLCConnection#getBoolean
+	 */
+	public void moveMirrorInline() throws Exception
+	{
+		boolean done,inline,moveFault,plcFault;
+
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":moveMirrorInline:Starting.");
+		// set demand
+		connection.setBoolean(mirrorInOutPLCAddress,true);
+		// loop, waiting for in line status or movement/PLC fault.
+		done = false;
+		while(done == false)
+		{
+			logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+				   ":moveMirrorInline:Getting current status.");
+			// are we inline
+			inline = connection.getBoolean(mirrorStatusInPLCAddress);
+			if(inline)
+			{
+				logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+					   ":moveMirrorInline:Mirror is now inline.");
+				done = true;
+			}
+			// movement fault?
+			moveFault = connection.getBoolean(mirrorStatusMoveFaultPLCAddress);
+			if(moveFault)
+				throw new Exception(this.getClass().getName()+"moveMirrorInline:Move fault bit set.");
+			// PLC fault?
+			plcFault = connection.getBoolean(faultStatusPLCAddress);
+			if(plcFault)
+				throw new Exception(this.getClass().getName()+"moveMirrorInline:PLC fault bit set.");
+		}// end while
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":moveMirrorInline:Finished.");
+	}
+
+	/**
+	 * Method to move mirror out of the beam.
+	 * <ul>
+	 * <li>We set mirrorInOutPLCAddress PLC address to false, to tell the PLC to move the mirror out of line.
+	 * <li>We enter a loop:
+	 *     <ul>
+	 *     <li>We test whether the mirror is currenly out of the beam by reading mirrorStatusOutPLCAddress,
+	 *         and exit the loop successfully if that is the case.
+	 *     <li>We test whether the move fault bit is set at mirrorStatusMoveFaultPLCAddress, and throw
+	 *         an exception if that is the case.
+	 *     <li>We test whether the PLC fault bit is set at faultStatusPLCAddress, and throw
+	 *         an exception if that is the case.
+	 *     </ul>
+	 * </ul>
+	 * @exception EIPNativeException Thrown if comms to the PLC fail.
+	 * @exception Exception Thrown if the PLC fault status bit is set, or the PLC move fault status bit is set..
+	 * @see #mirrorInOutPLCAddress
+	 * @see #mirrorStatusOutPLCAddress
+	 * @see #mirrorStatusMoveFaultPLCAddress
+	 * @see #faultStatusPLCAddress
+	 * @see #connection
+	 * @see ngat.lamp.PLCConnection#setBoolean
+	 * @see ngat.lamp.PLCConnection#getBoolean
+	 */
+	public void stowMirror() throws Exception
+	{
+		boolean done,outline,moveFault,plcFault;
+
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":stowMirror:Starting.");
+		// set demand : false means mirror out of line
+		connection.setBoolean(mirrorInOutPLCAddress,false);
+		// loop, waiting for out of line status or movement/PLC fault.
+		done = false;
+		while(done == false)
+		{
+			logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+				   ":stowMirror:Getting current status.");
+			// are we out of line
+			outline = connection.getBoolean(mirrorStatusOutPLCAddress);
+			if(outline)
+			{
+				logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+					   ":stowMirror:Mirror is now out of line.");
+				done = true;
+			}
+			// movement fault?
+			moveFault = connection.getBoolean(mirrorStatusMoveFaultPLCAddress);
+			if(moveFault)
+				throw new Exception(this.getClass().getName()+"stowMirror:Move fault bit set.");
+			// PLC fault?
+			plcFault = connection.getBoolean(faultStatusPLCAddress);
+			if(plcFault)
+				throw new Exception(this.getClass().getName()+"stowMirror:PLC fault bit set.");
+		}// end while
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":stowMirror:Finished.");
 	}
 
 	/**
@@ -320,6 +498,15 @@ public class LTAGLampUnit implements LampUnitInterface
 
 	/**
 	 * Has an error flag been set on the PLC.
+	 * <ul>
+	 * <li>The method reads the <b>high light level fault</b>  
+	 *     (high light level in A&G box when alllights should be off) using the highLightLevelFaultPLCAddress.
+	 * <li>The method reads the <b>lamp on fault</b> (the light was switched off by the PLC because it has been 
+	 *     left switched on for too long) using the lampOnFaultPLCAddress.
+	 * <li>The method reads the <b>mirror move fault</b>  using the mirrorStatusMoveFaultPLCAddress.
+	 * <li>The method reads the <b>plc fault status bit</b>  using the faultStatusPLCAddress.
+	 * <li>If all the bits are false, false is returned, otherwise true is returned.
+	 * </ul>
 	 * @return true if an error has occured, false if it has not.
 	 *         The return value is the logical OR of a <b>high light level fault</b> 
 	 *         (high light level in A&G box when alllights should be off) and a 
@@ -329,24 +516,41 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #connection
 	 * @see #highLightLevelFaultPLCAddress
 	 * @see #lampOnFaultPLCAddress
-	 * @see PLCConnection#getBoolean
+	 * @see #mirrorStatusMoveFaultPLCAddress
+	 * @see #faultStatusPLCAddress
+	 * @see ngat.lamp.PLCConnection#getBoolean
 	 */
 	public boolean isError() throws EIPNativeException
 	{
-		boolean highLightLevelFault,lampOnFault;
+		boolean highLightLevelFault,lampOnFault,moveFault,plcFault;
 
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Started.");
+		// high light level
 		highLightLevelFault = connection.getBoolean(highLightLevelFaultPLCAddress);
-		lampOnFault = connection.getBoolean(lampOnFaultPLCAddress);
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned highLightLevelFault:"+
-			   highLightLevelFault+"|lampOnFault:"+lampOnFault+".");
-		return highLightLevelFault|lampOnFault;
+			   highLightLevelFault+".");
+		// lamp on fault
+		lampOnFault = connection.getBoolean(lampOnFaultPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned lampOnFault:"+
+			   lampOnFault+".");
+		// mirror movement fault
+		moveFault = connection.getBoolean(mirrorStatusMoveFaultPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned moveFault:"+
+			   moveFault+".");
+		// general internal PLC fault
+		plcFault = connection.getBoolean(faultStatusPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned plcFault:"+
+			   plcFault+".");
+		// aggregate faults
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned:"+
+			   (highLightLevelFault|lampOnFault|moveFault|plcFault)+".");
+		return highLightLevelFault|lampOnFault|moveFault|plcFault;
 	}
 
 	/**
 	 * Return the actual light level in the A&G box.
 	 * <ul>
-	 * <li>Call the getInteger method in the Df1Library instance, using the lightLevelPLCAddress PLC address.
+	 * <li>Call the getInteger method in the connection instance, using the lightLevelPLCAddress PLC address.
 	 * </ul>
 	 * @return An integer, the actual light level in A/D counts.
 	 * @exception EIPNativeException Thrown if comms to the PLC fails.
@@ -420,6 +624,9 @@ public class LTAGLampUnit implements LampUnitInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.5  2009/02/05 14:33:29  cjm
+// Changed logging levels to GLS verbosities.
+//
 // Revision 1.4  2008/10/14 13:30:14  cjm
 // Fixed logging problems by adding internal logLevel variable.
 // Now loadConfig / setLogLevel can be called in any order, and the logging
