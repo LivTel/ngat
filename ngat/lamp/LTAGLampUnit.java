@@ -1,5 +1,5 @@
 // LTAGLampUnit.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.6 2010-03-15 14:41:37 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.7 2010-03-15 16:01:47 cjm Exp $
 package ngat.lamp;
 
 import java.io.*;
@@ -14,14 +14,14 @@ import ngat.util.logging.*;
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
  * over Ethernet/IP (controlled via the ngat.eip library). 
  * @author Chris Mottram
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.6 2010-03-15 14:41:37 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.7 2010-03-15 16:01:47 cjm Exp $");
 	/**
 	 * Basic unit log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
@@ -497,6 +497,24 @@ public class LTAGLampUnit implements LampUnitInterface
 	}
 
 	/**
+	 * Return whether the PLC fault status bit has been set.
+	 * @return true if the PLC fault bit is set, false if it is not.
+	 * @see #logger
+	 * @see #connection
+	 * @see #faultStatusPLCAddress
+	 * @see ngat.lamp.PLCConnection#getBoolean
+	 */
+	public boolean getFaultStatus()  throws EIPNativeException
+	{
+		boolean plcFault;
+
+		plcFault = connection.getBoolean(faultStatusPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":getFaultStatus:Returned plcFault:"+
+			   plcFault+".");
+		return plcFault;
+	}
+
+	/**
 	 * Has an error flag been set on the PLC.
 	 * <ul>
 	 * <li>The method reads the <b>high light level fault</b>  
@@ -624,6 +642,9 @@ public class LTAGLampUnit implements LampUnitInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.6  2010/03/15 14:41:37  cjm
+// Added lamp mirror position config/control and fault status/reset bits.
+//
 // Revision 1.5  2009/02/05 14:33:29  cjm
 // Changed logging levels to GLS verbosities.
 //
