@@ -1,5 +1,5 @@
 // TestLamp.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/test/TestLamp.java,v 1.3 2008-10-09 14:17:02 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/test/TestLamp.java,v 1.4 2010-03-16 15:22:06 cjm Exp $
 package ngat.lamp.test;
 
 import java.lang.*;
@@ -16,14 +16,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the LTAGLampUnit.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TestLamp
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TestLamp.java,v 1.3 2008-10-09 14:17:02 cjm Exp $");
+	public final static String RCSID = new String("$Id: TestLamp.java,v 1.4 2010-03-16 15:22:06 cjm Exp $");
 	/**
 	 * The filename of a properties file containing the lamp unit configuration.
 	 */
@@ -50,6 +50,14 @@ public class TestLamp
 	 */
 	protected boolean doOff = false;
 	/**
+	 * Boolean, if true move the mirror in the beam (before turning a lamp on).
+	 */
+	protected boolean doMirrorInline = false;
+	/**
+	 * Boolean, if true move the mirror out of the beam (after turning a lamp off).
+	 */
+	protected boolean doMirrorStow = false;
+	/**
 	 * How long to turn the lamp on (and monitor it), however unless doOff it set the lamp will be left on.
 	 */
 	protected int onTime = 1;
@@ -68,17 +76,9 @@ public class TestLamp
 	protected BitFieldLogFilter logFilter = null;
 	/**
 	 * Logger log level.
-	 * @see ngat.lamp.LTAGLampUnit#LOG_LEVEL_UNIT_BASIC
-	 * @see ngat.lamp.LTLamp#LOG_LEVEL_LAMP_BASIC
-	 * @see ngat.lamp.PLCConnection#LOG_LEVEL_CONNECTION_BASIC
-	 * @see ngat.eip.EIPPLC#LOG_BIT_ADDRESS
-	 * @see ngat.eip.EIPPLC#LOG_BIT_READ
-	 * @see ngat.eip.EIPPLC#LOG_BIT_WRITE
-	 * @see ngat.eip.EIPPLC#LOG_BIT_SESSION
+	 * @see ngat.util.logging.Logging#VERBOSITY_VERY_VERBOSE
 	 */
-	protected int logFilterLevel = LTAGLampUnit.LOG_LEVEL_UNIT_BASIC|LTLamp.LOG_LEVEL_LAMP_BASIC|
-		PLCConnection.LOG_LEVEL_CONNECTION_BASIC|
-		EIPPLC.LOG_BIT_ADDRESS|EIPPLC.LOG_BIT_READ|EIPPLC.LOG_BIT_WRITE|EIPPLC.LOG_BIT_SESSION;
+	protected int logFilterLevel = Logging.VERBOSITY_VERY_VERBOSE;
 
 	/**
 	 * Constructor.
@@ -100,6 +100,7 @@ public class TestLamp
 	 * @exception FileNotFoundException Thrown by the lamp unit's loadConfig method.
 	 * @exception IOException Thrown by the lamp unit's loadConfig method.
 	 * @exception NGATPropertyException Thrown by the lamp unit's loadConfig method.
+	 * @exception Exception Thrown by the lamp unit's init method.
 	 * @see #lampUnit
 	 * @see #configFilename
 	 * @see #doInit
@@ -108,7 +109,8 @@ public class TestLamp
 	 * @see ngat.lamp.LTAGLampUnit#setLogLevel
 	 * @see ngat.lamp.LTAGLampUnit#init
 	 */
-	public void init() throws EIPNativeException,FileNotFoundException, IOException, NGATPropertyException
+	public void init() throws EIPNativeException,FileNotFoundException, IOException, NGATPropertyException, 
+				  Exception
 	{
 		lampUnit = new LTAGLampUnit();
 		lampUnit.loadConfig(configFilename);
@@ -121,6 +123,10 @@ public class TestLamp
 
 	/**
 	 * run method.
+	 * If doMirrorInline:
+	 * <ul>
+	 * <li>Call the lampUnit moveMirrorInline method.
+	 * </ul>
 	 * If doOn:
 	 * <ul>
 	 * <li>Call the lampUnit turnLampOn method.
@@ -132,6 +138,10 @@ public class TestLamp
 	 * <li>Call the lampUnit's turnLampOff method.
 	 * <li>Call the lampUnit's isLampOn method and report the result.
 	 * </ul>
+	 * If doMirrorStow:
+	 * <ul>
+	 * <li>Call the lampUnit stowMirror method.
+	 * </ul>
 	 * @exception EIPNativeException Thrown by the lamp unit's unit/getLightLevel method.
 	 * @exception Exception Thrown by the lamp unit's turnLampOn,isLampOn,turnLampOff method.
 	 * @see #lampUnit
@@ -139,15 +149,21 @@ public class TestLamp
 	 * @see #onTime
 	 * @see #doLightLevel
 	 * @see #doOff
+	 * @see #doMirrorInline
+	 * @see #doMirrorStow
 	 * @see ngat.lamp.LTAGLampUnit#turnLampOn
 	 * @see ngat.lamp.LTAGLampUnit#turnLampOff
 	 * @see ngat.lamp.LTAGLampUnit#getLightLevel
 	 * @see ngat.lamp.LTAGLampUnit#isLampOn
+	 * @see ngat.lamp.LTAGLampUnit#moveMirrorInline
+	 * @see ngat.lamp.LTAGLampUnit#stowMirror
 	 */
 	public void run() throws Exception, EIPNativeException
 	{
 		int index,lightLevel;
 
+		if(doMirrorInline)
+			lampUnit.moveMirrorInline();
 		if(doOn)
 		{
 			lampUnit.turnLampOn(onLamp);
@@ -175,6 +191,8 @@ public class TestLamp
 			lampUnit.turnLampOff(onLamp);
 			System.out.println("Lamp "+onLamp+" is on = "+lampUnit.isLampOn(onLamp));
 		}
+		if(doMirrorStow)
+			lampUnit.stowMirror();
 	}
 
 	/**
@@ -219,6 +237,8 @@ public class TestLamp
 	 * @see #onTime
 	 * @see #doInit
 	 * @see #doLightLevel
+	 * @see #doMirrorInline
+	 * @see #doMirrorStow
 	 * @see #logFilterLevel
 	 */
 	private void parseArgs(String[] args)
@@ -251,6 +271,14 @@ public class TestLamp
 			else if(args[i].equals("-lightlevel")||args[i].equals("-l"))
 			{
 				doLightLevel = true;
+			}
+			else if(args[i].equals("-mirror_inline")||args[i].equals("-mi"))
+			{
+				doMirrorInline = true;
+			}
+			else if(args[i].equals("-mirror_stow")||args[i].equals("-ms"))
+			{
+				doMirrorStow = true;
 			}
 			else if(args[i].equals("-log_level")||args[i].equals("-log"))
 			{
@@ -303,6 +331,8 @@ public class TestLamp
 		System.out.println("\t-co[nfig_filename] <filename>");
 		System.out.println("\t-on <Neon|Xenon|Tungsten> <secs>");
 		System.out.println("\t-off");
+		System.out.println("\t-mirror_inline");
+		System.out.println("\t-mirror_stow");
 		System.out.println("\t-i[nit]");
 		System.out.println("\t-l[ightlevel]");
 		System.out.println("\t-log[_level] <n>");
@@ -311,6 +341,8 @@ public class TestLamp
 		System.out.println("-init calls the lamp unit's init method, which switches all lamps off and can set some thresholds/presets.");
 		System.out.println("-on turns the specified lamp on for a number of seconds.");
 		System.out.println("-off turns off the lamp turned on by -on. Otherwise the lamp stays on.");
+		System.out.println("-mirror_inline moves the calibration mirror into the beam.");
+		System.out.println("-mirror_stow moves the calibration mirror out of the beam.");
 		System.out.println("-lightlevel monitors the internal A&G light level whilst the lamp is on.");
 	}
 
