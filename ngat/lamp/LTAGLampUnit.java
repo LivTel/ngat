@@ -1,5 +1,5 @@
 // LTAGLampUnit.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.7 2010-03-15 16:01:47 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.8 2010-08-02 14:11:11 cjm Exp $
 package ngat.lamp;
 
 import java.io.*;
@@ -14,14 +14,14 @@ import ngat.util.logging.*;
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
  * over Ethernet/IP (controlled via the ngat.eip library). 
  * @author Chris Mottram
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.7 2010-03-15 16:01:47 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.8 2010-08-02 14:11:11 cjm Exp $");
 	/**
 	 * Basic unit log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
@@ -91,6 +91,12 @@ public class LTAGLampUnit implements LampUnitInterface
 	 */
 	protected PLCValueSetter lowlightLevel = null;
 	/**
+	 * Timeout, in milliseconds, to wait after commanding the calibration mirror to move
+	 * before failing. This timeout is theoretically 10s (set in the PLC), however this is
+	 * a secondary software timeout.
+	 */
+	protected int mirrorMoveTimeout = 20000;
+	/**
 	 * Copy of the log Level. Used to set log levels of new objects.
 	 */
 	protected int logLevel = 0;
@@ -146,6 +152,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #mirrorStatusInPLCAddress
 	 * @see #mirrorStatusOutPLCAddress
 	 * @see #mirrorStatusMoveFaultPLCAddress
+	 * @see #mirrorMoveTimeout
 	 * @see #faultResetPLCAddress
 	 * @see #faultStatusPLCAddress
 	 */
@@ -209,6 +216,8 @@ public class LTAGLampUnit implements LampUnitInterface
 		mirrorStatusOutPLCAddress = properties.getProperty("lamp.mirror.status.out.plc_address");
 		// calibration move fault status bit
 		mirrorStatusMoveFaultPLCAddress = properties.getProperty("lamp.mirror.move_fault.plc_address");
+		// mirror move software timeout in milliseconds
+		mirrorMoveTimeout = properties.getInt("lamp.mirror.move.timeout");
 		// fault reset 
 		faultResetPLCAddress = properties.getProperty("lamp.plc.fault.reset.plc_address");
 		// PLC fault status address
@@ -278,6 +287,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * Method to move mirror into the beam.
 	 * <ul>
 	 * <li>We set mirrorInOutPLCAddress PLC address to true, to tell the PLC to move the mirror inline
+	 * <li>We save a timestamp for calculating a timeout.
 	 * <li>We enter a loop:
 	 *     <ul>
 	 *     <li>We test whether the mirror is currenly in the beam by reading mirrorStatusInPLCAddress,
@@ -286,6 +296,8 @@ public class LTAGLampUnit implements LampUnitInterface
 	 *         an exception if that is the case.
 	 *     <li>We test whether the PLC fault bit is set at faultStatusPLCAddress, and throw
 	 *         an exception if that is the case.
+	 *     <li>We test whether the loop has been running longer than mirrorMoveTimeout, and throw
+	 *         an exception if that is the case.
 	 *     </ul>
 	 * </ul>
 	 * @exception EIPNativeException Thrown if comms to the PLC fail.
@@ -293,6 +305,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #mirrorInOutPLCAddress
 	 * @see #mirrorStatusInPLCAddress
 	 * @see #mirrorStatusMoveFaultPLCAddress
+	 * @see #mirrorMoveTimeout
 	 * @see #faultStatusPLCAddress
 	 * @see #connection
 	 * @see ngat.lamp.PLCConnection#setBoolean
@@ -301,10 +314,13 @@ public class LTAGLampUnit implements LampUnitInterface
 	public void moveMirrorInline() throws Exception
 	{
 		boolean done,inline,moveFault,plcFault;
+		long startTime,currentTime,moveTime;
 
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":moveMirrorInline:Starting.");
 		// set demand
 		connection.setBoolean(mirrorInOutPLCAddress,true);
+		// store start time
+		startTime = System.currentTimeMillis();
 		// loop, waiting for in line status or movement/PLC fault.
 		done = false;
 		while(done == false)
@@ -327,6 +343,14 @@ public class LTAGLampUnit implements LampUnitInterface
 			plcFault = connection.getBoolean(faultStatusPLCAddress);
 			if(plcFault)
 				throw new Exception(this.getClass().getName()+"moveMirrorInline:PLC fault bit set.");
+			// check for timeout
+			currentTime = System.currentTimeMillis();
+			moveTime = currentTime - startTime;
+			if(((int)moveTime) > mirrorMoveTimeout)
+			{
+				throw new Exception(this.getClass().getName()+"stowMirror:Move timeout ("+moveTime+
+						    " vs "+mirrorMoveTimeout+").");
+			}
 		}// end while
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":moveMirrorInline:Finished.");
 	}
@@ -335,6 +359,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * Method to move mirror out of the beam.
 	 * <ul>
 	 * <li>We set mirrorInOutPLCAddress PLC address to false, to tell the PLC to move the mirror out of line.
+	 * <li>We save a timestamp for calculating a timeout.
 	 * <li>We enter a loop:
 	 *     <ul>
 	 *     <li>We test whether the mirror is currenly out of the beam by reading mirrorStatusOutPLCAddress,
@@ -343,6 +368,8 @@ public class LTAGLampUnit implements LampUnitInterface
 	 *         an exception if that is the case.
 	 *     <li>We test whether the PLC fault bit is set at faultStatusPLCAddress, and throw
 	 *         an exception if that is the case.
+	 *     <li>We test whether the loop has been running longer than mirrorMoveTimeout, and throw
+	 *         an exception if that is the case.
 	 *     </ul>
 	 * </ul>
 	 * @exception EIPNativeException Thrown if comms to the PLC fail.
@@ -350,6 +377,7 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #mirrorInOutPLCAddress
 	 * @see #mirrorStatusOutPLCAddress
 	 * @see #mirrorStatusMoveFaultPLCAddress
+	 * @see #mirrorMoveTimeout
 	 * @see #faultStatusPLCAddress
 	 * @see #connection
 	 * @see ngat.lamp.PLCConnection#setBoolean
@@ -358,10 +386,13 @@ public class LTAGLampUnit implements LampUnitInterface
 	public void stowMirror() throws Exception
 	{
 		boolean done,outline,moveFault,plcFault;
+		long startTime,currentTime,moveTime;
 
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":stowMirror:Starting.");
 		// set demand : false means mirror out of line
 		connection.setBoolean(mirrorInOutPLCAddress,false);
+		// store start time
+		startTime = System.currentTimeMillis();
 		// loop, waiting for out of line status or movement/PLC fault.
 		done = false;
 		while(done == false)
@@ -384,6 +415,14 @@ public class LTAGLampUnit implements LampUnitInterface
 			plcFault = connection.getBoolean(faultStatusPLCAddress);
 			if(plcFault)
 				throw new Exception(this.getClass().getName()+"stowMirror:PLC fault bit set.");
+			// check for timeout
+			currentTime = System.currentTimeMillis();
+			moveTime = currentTime - startTime;
+			if(((int)moveTime) > mirrorMoveTimeout)
+			{
+				throw new Exception(this.getClass().getName()+"stowMirror:Move timeout ("+moveTime+
+						    " vs "+mirrorMoveTimeout+").");
+			}
 		}// end while
 		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":stowMirror:Finished.");
 	}
@@ -642,6 +681,9 @@ public class LTAGLampUnit implements LampUnitInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.7  2010/03/15 16:01:47  cjm
+// Added getFaultStatus method.
+//
 // Revision 1.6  2010/03/15 14:41:37  cjm
 // Added lamp mirror position config/control and fault status/reset bits.
 //
