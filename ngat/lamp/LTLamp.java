@@ -1,5 +1,5 @@
 // LTLamp.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.4 2009-02-05 14:33:32 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTLamp.java,v 1.5 2011-01-12 14:16:33 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * This class holds information about an individual lamp as part of a lamp unit.
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LTLamp implements LampInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTLamp.java,v 1.4 2009-02-05 14:33:32 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTLamp.java,v 1.5 2011-01-12 14:16:33 cjm Exp $");
 	/**
 	 * Basic lamp log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
@@ -143,16 +143,38 @@ public class LTLamp implements LampInterface
 	/**
 	 * Turn the lamp on.
 	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #turnLampOn(String,String)
+	 */
+	public void turnLampOn() throws EIPNativeException
+	{
+		turnLampOn(this.getClass().getName(),null);
+	}
+
+	/**
+	 * Turn the lamp on.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
 	 * @see #connection
 	 * @see #onOffPLCAddress
 	 * @see #turnLampOff
 	 * @see PLCConnection#setBoolean
 	 */
-	public void turnLampOn() throws EIPNativeException
+	public void turnLampOn(String clazz,String source) throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOn:"+name+":Started.");
-		connection.setBoolean(onOffPLCAddress,true);
-		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOn:"+name+":Finished.");
+		logger.log(LOG_LEVEL_LAMP_BASIC,clazz,source,this.getClass().getName()+":turnLampOn:"+name+
+			   ":Started.");
+		connection.setBoolean(clazz,source,onOffPLCAddress,true);
+		logger.log(LOG_LEVEL_LAMP_BASIC,clazz,source,this.getClass().getName()+":turnLampOn:"+name+
+			   ":Finished.");
+	}
+
+	/**
+	 * Turn the lamp off.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #turnLampOff(String,String)
+	 */
+	public void turnLampOff() throws EIPNativeException
+	{
+		turnLampOff(this.getClass().getName(),null);
 	}
 
 	/**
@@ -163,11 +185,25 @@ public class LTLamp implements LampInterface
 	 * @see #turnLampOn
 	 * @see PLCConnection#setBoolean
 	 */
-	public void turnLampOff() throws EIPNativeException
+	public void turnLampOff(String clazz,String source) throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOff:"+name+":Started.");
-		connection.setBoolean(onOffPLCAddress,false);
-		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":turnLampOff:"+name+":Finished.");
+		logger.log(LOG_LEVEL_LAMP_BASIC,clazz,source,this.getClass().getName()+":turnLampOff:"+name+
+			   ":Started.");
+		connection.setBoolean(clazz,source,onOffPLCAddress,false);
+		logger.log(LOG_LEVEL_LAMP_BASIC,clazz,source,this.getClass().getName()+":turnLampOff:"+name+
+			   ":Finished.");
+	}
+
+	/**
+	 * Return whether the lamp is on not.
+	 * @return true if the lamp is on, false if it is not (according to the PLC, which uses the light level
+	 *         in the A&G box).
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #isLampOn(String,String)
+	 */
+	public boolean isLampOn() throws EIPNativeException
+	{
+		return isLampOn(this.getClass().getName(),null);
 	}
 
 	/**
@@ -180,13 +216,13 @@ public class LTLamp implements LampInterface
 	 * @see #turnLampOn
 	 * @see PLCConnection#getBoolean
 	 */
-	public boolean isLampOn() throws EIPNativeException
+	public boolean isLampOn(String clazz,String source) throws EIPNativeException
 	{
 		boolean retval;
 
-		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":isLampOn:"+name+":Started.");
-		retval = connection.getBoolean(lightLevelOnPLCAddress);
-		logger.log(LOG_LEVEL_LAMP_BASIC,this.getClass().getName()+":isLampOn:"+name+":Finished.");
+		logger.log(LOG_LEVEL_LAMP_BASIC,clazz,source,this.getClass().getName()+":isLampOn:"+name+":Started.");
+		retval = connection.getBoolean(clazz,source,lightLevelOnPLCAddress);
+		logger.log(LOG_LEVEL_LAMP_BASIC,clazz,source,this.getClass().getName()+":isLampOn:"+name+":Finished.");
 		return retval;
 	}
 	/**
@@ -202,6 +238,9 @@ public class LTLamp implements LampInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.4  2009/02/05 14:33:32  cjm
+// Changed logging levels to GLS verbosities.
+//
 // Revision 1.3  2008/10/09 14:15:09  cjm
 // Rewrite so ngat.lamp now does PLC comms using ngat.eip rather than
 // via ngat.df1 / ngat.serial.arcomess.

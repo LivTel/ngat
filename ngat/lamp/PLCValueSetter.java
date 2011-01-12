@@ -1,5 +1,5 @@
 // PLCValueSetter.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCValueSetter.java,v 1.3 2008-10-09 14:15:09 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCValueSetter.java,v 1.4 2011-01-12 14:16:33 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
@@ -11,14 +11,14 @@ import ngat.util.logging.*;
  * This class holds information about one PLC address and the value it should contain.
  * This is used to set various values in the LT A&G lamp unit PLC.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class PLCValueSetter
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PLCValueSetter.java,v 1.3 2008-10-09 14:15:09 cjm Exp $");
+	public final static String RCSID = new String("$Id: PLCValueSetter.java,v 1.4 2011-01-12 14:16:33 cjm Exp $");
 	/**
 	 * A boolean, if true set the value during unit initialisation.
 	 */
@@ -76,15 +76,40 @@ public class PLCValueSetter
 	 */
 	public void setValue(PLCConnection connection) throws EIPNativeException
 	{
+		setValue(this.getClass().getName(),null,connection);
+	}
+
+	/**
+	 * Set the specified value in the PLC, if configured to do so. If set is true:
+	 * <ul>
+	 * <li>Use the PLCConnection.setInteger method to set the PLC memory location specified by plcAddress to value.
+	 * </ul>
+	 * @param clazz A string representing the class to put in the log record for all logs generated
+	 *              by this call.
+	 * @param source A string representing the source to put in the log record for all logs generated
+	 *              by this call.
+	 * @param connection The connection details of how to connect to the PLC.
+	 * @exception EIPNativeException Thrown if comms to the PLC has an error.
+	 * @see #set
+	 * @see #plcAddress
+	 * @see #value
+	 * @see PLCConnection#setInteger
+	 */
+	public void setValue(String clazz,String source,PLCConnection connection) throws EIPNativeException
+	{
 		if(set)
 		{
-			connection.setInteger(plcAddress,value);
+			connection.setInteger(clazz,source,plcAddress,value);
 		}
 	}
 
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.3  2008/10/09 14:15:09  cjm
+// Rewrite so ngat.lamp now does PLC comms using ngat.eip rather than
+// via ngat.df1 / ngat.serial.arcomess.
+//
 // Revision 1.2  2008/10/03 09:20:00  cjm
 // Changes relating to libdf1 using libarcom_ess handles.
 //

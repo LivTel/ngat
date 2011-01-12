@@ -1,5 +1,5 @@
 // LTAGLampUnit.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.8 2010-08-02 14:11:11 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/LTAGLampUnit.java,v 1.9 2011-01-12 14:16:33 cjm Exp $
 package ngat.lamp;
 
 import java.io.*;
@@ -14,14 +14,14 @@ import ngat.util.logging.*;
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
  * over Ethernet/IP (controlled via the ngat.eip library). 
  * @author Chris Mottram
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.8 2010-08-02 14:11:11 cjm Exp $");
+	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.9 2011-01-12 14:16:33 cjm Exp $");
 	/**
 	 * Basic unit log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
@@ -278,9 +278,33 @@ public class LTAGLampUnit implements LampUnitInterface
 	 */
 	public void faultReset() throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":faultReset:Starting.");
-		connection.setBoolean(faultResetPLCAddress,true);
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":faultReset:Finished.");
+		faultReset(this.getClass().getName(),null);
+	}
+
+	/**
+	 * Method to try to reset any PLC faults.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @exception EIPNativeException Thrown if comms to the PLC fail.
+	 * @see #faultResetPLCAddress
+	 * @see #connection
+	 * @see ngat.lamp.PLCConnection#setBoolean
+	 */
+	public void faultReset(String clazz,String source) throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":faultReset:Starting.");
+		connection.setBoolean(clazz,source,faultResetPLCAddress,true);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":faultReset:Finished.");
+	}
+	/**
+	 * Method to move mirror into the beam.
+	 * @exception EIPNativeException Thrown if comms to the PLC fail.
+	 * @exception Exception Thrown if the PLC fault status bit is set, or the PLC move fault status bit is set.
+	 * @see #moveMirrorInline(String,String)
+	 */
+	public void moveMirrorInline() throws Exception
+	{
+		moveMirrorInline(this.getClass().getName(),null);
 	}
 
 	/**
@@ -300,6 +324,8 @@ public class LTAGLampUnit implements LampUnitInterface
 	 *         an exception if that is the case.
 	 *     </ul>
 	 * </ul>
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
 	 * @exception EIPNativeException Thrown if comms to the PLC fail.
 	 * @exception Exception Thrown if the PLC fault status bit is set, or the PLC move fault status bit is set..
 	 * @see #mirrorInOutPLCAddress
@@ -311,36 +337,36 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see ngat.lamp.PLCConnection#setBoolean
 	 * @see ngat.lamp.PLCConnection#getBoolean
 	 */
-	public void moveMirrorInline() throws Exception
+	public void moveMirrorInline(String clazz,String source) throws Exception
 	{
 		boolean done,inline,moveFault,plcFault;
 		long startTime,currentTime,moveTime;
 
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":moveMirrorInline:Starting.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":moveMirrorInline:Starting.");
 		// set demand
-		connection.setBoolean(mirrorInOutPLCAddress,true);
+		connection.setBoolean(clazz,source,mirrorInOutPLCAddress,true);
 		// store start time
 		startTime = System.currentTimeMillis();
 		// loop, waiting for in line status or movement/PLC fault.
 		done = false;
 		while(done == false)
 		{
-			logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+			logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+
 				   ":moveMirrorInline:Getting current status.");
 			// are we inline
-			inline = connection.getBoolean(mirrorStatusInPLCAddress);
+			inline = connection.getBoolean(clazz,source,mirrorStatusInPLCAddress);
 			if(inline)
 			{
-				logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+				logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+
 					   ":moveMirrorInline:Mirror is now inline.");
 				done = true;
 			}
 			// movement fault?
-			moveFault = connection.getBoolean(mirrorStatusMoveFaultPLCAddress);
+			moveFault = connection.getBoolean(clazz,source,mirrorStatusMoveFaultPLCAddress);
 			if(moveFault)
 				throw new Exception(this.getClass().getName()+"moveMirrorInline:Move fault bit set.");
 			// PLC fault?
-			plcFault = connection.getBoolean(faultStatusPLCAddress);
+			plcFault = connection.getBoolean(clazz,source,faultStatusPLCAddress);
 			if(plcFault)
 				throw new Exception(this.getClass().getName()+"moveMirrorInline:PLC fault bit set.");
 			// check for timeout
@@ -352,7 +378,18 @@ public class LTAGLampUnit implements LampUnitInterface
 						    " vs "+mirrorMoveTimeout+").");
 			}
 		}// end while
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":moveMirrorInline:Finished.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":moveMirrorInline:Finished.");
+	}
+
+	/**
+	 * Method to move mirror out of the beam.
+	 * @exception EIPNativeException Thrown if comms to the PLC fail.
+	 * @exception Exception Thrown if the PLC fault status bit is set, or the PLC move fault status bit is set.
+	 * @see #stowMirror(String,String)
+	 */
+	public void stowMirror() throws Exception
+	{
+		stowMirror(this.getClass().getName(),null);
 	}
 
 	/**
@@ -372,6 +409,8 @@ public class LTAGLampUnit implements LampUnitInterface
 	 *         an exception if that is the case.
 	 *     </ul>
 	 * </ul>
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
 	 * @exception EIPNativeException Thrown if comms to the PLC fail.
 	 * @exception Exception Thrown if the PLC fault status bit is set, or the PLC move fault status bit is set..
 	 * @see #mirrorInOutPLCAddress
@@ -383,36 +422,36 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see ngat.lamp.PLCConnection#setBoolean
 	 * @see ngat.lamp.PLCConnection#getBoolean
 	 */
-	public void stowMirror() throws Exception
+	public void stowMirror(String clazz,String source) throws Exception
 	{
 		boolean done,outline,moveFault,plcFault;
 		long startTime,currentTime,moveTime;
 
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":stowMirror:Starting.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":stowMirror:Starting.");
 		// set demand : false means mirror out of line
-		connection.setBoolean(mirrorInOutPLCAddress,false);
+		connection.setBoolean(clazz,source,mirrorInOutPLCAddress,false);
 		// store start time
 		startTime = System.currentTimeMillis();
 		// loop, waiting for out of line status or movement/PLC fault.
 		done = false;
 		while(done == false)
 		{
-			logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+			logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+
 				   ":stowMirror:Getting current status.");
 			// are we out of line
-			outline = connection.getBoolean(mirrorStatusOutPLCAddress);
+			outline = connection.getBoolean(clazz,source,mirrorStatusOutPLCAddress);
 			if(outline)
 			{
-				logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+
+				logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+
 					   ":stowMirror:Mirror is now out of line.");
 				done = true;
 			}
 			// movement fault?
-			moveFault = connection.getBoolean(mirrorStatusMoveFaultPLCAddress);
+			moveFault = connection.getBoolean(clazz,source,mirrorStatusMoveFaultPLCAddress);
 			if(moveFault)
 				throw new Exception(this.getClass().getName()+"stowMirror:Move fault bit set.");
 			// PLC fault?
-			plcFault = connection.getBoolean(faultStatusPLCAddress);
+			plcFault = connection.getBoolean(clazz,source,faultStatusPLCAddress);
 			if(plcFault)
 				throw new Exception(this.getClass().getName()+"stowMirror:PLC fault bit set.");
 			// check for timeout
@@ -424,51 +463,94 @@ public class LTAGLampUnit implements LampUnitInterface
 						    " vs "+mirrorMoveTimeout+").");
 			}
 		}// end while
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":stowMirror:Finished.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":stowMirror:Finished.");
 	}
 
 	/**
 	 * Turn the specified lamp on.
 	 * @param lamp The name of the lamp.
 	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
-	 * @see #getLamp
-	 * @see LampInterface#turnLampOn
+	 * @see #turnLampOn(String,String,String)
 	 */
 	public void turnLampOn(String lamp) throws Exception
 	{
+		turnLampOn(this.getClass().getName(),null,lamp);
+	}
+
+	/**
+	 * Turn the specified lamp on.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param lamp The name of the lamp.
+	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
+	 * @see #getLamp
+	 * @see LampInterface#turnLampOn
+	 */
+	public void turnLampOn(String clazz,String source,String lamp) throws Exception
+	{
 		LampInterface li = null;
 
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":turnLampOn:"+lamp+" Started.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":turnLampOn:"+lamp+
+			   " Started.");
 		li = getLamp(lamp);
-		li.turnLampOn();
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":turnLampOn:"+lamp+" Finished.");
+		li.turnLampOn(clazz,source);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":turnLampOn:"+lamp+
+			   " Finished.");
 	}
 
 	/**
 	 * Turn the specified lamp off.
 	 * @param lamp The name of the lamp.
 	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
-	 * @see #getLamp
-	 * @see LampInterface#turnLampOff
+	 * @see #turnLampOff(String,String,String)
 	 */
 	public void turnLampOff(String lamp) throws Exception
 	{
+		turnLampOff(this.getClass().getName(),null,lamp);
+	}
+
+	/**
+	 * Turn the specified lamp off.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param lamp The name of the lamp.
+	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
+	 * @see #getLamp
+	 * @see LampInterface#turnLampOff
+	 */
+	public void turnLampOff(String clazz,String source,String lamp) throws Exception
+	{
 		LampInterface li = null;
 
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":turnLampOff:"+lamp+" Started.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":turnLampOff:"+lamp+
+			   " Started.");
 		li = getLamp(lamp);
-		li.turnLampOff();
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":turnLampOff:"+lamp+" Finished.");
+		li.turnLampOff(clazz,source);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":turnLampOff:"+lamp+
+			   " Finished.");
 	}
 
 	/**
 	 * Method to turn on more than one lamp.
 	 * @param lampListString A string containing a space separated list of valid lamp names.
 	 * @exception Exception Thrown if we can't find one of the lamps, or comms to the device fails.
+	 * @see #turnLampsOn(String,String,String)
+	 */
+	public void turnLampsOn(String lampListString) throws Exception
+	{
+		turnLampsOn(this.getClass().getName(),null,lampListString);
+	}
+
+	/**
+	 * Method to turn on more than one lamp.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param lampListString A string containing a space separated list of valid lamp names.
+	 * @exception Exception Thrown if we can't find one of the lamps, or comms to the device fails.
 	 * @see #lampList
 	 * @see LTLamp#turnLampOff
 	 */
-	public void turnLampsOn(String lampListString) throws Exception
+	public void turnLampsOn(String clazz,String source,String lampListString) throws Exception
 	{
 		LTLamp lamp = null;
 		List onList = null;
@@ -488,7 +570,7 @@ public class LTAGLampUnit implements LampUnitInterface
 			for(int i = 0;i < onList.size(); i++)
 			{
 				lamp = (LTLamp)(onList.get(i));
-				lamp.turnLampOn();
+				lamp.turnLampOn(clazz,source);
 			}
 		}
 		catch(Exception e)
@@ -496,7 +578,7 @@ public class LTAGLampUnit implements LampUnitInterface
 			for(int i = 0;i < onList.size(); i++)
 			{
 				lamp = (LTLamp)(onList.get(i));
-				lamp.turnLampOff();
+				lamp.turnLampOff(clazz,source);
 			}
 			throw e;
 		}
@@ -505,18 +587,30 @@ public class LTAGLampUnit implements LampUnitInterface
 	/**
 	 * Turn off all the lamps in the list.
 	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
-	 * @see #lampList
-	 * @see LTLamp#turnLampOff
+	 * @see #turnAllLampsOff(String,String)
 	 */
 	public void turnAllLampsOff() throws Exception
 	{
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":turnAllLampsOff:Started.");
+		turnAllLampsOff(this.getClass().getName(),null);
+	}
+
+	/**
+	 * Turn off all the lamps in the list.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
+	 * @see #lampList
+	 * @see LTLamp#turnLampOff
+	 */
+	public void turnAllLampsOff(String clazz,String source) throws Exception
+	{
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":turnAllLampsOff:Started.");
 		for(int i = 0; i < lampList.size(); i++)
 		{
 			LTLamp lamp = (LTLamp)(lampList.get(i));
-			lamp.turnLampOff();
+			lamp.turnLampOff(clazz,source);
 		}
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":turnAllLampsOff:Finished.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":turnAllLampsOff:Finished.");
 	}
 
 	/**
@@ -524,35 +618,72 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @param lamp The name of the lamp.
 	 * @return On (true) or off (false).
 	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
+	 * @see #isLampOn(String,String,String)
+	 */
+	public boolean isLampOn(String lamp) throws Exception
+	{
+		return isLampOn(this.getClass().getName(),null,lamp);
+	}
+
+	/**
+	 * Return whether the speciied lamp is on (true) or off (false).
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param lamp The name of the lamp.
+	 * @return On (true) or off (false).
+	 * @exception Exception Thrown if we can't find the specified lamp, or comms to the device fails.
 	 * @see #getLamp
 	 * @see LampInterface#isLampOn
 	 */
-	public boolean isLampOn(String lamp) throws Exception
+	public boolean isLampOn(String clazz,String source,String lamp) throws Exception
 	{
 		LampInterface li = null;
 
 		li = getLamp(lamp);
-		return li.isLampOn();
+		return li.isLampOn(clazz,source);
 	}
 
 	/**
 	 * Return whether the PLC fault status bit has been set.
+	 * @return true if the PLC fault bit is set, false if it is not.
+	 * @see #getFaultStatus(String,String)
+	 */
+	public boolean getFaultStatus()  throws EIPNativeException
+	{
+		return getFaultStatus(this.getClass().getName(),null);
+	}
+
+	/**
+	 * Return whether the PLC fault status bit has been set.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
 	 * @return true if the PLC fault bit is set, false if it is not.
 	 * @see #logger
 	 * @see #connection
 	 * @see #faultStatusPLCAddress
 	 * @see ngat.lamp.PLCConnection#getBoolean
 	 */
-	public boolean getFaultStatus()  throws EIPNativeException
+	public boolean getFaultStatus(String clazz,String source)  throws EIPNativeException
 	{
 		boolean plcFault;
 
-		plcFault = connection.getBoolean(faultStatusPLCAddress);
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":getFaultStatus:Returned plcFault:"+
-			   plcFault+".");
+		plcFault = connection.getBoolean(clazz,source,faultStatusPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+
+			   ":getFaultStatus:Returned plcFault:"+plcFault+".");
 		return plcFault;
 	}
 
+	/**
+	 * Has an error flag been set on the PLC.
+	 * @return true if an error has occured, false if it has not.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #isError(String,String)
+	 */
+	public boolean isError() throws EIPNativeException
+	{
+		return isError(this.getClass().getName(),null);
+	}
+		
 	/**
 	 * Has an error flag been set on the PLC.
 	 * <ul>
@@ -577,31 +708,42 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #faultStatusPLCAddress
 	 * @see ngat.lamp.PLCConnection#getBoolean
 	 */
-	public boolean isError() throws EIPNativeException
+	public boolean isError(String clazz,String source) throws EIPNativeException
 	{
 		boolean highLightLevelFault,lampOnFault,moveFault,plcFault;
 
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Started.");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":isError:Started.");
 		// high light level
-		highLightLevelFault = connection.getBoolean(highLightLevelFaultPLCAddress);
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned highLightLevelFault:"+
-			   highLightLevelFault+".");
+		highLightLevelFault = connection.getBoolean(clazz,source,highLightLevelFaultPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+
+			   ":isError:Returned highLightLevelFault:"+highLightLevelFault+".");
 		// lamp on fault
-		lampOnFault = connection.getBoolean(lampOnFaultPLCAddress);
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned lampOnFault:"+
-			   lampOnFault+".");
+		lampOnFault = connection.getBoolean(clazz,source,lampOnFaultPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+
+			   ":isError:Returned lampOnFault:"+lampOnFault+".");
 		// mirror movement fault
-		moveFault = connection.getBoolean(mirrorStatusMoveFaultPLCAddress);
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned moveFault:"+
+		moveFault = connection.getBoolean(clazz,source,mirrorStatusMoveFaultPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":isError:Returned moveFault:"+
 			   moveFault+".");
 		// general internal PLC fault
-		plcFault = connection.getBoolean(faultStatusPLCAddress);
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned plcFault:"+
+		plcFault = connection.getBoolean(clazz,source,faultStatusPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":isError:Returned plcFault:"+
 			   plcFault+".");
 		// aggregate faults
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":isError:Returned:"+
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":isError:Returned:"+
 			   (highLightLevelFault|lampOnFault|moveFault|plcFault)+".");
 		return highLightLevelFault|lampOnFault|moveFault|plcFault;
+	}
+
+	/**
+	 * Return the actual light level in the A&G box.
+	 * @return An integer, the actual light level in A/D counts.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.
+	 * @see #getLightLevel(String,String)
+	 */
+	public int getLightLevel() throws EIPNativeException
+	{
+		return getLightLevel(this.getClass().getName(),null);
 	}
 
 	/**
@@ -615,13 +757,14 @@ public class LTAGLampUnit implements LampUnitInterface
 	 * @see #connection
 	 * @see PLCConnection#getInteger
 	 */
-	public int getLightLevel() throws EIPNativeException
+	public int getLightLevel(String clazz,String source) throws EIPNativeException
 	{
 		int retval;
 
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":getLightLevel:Started.");
-		retval = connection.getInteger(lightLevelPLCAddress);
-		logger.log(LOG_LEVEL_UNIT_BASIC,this.getClass().getName()+":getLightLevel:Returned :"+retval+".");
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":getLightLevel:Started.");
+		retval = connection.getInteger(clazz,source,lightLevelPLCAddress);
+		logger.log(LOG_LEVEL_UNIT_BASIC,clazz,source,this.getClass().getName()+":getLightLevel:Returned :"+
+			   retval+".");
 		return retval;
 	}
 
@@ -681,6 +824,9 @@ public class LTAGLampUnit implements LampUnitInterface
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.8  2010/08/02 14:11:11  cjm
+// Added timeout to moveMirrorInline and stowMirror.
+//
 // Revision 1.7  2010/03/15 16:01:47  cjm
 // Added getFaultStatus method.
 //

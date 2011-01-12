@@ -1,5 +1,5 @@
 // PLCConnection.java
-// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCConnection.java,v 1.2 2009-02-05 14:33:35 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/lamp/PLCConnection.java,v 1.3 2011-01-12 14:16:33 cjm Exp $
 package ngat.lamp;
 
 import java.lang.*;
@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * Class, an instance of which holds PLC connection details.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PLCConnection
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PLCConnection.java,v 1.2 2009-02-05 14:33:35 cjm Exp $");
+	public final static String RCSID = new String("$Id: PLCConnection.java,v 1.3 2011-01-12 14:16:33 cjm Exp $");
 	/**
 	 * Basic connection log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_VERY_VERBOSE
@@ -164,17 +164,39 @@ public class PLCConnection
 	 */
 	public synchronized void openConnection() throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":openConnection:"+hostname+":Started.");
+		openConnection(this.getClass().getName(),null);
+	}
+
+	/**
+	 * Open a connection (held within the plc instance) using the specified connection parameters.
+	 * Calls the PLC createHandle method, followed by the open method.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @exception EIPNativeException Thrown if the connection fails.
+	 * @see #plc
+	 * @see #hostname
+	 * @see #backplane
+	 * @see #slot
+	 * @see #plcType
+	 * @see #handle
+	 * @see ngat.eip.EIPPLC#createHandle
+	 * @see ngat.eip.EIPPLC#open
+	 */
+	public synchronized void openConnection(String clazz,String source) throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":openConnection:"+
+			   hostname+":Started.");
 		if(handle == null)
 		{
-			handle = plc.createHandle(hostname,backplane,slot,plcType);
-			plc.open(handle);
-			connectionIdleThread = new ConnectionIdleThread();
+			handle = plc.createHandle(clazz,source,hostname,backplane,slot,plcType);
+			plc.open(clazz,source,handle);
+			connectionIdleThread = new ConnectionIdleThread(clazz,source);
 			connectionIdleThread.start();
 		}
 		else
 			connectionIdleThread.setBusy();	
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":openConnection:"+hostname+":Finished.");
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":openConnection:"+
+			   hostname+":Finished.");
 	}
 
 	/**
@@ -185,14 +207,29 @@ public class PLCConnection
 	 */
 	public synchronized void closeConnection() throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":closeConnection:"+hostname+":Started.");
+		closeConnection(this.getClass().getName(),null);
+	}
+
+	/**
+	 * Close the previously opened connection.
+	 * Calls the EIPPLC close method, followed by the destroyHandle method.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @exception EIPNativeException Thrown if the close fails.
+	 * @see ngat.eip.EIPPLC#destroyHandle
+	 */
+	public synchronized void closeConnection(String clazz,String source) throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":closeConnection:"+
+			   hostname+":Started.");
 		if(handle != null)
 		{
-			plc.close(handle);
-			plc.destroyHandle(handle);
+			plc.close(clazz,source,handle);
+			plc.destroyHandle(clazz,source,handle);
 			handle = null;
 		}
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":closeConnection:"+hostname+":Finished.");
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":closeConnection:"+
+			   hostname+":Finished.");
 	}
 
 	/**
@@ -206,11 +243,28 @@ public class PLCConnection
 	 */
 	public synchronized boolean getBoolean(String plcAddress) throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":getBoolean:"+hostname+":Started.");
+		return getBoolean(this.getClass().getName(),null,plcAddress);
+	}
+
+	/**
+	 * Wrapper for PLC get boolean method.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param plcAddress The address to retrieve the boolean value from.
+	 * @return The boolean value.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.	 
+	 * @see #plc
+	 * @see #handle
+	 * @see ngat.eip.EIPPLC#getBoolean
+	 */
+	public synchronized boolean getBoolean(String clazz,String source,String plcAddress) throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":getBoolean:"+
+			   hostname+":Started.");
 		if(handle == null)
-			openConnection();
+			openConnection(clazz,source);
 		connectionIdleThread.setBusy();	
-		return plc.getBoolean(handle,plcAddress);
+		return plc.getBoolean(clazz,source,handle,plcAddress);
 	}
 
 	/**
@@ -224,11 +278,28 @@ public class PLCConnection
 	 */
 	public synchronized int getInteger(String plcAddress) throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":getInteger:"+hostname+":Started.");
+		return getInteger(this.getClass().getName(),null,plcAddress);
+	}
+
+	/**
+	 * Wrapper for PLC get integer method.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param plcAddress The address to retrieve the value from.
+	 * @return The integer value.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.	 
+	 * @see #plc
+	 * @see #handle
+	 * @see ngat.eip.EIPPLC#getInteger
+	 */
+	public synchronized int getInteger(String clazz,String source,String plcAddress) throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":getInteger:"+
+			   hostname+":Started.");
 		if(handle == null)
-			openConnection();
+			openConnection(clazz,source);
 		connectionIdleThread.setBusy();	
-		return plc.getInteger(handle,plcAddress);
+		return plc.getInteger(clazz,source,handle,plcAddress);
 	}
 
 	/**
@@ -242,11 +313,29 @@ public class PLCConnection
 	 */
 	public synchronized void setInteger(String plcAddress,int value) throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":setInteger:"+hostname+":Started.");
+		setInteger(this.getClass().getName(),null,plcAddress,value);
+	}
+
+	/**
+	 * Wrapper for PLC set integer method.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param plcAddress The address to write the value to.
+	 * @param value The value to write to the PLC.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.	 
+	 * @see #plc
+	 * @see #handle
+	 * @see ngat.eip.EIPPLC#setInteger
+	 */
+	public synchronized void setInteger(String clazz,String source,String plcAddress,int value) 
+		throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":setInteger:"+
+			   hostname+":Started.");
 		if(handle == null)
-			openConnection();
+			openConnection(clazz,source);
 		connectionIdleThread.setBusy();	
-		plc.setInteger(handle,plcAddress,value);
+		plc.setInteger(clazz,source,handle,plcAddress,value);
 	}
 
 	/**
@@ -260,11 +349,29 @@ public class PLCConnection
 	 */
 	public synchronized void setBoolean(String plcAddress,boolean value) throws EIPNativeException
 	{
-		logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":setBoolean:"+hostname+":Started.");
+		setBoolean(this.getClass().getName(),null,plcAddress,value);
+	}
+
+	/**
+	 * Wrapper for PLC set boolean method.
+	 * @param clazz The class string used for generating log records from this operation.
+	 * @param source The source string used for generating log records from this operation.
+	 * @param plcAddress The address to write the value to.
+	 * @param value The value to write to the PLC.
+	 * @exception EIPNativeException Thrown if comms to the PLC fails.	 
+	 * @see #plc
+	 * @see #handle
+	 * @see ngat.eip.EIPPLC#setBoolean
+	 */
+	public synchronized void setBoolean(String clazz,String source,String plcAddress,boolean value) 
+		throws EIPNativeException
+	{
+		logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":setBoolean:"+
+			   hostname+":Started.");
 		if(handle == null)
-			openConnection();
+			openConnection(clazz,source);
 		connectionIdleThread.setBusy();	
-		plc.setBoolean(handle,plcAddress,value);
+		plc.setBoolean(clazz,source,handle,plcAddress,value);
 	}
 
 	/**
@@ -288,9 +395,29 @@ public class PLCConnection
 	public class ConnectionIdleThread extends Thread
 	{
 		/**
+		 * The class string used for generating log records from this operation.
+		 */
+		protected String clazz = null;
+		/**
+		 * The source string used for generating log records from this operation.
+		 */
+		protected String source = null;
+		/**
 		 * Boolean keeping track of wether the connection is idle or not.
 		 */
 		protected boolean isIdle = false;
+
+		/**
+		 * Constructor.
+		 * @param clazz The class string used for generating log records from this thread.
+		 * @param source The source string used for generating log records from this thread.
+		 */
+		public ConnectionIdleThread(String clazz,String source)
+		{
+			super();
+			this.clazz = clazz;
+			this.source = source;
+		}
 
 		/**
 		 * Thread run method.
@@ -303,17 +430,20 @@ public class PLCConnection
 		 * <li>When the loop is exited the connection is closed.
 		 * </ul>
 		 * @see #isIdle
+		 * @see #clazz
+		 * @see #source
 		 * @see #closeConnection
 		 */
 		public void run()
 		{
 			boolean done = false;
 
-			logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":run:"+hostname+":Started.");
+			logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":run:"+
+				   hostname+":Started.");
 			while(done == false)
 			{
-				logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":run:"+hostname+
-					   ":Sleeping.");
+				logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":run:"+
+					   hostname+":Sleeping.");
 				isIdle = true;
 				try
 				{
@@ -322,22 +452,24 @@ public class PLCConnection
 				catch(Exception e)
 				{
 				}
-				logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":run:"+hostname+
-					   ":Checking whether connection is idle:"+isIdle+".");
+				logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":run:"+
+					   hostname+":Checking whether connection is idle:"+isIdle+".");
 				done = (isIdle == true);
 			}
-			logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":run:"+hostname+
+			logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":run:"+hostname+
 				   ":Closing connection.");
 			try
 			{
-				closeConnection();
+				closeConnection(clazz,source);
 			}
 			catch(Exception e)
 			{
-				logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":run:"+hostname+
-					   ":Close connection failed.",e);
+				logger.log(null,LOG_LEVEL_CONNECTION_BASIC,clazz,source,"run",
+					   this.getClass().getName()+":run:"+hostname+":Close connection failed.",
+					   null,e);
 			}
-			logger.log(LOG_LEVEL_CONNECTION_BASIC,this.getClass().getName()+":run:"+hostname+":Finished.");
+			logger.log(LOG_LEVEL_CONNECTION_BASIC,clazz,source,this.getClass().getName()+":run:"+
+				   hostname+":Finished.");
 		}
 
 		/**
@@ -352,6 +484,9 @@ public class PLCConnection
 }// end class PLCConnection
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2009/02/05 14:33:35  cjm
+// Changed logging levels to GLS verbosities.
+//
 // Revision 1.1  2008/10/09 14:15:09  cjm
 // Initial revision
 //
