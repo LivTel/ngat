@@ -10,6 +10,7 @@ JAR_FILE       = ngat_fits.jar
 SRCS           = FitsFilename.java \
                  FitsHeaderCardImage.java \
                  FitsHeaderCardImageOrderNumberComparator.java \
+		 FitsHeaderCardImageKeywordComparator.java \
                  FitsHeaderDefaults.java \
                  FitsHeaderException.java \
                  FitsHeader.java
