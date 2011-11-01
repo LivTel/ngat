@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // FitsFilename.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.10 2009-12-18 12:01:35 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsFilename.java,v 1.11 2011-11-01 10:06:43 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -42,14 +42,14 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.10 2009-12-18 12:01:35 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.11 2011-11-01 10:06:43 cjm Exp $");
 	// instrument codes
 	/**
 	 * Instrument code constant - FrodoSpec blue arm.
@@ -76,17 +76,17 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_FTSPEC_SOUTH 	        = 'g';
 	/**
-	 * Instrument code constant - Manchester Eschelle Spectrograph.
+	 * Instrument code constant - IO:I (HUGINN).
 	 */
-	public final static char INSTRUMENT_CODE_MES 		        = 'm';
+	public final static char INSTRUMENT_CODE_I        	        = 'h';
+	/**
+	 * Instrument code constant - IO:O (MUNINN).
+	 */
+	public final static char INSTRUMENT_CODE_O        	        = 'm';
 	/**
 	 * Instrument code constant - NuView.
 	 */
 	public final static char INSTRUMENT_CODE_NUVIEW 		= 'n';
-	/**
-	 * Instrument code constant - RISE.
-	 */
-        public final static char INSTRUMENT_CODE_RISE 	                = 'q';
 	/**
 	 * Instrument code constant - Ringo Star / Grope Polarimeter.
 	 */
@@ -96,6 +96,10 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_RINGO2 	        = 'p';
 	/**
+	 * Instrument code constant - RISE.
+	 */
+        public final static char INSTRUMENT_CODE_RISE 	                = 'q';
+	/**
 	 * Instrument code constant - FrodoSpec red arm.
 	 */
 	public final static char INSTRUMENT_CODE_FRODOSPEC_RED 	        = 'r';
@@ -103,6 +107,8 @@ public class FitsFilename
 	 * Instrument code constant - SupIRCam.
 	 */
 	public final static char INSTRUMENT_CODE_SUPIRCAM        	= 's';
+
+
 	// exposure codes 
 	/**
 	 * Exposure code constant - for an arc.
@@ -500,13 +506,14 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_DILLCAM_SOUTH
 	 * @see #INSTRUMENT_CODE_FTSPEC_NORTH
 	 * @see #INSTRUMENT_CODE_FTSPEC_SOUTH
-	 * @see #INSTRUMENT_CODE_MES
 	 * @see #INSTRUMENT_CODE_NUVIEW
 	 * @see #INSTRUMENT_CODE_RINGO_STAR
 	 * @see #INSTRUMENT_CODE_RINGO2
 	 * @see #INSTRUMENT_CODE_FRODOSPEC_RED
 	 * @see #INSTRUMENT_CODE_SUPIRCAM
 	 * @see #INSTRUMENT_CODE_RISE
+	 * @see #INSTRUMENT_CODE_I
+	 * @see #INSTRUMENT_CODE_O
 	 */
 	public void setInstrumentCode(String code) throws Exception
 	{
@@ -526,10 +533,11 @@ public class FitsFilename
 		if((ch != INSTRUMENT_CODE_FRODOSPEC_BLUE) && (ch != INSTRUMENT_CODE_CCD_CAMERA) && 
 		   (ch != INSTRUMENT_CODE_DILLCAM_NORTH) && (ch != INSTRUMENT_CODE_DILLCAM_SOUTH) && 
 		   (ch != INSTRUMENT_CODE_FTSPEC_NORTH) && (ch != INSTRUMENT_CODE_FTSPEC_SOUTH) &&
-		   (ch != INSTRUMENT_CODE_MES) && (ch != INSTRUMENT_CODE_NUVIEW) && 
+		   (ch != INSTRUMENT_CODE_NUVIEW) && 
 		   (ch != INSTRUMENT_CODE_RINGO_STAR) && (ch != INSTRUMENT_CODE_RINGO2) && 
 		   (ch != INSTRUMENT_CODE_RISE) && 
-		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM))
+		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
+		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O))
 		{
 			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
 					    ch+".");
@@ -851,6 +859,9 @@ public class FitsFilename
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.10  2009/12/18 12:01:35  cjm
+// Added INSTRUMENT_CODE_RINGO2 and EXPOSURE_CODE_ACQUIRE.
+//
 // Revision 1.9  2009/02/23 15:17:18  cjm
 // Added INSTRUMENT_CODE_RISE.
 //
