@@ -1,5 +1,5 @@
 // Dichroic.java
-// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/Dichroic.java,v 1.1 2011-10-12 10:16:10 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/Dichroic.java,v 1.2 2012-01-17 14:56:01 cjm Exp $
 package ngat.dichroic;
 
 import java.io.*;
@@ -13,14 +13,14 @@ import ngat.util.logging.*;
  * which provides a telnet-like interface to move the 3 position dichroic (red|blue|mirror), and get
  * status and error information. 
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Dichroic
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: Dichroic.java,v 1.1 2011-10-12 10:16:10 cjm Exp $");
+	public final static String RCSID = new String("$Id: Dichroic.java,v 1.2 2012-01-17 14:56:01 cjm Exp $");
 	/**
 	 * Basic log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
@@ -29,19 +29,19 @@ public class Dichroic
 	/**
 	 * Constant specifying the RED slide position.
 	 */
-	public final static int SLIDE_POSITION_RED = 0;
+	protected final static int SLIDE_POSITION_RED = 0;
 	/**
 	 * Constant specifying the BLUE slide position.
 	 */
-	public final static int SLIDE_POSITION_BLUE = 2;
+	protected final static int SLIDE_POSITION_BLUE = 2;
 	/**
 	 * Constant specifying the MIRROR slide position.
 	 */
-	public final static int SLIDE_POSITION_MIRROR = 1;
+	protected final static int SLIDE_POSITION_MIRROR = 1;
 	/**
 	 * Constant specifying an UNKNOWN slide position.
 	 */
-	public final static int SLIDE_POSITION_UNKNOWN = -1;
+	protected final static int SLIDE_POSITION_UNKNOWN = -1;
 	/**
 	 * Array of 3 strings represting the slide positions. Should match the constants:
 	 * SLIDE_POSITION_RED , SLIDE_POSITION_BLUE , SLIDE_POSITION_MIRROR.
@@ -49,7 +49,7 @@ public class Dichroic
 	 * @see #SLIDE_POSITION_BLUE
 	 * @see #SLIDE_POSITION_MIRROR
 	 */
-	public final static String SLIDE_POSITION_STRING_LIST[] = {"red","mirror","blue"};
+	protected final static String SLIDE_POSITION_STRING_LIST[] = {"red","mirror","blue"};
 
 // per instance variables
 	/**
@@ -363,4 +363,7 @@ public class Dichroic
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2011/10/12 10:16:10  cjm
+// Initial revision
+//
 //
