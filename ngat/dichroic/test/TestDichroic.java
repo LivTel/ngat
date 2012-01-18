@@ -1,5 +1,5 @@
 // TestDichroic.java
-// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/test/TestDichroic.java,v 1.1 2011-10-12 10:15:55 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/test/TestDichroic.java,v 1.2 2012-01-18 15:14:40 cjm Exp $
 package ngat.dichroic.test;
 
 import java.lang.*;
@@ -14,14 +14,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the IO:O dichroic.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TestDichroic
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TestDichroic.java,v 1.1 2011-10-12 10:15:55 cjm Exp $");
+	public final static String RCSID = new String("$Id: TestDichroic.java,v 1.2 2012-01-18 15:14:40 cjm Exp $");
 	/**
 	 * The dichroic instance.
 	 */
@@ -117,8 +117,6 @@ public class TestDichroic
 			System.out.println(this.getClass().getName()+":run:About to get position.");
 			position = dichroic.getPosition();
 			System.out.println(this.getClass().getName()+":run:position is:"+position);
-			System.out.println(this.getClass().getName()+":run:position is:"+
-					   Dichroic.stringFromPosition(position));
 		}
 	}
 
@@ -211,7 +209,7 @@ public class TestDichroic
 			{
 				if((i+1) < args.length)
 				{
-					movePosition = Dichroic.positionFromString(args[i+1]);
+					movePosition = Integer.parseInt(args[i+1]);
 					doMove = true;
 					i++;
 				}
@@ -253,7 +251,7 @@ public class TestDichroic
 		System.out.println("\t-a[ddress] <hostname|IP>");
 		System.out.println("\t-g[et_position]");
 		System.out.println("\t-log[_level] <n>");
-		System.out.println("\t-m[ove] <red|blue|mirror>");
+		System.out.println("\t-m[ove] <0|1|2>");
 		System.out.println("\t-p[ort_number] <n>");
 		System.out.println("");
 	}
@@ -301,4 +299,7 @@ public class TestDichroic
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2011/10/12 10:15:55  cjm
+// Initial revision
+//
 //

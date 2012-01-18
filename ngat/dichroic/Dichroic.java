@@ -1,5 +1,5 @@
 // Dichroic.java
-// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/Dichroic.java,v 1.2 2012-01-17 14:56:01 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/Dichroic.java,v 1.3 2012-01-18 15:14:41 cjm Exp $
 package ngat.dichroic;
 
 import java.io.*;
@@ -10,46 +10,26 @@ import ngat.util.logging.*;
 
 /**
  * This class provides an interface to drive the IO:O Dichroic. This is an Arduino Ethernet + POE board,
- * which provides a telnet-like interface to move the 3 position dichroic (red|blue|mirror), and get
+ * which provides a telnet-like interface to move the 3 position dichroic (0|1|2|left|middle|right), and get
  * status and error information. 
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class Dichroic
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: Dichroic.java,v 1.2 2012-01-17 14:56:01 cjm Exp $");
+	public final static String RCSID = new String("$Id: Dichroic.java,v 1.3 2012-01-18 15:14:41 cjm Exp $");
 	/**
 	 * Basic log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE
 	 */
 	public final static int LOG_LEVEL_DICHROIC_BASIC = Logging.VERBOSITY_INTERMEDIATE;
 	/**
-	 * Constant specifying the RED slide position.
-	 */
-	protected final static int SLIDE_POSITION_RED = 0;
-	/**
-	 * Constant specifying the BLUE slide position.
-	 */
-	protected final static int SLIDE_POSITION_BLUE = 2;
-	/**
-	 * Constant specifying the MIRROR slide position.
-	 */
-	protected final static int SLIDE_POSITION_MIRROR = 1;
-	/**
 	 * Constant specifying an UNKNOWN slide position.
 	 */
 	protected final static int SLIDE_POSITION_UNKNOWN = -1;
-	/**
-	 * Array of 3 strings represting the slide positions. Should match the constants:
-	 * SLIDE_POSITION_RED , SLIDE_POSITION_BLUE , SLIDE_POSITION_MIRROR.
-	 * @see #SLIDE_POSITION_RED
-	 * @see #SLIDE_POSITION_BLUE
-	 * @see #SLIDE_POSITION_MIRROR
-	 */
-	protected final static String SLIDE_POSITION_STRING_LIST[] = {"red","mirror","blue"};
 
 // per instance variables
 	/**
@@ -134,7 +114,7 @@ public class Dichroic
 	 * <ul>
 	 * <li>Check the position argument is valid.
 	 * <li>We open the telnet connection.
-	 * <li>We construct a move command string using SLIDE_POSITION_STRING_LIST.
+	 * <li>We construct a move command string.
 	 * <li>We send the command string to the open connection using sendLine.
 	 * <li>We receive a reply from the connection using readLine.
 	 * <li>If the reply was non-null, we parse the reply (which should be a valid integer) to get the
@@ -144,18 +124,13 @@ public class Dichroic
 	 * </ul>
 	 * Note the method is synchronized on the object instance, so two thread cannot access the move
 	 * and getPosition simultaneously.
-	 * @param position An integer resresenting a position, one of: SLIDE_POSITION_RED, SLIDE_POSITION_BLUE, 
-	 *        SLIDE_POSITION_MIRROR.
+	 * @param position An integer resresenting a position, one of : 0|1|2.
 	 * @exception IOException Thrown if opening/closing/reading from the connection fails.
 	 * @exception NullPointerException Thrown if opening/closing/reading from/writing to the connection fails.
 	 * @exception DichroicMoveException Thrown if the move returns a non-zero error code from the arduino,
 	 *            or nothing is returned. Also thrown if the position is not legal,
 	 * @see #connection
 	 * @see #isPosition
-	 * @see #SLIDE_POSITION_RED
-	 * @see #SLIDE_POSITION_BLUE
-	 * @see #SLIDE_POSITION_MIRROR
-	 * @see #SLIDE_POSITION_STRING_LIST
 	 * @see ngat.net.TelnetConnection#open
 	 * @see ngat.net.TelnetConnection#sendLine
 	 * @see ngat.net.TelnetConnection#readLine
@@ -181,7 +156,7 @@ public class Dichroic
 		try
 		{
 			// send move command
-			commandString = new String("move "+SLIDE_POSITION_STRING_LIST[position]);
+			commandString = new String("move "+position);
 			logger.log(LOG_LEVEL_DICHROIC_BASIC,this.getClass().getName()+":move("+position+
 				   "):Sending command:"+commandString);
 			connection.sendLine(commandString);
@@ -223,27 +198,25 @@ public class Dichroic
 	 * <li>We open the telnet connection.
 	 * <li>We send the get position command string to the open connection using sendLine.
 	 * <li>We receive a reply from the connection using readLine.
-	 * <li>If the reply was non-null, we parse the reply (which should be red|blue|mirror|unknown) to get the
+	 * <li>If the reply was non-null, we parse the reply (which should be 0|1|2|-1) to get the
 	 *     position, and return this as an integer. If the reply cannot be parsed, we throw an exception.
 	 * <li>If the reply is null, we failed to get a reply from the arduino, and throw an exception.
 	 * <li>Finally, we always close the connection.
 	 * </ul>
 	 * Note the method is synchronized on the object instance, so two thread cannot access the move
 	 * and getPosition simultaneously.
-	 * @return The dichroic's current position, one of: SLIDE_POSITION_RED , SLIDE_POSITION_BLUE , 
-	 *         SLIDE_POSITION_MIRROR, SLIDE_POSITION_UNKNOWN.
+	 * @return The dichroic's current position, one of: 0|1|2|-1.
 	 * @exception IOException Thrown if opening/closing/reading from the connection fails.
 	 * @exception NullPointerException Thrown if opening/closing/reading from/writing to the connection fails.
 	 * @exception DichroicException Thrown if the get position command does not return a string, 
 	 *            or returns a string that is not known.
-	 * @see #SLIDE_POSITION_RED
-	 * @see #SLIDE_POSITION_BLUE
-	 * @see #SLIDE_POSITION_MIRROR
-	 * @see #SLIDE_POSITION_UNKNOWN
+	 * @exception NumberFormatException Thrown if parsing the reply as an integer fails.
 	 */
-	public synchronized int getPosition() throws IOException, NullPointerException, DichroicException
+	public synchronized int getPosition() throws IOException, NullPointerException, DichroicException,
+						     NumberFormatException
 	{
 		String replyString = null;
+		int position;
 
 		logger.log(LOG_LEVEL_DICHROIC_BASIC,this.getClass().getName()+":getPosition:Started.");
 		// open conenction
@@ -264,17 +237,13 @@ public class Dichroic
 				logger.log(LOG_LEVEL_DICHROIC_BASIC,this.getClass().getName()+
 					   ":getPosition:Parsing reply:"+replyString);
 				// if reply returned parse string
-				if(replyString.equals("red"))
-					return SLIDE_POSITION_RED;
-				else if(replyString.equals("mirror"))
-					return SLIDE_POSITION_MIRROR;
-				else if(replyString.equals("blue"))
-					return SLIDE_POSITION_BLUE;
-				else if(replyString.equals("unknown"))
-					return SLIDE_POSITION_UNKNOWN;
-				else
+				position = Integer.parseInt(replyString);
+				if(!isPosition(position,true))
+				{
 					throw new DichroicException(this.getClass().getName()+
 								    ":getPosition:Failed to parse reply:"+replyString);
+				}
+				return position;
 			}
 			else // end of stream reached / no string returned.
 				throw new DichroicException(this.getClass().getName()+
@@ -291,78 +260,26 @@ public class Dichroic
 	}
 
 	/**
-	 * Translate a string into a valid position integer.
-	 * @param s The string to translate, should be one of: 'red','blue','mirror','unknown'.
-	 * @return A position integer, one of: SLIDE_POSITION_RED, SLIDE_POSITION_BLUE, SLIDE_POSITION_MIRROR,
-	 *         SLIDE_POSITION_UNKNOWN.
-	 * @exception DichroicException Thrown if the string is not valid.
-	 * @see #SLIDE_POSITION_RED
-	 * @see #SLIDE_POSITION_BLUE
-	 * @see #SLIDE_POSITION_MIRROR
-	 * @see #SLIDE_POSITION_UNKNOWN
-	 */
-	public static int positionFromString(String s) throws DichroicException
-	{
-		if(s.equals("red"))
-			return SLIDE_POSITION_RED;
-		else if(s.equals("blue"))
-			return SLIDE_POSITION_BLUE;
-		else if(s.equals("mirror"))
-			return SLIDE_POSITION_MIRROR;
-		else if(s.equals("unknown"))
-			return SLIDE_POSITION_UNKNOWN;
-		else
-			throw new DichroicException("Dichroic:positionFromString:Failed to parse string:"+s);
-	}
-
-	/**
-	 * Translate a position into a string description.
-	 * @param position A position integer, one of: SLIDE_POSITION_RED, SLIDE_POSITION_BLUE, SLIDE_POSITION_MIRROR,
-	 *         SLIDE_POSITION_UNKNOWN.
-	 * @return The string description , should be one of: 'red','blue','mirror','unknown'.
-	 * @exception DichroicException Thrown if the position integer is not valid.
-	 * @see #SLIDE_POSITION_RED
-	 * @see #SLIDE_POSITION_BLUE
-	 * @see #SLIDE_POSITION_MIRROR
-	 * @see #SLIDE_POSITION_UNKNOWN
-	 */
-	public static String stringFromPosition(int position) throws DichroicException
-	{
-		if(position == SLIDE_POSITION_RED)
-			return "red";
-		else if(position == SLIDE_POSITION_BLUE)
-			return "blue";
-		else if(position == SLIDE_POSITION_MIRROR)
-			return "mirror";
-		else if(position == SLIDE_POSITION_UNKNOWN)
-			return "unknown";
-		else
-			throw new DichroicException("Dichroic:stringFromPosition:Illegal position:"+position);
-	}
-
-	/**
 	 * Return whether the specified position integer is a valid dichroic position or not.
 	 * @param position The position integer to test.
-	 * @param allowUnknown A boolean, if true allow SLIDE_POSITION_UNKNOWN to be valid, otherwise only
-	 *        allow SLIDE_POSITION_RED / SLIDE_POSITION_BLUE / SLIDE_POSITION_MIRROR.
+	 * @param allowUnknown A boolean, if true allow -1 to be valid, otherwise only allow 0|1|2.
 	 * @return True if the specified position integer is a valid dichroic position, false if it is not.
-	 * @see #SLIDE_POSITION_RED
-	 * @see #SLIDE_POSITION_BLUE
-	 * @see #SLIDE_POSITION_MIRROR
-	 * @see #SLIDE_POSITION_UNKNOWN
 	 */
 	protected boolean isPosition(int position,boolean allowUnknown)
 	{
-		if((position == SLIDE_POSITION_RED)||(position == SLIDE_POSITION_BLUE)||
-		   (position == SLIDE_POSITION_MIRROR))
+		if((position == 0)||(position == 1)||(position == 2))
 			return true;
-		if(allowUnknown && (position == SLIDE_POSITION_UNKNOWN))
+		if(allowUnknown && (position == -1))
 			return true;
 		return false;
 	}
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2012/01/17 14:56:01  cjm
+// SLIDE_POSITION_ constants now protected.
+// Eventually to be deprecated, as the contents of the slide move around.
+//
 // Revision 1.1  2011/10/12 10:16:10  cjm
 // Initial revision
 //
