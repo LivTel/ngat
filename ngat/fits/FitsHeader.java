@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // FitsHeader.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.6 2009-10-06 15:47:08 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.7 2012-08-02 09:38:39 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -30,7 +30,7 @@ import java.util.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.6 $
+ * @version $Revision: 0.7 $
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -38,7 +38,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.6 2009-10-06 15:47:08 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.7 2012-08-02 09:38:39 cjm Exp $");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -76,50 +76,71 @@ public class FitsHeader
 	private native String Fits_Header_Get_Error_String();
 	/**
 	 * Native wrapper to a libccsfits routine to open the filename.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
 	 * @param filename The filename to open.
 	 * @return Returns true if the operation succeeds, false if it fails.
 	 */
-	private native boolean Fits_Header_Open(String filename);
+	private native synchronized boolean Fits_Header_Open(String filename);
 	/**
 	 * Native wrapper to a libccsfits routine to update a keywords value that is of type String.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
 	 */
-	private native boolean Fits_Header_Update_Keyword_String(String keyword,String value,
+	private native synchronized boolean Fits_Header_Update_Keyword_String(String keyword,String value,
 		String comment,String units);
 	/**
 	 * Native wrapper to a libccsfits routine to update a keywords value that is of type Integer.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
 	 */
-	private native boolean Fits_Header_Update_Keyword_Integer(String keyword,Integer value,
+	private native synchronized boolean Fits_Header_Update_Keyword_Integer(String keyword,Integer value,
 		String comment,String units);
 	/**
 	 * Native wrapper to a libccsfits routine to update a keywords value that is of type Float.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
 	 */
-	private native boolean Fits_Header_Update_Keyword_Float(String keyword,Float value,
+	private native synchronized boolean Fits_Header_Update_Keyword_Float(String keyword,Float value,
 		String comment,String units);
 	/**
 	 * Native wrapper to a libccsfits routine to update a keywords value that is of type Double.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
 	 */
-	private native boolean Fits_Header_Update_Keyword_Double(String keyword,Double value,
+	private native synchronized boolean Fits_Header_Update_Keyword_Double(String keyword,Double value,
 		String comment,String units);
 	/**
 	 * Native wrapper to a libccsfits routine to update a keywords value that is of type Boolean.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
 	 */
-	private native boolean Fits_Header_Update_Keyword_Boolean(String keyword,Boolean value,
+	private native synchronized boolean Fits_Header_Update_Keyword_Boolean(String keyword,Boolean value,
 		String comment,String units);
 	/**
 	 * Native wrapper to a libccsfits routine to close the file.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
 	 * @return Returns true if the operation succeeds, false if it fails.
 	 */
-	private native boolean Fits_Header_Close();
+	private native synchronized boolean Fits_Header_Close();
 
 	/**
 	 * Constructor for FitsHeader. Constructs an empty cardImageList, and initialises the
@@ -260,10 +281,15 @@ public class FitsHeader
 
 	/**
 	 * Routine to write out the keyword-value combinations into a new file in the FITS format.
+	 * This method is synchronised, as using CFITSIO to write headers to two FITS
+	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
+	 * been compiled re-entrant).
+	 * In fact the underlying JNI methods are synchronised so this method does not need to be, but I'm
+	 * hoping this will be more efficient as the object lock is acquired only once.
 	 * @param filename The filename to write the FITS header to.
 	 * @exception FitsHeaderException Thrown if the file cannot be opened.
 	 */
-	public void writeFitsHeader(String filename) throws FitsHeaderException
+	public synchronized void writeFitsHeader(String filename) throws FitsHeaderException
 	{
 		FitsHeaderCardImage cardImage = null;
 		Object keyword = null;
@@ -306,6 +332,7 @@ public class FitsHeader
 
 	/**
 	 * This routine writes one keyword and it's value to a file.
+	 * This method is NOT synchronised, as the underlying native methods are synchronised.
 	 * @param cardImage An instance of FitsHeaderCardImage representing the keyword/value to write to the
 	 * 	FITS file.
 	 * @exception FitsHeaderException This is thrown if the value is not of a recognized class type,
@@ -384,6 +411,9 @@ public class FitsHeader
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.6  2009/10/06 15:47:08  cjm
+// Added getKeywordValue from Ian Todd, used for RISE.
+//
 // Revision 0.5  2006/05/16 17:42:25  cjm
 // gnuify: Added GNU General Public License.
 //
