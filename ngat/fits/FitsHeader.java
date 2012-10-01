@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // FitsHeader.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.8 2012-10-01 15:54:27 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.9 2012-10-01 16:00:20 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -31,7 +31,7 @@ import ngat.util.logging.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.8 $
+ * @version $Revision: 0.9 $
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -39,7 +39,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.8 2012-10-01 15:54:27 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.9 2012-10-01 16:00:20 cjm Exp $");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -88,13 +88,14 @@ public class FitsHeader
 	/**
 	 * Native wrapper to a libngatfits routine to open the filename.
 	 * @param filename The filename to open.
-	 * @return Returns true if the operation succeeds, false if it fails.
+	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Open(String filename) throws FitsHeaderException;
 	/**
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type String.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_String(String keyword,String value,
 							      String comment,String units) throws FitsHeaderException;
@@ -102,6 +103,7 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Integer.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Integer(String keyword,Integer value,
 							       String comment,String units) throws FitsHeaderException;
@@ -109,6 +111,7 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Float.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Float(String keyword,Float value,
 							     String comment,String units) throws FitsHeaderException;
@@ -116,6 +119,7 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Double.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Double(String keyword,Double value,
 							      String comment,String units) throws FitsHeaderException;
@@ -123,12 +127,13 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Boolean.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Boolean(String keyword,Boolean value,
 							       String comment,String units) throws FitsHeaderException;
 	/**
 	 * Native wrapper to a libngatfits routine to close the file.
-	 * @return Returns true if the operation succeeds, false if it fails.
+	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Close() throws FitsHeaderException;
 
@@ -417,6 +422,15 @@ public class FitsHeader
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.8  2012/10/01 15:54:27  cjm
+// The native part of the library completely re-written.
+// Native methods now throw a FitsHeaderException on failure.
+// A logger is now created and the logger reference passed to the C layer for logging.
+// The underlying C layer now no longer has a global fitsfile, but keeps
+// a fitsfile pointer for each FitsHeader instance. This allows 1 fits header to be
+// written simutaneously for each FitsHeader object instansiated. This stops
+// the file pointer being shared across 2 arms in Frodospec.
+//
 // Revision 0.7  2012/08/02 09:38:39  cjm
 // First attempt at adding synchronisation to FITS header writing to stop SIGSEGV problems in
 // Frodospec.
