@@ -1,4 +1,4 @@
-# $Header: /space/home/eng/cjm/cvs/ngat/astrometry/ngatastrometrywcstools/c/Makefile,v 1.2 2008-06-27 17:35:23 cjm Exp $
+# $Header: /space/home/eng/cjm/cvs/ngat/astrometry/ngatastrometrywcstools/c/Makefile,v 1.3 2012-11-12 17:59:21 cjm Exp $
 
 include ../../../../Makefile.common
 
@@ -7,9 +7,9 @@ PACKAGENAME 	= ngat.astrometry
 LIBNAME		= ngatastrometrywcstools
 
 WCSLIBNAME	= wcs
-# Use wcstools-3.6.8 in src
+# Use wcstools-3.8.1 in src
 # This has modified Makefiles to put libwcs.a in a hosttype specific directory.
-WCSLIBINCDIR	= $(LT_SRC_HOME)/wcstools-3.6.8/libwcs/
+WCSLIBINCDIR	= $(LT_SRC_HOME)/wcstools-3.8.1/libwcs/
 WCSLIBLINKDIR	= $(LT_LIB_HOME)
 
 INCDIR = ../include
@@ -69,6 +69,9 @@ backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.2  2008/06/27 17:35:23  cjm
+# Added MAKEDEPENDFLAGS.
+#
 # Revision 1.1  2007/09/27 15:35:14  cjm
 # Initial revision
 #
@@ -76,22 +79,25 @@ backup: tidy
 # DO NOT DELETE
 
 ngat_astrometry_WCSTools.o: /usr/include/stdio.h /usr/include/features.h
-ngat_astrometry_WCSTools.o: /usr/include/sys/cdefs.h /usr/include/gnu/stubs.h
-ngat_astrometry_WCSTools.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stddef.h
-ngat_astrometry_WCSTools.o: /usr/include/bits/types.h
+ngat_astrometry_WCSTools.o: /usr/include/sys/cdefs.h
 ngat_astrometry_WCSTools.o: /usr/include/bits/wordsize.h
+ngat_astrometry_WCSTools.o: /usr/include/gnu/stubs.h
+ngat_astrometry_WCSTools.o: /usr/include/gnu/stubs-32.h
+ngat_astrometry_WCSTools.o: /usr/lib/gcc/i386-redhat-linux/4.1.2/include/stddef.h
+ngat_astrometry_WCSTools.o: /usr/include/bits/types.h
 ngat_astrometry_WCSTools.o: /usr/include/bits/typesizes.h
 ngat_astrometry_WCSTools.o: /usr/include/libio.h /usr/include/_G_config.h
 ngat_astrometry_WCSTools.o: /usr/include/wchar.h /usr/include/bits/wchar.h
 ngat_astrometry_WCSTools.o: /usr/include/gconv.h
-ngat_astrometry_WCSTools.o: /usr/lib/gcc-lib/i386-redhat-linux/3.2.2/include/stdarg.h
+ngat_astrometry_WCSTools.o: /usr/lib/gcc/i386-redhat-linux/4.1.2/include/stdarg.h
 ngat_astrometry_WCSTools.o: /usr/include/bits/stdio_lim.h
 ngat_astrometry_WCSTools.o: /usr/include/bits/sys_errlist.h
 ngat_astrometry_WCSTools.o: /usr/include/stdlib.h /usr/include/string.h
-ngat_astrometry_WCSTools.o: /usr/java/j2sdk1.4.2_06/include/jni.h
-ngat_astrometry_WCSTools.o: /usr/java/j2sdk1.4.2_06/include/linux/jni_md.h
+ngat_astrometry_WCSTools.o: /usr/lib/gcc/i386-redhat-linux/4.1.2/include/jni.h
+ngat_astrometry_WCSTools.o: /usr/lib/gcc/i386-redhat-linux/4.1.2/include/jni_md.h
+ngat_astrometry_WCSTools.o: /usr/lib/gcc/i386-redhat-linux/4.1.2/include/gcj/libgcj-config.h
 ngat_astrometry_WCSTools.o: /usr/include/time.h /usr/include/bits/time.h
-ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.6.8/libwcs/wcs.h
-ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.6.8/libwcs/wcslib.h
-ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.6.8/libwcs/fitshead.h
+ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.8.1/libwcs/wcs.h
+ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.8.1/libwcs/wcslib.h
+ngat_astrometry_WCSTools.o: /home/dev/src/wcstools-3.8.1/libwcs/fitshead.h
 ngat_astrometry_WCSTools.o: /usr/include/sys/types.h
