@@ -1,5 +1,5 @@
 // SoakTestDichroic.java
-// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/test/SoakTestDichroic.java,v 1.1 2011-10-18 17:30:46 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/dichroic/test/SoakTestDichroic.java,v 1.2 2013-03-27 16:32:08 cjm Exp $
 package ngat.dichroic.test;
 
 import java.lang.*;
@@ -15,14 +15,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the IO:O dichroic.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SoakTestDichroic
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: SoakTestDichroic.java,v 1.1 2011-10-18 17:30:46 cjm Exp $");
+	public final static String RCSID = new String("$Id: SoakTestDichroic.java,v 1.2 2013-03-27 16:32:08 cjm Exp $");
 	/**
 	 * The dichroic instance.
 	 */
@@ -392,8 +392,7 @@ public class SoakTestDichroic
 
 			movePosition = random.nextInt(3);// produce values 012
 			logger.log(Logging.VERBOSITY_INTERMEDIATE,this.getClass().getName()+
-				   ":doCommand:About to move to position:"+movePosition+" ("+
-				   Dichroic.stringFromPosition(movePosition)+")");
+				   ":doCommand:About to move to position:"+movePosition);
 			dichroic.move(movePosition);	
 			logger.log(Logging.VERBOSITY_INTERMEDIATE,this.getClass().getName()+":doCommand:move done.");
 		}
@@ -429,8 +428,6 @@ public class SoakTestDichroic
 			position = dichroic.getPosition();
 			logger.log(Logging.VERBOSITY_INTERMEDIATE,this.getClass().getName()+
 				   ":doCommand:position is:"+position);
-			logger.log(Logging.VERBOSITY_INTERMEDIATE,this.getClass().getName()+
-				   ":doCommand:position is:"+Dichroic.stringFromPosition(position));
 		}
 	}
 
@@ -522,4 +519,7 @@ public class SoakTestDichroic
 
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.1  2011/10/18 17:30:46  cjm
+// Initial revision
+//
 //
