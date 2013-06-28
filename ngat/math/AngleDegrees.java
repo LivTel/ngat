@@ -4,7 +4,7 @@ public class AngleDegrees implements Angle {
 
     protected double angleDegrees;
 
-    public AngleDegree(double angleDegrees) {
+    public AngleDegrees(double angleDegrees) {
 	this.angleDegrees = angleDegrees;
     }
 
@@ -14,4 +14,8 @@ public class AngleDegrees implements Angle {
 	return Math.toRadians(angleDegrees);
     }
 
+  /** Returns the default style of formatting for the type of Angle.*/
+    public String getDefaultFormatString() {
+	return ""+angleDegrees;
+    }
 }
