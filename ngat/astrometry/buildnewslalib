@@ -1,0 +1,14 @@
+#!/bin/csh
+
+# compile modified jslalib using new-astro classes
+
+# DO NOT use 1.4
+set JAVA_HOME   = /usr/java/jdk1.5.0_16 
+set JNIINCDIR   = $JAVA_HOME/include/
+set JNIMDINCDIR = $JAVA_HOME/include/linux/
+
+set SLA_DIR = /home/dev/src/ngat/astrometry/Linux_sla/lib
+set DEST_DIR = /home/dev/bin/lib/i386-linux
+
+cc -Wall -shared -I$JNIINCDIR -I$JNIMDINCDIR -L${SLA_DIR} newjslalib.c ${SLA_DIR}/libsla.a -o ${DEST_DIR}/libnewjslalib.so -lm
+
