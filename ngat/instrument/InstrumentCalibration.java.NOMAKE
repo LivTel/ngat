@@ -1,0 +1,30 @@
+package ngat.instrument;
+
+import java.io.*;
+
+/** Details of calibration requirements and history for an instrument.*/
+public class InstrumentCalibration implements Serializable {
+
+    /** Serial version UID - used to maintain serialization compatibility
+     * across modifications of the class's structure.*/
+    private static final long serialVersionUID = -5627072258634864737L;
+
+    /** True if morning sky-flats should be attempted.*/
+    public boolean doMorningFlats;
+
+    /** True if evening sky-flats should be attempted.*/
+    public boolean doEveningFlats;
+
+    /** How often do we attempt morning sky-flat calibrations (ms).*/
+    public long morningFlatCadence;
+
+    /** How often do we attempt evening sky-flat calibrations (ms).*/
+    public long eveningFlatCadence;
+
+    /** When did we last do morning sky-flat calibrations.*/
+    public long lastMorningFlats;
+    
+    /** When did we last do evening sky-flat calibrations.*/
+    public long lastEveningFlats;
+
+}

@@ -1,0 +1,730 @@
+package ngat.instrument;
+
+import ngat.phase2.*;
+import ngat.util.*;
+import ngat.util.logging.*;
+
+import java.util.*;
+import java.io.*;
+
+/** 
+ * Stores information about a CCD camera - its current configuration and
+ * methods for calculating reconfiguration times etc.
+ */
+public class GenericCCD extends Instrument implements Logging 
+{
+
+    /** Pixel size in arc secs.*/
+    public static final double pixelSize = 0.1347;
+    
+    /** Max number of wheels in a filter wheel. */
+    public static final int maxWheelCount = 10;
+    
+    /** Max number of filters in a wheel. */
+    public static final int maxFilterCount = 20;
+    
+    /** The number of wheels in the filter wheel. */
+    protected int wheelCount = 0;
+    
+    /** The number of filters in each wheel. */
+    protected int filterCount = 0;
+
+    /** Stores the filter at each location in each wheel of the filter wheel.*/
+    Filter filterWheel[][];
+    
+    /** The currently selected filter in each wheel.*/
+    Filter currentFilter[];
+    
+    /** Stores the currently selected index in each wheel.*/
+    int currentFilterIndex[];
+  
+    /** Logging.*/
+    Logger infoLog;
+    
+    /** Default reconfiguration time (millis). This is needed because of a
+     * problem  with the wheel mechanism resulting in frequent resets as 
+     * the detente mechanism is missed or overshot due to slack in the 
+     * drive belt. This will hopefully be replaced with a more accurate set
+     * of parameters to allow realistic estimates of the time required.*/
+    protected final long DEFAULT_RECONFIG_TIME = 60000L;
+    
+    /** Default readout time. This actually depends on the binning, windowing
+     * and other internal settings.*/
+    protected final long DEFAULT_READOUT_TIME  = 20000L;
+    
+
+    /** 
+     * Create a CCD camera with the specified name.
+     * @param filters The number of filter positions in each wheel.
+     */
+    public GenericCCD(String name) 
+    {
+    	super(name);
+    	filterWheel = new Filter[maxWheelCount][maxFilterCount];
+    	currentFilter = new Filter[maxWheelCount];
+    	currentFilterIndex = new int[maxWheelCount];
+    	infoLog = LogManager.getLogger(INFO);
+    }
+
+    /** 
+     * Set the currently selected filter in the specified wheel by type.
+     * @param wheel The index of the wheel to set.
+     * @param type The type of the currently selected filter in the wheel.
+     * @throws IllegalArgumentException if any of the arguments were invalid.
+     */
+    public void setFilterByType(int wheel, String type) throws IllegalArgumentException 
+    { 
+    	int index = getIndexForFilter(wheel, type);
+    	if (index < 0)
+    		throw new IllegalArgumentException("CCD: " + name 
+    				+ " Illegal filter for wheel " + wheel + ": " + type);
+    	currentFilterIndex[wheel] = index;
+    	currentFilter[wheel] = getFilter(wheel, index);
+    }
+    
+    /** 
+     * Returns the currently selected filter in the specified wheel.
+     * @param wheel The index of the wheel to get the selected filter for.
+     * @return The currently selected filter in the specified wheel.
+     * @throws IllegalArgumentException if the wheel number is out of range.
+     */
+    public Filter getCurrentFilter(int wheel) throws IllegalArgumentException
+    {
+    	if (wheel < 0 || wheel >= wheelCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Wheel index " + wheel
+    				+ " out of range [0, " + (wheelCount-1) + "]");
+    	return currentFilter[wheel]; 
+    }   
+
+    /** 
+     * Returns the index of the currently selected Filter in the specified wheel.
+     * @param wheel The index of the wheel to get the current index for.
+     * @return The index position of the specified wheel.
+     * @throws IllegalArgumentException if the specified wheel number is out of range. 
+     */
+    public int getCurrentFilterIndex(int wheel) throws IllegalArgumentException 
+    {
+    	if (wheel < 0 || wheel >= wheelCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Wheel index " + wheel
+    				+ " out of range [0, " + (wheelCount-1) + "]");
+    	return currentFilterIndex[wheel]; 
+    }
+    
+    /** 
+     * Set the Filter at index in the specified wheel to the specified filter.
+     * @param wheel The index of the wheel to set the filter for.
+     * @param index The index (location) in the specified wheel.
+     * @param filter The filter to set.
+     * @throws IllegalArgumentException if any of the arguments are out of range.
+     */
+    public void setFilter(int wheel, int index, Filter filter) throws IllegalArgumentException 
+    {
+    	if (wheel < 0 || wheel >= wheelCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Wheel index " + wheel
+    				+ " out of range [0, " + (wheelCount-1) + "]");
+    	if (index < 0 || index >= filterCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Filter index " + index
+    				+ " out of range [0," + (filterCount-1) + "]");
+	
+    	filterWheel[wheel][index] = filter;
+    	infoLog.log(INFO, 2, "CCD", name, "setFilterWheel", 
+		    "Wheel: " + wheel + "Index: " + index + " Type: " 
+		    + filter.getType() + " Name: " + filter.getName());
+    }
+    
+    /** 
+     * Return the Filter at location index in the specified wheel.
+     * @param wheel The index of the wheel to get the filter for.
+     * @param index The index (location) in the filterwheel.
+     * @return The Filter at the specified position.
+     * @throws IllegalArgumentException if any of the arguments are out of range.
+     */
+    public Filter getFilter(int wheel, int index) throws IllegalArgumentException 
+    {
+    	if (wheel < 0 || wheel >= wheelCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Wheel index " + wheel
+    				+ " out of range [0, " + (wheelCount-1) + "]");
+    	if (index < 0 || index >= filterCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Filter index " + index
+    				+ " out of range [0," + (filterCount-1) + "]");
+    	return filterWheel[wheel][index];
+    }
+    
+    /** 
+     * Verify if the specified filter wheel contains the named filter.
+     * @param wheel The index of the wheel to verify.
+     * @param filterName The physical name of the Filter.
+     * @return true if the wheel has the specified filter, false if not.
+     * @throws IllegalArgumentException if the specified wheel number is out of range.
+     */
+    public boolean filterWheelHasFilter(int wheel, String filterName) throws IllegalArgumentException 
+    {
+    	if (wheel < 0 || wheel >= wheelCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Wheel index " + wheel
+    				+ " out of range [0, " + (wheelCount-1) + "]");
+    	for (int i = 0; i < filterCount; i++) 
+    	{
+    		if (filterName.equals(filterWheel[wheel][i].getName()))
+    				return true; 
+    	}
+    	return false;
+    }
+    
+    /** 
+     * Verifies if the specified filter wheel contains the named filter type.
+     * @param wheel The index of the wheel to verify.
+     * @param filterType The logical name (type) of the Filter.
+     */
+    public boolean filterWheelHasFilterType(int wheel, String filterType) throws IllegalArgumentException
+    {
+    	if (wheel < 0 || wheel >= wheelCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Wheel index " + wheel
+    				+ " out of range [0, " + (wheelCount-1) + "]");
+    	for (int i = 0; i < filterCount; i++)
+    	{
+    		if (filterType.equals(filterWheel[wheel][i].getType()))
+    			return true; 
+    	}
+    	return false;
+    }
+    
+    /** 
+     * Returns the index in the specified wheel of the specified type of filter.
+     * @param wheel The index of the wheel to get the filter index for.
+     * @param type The filter type to get the index of.
+     * @return The index of the filter in the wheel, or -1 if the wheel does not contain
+     *  the specified filter type.
+     * @throws IllegalArgumentException if the wheel number is out of range.
+     */
+    public int getIndexForFilter(int wheel, String type)
+    {
+    	if (wheel < 0 || wheel >= wheelCount)
+    		throw new IllegalArgumentException("CCD: " + name + " Wheel index " + wheel
+    				+ " out of range [0, " + (wheelCount-1) + "]");
+    	for (int i = 0; i < filterCount; i++) 
+    	{
+    		if (type.equals(filterWheel[wheel][i].getType()))
+    			return i;
+    	}
+    	return -1;
+    }
+    
+    /**
+     * Get the number of filters in each wheel of the filter wheel.
+     * @return The number of filters in each filter wheel.
+     */
+    public int getFilterCount()
+    {
+    	return filterCount;
+    }
+
+    /** 
+     * Load the CCD camera initial configuration from a file layed out in the
+     * java.util.Properties format. As a side effect, the FilterDatabase is also
+     * setup with the filters specified in the named property files.
+     * @param configFile The java.io.File containing Filter parameters etc
+     * layed out in java.util.Properties format.
+     * @exception IOException If the file cannot be found or any other IO
+     * problems occur while reading it.
+     * @exception IllegalArgumentException If an number parsing error occurs
+     * or an essential property is missing from the file.
+     */
+    public void configure(File configFile) throws IOException, IllegalArgumentException 
+    {
+		ConfigurationProperties props = new ConfigurationProperties();
+		
+		// Load the Config info.
+		InputStream in   = new FileInputStream(configFile);	
+		props.load(in);
+		
+		// Get the Filter Wheel config file.
+		File filterFile = null;
+		try 
+		{
+		    filterFile = props.getFile("filter.config.file");
+		} 
+		catch (FileNotFoundException fx) 
+		{
+		    throw new IllegalArgumentException("CCD: " + name +
+						       " (configure) Error parsing config: Filter Wheel Set: " + fx);
+		}
+	
+		// Get the Filter database file.
+		File dbPropsFile = null;
+		try 
+		{
+		    dbPropsFile = props.getFile("filter.database.file");
+		} 
+		catch (FileNotFoundException fx)
+		{
+		    throw new IllegalArgumentException("CCD: " + name +
+						       " (configure) Error parsing config: Filter Database: "+ fx);
+		}
+		
+		configure(dbPropsFile, filterFile);
+    }
+    
+    /** 
+     * Load the CCD camera initial configuration from a file layed out in the
+     * java.util.Properties format. As a side effect, the FilterDatabase is also
+     * setup with the filters specified in the named property files.
+     * @param dbFile Filter Database file layed out in java.util.Properties format.
+     * @param filterFile The java.io.File containing Filter parameters etc
+     * layed out in java.util.Properties format.
+     * @exception IOException If the file cannot be found or any other IO
+     * problems occur while reading it.
+     * @exception IllegalArgumentException If an number parsing error occurs
+     * or an essential property is missing from the file.
+     */
+    public void configure(File dbFile, File filterFile) throws IOException, IllegalArgumentException 
+    {
+    	ConfigurationProperties filterProps = new ConfigurationProperties();
+		
+		// Load the Filter Config info.
+		InputStream in   = new FileInputStream(filterFile);	
+		filterProps.load(in);
+		
+		// Wheels.
+		try 
+		{
+		    wheelCount = Integer.parseInt((String)filterProps.getProperty("filterwheel.count", "" + 2));
+		} 
+		catch (NumberFormatException ne)
+		{
+		    throw new IllegalArgumentException("CCD: " + name +
+						       " (configure) Error parsing filterwheel.count : " + ne);
+		}
+		infoLog.log(INFO, 2, "CCD", name, 
+			   "Loaded wheel count: " + wheelCount);
+		Filter filter = null;
+		for (int wheel = 0; wheel < wheelCount; wheel++) 
+		{
+		    try 
+		    {
+		    	filterCount = Integer.parseInt((String)filterProps.getProperty("filterwheel."+wheel+".count",""+0));
+		    } 
+		    catch (NumberFormatException ne) 
+		    {
+		    	throw new IllegalArgumentException("CCD: " + name +
+							   " (configure) Error parsing filter." + wheel + ".count : " + ne);
+		    }
+		    infoLog.log(INFO, 2, "CCD", name, 
+				"Loaded filter wheel " + wheel + " filter count: " + filterCount);
+		    
+		    for (int filterNo = 0; filterNo < filterCount; filterNo++) 
+		    {
+		    	String type = (String)filterProps.getProperty("filterwheel." + wheel + "." + filterNo + ".type");
+			
+				if (type == null)
+				    throw new IllegalArgumentException("CCD: " + name +
+								       " (configure) Filterwheel: " + wheel +
+								       " location: " + filterNo + " type not defined.");
+				infoLog.log(INFO, 2, "CCD", name, 
+					   "Wheel: "+wheel+" location: "+filterNo+" Loaded type: "+type);
+				
+				String id = (String)filterProps.getProperty("filterwheel."+type+".id");		
+				
+				if (id == null)
+				    throw new IllegalArgumentException("CCD: "+name+
+								       " (configure) Filterwheel: "+wheel+
+								       " location: "+filterNo+" id not defined. ");	    
+				infoLog.log(INFO, 2, "CCD", name, 
+					   "Wheel: "+wheel+" location: "+filterNo+" Loaded id: "+id);
+				
+				// Setup this filter in the database using the filter's Physical name.
+				filter = makeFilter(type, id, dbFile);
+				infoLog.log(INFO, 2, "CCD", name, 
+					    "Configured CCD for filter: "+filter);
+				
+				// Set the filter to specified physical name.
+				setFilter(wheel, filterNo, filter );
+		    }
+		}	
+    }
+    
+    /** 
+     * Configure the Instrument Standards set from the specified File.
+     * The properties should include the following info:-<br>
+     * <dl>
+     * <dt>standard.inst-name.config.count
+     * <dd>The number of configs to set up.
+     * <dt>standard.inst-name.config.<i>count</i>.upper.filter  
+     * <dd>The name/type of the upper filter.
+     * <dt>standard.inst-name.config.<i>count</i>.lower.filter   
+     * <dd>The name/type of the lower filter.
+     * </dl>
+     * @param file The configuration file.
+     * @exception IOException If the file cannot be found or any other IO
+     * problems occur while reading it. 
+     * @exception IllegalArgumentException If an number parsing error occurs
+     * or an essential property is missing from the file.
+     */
+    public void configureStandards(File file) throws IOException, IllegalArgumentException
+    {
+		InputStream in    = new FileInputStream(file);
+		ConfigurationProperties props = new ConfigurationProperties();
+		props.load(in);
+		configureStandards(props);
+    }
+    
+    /** 
+     * Configure Standards from a ConfigurationProperties.
+     * @param props The ConfigurationProperties to use.
+     * @exception IllegalArgumentException If an number parsing error occurs
+     * or an essential property is missing from the file.
+     */
+    public void configureStandards(ConfigurationProperties props)  throws IllegalArgumentException
+    {
+		GenericCCDConfig instConfig = null;	
+		CCDDetector detector = new CCDDetector();
+		detector.setXBin(1);
+		detector.setYBin(1);
+		
+		int configCount = props.getIntValue("standard."+name+".config.count", -1);
+		if (configCount == -1)
+		    throw new IllegalArgumentException("Instrument ["+name+
+						       "] standards: config.count: Not set or illegal.");
+		
+		standards = new GenericCCDConfig[configCount];
+		
+		for (int i = 0; i < configCount; i++) 
+		{	 	   
+		    instConfig  = new GenericCCDConfig("Std-"+name+"-("+i+")");
+		    instConfig.setDetector(0, detector);
+		    for (int wheel = 0; wheel < wheelCount; wheel++)
+		    {
+			    String filter = props.getProperty("standard."+name+".config."+i+".filter."+wheel);
+			    if (filter == null)
+			    	throw new IllegalArgumentException("Standards: "+instConfig.getName()+
+								   " Filter "+wheel+" not set or illegal.");
+			    instConfig.setFilterName(wheel, filter);
+		    }	  
+		    
+		    standards[i] = instConfig;
+		}
+    }
+    
+    /** 
+     * Configure the Instrument with default settings.
+     */
+    public void loadConfig() 
+    {
+		try 
+		{
+			for (int wheel = 0; wheel < wheelCount; wheel++)
+			{
+			    Filter filter = getFilter(wheel, 0);
+			    infoLog.log(INFO, 2, "CCD", name, "config(V)", "Filter wheel " + wheel + ": " + filter);
+			    setFilterByType(wheel, filter.getType());
+			}
+			CCDDetector detector = new CCDDetector();	    
+			setDetector(0, detector);
+		} 
+		catch (IllegalArgumentException e) 
+		{
+		    System.err.println("CCD: "+name+" (configure) Unexpected error setting default config: "+e);
+		}
+    }
+
+    /** 
+     * Sets the current InstrumentConfig from the properties contained in configFile.
+     * @param configFile Config settings in java.util.Properties format.
+     */
+    public void loadConfig(File configFile) throws IOException, IllegalArgumentException 
+    {
+		InputStream in = new FileInputStream(configFile);
+		ConfigurationProperties props = new ConfigurationProperties();
+		props.load(in);
+		loadConfig(props);
+    }
+  
+    /** 
+     * ConfigureInstrument from a ConfigurationProperties.
+     * @param props The ConfigurationProperties to use.
+     * @exception IllegalArgumentException If an number parsing error occurs
+     * or an essential property is missing from the file.
+     */
+    public void loadConfig(ConfigurationProperties props) throws IllegalArgumentException 
+    {
+		instConfigName = props.getProperty("id", "UNTITLED");
+		for (int wheel = 0; wheel < wheelCount; wheel++)
+		{
+			setFilterByType(wheel, props.getProperty("filter." + wheel, "clear"));
+		}
+		CCDDetector detector = new CCDDetector();	    
+		setDetector(0, detector);
+		detector.setXBin(props.getIntValue("x.bin", 1));
+		detector.setYBin(props.getIntValue("y.bin", 1)); 
+		detector.clearAllWindows();
+    }
+    
+    /** 
+     * Configure the Instrument with the specified (instrument specific) ngat.phase2.Config.
+     * @param ic The InstrumentConfig to apply.
+     */
+    public void configure(InstrumentConfig ic) 
+    {
+		GenericCCDConfig ccdc = (GenericCCDConfig)ic;
+		for (int wheel = 0; wheel < wheelCount; wheel++)
+		{
+			setFilterByType(wheel, ccdc.getFilterName(wheel));
+		}
+		try 
+		{
+		    setDetector(0, ccdc.getDetector(0));
+		} 
+		catch (IllegalArgumentException e) 
+		{
+		    System.err.println("CCD: "+name+" (configure) Unexpected error setting detector from config: "+e);
+		}
+    }
+    
+    /** 
+     * Return the current configuration as an ngat.phase2.InstrumentConfig.
+     * @param name A name to apply to the config.
+     * @return The current configuration.
+     */
+    public InstrumentConfig getConfig(String name) 
+    {
+    	GenericCCDConfig config = new GenericCCDConfig(name);
+    	for (int wheel = 0; wheel < wheelCount; wheel++)
+    	{
+    		config.setFilterName(wheel, currentFilter[wheel].getType());
+    	}
+		try 
+		{
+		    config.setDetector(0, detectors[0]);
+		} catch (IllegalArgumentException e) {
+		    System.err.println("CCD: "+name+" (getConfig) Unexpected error setting detector in config: "+e);
+		}
+		return config;
+    }
+
+    /** 
+     * Returns true if the specified configuration is valid for this Instrument.
+     * @param config The configuration to test against valid configs for the Instruement.
+     */
+    public boolean canBeConfigured(InstrumentConfig config) 
+    {
+		if (! (config instanceof GenericCCDConfig)) 
+			return false;
+		GenericCCDConfig cc = (GenericCCDConfig)config;
+		for (int wheel = 0; wheel < wheelCount; wheel++)
+		{
+			String filter = cc.getFilterName(wheel);
+			if (!filterWheelHasFilterType(wheel, filter)) 
+				return false;
+		}
+		Detector[] dets = cc.getDetectors();
+		if (dets == null || (dets.length != 1)) 
+			return false;
+		CCDDetector det = (CCDDetector)dets[0];
+		if (det == null)
+			return false;
+		
+		return true;
+    }
+    
+    /** 
+     * Returns the wavelength (nm) represented by the current configuration.
+     * If filters are either Clear or Neutral then we just assume 500nm !
+     */
+    public double getCurrentWavelength() 
+    {
+    	for (int wheel = 0; wheel < wheelCount; wheel++)
+    	{
+			if (!currentFilter[wheel].isClear() && !currentFilter[wheel].isNeutral()) 
+			{
+			   	return currentFilter[wheel].getCentralWavelength()/10.0;
+			}
+    	}
+    	return 500.0;
+    }
+
+    /** 
+     * Returns the time taken for reconfiguration to the specified
+     * new configuration.## Just returns DEFAULT_RECONFIG_TIME.
+     * @param other The new configuration to go to.
+     * @return The time required to move to this configuration from
+     * the current configuration.
+     */
+    public long getReconfigurationTime(InstrumentConfig other) 
+    {
+    	return DEFAULT_RECONFIG_TIME;
+    }
+    
+    /** 
+     * Calculates and returns the readout time for this CCD in
+     * its current configuration. ## Just returns DEFAULT_READOUT_TIME.
+     */
+    public long calculateReadoutTime() 
+    {
+    	return DEFAULT_READOUT_TIME;
+    }
+
+    /** 
+     * Returns the time taken to perform pre/post exposure calibration in
+     * its current configuration.
+     * @param exposeTime The time taken for the actual exposure.
+     */
+    public long getCalibrationTime(double exposeTime) 
+    {
+    	return 0L;
+    }
+
+
+    public double getPixelSize() 
+    { 
+    	return Math.toRadians(pixelSize*3600); 
+    }
+    
+    /** 
+     * Load the filter config from a file layed out in the
+     * java.util.Properties format.
+     * @param propsFile The java.io.File containing the properties.
+     * @exception IOException If the file cannot be found or any other IO
+     * problems occur while reading it.
+     * @exception IllegalArgumentException If an number parsing error occurs
+     * or an essential property is missing from the file.
+     */
+    public Filter makeFilter(String type, String name, File propsFile) 
+		throws IOException, IllegalArgumentException 
+	{
+		InputStream in   = new FileInputStream(propsFile);
+		Properties props = new Properties();
+		props.load(in);
+		Filter filter    = new Filter(name);
+		filter.setType(type);	
+		filter.configure(props);	
+		return filter;
+    }
+
+    /** 
+     * Returns a reference to an exposure calculator.
+     */
+    public ExposureCalculator getExposureCalculator() 
+    { 
+    	return new CCDExposureCalculator();
+    }
+
+    /** Internal ExposureCalculator.*/
+    protected class CCDExposureCalculator implements ExposureCalculator 
+    {
+		/** 
+		 * Returns the exposure time (millis) for the CCD as currently configured for the specifed 
+		 * Source magnitude and SNR. 	
+		 * @param sourceMagnitude The magnitude of the star for which the exposure is to be determined.
+		 * @param snr             The snr for this exposure.
+		 * @param skyMagnitude    Magnitude of the sky (mag/arcsec^2).
+		 * @param seeing          The current seeing (arcsec).
+		 * @return The exposure time in millis.
+		 */
+		public double calculateExposureTime(double sourceMagnitude, double snr, double skyMagnitude, double seeing) 
+		{
+		    // Fake result.
+		    //return (1000.0)*Math.pow(2.0, sourceMagnitude-15.0)*(Math.log(snr)+5.0);
+		    
+		    // Actual Result.
+		    double telarea   = 31415;
+		    double readnoise = 3.0;
+		    double telqe     = 0.70;
+	
+		    Filter filter = currentFilter[0];
+	
+		    System.err.println("EXP:Starting exposure calculation:");
+		    // Work out which is the non-clear filter. Note that the 'clear' filter may be an ND so
+		    // need to take into account the extinction (mags)..
+		    double extinction = 1.0;
+		    
+		    // Whichever filter is NOT ND and NOT clear use it.
+		    for (int wheel = 0; wheel < wheelCount; wheel++)
+		    {
+		    	if (!currentFilter[wheel].isClear())
+		    	{
+		    		if (!currentFilter[wheel].isNeutral())
+		    		{
+		    			filter = currentFilter[wheel];
+		    		}
+		    		else
+		    		{
+		    			// If a filter is neutral, set its extinction.
+		    			extinction = currentFilter[wheel].getExtinction();
+		    		}
+		    	}
+		    }
+	
+		    System.err.println("EXP:Use Filter: "+filter);
+		    System.err.println("EXP:Overall Extinction: "+extinction);
+		   
+		    double ccdqe    = filter.getQCCD();
+		    double zp       = filter.getZeroCalibration();
+		    double filwidth = filter.getBandwidth();
+		    double filwave  = filter.getCentralWavelength();
+		    double filqe    = filter.getQFilter();
+		 
+		    double starflux        = zp * Math.pow(10.0,-0.4*sourceMagnitude);
+		    double flux            = starflux * telarea * telqe * ccdqe * filqe * filwidth / extinction;
+		    double energyperphoton = 19.8e-9/filwave;
+		    double starphotons     = flux / energyperphoton; // units: photons per 
+		    
+		    System.out.println("EXP:starphotons="+starphotons);
+		    
+		    double areaofdisk = (seeing * 1.5) * (seeing * 1.5);
+		    
+		    double pixelarea = pixelSize * pixelSize;
+		    
+		    double numberofpixels = areaofdisk/pixelarea;
+		    
+		    System.out.println("EXP:numberofpixels="+numberofpixels);
+		    
+		    double skyflux = zp * Math.pow(10.0,-0.4*skyMagnitude) * pixelarea;
+		    flux = skyflux * telarea * telqe * ccdqe * filqe * filwidth / extinction;
+		    energyperphoton = 19.8e-9/filwave;
+		    double skyphotons = flux / energyperphoton;
+		    
+		    System.out.println("EXP:skyphotons/pixel="+skyphotons);
+		    
+		    skyphotons = skyphotons * numberofpixels;
+		    
+		    double temp = snr * snr * starphotons + snr*snr*skyphotons;
+		    
+		    double root = Math.sqrt(temp*temp + 
+					    4 * starphotons * starphotons * readnoise *
+					    readnoise*numberofpixels*snr*snr);
+		    
+		    double texp = (snr * snr * starphotons + snr*snr*skyphotons + root) /
+			(2.0 * starphotons * starphotons);	
+		    
+		    int iexp = (int)(texp + 1);
+		    System.err.println("EXP:Calculated exposure: "+iexp+" secs.");
+	
+		    return iexp*1000.0;
+		}  
+	
+		/**
+		 * Calculates the exposure time (millis) for the CCD  
+		 * configured with the supplied InstrumentConfig.
+		 * @param config          The InstrumentConfig to use.
+		 * @param sourceMagnitude The magnitude of the star for which the exposure is to be determined.
+		 * @param snr             The snr for this exposure.
+		 * @param skyMagnitude    Magnitude of the sky (mags.arcsec<sup>-2</sup>).
+		 * @param seeing          The current seeing (arcsec).
+		 * @return                The exposure time in millis.
+		 */
+		public double calculateExposureTime(InstrumentConfig config,
+						    double           sourceMagnitude,
+						    double           snr, 
+						    double           skyMagnitude, 
+						    double           seeing) 
+		{
+		    
+		    // Save the current config, re-configure with new config, 
+		    // calc time, reset config to current.
+		    GenericCCDConfig current = (GenericCCDConfig)getConfig("");
+		    configure(config);
+		    double time = calculateExposureTime(sourceMagnitude, snr, skyMagnitude, seeing);
+		    configure(current);
+		    return time;
+		}	
+    }
+}
