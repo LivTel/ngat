@@ -1,10 +1,10 @@
 package ngat.math;
 
-public class AngleRad implements Angle {
+public class AngleRads implements Angle {
 
     protected double angleRads;
 
-    public AngleRad(double angleRads) {
+    public AngleRads(double angleRads) {
 	this.angleRads = angleRads;
     }
 
@@ -14,4 +14,8 @@ public class AngleRad implements Angle {
 	return angleRads;
     }
 
+    /** Returns the default style of formatting for the type of Angle.*/
+    public String getDefaultFormatString() {
+	return ""+angleRads;
+    }
 }
