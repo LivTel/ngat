@@ -1,5 +1,5 @@
 // FloatRead.java
-// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatRead.java,v 1.2 2008-06-24 15:59:03 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/df1/test/FloatRead.java,v 1.3 2013-06-28 10:41:25 cjm Exp $
 package ngat.df1.test;
 
 import java.lang.*;
@@ -9,25 +9,26 @@ import java.text.*;
 import java.util.*;
 
 import ngat.df1.*;
+import ngat.serial.arcomess.*;
 import ngat.util.*;
 import ngat.util.logging.*;
 
 /**
  * This class tests the Frodospec Df1 library, by reading a float value from a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class FloatRead
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: FloatRead.java,v 1.2 2008-06-24 15:59:03 cjm Exp $");
+	public final static String RCSID = new String("$Id: FloatRead.java,v 1.3 2013-06-28 10:41:25 cjm Exp $");
 	/**
 	 * Which type of device to try to connect to.
-	 * @see ngat.df1.Df1Library#INTERFACE_DEVICE_NONE
+	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_NONE
 	 */
-	protected int deviceId = Df1Library.INTERFACE_DEVICE_NONE;
+	protected int deviceId = ArcomESS.INTERFACE_DEVICE_NONE;
 	/**
 	 * Name of the device to connect to.
 	 * If deviceId is INTERFACE_DEVICE_SERIAL, the serial device i.e. /dev/ttyS0.
@@ -50,8 +51,12 @@ public class FloatRead
 	protected BitFieldLogFilter logFilter = null;
 	/**
 	 * The Df1Library log level.
+	 * @see ngat.serial.arcomess.ArcomESS#LOG_BIT_SERIAL
+	 * @see ngat.serial.arcomess.ArcomESS#LOG_BIT_SOCKET
+	 * @see ngat.df1.Df1Library#LOG_BIT_DF1
+	 * @see ngat.df1.Df1Library#LOG_BIT_DF1_READ_WRIT
 	 */
-	protected int logLevel = Df1Library.LOG_BIT_SERIAL|Df1Library.LOG_BIT_SOCKET|
+	protected int logLevel = ArcomESS.LOG_BIT_SERIAL|ArcomESS.LOG_BIT_SOCKET|
 		Df1Library.LOG_BIT_DF1|Df1Library.LOG_BIT_DF1_READ_WRITE;
 	/**
 	 * The PLC address of the float to read. i.e. F8:1.
@@ -61,31 +66,42 @@ public class FloatRead
 	/**
 	 * Run method.
 	 * <ul>
+	 * <li>Creates an ArcomESS instance.
+	 * <li>Calls setLogFilterLevel with the logLevel.
+	 * <li>Calls interfaceOpen with deviceId, deviceName, portNumber to connect to the ArcomESS 
+	 *     (and therefore the PLC).
 	 * <li>Creates a Df1Library instance.
 	 * <li>Calls setLogFilterLevel with the logLevel.
-	 * <li>Calls interfaceOpen with deviceId, deviceName, portNumber to connect to the PLC.
 	 * <li>Calls getFloat with plcAddress to get the value held at the specified address on the PLC.
 	 * <li>Finally, calls interfaceClose to close the connection to the PLC.
 	 * </ul>
+	 * @exception ArcomESSNativeException Thrown if an error occurs initialising,opening or 
+	 *            closing the ArcomESS interface.
+	 * @exception Df1LibraryNativeException Thrown if an error occurs communicating with the PLC.
 	 * @see #deviceName
 	 * @see #deviceId
 	 * @see #portNumber
 	 * @see #plcAddress
 	 * @see #logLevel
+	 * @see ngat.serial.arcomess.ArcomESS
+	 * @see ngat.serial.arcomess.ArcomESS#setLogFilterLevel
+	 * @see ngat.serial.arcomess.ArcomESS#interfaceOpen
+	 * @see ngat.serial.arcomess.ArcomESS#interfaceClose
 	 * @see ngat.df1.Df1Library
 	 * @see ngat.df1.Df1Library#setLogFilterLevel
-	 * @see ngat.df1.Df1Library#interfaceOpen
-	 * @see ngat.df1.Df1Library#interfaceClose
 	 * @see ngat.df1.Df1Library#getFloat
 	 */
-	public void run() throws Df1LibraryNativeException
+	public void run() throws Df1LibraryNativeException, ArcomESSNativeException
 	{
+		ArcomESS arcomESS = null;
 		Df1Library df1 = null;
 		float value;
 
-		df1 = new Df1Library();
+		arcomESS = new ArcomESS();
+		arcomESS.setLogFilterLevel(logLevel);
+		arcomESS.interfaceOpen(deviceId,deviceName,portNumber);
+		df1 = new Df1Library(arcomESS);
 		df1.setLogFilterLevel(logLevel);
-		df1.interfaceOpen(deviceId,deviceName,portNumber);
 		try
 		{
 			value = df1.getFloat(plcAddress);
@@ -93,7 +109,7 @@ public class FloatRead
 		}
 		finally
 		{
-			df1.interfaceClose();
+			arcomESS.interfaceClose();
 		}
 	}
 
@@ -106,7 +122,7 @@ public class FloatRead
 	{
 		LogHandler handler = null;
 		BogstanLogFormatter blf = null;
-		String loggerList[] = {"ngat.df1.Df1Library"};
+		String loggerList[] = {"ngat.df1.Df1Library","ngat.serial.arcomess.ArcomESS"};
 
 		// setup log formatter
 		blf = new BogstanLogFormatter();
@@ -178,7 +194,7 @@ public class FloatRead
 				if((i+1)< args.length)
 				{
 					deviceName = args[i+1];
-					deviceId = Df1Library.INTERFACE_DEVICE_SERIAL;
+					deviceId = ArcomESS.INTERFACE_DEVICE_SERIAL;
 					i++;
 				}
 				else
@@ -193,7 +209,7 @@ public class FloatRead
 				{
 					deviceName = args[i+1];
 					portNumber = Integer.parseInt(args[i+2]);
-					deviceId = Df1Library.INTERFACE_DEVICE_SOCKET;
+					deviceId = ArcomESS.INTERFACE_DEVICE_SOCKET;
 					i += 2;
 				}
 				else
@@ -263,6 +279,9 @@ public class FloatRead
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2008/06/24 15:59:03  cjm
+// Added logging code.
+//
 // Revision 1.1  2008/03/06 10:46:47  cjm
 // Initial revision
 //
