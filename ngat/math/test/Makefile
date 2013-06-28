@@ -1,42 +1,19 @@
-# Makefile -*- mode: Fundamental;-*-
-# $Header: /space/home/eng/cjm/cvs/ngat/math/test/Makefile,v 0.7 2002-11-15 13:37:54 je Exp $ 
+PACKAGENAME    = ngat.math.test
+PACKAGEDIR     = ngat/math/test
+JAR_FILE       = ngat_math_test.jar
+
+SRCS           = QuadraticFitTest.java \
+		 QuadraticFitTest2.java
 
 include $(LT_SRC_HOME)/ngat/Makefile.ngat
 
-PACKAGE_DIR	= math/test
-BINDIR 		= $(NGAT_BIN_HOME)/$(PACKAGE_DIR)
-DOCSDIR 	= $(NGAT_DOC_HOME)/javadocs/ngat/$(PACKAGE_DIR)
-DOCFLAGS 	= -version -author -private
-SRCS 		= QuadraticFitTest.java QuadraticFitTest2.java
-OBJS 		= $(SRCS:%.java=$(BINDIR)/%.class)
-DOCS 		= $(SRCS:%.java=$(DOCSDIR)/%.html)
 
-top: $(OBJS) docs
-
-$(BINDIR)/%.class:%.java
-	$(JAVAC) $(JAVAC_OPTIONS) -d $(BINDIR) $<
-
-docs: $(DOCS)
-
-$(DOCS): $(SRCS)
-	$(JAVADOC) -d $(DOCSDIR) $(DOCFLAGS) $(SRCS)
-
-checkout:
-	$(CO) $(CO_OPTIONS) $(SRCS)
-
-checkin:
-	-$(CI) $(CI_OPTIONS) $(SRCS)
-
-clean: tidy
-	-$(RM) $(RM_OPTIONS) $(OBJS)
-
-tidy:
-	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
-
-backup: tidy
-
+# $Header: /space/home/eng/cjm/cvs/ngat/math/test/Makefile,v 0.8 2013-06-28 13:50:59 cjm Exp $ 
 #
 # $Log: not supported by cvs2svn $
+# Revision 0.7  2002/11/15 13:37:54  je
+# *** empty log message ***
+#
 # Revision 0.6  2002/11/15 13:35:42  je
 # As above - co error!
 #
