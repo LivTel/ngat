@@ -8,7 +8,11 @@ JAR_FILE       = ngat_math.jar
 DIRS           = test
 DIRS_TARGET    = dirs
 
-SRCS           = CartesianCoordinatePair.java \
+SRCS           = Angle.java \
+		AngleRads.java \
+		AngleDegrees.java \
+		AngleHMS.java \
+		CartesianCoordinatePair.java \
                  ChiSquaredFitDataValuer.java \
                  ChiSquaredFit.java \
                  ChiSquaredFitModeller.java \
@@ -21,13 +25,16 @@ SRCS           = CartesianCoordinatePair.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: cjm $ 
-# $Revision: 1.2 $
-#       $Id: Makefile,v 1.2 2006-12-18 12:27:17 cjm Exp $
-#     $Date: 2006-12-18 12:27:17 $
+#   $Author: eng $ 
+# $Revision: 1.3 $
+#       $Id: Makefile,v 1.3 2013-06-28 13:47:16 eng Exp $
+#     $Date: 2013-06-28 13:47:16 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/math/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.2  2006/12/18 12:27:17  cjm
+#      *** empty log message ***
+#
 #      Revision 1.1  2006/12/18 12:17:58  snf
 #      Initial revision
 #
