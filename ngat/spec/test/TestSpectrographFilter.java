@@ -1,5 +1,6 @@
-// TestSpectrographFilter.java -*- mode: Fundamental;-*-
-// $Header: /space/home/eng/cjm/cvs/ngat/spec/test/TestSpectrographFilter.java,v 0.3 2002-02-14 18:05:46 cjm Exp $
+// TestSpectrographFilter.java
+// $Header: /space/home/eng/cjm/cvs/ngat/spec/test/TestSpectrographFilter.java,v 0.4 2013-06-28 10:13:30 cjm Exp $
+package ngat.spec.test;
 
 import java.lang.*;
 
@@ -8,14 +9,14 @@ import ngat.spec.*;
 /**
  * Simple test of ngat.spec library.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision: 0.4 $
  */
 public class TestSpectrographFilter
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TestSpectrographFilter.java,v 0.3 2002-02-14 18:05:46 cjm Exp $");
+	public final static String RCSID = new String("$Id: TestSpectrographFilter.java,v 0.4 2013-06-28 10:13:30 cjm Exp $");
 
 	/**
 	 * Run method. 
@@ -81,6 +82,9 @@ public class TestSpectrographFilter
 }
 //
 // $Log: not supported by cvs2svn $
+// Revision 0.3  2002/02/14 18:05:46  cjm
+// Added extra calls for startx/starty.
+//
 // Revision 0.2  2000/10/19 13:48:27  cjm
 // initial test program.
 //

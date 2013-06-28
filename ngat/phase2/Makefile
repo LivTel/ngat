@@ -42,12 +42,18 @@ SRCS           = CatalogSource.java \
                  Mosaic.java \
                  Observation.java \
 		 Offset.java \
+                 OConfig.java \
+                 ODetector.java \
                  PipelineConfig.java \
 		 PolarimeterDetector.java \
 		 PolarimeterConfig.java \
                  Proposal.java \
 		 RISEDetector.java \
 		 RISEConfig.java \
+		 Ringo2PolarimeterDetector.java \
+		 Ringo2PolarimeterConfig.java \
+		 Ringo3PolarimeterDetector.java \
+		 Ringo3PolarimeterConfig.java \
                  Root.java \
 		 RepeatableGroup.java \
 		 Revision.java \
@@ -58,6 +64,8 @@ SRCS           = CatalogSource.java \
                  SpecConfig.java \
                  Tag.java \
                  TelescopeConfig.java \
+                 THORConfig.java \
+                 THORDetector.java \
                  User.java \
                  Window.java \
 		 ProposalDescriptor.java \
@@ -70,12 +78,15 @@ include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
 #   $Author: cjm $ 
-# $Revision: 1.11 $
-#       $Id: Makefile,v 1.11 2007-12-11 15:59:25 cjm Exp $
-#     $Date: 2007-12-11 15:59:25 $
+# $Revision: 1.12 $
+#       $Id: Makefile,v 1.12 2013-06-28 10:13:27 cjm Exp $
+#     $Date: 2013-06-28 10:13:27 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/phase2/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.11  2007/12/11 15:59:25  cjm
+#      Added RISEDetector.java / RISEConfig.java.
+#
 #      Revision 1.10  2007/12/11 15:57:06  snf
 #      after lock theiving
 #
