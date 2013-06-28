@@ -1,34 +1,28 @@
 // Df1Library.java
-// $Header: /space/home/eng/cjm/cvs/ngat/df1/Df1Library.java,v 1.2 2008-06-24 15:17:12 cjm Exp $
+// $Header: /space/home/eng/cjm/cvs/ngat/df1/Df1Library.java,v 1.3 2013-06-28 10:39:57 cjm Exp $
 package ngat.df1;
 
 import java.lang.*;
 import ngat.util.logging.*;
+import ngat.serial.arcomess.*;
 
 /**
  * This class supports an interface to a Micrologix 1100 PLC, using thr DF1 protocol either over a 
- * serial link, or over a socket conenction via an Arcom ESS.
+ * serial link, or over a socket conenction via an Arcom ESS.It supports an Arcom
+ * ESS interface (via an instance of the ngat.serial.arcomess.ArcomESS class), which
+ * allows communication with the motion controller's serial interface either directly or via
+ * a Arcom ESS (Ethernet Serial Server).
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class Df1Library
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: Df1Library.java,v 1.2 2008-06-24 15:17:12 cjm Exp $");
+	public final static String RCSID = new String("$Id: Df1Library.java,v 1.3 2013-06-28 10:39:57 cjm Exp $");
 // df1_general.h
 	/* These constants should be the same as those in df1_general.h */
-	/**
-	 * Logging filter bit.
-	 * @see #setLogFilterLevel
-	 */
-	public final static int LOG_BIT_SERIAL       = (1<<16);
-	/**
-	 * Logging filter bit.
-	 * @see #setLogFilterLevel
-	 */
-	public final static int LOG_BIT_SOCKET       = (1<<17);
 	/**
 	 * Logging filter bit.
 	 * @see #setLogFilterLevel
@@ -39,23 +33,6 @@ public class Df1Library
 	 * @see #setLogFilterLevel
 	 */
 	public final static int LOG_BIT_DF1_READ_WRITE = (1<<19);
-// df1_interface.h
-	/* These constants should be the same as those in df1_interface.h */
-	/**
-	 * Interface device number, showing that commands will currently be sent nowhere.
-	 * @see #interfaceOpen
-	 */
-	public final static int INTERFACE_DEVICE_NONE = 		0;
-	/**
-	 * Interface device number, showing that commands will currently be sent over a serial connection.
-	 * @see #interfaceOpen
-	 */
-	public final static int INTERFACE_DEVICE_SERIAL = 		1;
-	/**
-	 * Interface device number, showing that commands will currently be sent over a socket (Arcom ESS) connection.
-	 * @see #interfaceOpen
-	 */
-	public final static int INTERFACE_DEVICE_SOCKET = 		2;
 
 //internal C layer initialisation
 	/**
@@ -67,44 +44,21 @@ public class Df1Library
 	 * Native method that allows the JNI layer to release the global reference to this Class's logger.
 	 */
 	private native void finaliseLoggerReference();
+	/**
+	 * Native method that allows the JNI layer to store in a handle map, this reference, the asssociated
+	 * ArcomESS reference and it's associated native Arcom ESS interface handle.
+	 * @param handle The handle to initialise.
+	 */
+	private native void initialiseHandle(ArcomESS handle);
+	/**
+	 * Native method that allows the JNI layer to release this instance from the handle map.
+	 */
+	private native void finaliseHandle();
 // df1_general.h
 	/**
 	 * Native wrapper to libdf1 routine that changes the log Filter Level.
 	 */
 	private native void Df1_Set_Log_Filter_Level(int level);
-// df1_interface.h
-	/**
-	 * Native wrapper to libdf1 routine that create a Df1 library handle and associates it with
-	 * this instance of the Df1Library class.
-	 * @exception Df1LibraryNativeException This method throws a Df1LibraryNativeException if it failed.
-	 */
-	private native void Df1_Interface_Handle_Create() throws Df1LibraryNativeException;
-	/**
-	 * Native wrapper to libdf1 routine that destroys the Df1 library handle associated with
-	 * this instance of the Df1Library class.
-	 * @exception Df1LibraryNativeException This method throws a Df1LibraryNativeException if it failed.
-	 */
-	private native void Df1_Interface_Handle_Destroy() throws Df1LibraryNativeException;
-	/**
-	 * Native wrapper to libdf1 routine that opens the selected interface device.
-	 * @param interfaceDevice The interface device to use to communicate with the PLC.
-	 * 	One of: INTERFACE_DEVICE_NONE, INTERFACE_DEVICE_SERIAL, INTERFACE_DEVICE_SOCKET.
-	 * @param deviceName The name of the device. For devices of type SERIAL, this will be something like
-	 *        "/dev/ttyS0". For devices of type SOCKET, this should be a valid IP address or hostname 
-	 *        e.g. 150.204.240.115 or frodospec1serialports.
-	 * @param portNumber The port number of the SOCKET device - not used for serial devices.
-	 * @see #INTERFACE_DEVICE_NONE
-	 * @see #INTERFACE_DEVICE_TEXT
-	 * @see #INTERFACE_DEVICE_PCI
-	 * @exception Df1LibraryNativeException This method throws a Df1LibraryNativeException if it failed.
-	 */
-	private native void Df1_Interface_Open(int interfaceDevice,String deviceName,int portNumber)
-		throws Df1LibraryNativeException;
-	/**
-	 * Native wrapper to libdf1 routine that closes the selected interface device.
-	 * @exception Df1LibraryNativeException This method throws a Df1LibraryNativeException if it failed.
-	 */
-	private native void Df1_Interface_Close() throws Df1LibraryNativeException;
 // df1_read_write.h
 	/**
 	 * Native wrapper to libdf1 routine that writes a boolean value to the PLC.
@@ -156,34 +110,34 @@ public class Df1Library
 // constructor
 	/**
 	 * Constructor. Constructs the logger, and sets the C layers reference to it.
-	 * Calls Df1_Interface_Handle_Create to create a Df1 library handle and associate in the handle map
-	 * with this new instance of Df1Library.
+	 * Calls initialiseHandle to associate in the handle map the ArcomESS instance
+	 * with this new instance of Df1Library, and the associated ArcomESS interface handle.
+	 * @param handle An instance of ArcomESS describing the connection interface to the Micrologix controller.
 	 * @exception Df1LibraryNativeException Thrown if the handle creation / mapping fails.
 	 * @see #logger
+	 * @see #initialiseHandle
 	 * @see #initialiseLoggerReference
-	 * @see #initialiseLibraryHandle
-	 * @see #Df1_Interface_Handle_Create
 	 */
-	public Df1Library() throws Df1LibraryNativeException
+	public Df1Library(ArcomESS handle) throws Df1LibraryNativeException
 	{
 		super();
 		logger = LogManager.getLogger(this);
 		initialiseLoggerReference(logger);
-		Df1_Interface_Handle_Create();
+		initialiseHandle(handle);
 	}
 
 	/**
 	 * Finalize method for this class, delete JNI global references.
-	 * Calls Df1_Interface_Handle_Destroy to remove the Df1 Library handle from the handle map for this
+	 * Calls finaliseHandle to remove the Df1 Library handle from the handle map for this
 	 * instance of the Df1Library class.
 	 * @exception Df1LibraryNativeException Thrown if the handle destruction fails.
 	 * @see #finaliseLoggerReference
-	 * @see #Df1_Interface_Handle_Destroy
+	 * @see #finaliseHandle
 	 */
 	protected void finalize() throws Throwable
 	{
 		super.finalize();
-		Df1_Interface_Handle_Destroy();
+		finaliseHandle();
 		finaliseLoggerReference();
 	}
 
@@ -221,72 +175,6 @@ public class Df1Library
 			System.out.println("Logger handler "+i+" has filter:"+handler.getFilter());
 			System.out.println("Logger handler "+i+" has log level:"+handler.getLogLevel());
 		}
-	}
-
-// df1_interface.h
-	/**
-	 * Routine to open the interface. 
-	 * @param interfaceDevice The interface device to use to communicate with the PLC.
-	 * 	One of: INTERFACE_DEVICE_NONE, INTERFACE_DEVICE_SERIAL, INTERFACE_DEVICE_SOCKET.
-	 * @param deviceName The name of the device. For devices of type SERIAL, this will be something like
-	 *        "/dev/ttyS0". For devices of type SOCKET, this should be a valid IP adddress or hostname 
-	 *        (e.g. 150.204.240.115 ot frodospec1serialports).
-	 * @param portNumber The port number of the SOCKET device - not used for serial devices.
-	 * @exception Df1LibraryNativeException This method throws a Df1LibraryNativeException if the device could
-	 * 	not be opened.
-	 * @see #INTERFACE_DEVICE_NONE
-	 * @see #INTERFACE_DEVICE_SERIAL
-	 * @see #INTERFACE_DEVICE_SOCKET
-	 * @see #interfaceClose
-	 * @see #Df1_Interface_Open
-	 */
-	public void interfaceOpen(int interfaceDevice,String deviceName,int portNumber) 
-		throws Df1LibraryNativeException
-	{
-		Df1_Interface_Open(interfaceDevice,deviceName,portNumber);
-	}
-
-	/**
-	 * Routine to close the interface opened with <b>interfaceOpen</b>.
-	 * @exception Df1LibraryNativeException This method throws a Df1LibraryNativeException if the device could
-	 * 	not be closed.
-	 * @see #interfaceOpen
-	 * @see #Df1_Interface_Close
-	 */
-	public void interfaceClose() throws Df1LibraryNativeException
-	{
-		Df1_Interface_Close();
-	}
-
-	/**
-	 * Routine to get an interface device number from a string representation of the device. Used for
-	 * getting a device number from a string in a properties file.
-	 * @param s A string representing a device number, one of:
-	 * 	<ul>
-	 * 	<li>INTERFACE_DEVICE_NONE,
-	 * 	<li>INTERFACE_DEVICE_SERIAL,
-	 * 	<li>INTERFACE_DEVICE_SOCKET.
-	 * 	</ul>.
-	 * @return An interface device number, one of:
-	 * 	<ul>
-	 * 	<li>INTERFACE_DEVICE_NONE,
-	 * 	<li>INTERFACE_DEVICE_SERIAL,
-	 * 	<li>INTERFACE_DEVICE_SOCKET.
-	 * 	</ul>. 
-	 * @exception Df1LibraryFormatException If the string was not an accepted value an exception is thrown.
-	 * @see #INTERFACE_DEVICE_NONE
-	 * @see #INTERFACE_DEVICE_SERIAL
-	 * @see #INTERFACE_DEVICE_SOCKET
-	 */
-	public static int interfaceDeviceFromString(String s) throws Df1LibraryFormatException
-	{
-		if(s.equals("INTERFACE_DEVICE_NONE"))
-			return INTERFACE_DEVICE_NONE;
-		if(s.equals("INTERFACE_DEVICE_SERIAL"))
-			return INTERFACE_DEVICE_SERIAL;
-		if(s.equals("INTERFACE_DEVICE_SOCKET"))
-			return INTERFACE_DEVICE_SOCKET;
-		throw new Df1LibraryFormatException("ngat.df1.Df1Library","interfaceDeviceFromString",s);
 	}
 
 // df1_read_write.h
@@ -365,6 +253,9 @@ public class Df1Library
  
 //
 // $Log: not supported by cvs2svn $
+// Revision 1.2  2008/06/24 15:17:12  cjm
+// Added logDebug method for log debugging.
+//
 // Revision 1.1  2008/03/06 10:46:40  cjm
 // Initial revision
 //
