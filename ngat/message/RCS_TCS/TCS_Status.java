@@ -9,7 +9,7 @@ import ngat.astrometry.*;
 
 /** Holds the state of the TCS and telescope systems.
  * <br><br>
- * $Id: TCS_Status.java,v 1.3 2008-08-21 10:30:48 eng Exp $
+ * $Id: TCS_Status.java,v 1.4 2013-07-01 09:40:15 eng Exp $
  */
 public class TCS_Status implements Serializable, Cloneable {
 
@@ -363,7 +363,7 @@ public class TCS_Status implements Serializable, Cloneable {
 	codes.put(new Integer (POSITION_PORT_7),          "PORT 7");
 	codes.put(new Integer (POSITION_PORT_8),          "PORT 8");
 
-	codes.put(new Integer (POSITION_INLINE),          "IN-LINE");
+	codes.put(new Integer (POSITION_INLINE),          "IN LINE");
 	codes.put(new Integer (POSITION_RETRACT),         "RETRACT");
 	
 	codes.put(new Integer (STATE_OKAY),               "OKAY");
@@ -1183,7 +1183,7 @@ public class TCS_Status implements Serializable, Cloneable {
 	public double azPos;
 	
 	/** Records the current Azimuth status.*/
-	public int azStatus;
+	public int azStatus = MOTION_OFF_LINE;
 	
 	// ---------------
 	// Altitude drive.
@@ -1199,7 +1199,7 @@ public class TCS_Status implements Serializable, Cloneable {
 	public double altPos;
 	
 	/** Records the current Altitude status.*/
-	public int altStatus;
+	public int altStatus = MOTION_OFF_LINE;
 	
 	// --------------
 	// Rotator drive.
@@ -1221,7 +1221,7 @@ public class TCS_Status implements Serializable, Cloneable {
 	public double rotSkyAngle;
 	
 	/** Records the Rotator status.*/
-	public int rotStatus;
+	public int rotStatus = MOTION_OFF_LINE;
 	
 	// ----------
 	// Enclosure.
@@ -1988,6 +1988,9 @@ public class TCS_Status implements Serializable, Cloneable {
 
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.3  2008/08/21 10:30:48  eng
+/** *** empty log message ***
+/**
 /** Revision 1.2  2007/10/17 07:29:27  snf
 /** added actual RA and Dec with offsets.
 /**
