@@ -15,7 +15,7 @@ import ngat.util.logging.*;
  * SocketConnection is live immediately without having to call open(). 
  * It is intended for use at the server end.
  *
- * $Id: SocketConnection.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id: SocketConnection.java,v 1.2 2013-07-01 10:10:46 eng Exp $
  *
  */
 public class SocketConnection implements IConnection {
@@ -55,6 +55,8 @@ public class SocketConnection implements IConnection {
 	this.port = port;
 	open = false;
 	logger = LogManager.getLogger("JMS");
+	logger.log(3, "SockConn::Created for "+host+":"+port);
+	cid = host+":"+port
     }
 
     /** Create a SocketConnection for the specified address.
@@ -86,6 +88,9 @@ public class SocketConnection implements IConnection {
     public SocketConnection(Socket socket) throws IOException {
 	if (socket == null) throw new IOException("Socket not defined");
 	this.socket = socket;
+
+	logger = LogManager.getLogger("JMS");
+
 	//socket.setTcpNoDelay(true);
 	try {
 	    //is = new ObjectInputStream(socket.getInputStream());
@@ -103,8 +108,8 @@ public class SocketConnection implements IConnection {
 	}
 	open = true;
 
-	logger = LogManager.getLogger("JMS");
-	logger.log(1, "SockConn:: Socket streams are now open and flushed");
+
+	logger.log(1, "SockConn::"+socket.getInetAddress()+":"+socket.getPort()+":Socket streams are now open and flushed");
 
     }
 
@@ -120,6 +125,8 @@ public class SocketConnection implements IConnection {
      * error occurs while opening the I/O streams.*/
     public void open() throws ConnectException {
 	if (open) throw new ConnectException("Connection already open");
+	logger.log(3, "SockConn:"+cid+":opening connection to: "+host+":"+port);
+
 	if (sf != null) {
 	    try {
 		socket = sf.createSocket(host, port);	
@@ -133,6 +140,8 @@ public class SocketConnection implements IConnection {
 	    try {
 		socket = new Socket(host, port);
 		//socket.setTcpNoDelay(true);
+		
+
 	    } catch (UnknownHostException ue) {
 		throw new ConnectException("Unable to connect to "+host+":"+port+" :"+ue);
 	    } catch (IOException e) {
@@ -164,7 +173,7 @@ public class SocketConnection implements IConnection {
     public void send(Object data) throws IOException {
 	os.writeObject(data);
 	os.flush();
-	logger.log(1, "SockConn:: "+cid+" Sent and flushed OS: "+
+	logger.log(1, "SockConn:: "+cid+" Sent object and flushed OS: "+
 		   (data != null ? data.getClass().getName() : "NULL"));
     }
     
@@ -189,7 +198,7 @@ public class SocketConnection implements IConnection {
 	}
 	os.writeObject(data);
 	os.flush();
-	logger.log(1, "SockConn:: "+cid+" Sent and flushed OS: "+
+	logger.log(1, "SockConn:: "+cid+" Sent objert and flushed OS: "+
 		   (data != null ? data.getClass().getName() : "NULL"));
 	try {
 	    socket.setSoTimeout(original);
@@ -202,15 +211,17 @@ public class SocketConnection implements IConnection {
      * @exception IOException If any error occurs while reading the 
      * input stream.*/
     public Object receive() throws IOException {
+	Object data = null;
 	try {
 	    logger.log(1, "SockConn:: "+cid+" Calling readObj on IS..");
-	    return is.readObject();
+	    data = is.readObject();
+	    logger.log(1, "SockConn:: "+cid+" received: "+(data != null ? data.getClass().getName() : "NULL"));
 	} catch (ClassNotFoundException c) {
 	    throw new IOException("Error resolving serialized object: "+c);
 	} catch (Exception e) {
 	    logger.log(1, "SockConn:: "+cid+" An exception occurred reading Object: "+e);	  
 	}
-	return null;
+	return data;
     }
     
     /** Receive data from other end of connection but timeout
@@ -222,7 +233,7 @@ public class SocketConnection implements IConnection {
      * @exception InterruptedIOException If the connection times out.*/
     public Object receive(long timeout) throws IOException {
 	int original = socket.getSoTimeout();
-	Object obj = null;
+	Object data = null;
 
 	if ((long)original != timeout) {
 	    try {
@@ -231,8 +242,11 @@ public class SocketConnection implements IConnection {
 		throw new IOException("SockConn:: "+cid+" Failed to set socket timeout: "+s);
 	    }
 	}
-	try {	    
-	    obj = is.readObject();
+	try {	   
+	    logger.log(1, "SockConn:: "+cid+" Calling readObj on IS.."); 
+	    data = is.readObject();  
+	    logger.log(1, "SockConn:: "+cid+" received: "+(data != null ? data.getClass().getName() : "NULL"));
+	
 	} catch (ClassNotFoundException c) {
 	    throw new IOException("SockConn:: "+cid+" Error resolving serialized object: "+c);
 	}
@@ -241,7 +255,7 @@ public class SocketConnection implements IConnection {
 	} catch (SocketException s) {
 	    throw new IOException("SockConn:: "+cid+" Failed to reset socket timeout: "+s);
 	}
-	return obj;
+	return data;
     }
 
 
@@ -291,12 +305,15 @@ public class SocketConnection implements IConnection {
     }
 
     public String toString() {
-	return (socket != null ? "ngat.net.SocketConnection: "+socket : "NO_SOCKET");
+	return (socket != null ? "ngat.net.SocketConnection: "+socket : host+":"+port);
     }
-
+    
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.1  2008/07/23 12:41:17  eng
+/** Initial revision
+/**
 /** Revision 1.10  2006/11/23 10:34:13  snf
 /** test
 /**
