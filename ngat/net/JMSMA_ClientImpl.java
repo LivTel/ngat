@@ -9,7 +9,7 @@ import ngat.util.logging.*;
  * JMS_ClientConnectionThread to which the concrete Client object 
  * is passed as a handler (typically as <i>this</i>).
  * <br>
- * $Id: JMSMA_ClientImpl.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id: JMSMA_ClientImpl.java,v 1.2 2013-07-01 13:26:18 eng Exp $
  *
  */
 public abstract class JMSMA_ClientImpl implements JMSMA_Client { 
@@ -73,6 +73,7 @@ public abstract class JMSMA_ClientImpl implements JMSMA_Client {
     public void createConnection(String name) throws UnknownResourceException {
 	if (connFactory == null)
 	    throw new UnknownResourceException("No ConnectionFactory set");
+	logger.log(3, "JMSMA_Client::Create connection for: "+name);
 	connection   = connFactory.createConnection(name);
 	connectionId = name;
     }
@@ -143,6 +144,9 @@ public abstract class JMSMA_ClientImpl implements JMSMA_Client {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.1  2008/07/23 12:41:17  eng
+/** Initial revision
+/**
 /** Revision 1.6  2007/01/11 10:08:47  snf
 /** checking
 /**
