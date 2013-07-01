@@ -9,6 +9,15 @@ public class JMSClientProtocolImplementor {
 
     long timeout = 10000L;
 
+    boolean debug = false;
+
+    public JMSClientProtocolImplementor() {}
+
+    public JMSClientProtocolImplementor(boolean debug) {
+	this();
+	this.debug = debug;
+    }
+
     public void setTimeout(long timeout) {this.timeout = timeout;}
 
     /** Perform JMS protocol using supplied command and components.
@@ -41,15 +50,18 @@ public class JMSClientProtocolImplementor {
 	    COMMAND_DONE done = null;
 
 	    while (!completed) {
-		System.err.println("JMSClient::Ready receive (to="+timeout);
+		if (debug)
+		System.err.println("JMSClient::["+command.getId()+"] Ready receive (to="+timeout);
 		obj = connection.receive(timeout);
-		System.err.println("JMSClient::Data received type= "+
+		if (debug)
+		System.err.println("JMSClient::["+command.getId()+"] Data received type= "+
 				   (obj != null ? obj.getClass().getName() : "NULL"));
 		if
 		    (obj instanceof ACK) {
 		    ack = (ACK)obj;
 		    timeout = ack.getTimeToComplete();
-		    System.err.println("JMSClient::Reset timeout ["+ack.getId()+"] to: "+timeout);
+		    if (debug)
+		    System.err.println("JMSClient::["+command.getId()+"] Reset timeout ["+ack.getId()+"] to: "+timeout);
 		    handler.handleAck(ack);
 		    
 		} else if
@@ -60,12 +72,14 @@ public class JMSClientProtocolImplementor {
 		    handler.handleDone(done);
 		    
 		} else
-		    throw new Exception("JMSClient::Unknown reply class: "+
+		    throw new Exception("JMSClient::["+command.getId()+"] Unknown reply class: "+
 					(done != null ? done.getClass().getName() : "NULL"));
 	    }
-	    if (!completed)
-		System.err.println("JMSClient::No response received within timeout");
-	    
+	    if (!completed) {
+		if (debug)
+		System.err.println("JMSClient::["+command.getId()+"] No response received within timeout");
+	    }
+
 	} finally {
 	    
 	    // Close the connection.
