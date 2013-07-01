@@ -15,7 +15,7 @@ import ngat.message.base.*;
  *    ## do not rebroadcast our Acks in time and our ##<br>
  *    ## client will probably die. ##
  * <br><br>
- * $Id: JMSMA_ProtocolClientImpl.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id: JMSMA_ProtocolClientImpl.java,v 1.2 2013-07-01 12:45:45 eng Exp $
  */
 public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
     
@@ -70,8 +70,8 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
      * failedDespatch() signal.*/  
     public void implement() {
 	try {
-	    logger.log(5, CLASS, id, "impl", 
-		       "Opening client connection");
+	    logger.log(5,  
+		       id+":Opening client connection to: " +connection);
 
 	    // Fail if the connection is not set.
 	    if (connection == null) {
@@ -83,8 +83,8 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 	    if ( ! connection.isOpen()) {
 		try {
 		    connection.open();
-		    logger.log(5, CLASS, id, 
-			       "impl","Connection is open");
+		    logger.log(5, id+":Connection is open");   
+   
 		} catch (ConnectException cx) {
 		    client.failedConnect(cx);
 		    return;
@@ -93,8 +93,7 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 
 	    // Retrieve the COMMAND.
 	    command = client.getCommand();
-	    logger.log(5, CLASS, id, "impl",
-		       "Retreived command: "+command.getClass().getName());
+	    logger.log(5,id+":Retrieved command: "+(command != null ? command.getClass().getName()+":"+command.getId():"NULL"));
 	    // This should not happen !
 	    if (command == null) {
 		client.exceptionOccurred(this, new IllegalStateException("No command set"));
@@ -104,8 +103,8 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 	    // Send the Command
 	    try {
 		connection.send(command);
-		logger.log(5, CLASS, id, "impl",
-			   "Despatched command: "+command.getId());
+		logger.log(5, id+":Despatched command: "+
+			   (command != null ? command.getClass().getName()+":"+command.getId():"NULL"));
 		
 	    } catch (IOException iox) {
 		client.failedDespatch(iox); 
@@ -121,17 +120,19 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 	    Object obj = null;
 	    boolean completed = false;
 	    while (!completed) {		
-		logger.log(5, CLASS, id, "impl",
-			   "Waiting ACK with timeout: "+client.getTimeout());
+		logger.log(5,id+":Waiting ACK with timeout: "+client.getTimeout());
 		try {
 		    obj = connection.receive(client.getTimeout());
-		    logger.log(5, CLASS, id, "impl",
-			       "Data received type= "+obj.getClass().getName());
+		    logger.log(5,id+":Data received type= "+obj.getClass().getName());
 		    if 
 			(obj instanceof ACK) {	
 			ack = (ACK)obj;
-			logger.log(5, CLASS, id, "impl",
-				   "About to forward ACK to client for handling");
+
+			if (ack.getTimeToComplete() < 0) {
+			    System.err.println("Received ack: "+ack);
+			    System.err.println("Received ack with negative timeout: "+ack.getTimeToComplete());
+			}
+			logger.log(5, id+":About to forward ACK to client for handling");
 			client.handleAck(ack);
 		    } else if
 			(obj instanceof COMMAND_DONE) {
@@ -139,8 +140,7 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 
 			completed = true;
 
-			logger.log(5, CLASS, id, 
-				   "impl","About to forward DONE to client for handling");
+			logger.log(5,id+":About to forward DONE to client for handling");
 
 			client.handleDone(done);
 			// Break out of the loop unless client resets the completion flag.
@@ -152,8 +152,10 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 			return;
 		    }
 		} catch (IOException iox) {
-		    logger.log(EXCEPTION, 3, CLASS, id, "impl",
-			       "No response received within timeout", null, iox);
+		  
+		    logger.log(3, id+
+			       ":No response received within timeout, trace follows..."); 
+		    iox.printStackTrace();
 		    client.failedResponse(iox); 
 		    return;			
 		}
@@ -163,17 +165,18 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 	    
 	} catch (Exception ex) {
 	    // Deal with any other exceptions here.
-	    logger.log(EXCEPTION, 3, CLASS, id, "impl",
-		       "Passing exception to client: "+ex);
+	    logger.log(3,id+
+		       ":Passing exception to client, trace follows... ");
+	    ex.printStackTrace();
 	    client.exceptionOccurred(this, ex);
-
+	    
 	} finally {
 
 	    // Close the connection.
 	    
 	    connection.close();
 	
-	    logger.log(TRACE, 5, CLASS, id, "impl", "Leaving implementation.");
+	    logger.log(3,id+":Leaving implementation.");
 	
 	}
 
@@ -181,7 +184,7 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
   
     /** Forces the CCT-Thread to unblock by any suitable method.*/
     public void cancel() {
-	logger.log(5, CLASS, id, "cancel", "Closing connection.");
+	logger.log(5, id+":Closing connection.");
 	connection.close();
     }
 
@@ -192,6 +195,9 @@ public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.1  2008/07/23 12:41:17  eng
+/** Initial revision
+/**
 /** Revision 1.13  2008/07/23 12:01:52  eng
 /** nothing
 /**
