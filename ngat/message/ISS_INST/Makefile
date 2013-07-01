@@ -1,6 +1,6 @@
 #
 # This is an automatically generated Makfile from
-# /home/dev/src/scripts/make_makefile.csh
+# /home/dev/src/mess/jmake
 #
 PACKAGENAME    = ngat.message.ISS_INST
 PACKAGEDIR     = ngat/message/ISS_INST
@@ -9,7 +9,9 @@ DIRS           =
 
 SRCS           = ABORT_DONE.java \
                  ABORT.java \
+                 ACQUIRE_ACK.java \
                  ACQUIRE_DONE.java \
+                 ACQUIRE_DP_ACK.java \
                  ACQUIRE.java \
                  AG_START_DONE.java \
                  AG_START.java \
@@ -34,6 +36,42 @@ SRCS           = ABORT_DONE.java \
                  EXPOSE_DP_ACK.java \
                  EXPOSE.java \
                  FILENAME_ACK.java \
+                 FOCUS_CONTROL_DONE.java \
+                 FOCUS_CONTROL.java \
+                 FRODOSPEC_ABORT_DONE.java \
+                 FRODOSPEC_ABORT.java \
+                 FRODOSPEC_ARC_DONE.java \
+                 FRODOSPEC_ARC.java \
+                 FRODOSPEC_BIAS_DONE.java \
+                 FRODOSPEC_BIAS.java \
+                 FRODOSPEC_CALIBRATE_DONE.java \
+                 FRODOSPEC_CALIBRATE.java \
+                 FRODOSPEC_DARK_DONE.java \
+                 FRODOSPEC_DARK.java \
+                 FRODOSPEC_DAY_CALIBRATE_DONE.java \
+                 FRODOSPEC_DAY_CALIBRATE.java \
+                 FRODOSPEC_EXPOSE_DONE.java \
+                 FRODOSPEC_EXPOSE.java \
+                 FRODOSPEC_GLANCE_DONE.java \
+                 FRODOSPEC_GLANCE.java \
+                 FRODOSPEC_INTERRUPT_DONE.java \
+                 FRODOSPEC_INTERRUPT.java \
+                 FRODOSPEC_LAMPFLAT_DONE.java \
+                 FRODOSPEC_LAMPFLAT.java \
+                 FRODOSPEC_LAMPFOCUS_DONE.java \
+                 FRODOSPEC_LAMPFOCUS.java \
+                 FRODOSPEC_MOVIE_DONE.java \
+                 FRODOSPEC_MOVIE.java \
+                 FRODOSPEC_MULTRUN_DONE.java \
+                 FRODOSPEC_MULTRUN.java \
+                 FRODOSPEC_RUNAT_DONE.java \
+                 FRODOSPEC_RUNAT.java \
+                 FRODOSPEC_SETUP_DONE.java \
+                 FRODOSPEC_SETUP.java \
+                 FRODOSPEC_SKYFLAT_DONE.java \
+                 FRODOSPEC_SKYFLAT.java \
+                 FRODOSPEC_TWILIGHT_CALIBRATE_DONE.java \
+                 FRODOSPEC_TWILIGHT_CALIBRATE.java \
                  GET_FITS_DONE.java \
                  GET_FITS.java \
                  GET_STATUS_DONE.java \
@@ -55,16 +93,24 @@ SRCS           = ABORT_DONE.java \
                  MOVIE_ACK.java \
                  MOVIE_DONE.java \
                  MOVIE.java \
+                 MULTBIAS_DONE.java \
+                 MULTBIAS.java \
+                 MULTDARK_DONE.java \
+                 MULTDARK.java \
                  MULTRUN_ACK.java \
                  MULTRUN_DONE.java \
                  MULTRUN_DP_ACK.java \
                  MULTRUN.java \
+                 OFFSET_FOCUS_CONTROL_DONE.java \
+                 OFFSET_FOCUS_CONTROL.java \
                  OFFSET_FOCUS_DONE.java \
                  OFFSET_FOCUS.java \
                  OFFSET_RA_DEC_DONE.java \
                  OFFSET_RA_DEC.java \
                  OFFSET_ROTATOR_DONE.java \
                  OFFSET_ROTATOR.java \
+                 OFFSET_X_Y_DONE.java \
+                 OFFSET_X_Y.java \
                  PAUSE_DONE.java \
                  PAUSE.java \
                  REBOOT_DONE.java \
@@ -91,21 +137,14 @@ SRCS           = ABORT_DONE.java \
                  TELFOCUS_DONE.java \
                  TELFOCUS_DP_ACK.java \
                  TELFOCUS.java \
+                 TEMPERATURE_ACK.java \
                  TEST_DONE.java \
                  TEST.java \
+                 TIMED_MULTRUNAT_DONE.java \
+                 TIMED_MULTRUNAT.java \
                  TWILIGHT_CALIBRATE_ACK.java \
                  TWILIGHT_CALIBRATE_DONE.java \
                  TWILIGHT_CALIBRATE_DP_ACK.java \
                  TWILIGHT_CALIBRATE.java
 
-
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
-#
-#   $Author: je $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2002-10-03 10:57:32 je Exp $
-#     $Date: 2002-10-03 10:57:32 $
-#  $RCSfile: Makefile,v $
-#   $Source: /space/home/eng/cjm/cvs/ngat/message/ISS_INST/Makefile,v $
-#      $Log: not supported by cvs2svn $
-#
