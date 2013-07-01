@@ -9,7 +9,7 @@ import ngat.message.base.*;
 /** Implementation of the JMS (Multiple Acknowledge) protocol at
  * the server end.
  * <br><br>
- * $Id: JMSMA_ProtocolServerImpl.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id: JMSMA_ProtocolServerImpl.java,v 1.2 2013-07-01 12:43:48 eng Exp $
  */
 public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
 
@@ -128,7 +128,7 @@ public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
 	}
 
 	// 3. Send an ACK straight to the client.
-	ACK ack = new ACK(command.getId());
+	ACK ack = new ACK(command.getId()+":handling request");
 	ack.setTimeToComplete(BASIC_TIMEOUT+(int)(1.1*handler.getHandlingTime()));
 	sendAck(ack);
 
@@ -159,6 +159,7 @@ public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
 	if (! completed() ) {
 	    logger.log(1, CLASS, id, "impl", 
 		       "Timed out uncompleted");
+	    System.err.println("JMSPS::"+command.getId()+":Handler timed out w/o reply, sending DONE w t/o message");
 	    COMMAND_DONE done = new COMMAND_DONE(command.getId());
 	    done.setSuccessful(false);
 	    done.setErrorNum(SERVER_TIMEOUT_ERROR);
@@ -181,10 +182,13 @@ public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
 			   "Sending ACK with ttc: "+ack.getTimeToComplete());
 		//System.err.println("JMSMA_PSI:: sendAck: connect: "+connection+
 		//	   "\nTTC: "+ack.getTimeToComplete());
+		//System.err.println("JMSPS::"+command.getId()+"SendACK:: Conn="+connection);
+
 		if (connection != null)
 		    connection.send(ack);
 	    } catch (IOException e) {
-		handler.exceptionOccurred(this,e);
+		System.err.println("JMSPS::"+command.getId()+"SendACK:: Exception: "+e);
+		handler.exceptionOccurred(this, e);
 	    }
 	}
     }
@@ -207,6 +211,7 @@ public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
 		//	   "\nOK:    "+done.getSuccessful()+
 		//	   "\nErr:   "+done.getErrorNum()+
 		//	   "\nMsg:   "+done.getErrorString());	
+		//		System.err.println("JMSPS::"+command.getId()+" Conn="+connection);
 		if (connection != null) {
 		    if (timeout > 0L)
 			connection.send(done, timeout);
@@ -271,7 +276,7 @@ public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
     protected void initError(String message, COMMAND command) {	
 	System.err.println("Error: "+message);
 	String id = (command != null ? command.getId() : "no-command");	    
-	ACK ack = new ACK(id);
+	ACK ack = new ACK(id+":handling error");
 	ack.setTimeToComplete(BASIC_TIMEOUT);
 	sendAck(ack);
 	COMMAND_DONE done = new COMMAND_DONE(id);
@@ -293,6 +298,9 @@ public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
 }
 
 /** $Log: not supported by cvs2svn $
+/** Revision 1.1  2008/07/23 12:41:17  eng
+/** Initial revision
+/**
 /** Revision 1.14  2006/11/23 10:34:13  snf
 /** test
 /**
