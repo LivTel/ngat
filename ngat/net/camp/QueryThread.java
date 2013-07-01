@@ -70,18 +70,27 @@ public class QueryThread extends ControlThread {
 	    return;
 	}
 
-	try {
-	    Object obj = connection.receive(timeout);
-	    System.err.println("QT:"+name+"::Object recvd: "+obj);
-	    COMMAND_DONE update = (COMMAND_DONE)obj;	   
-	    handler.handleUpdate(update, connection);
-	} catch (ClassCastException cx) {
-	    handler.failed(cx, connection);
-	    return;
-	} catch (IOException iox) {
-	    handler.failed(iox, connection);
-	    return;
-	} 
+	boolean waitingReply = true;
+	while (waitingReply) {
+	    try {
+		Object obj = connection.receive(timeout);
+		System.err.println("QT:"+getName()+"::Object recvd: "+obj);
+		if (obj instanceof COMMAND_DONE) {
+		    try {
+			COMMAND_DONE update = (COMMAND_DONE)obj;	   
+			handler.handleUpdate(update, connection);
+			return;
+		    } catch (Exception x) {
+			handler.failed(x, connection);
+			return;
+		    }
+		}
+	    } catch (Exception x) {
+		handler.failed(x, connection);
+		return;
+	    }
+
+	}
 
     }
 
