@@ -29,7 +29,13 @@ import ngat.message.base.*;
 public class ID_DONE extends GUI_TO_RCS_DONE {
 
 	// Variables.
-
+    public static final int IDLE = 0;
+    public static final int SOCA_MODE = 6;
+    public static final int BGCA_MODE = 7;
+    public static final int TOCA_MODE = 8;
+    public static final int X_MODE = 9;
+    public static final int CAL_MODE = 10;
+    
 	/** The process in control*/
 	protected int control;
 
@@ -45,11 +51,15 @@ public class ID_DONE extends GUI_TO_RCS_DONE {
 	/** The ID of MCA currently in control or null*/
 	protected String agentInControl;
 
+
 	/** The Name of the MCA currently in control or null*/
 	protected String agentName;
 
 	/** The Activity that AIC is doing or null*/
 	protected String agentActivity;
+
+    /** Uptime of RCS.*/
+    protected long uptime;
 
 	/** Create a ID_DONE with specified id.
 	 * @param id The unique id of this ID_DONE.
@@ -106,6 +116,9 @@ public class ID_DONE extends GUI_TO_RCS_DONE {
 	 */
 	public String getAgentInControl() { return agentInControl; }
 
+
+
+
 	/** Set the Name of the MCA currently in control or null
 	 * @param agentName The Name of the MCA currently in control or null.
 	 */
@@ -126,6 +139,11 @@ public class ID_DONE extends GUI_TO_RCS_DONE {
 	 */
 	public String getAgentActivity() { return agentActivity; }
 
+
+    public void setUptime(long uptime) { this.uptime = uptime;}
+
+    public long getUptime() { return uptime; }
+
 	/** Returns a String representation of the object.*/
 	public String toString() {
 		return "["+this.getClass().getName()+":"+
@@ -136,7 +154,9 @@ public class ID_DONE extends GUI_TO_RCS_DONE {
 			", lastStatus="+lastStatus+
 			", agentInControl="+agentInControl+
 			", agentName="+agentName+
-			", agentActivity="+agentActivity+"]";
+			", agentActivity="+agentActivity+
+		    ", uptime="+uptime+
+		    "]";
 	}
 	// Hand generated code.
 
