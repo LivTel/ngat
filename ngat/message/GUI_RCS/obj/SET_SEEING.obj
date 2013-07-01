@@ -2,7 +2,11 @@
 #
 # Module code: 681700
 #
-%int;seeing;{ SEEING_POOR |  SEEING_AVERAGE | SEEING_EXCELLENT };seeing value
+%int;seeing;{ SEEING_POOR |  SEEING_AVERAGE | SEEING_EXCELLENT | SEEING_UNRES };seeing value
+%int;source;{ MANUAL | EXTERNAL}; extinction source
+%String;sourceName;a valid source name; source provider identity
 $SEEING_POOR;681701;that the seeing is currently POOR 
 $SEEING_AVERAGE;681702;that the seeing is AVERAGE
 $SEEING_EXCELLENT;681703;that the seeing is EXCELLENT
+$MANUAL_SOURCE;681710; manual source
+$EXTERNAL_SOURCE;681711; external source
