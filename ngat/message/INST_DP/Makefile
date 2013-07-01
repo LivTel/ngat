@@ -1,6 +1,6 @@
 #
 # This is an automatically generated Makfile from
-# /home/dev/src/scripts/make_makefile.csh
+# /home/dev/src/mess/jmake
 #
 PACKAGENAME    = ngat.message.INST_DP
 PACKAGEDIR     = ngat/message/INST_DP
@@ -19,6 +19,12 @@ SRCS           = ABORT_DONE.java \
                  INST_TO_DP.java \
                  INTERRUPT_DONE.java \
                  INTERRUPT.java \
+                 MAKE_MASTER_BIAS_DONE.java \
+                 MAKE_MASTER_BIAS.java \
+                 MAKE_MASTER_DONE.java \
+                 MAKE_MASTER_FLAT_DONE.java \
+                 MAKE_MASTER_FLAT.java \
+                 MAKE_MASTER.java \
                  REBOOT_DONE.java \
                  REBOOT.java \
                  REDUCE_DONE.java \
@@ -26,14 +32,4 @@ SRCS           = ABORT_DONE.java \
                  STOP_DONE.java \
                  STOP.java
 
-
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
-#
-#   $Author: je $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2002-10-03 10:57:28 je Exp $
-#     $Date: 2002-10-03 10:57:28 $
-#  $RCSfile: Makefile,v $
-#   $Source: /space/home/eng/cjm/cvs/ngat/message/INST_DP/Makefile,v $
-#      $Log: not supported by cvs2svn $
-#
