@@ -1,8 +1,11 @@
-# Request state-model information.
+# Request RCS version information.
 #
-# Module code: 680200
+# Module code: 682100
 #
-*HashMap;variable;state model variable information
-*int;currentState;current state
-*int;currentOperation;current operation
-$NOT_AVAILABLE;680201;that the state model information is not available
+*String;majorVersion;Major version number
+*String;minorVersion;Minor version number
+*String;patchVersion;Patch version number
+*String;releaseName;Release name
+*String;buildNumber;Build number
+*String;buildDate;Build date/time
+
