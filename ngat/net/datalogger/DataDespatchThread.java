@@ -32,8 +32,11 @@ public class DataDespatchThread extends ControlThread {
 		
 		DataLoggerUpdateListener dl = (DataLoggerUpdateListener)listeners.next();
 		
-		dl.dataUpdate(data);
-
+		try {
+		    dl.dataUpdate(data);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	    }
 
 	} catch (InterruptedException ix) {}
