@@ -3,36 +3,36 @@ package ngat.ngtcs;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class PointingOrigin
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: PointingOrigin.java,v 1.1 2003-07-01 10:11:30 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: PointingOrigin.java,v 1.2 2013-07-02 15:26:15 cjm Exp $" );
 
     /**
      * The X coordinate of this PointingOrigin.
      */
-    private double x;
+    protected double x;
 
     /**
      * The Y coordinate of this PointingOrigin.
      */
-    private double y;
+    protected double y;
 
     /**
      * The X coodinate offset from this PointingOrigin.
      */
-    private double dx;
+    protected double dx;
 
     /**
      * The Y coodinate offset from this PointingOrigin.
      */
-    private double dy;
+    protected double dy;
 
 
     /**
@@ -107,8 +107,11 @@ public class PointingOrigin
     }
 }
 /*
- *    $Date: 2003-07-01 10:11:30 $
+ *    $Date: 2013-07-02 15:26:15 $
  * $RCSfile: PointingOrigin.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/PointingOrigin.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:11:30  je
+ *     Initial revision
+ *
  */

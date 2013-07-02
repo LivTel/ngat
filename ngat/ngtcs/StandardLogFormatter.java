@@ -19,16 +19,16 @@ import ngat.util.logging.*;
  * exception stack trace...
  * </pre>
  *
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class StandardLogFormatter extends LogFormatter
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: StandardLogFormatter.java,v 1.1 2003-07-01 10:11:30 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: StandardLogFormatter.java,v 1.2 2013-07-02 15:26:49 cjm Exp $" );
 
     /**
      * Format of the logged time.
@@ -44,7 +44,7 @@ public class StandardLogFormatter extends LogFormatter
 	if( record.getException() == null )
 	    {
 		return( sdf.format( new Date( record.getTime() ) )+
-			" >> [ "+record.getClazz()+" ] - "+
+			" >> ["+record.getClazz()+"] - "+
 			record.getMessage() );
 	    }
 	else
@@ -56,7 +56,7 @@ public class StandardLogFormatter extends LogFormatter
 		w.close();
 		w = null;
 		return( sdf.format( new Date( record.getTime() ) )+
-			" >> [ "+record.getMessage()+" ] - "+e+"\n"+
+			" >> ["+record.getMessage()+"] - "+e+"\n"+
 			baos.toString() );
 	    }
     }
@@ -68,9 +68,9 @@ public class StandardLogFormatter extends LogFormatter
      */
     public String getHead()
     {
-	return( "NGTCS Logging started [ "+
+	return( "NGTCS Logging started ["+
 		( new SimpleDateFormat( "dd/MM/yyyy - HH:mm:ss" ).
-		    format( new Date( System.currentTimeMillis() ) ) )+" ]" );
+		    format( new Date( System.currentTimeMillis() ) ) )+"]" );
     }
 
 
@@ -80,9 +80,9 @@ public class StandardLogFormatter extends LogFormatter
      */
     public String getTail()
     {
-	return( "NGTCS Logging terminated [ "+
+	return( "NGTCS Logging terminated ["+
 		( new SimpleDateFormat( "dd/MM/yyyy - HH:mm:ss" ).
-		    format( new Date( System.currentTimeMillis() ) ) )+" ]" );
+		    format( new Date( System.currentTimeMillis() ) ) )+"]" );
     }
 
 
@@ -97,8 +97,11 @@ public class StandardLogFormatter extends LogFormatter
     }
 }
 /*
- *    $Date: 2003-07-01 10:11:30 $
+ *    $Date: 2013-07-02 15:26:49 $
  * $RCSfile: StandardLogFormatter.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/StandardLogFormatter.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:11:30  je
+ *     Initial revision
+ *
  */

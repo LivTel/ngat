@@ -1,68 +1,40 @@
-
-
 #
 # This is an automatically generated Makfile from
-# /home/dev/src/scripts/change_makefiles.csh
+# /home/dev/src/scripts/make_makefile.csh
 #
 PACKAGENAME    = ngat.ngtcs
 PACKAGEDIR     = ngat/ngtcs
 JAR_FILE       = ngat_ngtcs.jar
-DIRS           = command common
+DIRS           = c common subsystem command test
+DIRS_TARGET    = dirs
 
 SRCS           = AltAzPointingModel.java \
+                 AltAzPointingModelCoefficients.java \
                  AstrometryCalculator.java \
-                 Autoguider.java \
-                 BasicMechanism.java \
-                 CalendarType.java \
-                 CammellLairdEnclosure.java \
                  Communicator.java \
-                 Convert.java \
-                 Data.java \
-                 Epoch.java \
-                 Equinox.java \
                  ExecutionThread.java \
                  FocalStation.java \
-                 IERSData.java \
                  InitialisationException.java \
                  JNIAstrometryCalculator.java \
+                 JNIAstrometryCalculatorFactory.java \
                  Limit.java \
                  LoggingInitialiser.java \
-                 Matrix.java \
-                 MCS_State.java \
-                 Mechanism.java \
-                 MechanismState.java \
-                 MechanismStatus.java \
-                 MeteorologicalData.java \
-                 Monitor.java \
-                 Mount.java \
-                 MountState.java \
-                 MountStatus.java \
-                 MountType.java \
-                 MSIAutoguider.java \
                  PointingModel.java \
+                 PointingModelCoefficients.java \
                  PointingOrigin.java \
-                 PowerController.java \
-                 ReportedTarget.java \
-                 Rotator.java \
-                 RotatorMode.java \
                  ShutdownThread.java \
-                 SiteData.java \
-                 SoftwareState.java \
                  StandardLogFormatter.java \
-                 State.java \
-                 Status.java \
-                 Target.java \
                  Telescope.java \
-                 TelescopeState.java \
-                 TelescopeStatus.java \
-                 Timer.java \
-                 TimescaleType.java \
-                 TimestampedPosition.java \
-                 Timestamp.java \
-                 TransportLayer.java \
-                 TTLMount.java \
-                 Util.java \
-                 VirtualTelescope.java \
-                 XYZMatrix.java
+                 VirtualTelescope.java
+
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
+#
+#   $Author: cjm $
+# $Revision: 1.4 $
+#       $Id: Makefile,v 1.4 2013-07-02 15:25:05 cjm Exp $
+#     $Date: 2013-07-02 15:25:05 $
+#  $RCSfile: Makefile,v $
+#   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/Makefile,v $
+#      $Log: not supported by cvs2svn $
+#
