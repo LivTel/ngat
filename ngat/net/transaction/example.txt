@@ -1,0 +1,88 @@
+
+// In reality most of this hardcoded stuff would come from a config file.
+
+
+// Create the TMgr GECKO
+TransactionManager.Originator tmo = TransactionManager.createOriginatorInstance("GECKO", 1234567L);
+
+// Standard naming convention based on TM's alias.
+tmo.setClientKeyStore("gecko-local.private");
+tmo.setClientTrustStore("gecko-downstream.public");
+
+// If TMR or TMD then we also need: "gecko-upstream.public" as well.
+
+try {
+    tmo.initializeSSL();
+} catch (Exception e) {
+  System.err.println("Failed to initialize TransactionManager: "+e);
+  System.exit(666);
+}
+
+// Setup routes. 1- aliases, 2- addresses.
+tmo.addDestination("SALAMANDER", 46464646L);
+tmo.addDestination("SIDEWINDER", 54839359L);
+tmo.addDestination("VIPER",      87965868L);
+
+tmo.setConnectionInfo(46464646L, "salamander.livjm.ac.uk", 7865);
+tmo.setConnectionInfo(54839359L, "sidewinder.livjm.ac.uk", 8767);
+tmo.setConnectionInfo(87965868L, "viper.livjm.ac.uk",      6567);
+
+
+// Start the ops thread(s).
+tmo.start();
+
+// Thats ALL - its running now..
+
+..
+..
+..
+..
+..
+..
+
+// Generate a TRANSACTION.
+ADD_GROUP addGroup = new ADD_GROUP("add-group-1");
+addGroup.setGroup(group1);
+addGroup.setProposalPath("/LT_Phase2_A2/JMU/abc-user/JL03B232");
+
+// get some IDs. These 2 together should be unique over all TMs and all time.
+long addGroupId = tmo.getNextTransactionId();
+long srcId   = tmo.getManagerId();
+
+// Make an Executable
+ExecutableTransactionMessage exec = new ExecutableTransactionMessage(srcId, addGroupId, addGroup);
+
+// Setup dest and routing.
+exec.setDestination(tmo.getDestination("SALAMANDER"));
+exec.routeVia(tmo.getDestination("SIDEWINDER"));
+exec.routeVia(tmo.getDestination("VIPER"));
+
+// This trans will go:  GECKO(here) -> SIDEWINDER(router) -> VIPER(router) -> SALAMANDER(dest)
+
+// Some options to control its progress.
+exec.setOption(NO_DISCARD);
+exec.setOption(MAX_POLL_INTERVAL, 30000L);
+
+// Now Submit - we are the response handler also.
+tmo.submitTransaction(exec, this);
+
+// The thing has gone now.. we find out what happens by callback..
+
+
+
+public void submissionAccepted(long transId) {
+       if (transId == addGroupId) {
+	  System.err.println("The ADDGROUP is now under management of GECKO");
+       }
+}      
+
+public void responseReceived(long transId, TRANSACTION_DONE done)
+        if (transId == addGroupId) {
+	  System.err.println("The ADDGROUP has been executed");
+	  if (done.getSuccessful()) {
+	     if (done instanceof ADD_GROUP_DONE) {
+		System.err.println("Done: and "+(((ADD_GROUP_DONE)done.getAdded() ? "added" : "Not added")));
+             }
+          }
+        }
+}
