@@ -16,6 +16,10 @@ public class DataLogger {
     /** Data handlers.*/
     protected Vector listeners;
 
+    /** Pending Data handlers.*/
+    protected Vector newListeners;
+
+
     /** Despatches update events to handlers.*/
     protected DataDespatchThread despatcher;
 
@@ -25,7 +29,8 @@ public class DataLogger {
     /** Create a DataLogger.*/
     public DataLogger() {
 
-	listeners  = new Vector();
+	listeners    = new Vector();
+	newListeners = new Vector();
 
 	cache      = new BlockingQueue();
 
@@ -52,13 +57,16 @@ public class DataLogger {
      */
     public void addUpdateListener(DataLoggerUpdateListener listener) {
 
-	listeners.add(listener);
+	newListeners.add(listener);
 	 
     }
 
     /** Returns an Iterator over the list of listeners.*/
     public Iterator listeners() {
 	
+	listeners.addAll(newListeners);
+	newListeners.clear();
+
 	return listeners.iterator();
 	
     }
