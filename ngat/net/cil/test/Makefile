@@ -9,33 +9,12 @@ SRCS = TestServer.java
 OBJS = $(SRCS:%.java=$(BINDIR)/%.class)
 DOCS = $(SRCS:%.java=$(DOCSDIR)/%.html)
 
-top: $(OBJS) docs
-
-$(BINDIR)/%.class: %.java
-	$(JAVAC) $(JAVAC_OPTIONS) -d $(BINDIR)/ $<
-
-docs: $(DOCS)
-
-$(DOCSDIR)/%.html: %.java
-	mkdir -p $(DOCSDIR);
-	$(JAVADOC) -d $(DOCSDIR) -classpath $(LT_HOME)/classes $(DOCFLAGS) $(SRCS)
-
-checkout:
-	$(CO) $(CO_OPTIONS) $(SRCS)
-
-checkin:
-	-$(CI) $(CI_OPTIONS) $(SRCS)
-
-clean: tidy
-	-$(RM) $(RM_OPTIONS) $(OBJS)
-
-tidy:
-	-$(RM) $(RM_OPTIONS) $(TIDY_OPTIONS)
-
-backup: tidy
 
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.3  2002/11/15 14:15:42  je
+# *** empty log message ***
+#
 # Revision 1.2  2002/11/15 11:41:12  cjm
 # Changed Makefile.common to Makefile.ngat
 #
