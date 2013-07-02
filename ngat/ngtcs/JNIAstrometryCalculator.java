@@ -6,15 +6,15 @@ import ngat.ngtcs.common.*;
  * This class is the JNI layer interacting with a C slalib library for the 
  * astrometric transformations.
  *
- * @version $Revision: 1.1 $
- * @author $Author: je $
+ * @version $Revision: 1.2 $
+ * @author $Author: cjm $
  */
 public class JNIAstrometryCalculator extends AstrometryCalculator
 {
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString = new String( "$Id: JNIAstrometryCalculator.java,v 1.1 2003-09-19 15:58:40 je Exp $" );
+  public static final String rcsid = new String( "$Id: JNIAstrometryCalculator.java,v 1.2 2013-07-02 14:44:46 cjm Exp $" );
 
   /**
    * Name of the C slalib library to use.
@@ -144,9 +144,12 @@ public class JNIAstrometryCalculator extends AstrometryCalculator
 
 }
 /*
- *    $Date: 2003-09-19 15:58:40 $
+ *    $Date: 2013-07-02 14:44:46 $
  * $RCSfile: JNIAstrometryCalculator.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/JNIAstrometryCalculator.java,v $
- *      $Id: JNIAstrometryCalculator.java,v 1.1 2003-09-19 15:58:40 je Exp $
+ *      $Id: JNIAstrometryCalculator.java,v 1.2 2013-07-02 14:44:46 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 15:58:40  je
+ *     Initial revision
+ *
  */
