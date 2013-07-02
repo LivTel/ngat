@@ -17,6 +17,8 @@ public class DataCampSender implements DataLoggerUpdateListener {
     long timeout;
     Vector wants;
 
+    public static int count = 0;
+
     /** Create a DataSender for the specified host and port.*/
     public DataCampSender(Vector wants, String host, int port, long timeout) throws IOException {
 	this.wants = wants;
@@ -35,6 +37,8 @@ public class DataCampSender implements DataLoggerUpdateListener {
      *
      */
     public void dataUpdate(Object data) {
+
+	count++;
 
 	// Noone wants null data !
 	if (data == null)
@@ -56,32 +60,45 @@ public class DataCampSender implements DataLoggerUpdateListener {
 	    
 	    TELEMETRY_UPDATE telem = new TELEMETRY_UPDATE("TestUpdateClient");
 	    telem.setData((TelemetryInfo)data);
-	    
+
+	    long oct = System.currentTimeMillis();
 	    try {
 		conn.open();
-	    } catch (ConnectException cx) {
+	    } catch (Exception cx) {
+		System.err.println("DLogCamp::["+count+"] Error opening TCP/camp connection to: "+host+":"+port+" after "+(System.currentTimeMillis()-oct)+"ms");
 		cx.printStackTrace();
 		return;
 	    }
-	    
+	  
 	    try {
-		conn.send(telem);
-	    } catch (IOException iox) {
-		iox.printStackTrace();
-		return;
-	    }
-	    
-	    try {
-		Object obj = conn.receive(timeout);
-		System.err.println("DLog:TelemSender::Obj recvd: "+(obj != null ? obj.getClass().getName() : "NULL"));
-		COMMAND_DONE update = (COMMAND_DONE)obj;	   
+		long sst = System.currentTimeMillis();
+		try {
+		    System.err.println("DLogCamp::["+count+"] Sending TCP/camp packet to: "+host+":"+port+", to="+timeout+" ms");
+		    conn.send(telem);		    
+		} catch (Exception iox) {
+		    System.err.println("DLogCamp::["+count+"] Error sending TCP/camp packet to: "+host+":"+port+" after "+(System.currentTimeMillis()-sst)+"ms");
+		    iox.printStackTrace();
+		    return;
+		}
 		
-	    } catch (ClassCastException cx) {
-		cx.printStackTrace();
-		return;
-	    } catch (IOException iox) {
-		iox.printStackTrace();
-		return;
+		long srt = System.currentTimeMillis();
+		try {
+		    System.err.println("DLogCamp::["+count+"] Waiting TCP/camp reply from: "+host+":"+port+", to="+timeout+" ms");
+		    Object obj = conn.receive(timeout);
+		    System.err.println("DLogCamp::Obj recvd: "+(obj != null ? obj.getClass().getName() : "NULL"));
+		    COMMAND_DONE update = (COMMAND_DONE)obj;	   
+		    
+		} catch (Exception cx) {
+		    System.err.println("DLogCamp::["+count+"] Error getting TCP/camp reply from: "+host+":"+port+" after "+(System.currentTimeMillis()-srt)+"ms");
+		    cx.printStackTrace();
+		    return;
+		}
+	    } finally {
+		try {
+		    conn.close();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 	    }
 	    
 	}
