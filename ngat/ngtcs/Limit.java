@@ -5,27 +5,27 @@ import ngat.ngtcs.common.*;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class Limit
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: Limit.java,v 1.1 2003-07-01 10:11:30 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: Limit.java,v 1.2 2013-07-02 14:45:17 cjm Exp $" );
 
     /**
      * Timestamp of this Limit.
      */
-    private Timestamp timestamp;
+    protected Timestamp timestamp;
 
     /**
      * Whether this Limit defines a boundary where the target becomes
      * UNTRACKABLE.
      */
-    private boolean trackable;
+    protected boolean trackable;
 
     /**
      * Usual constructor.
@@ -74,8 +74,11 @@ public class Limit
     }
 }
 /*
- *    $Date: 2003-07-01 10:11:30 $
+ *    $Date: 2013-07-02 14:45:17 $
  * $RCSfile: Limit.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/Limit.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:11:30  je
+ *     Initial revision
+ *
  */

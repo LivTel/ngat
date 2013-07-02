@@ -25,76 +25,83 @@ package ngat.ngtcs;
  * <b>Note</b> a Mirror object is to be added to include pin-cushion/barrel
  * distortions.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class FocalStation
 {
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: FocalStation.java,v 1.1 2003-07-01 10:11:30 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: FocalStation.java,v 1.2 2013-07-02 14:40:07 cjm Exp $" );
 
   /**
    * Name of this FocalStation.
    */
-  private String name;
+  protected String name;
 
   /**
-   * Focus offset for this FocalStation, in millimetres.
+   * Port number of this FocalStation.  0 (zero) Refers to the straight through
+   * port position (main Cassgerain for the LT).
    */
-  private double focusOffset;
+  protected int portNumber = 0;
+
+  /**
+   * The focus offset for this Focal Station, in millimetres.
+   */
+  protected double focus = 0.0;
 
   /**
    * Origin for this FocalStation's instrument origin. i.e. This pair of
    * coordinates defines the position, in millimetres, of the instruments
    * (0, 0) coordinate, in the XY scale.
    */
-  private PointingOrigin instOrigXYCoords = new PointingOrigin( 0.0, 0.0 );
+  protected PointingOrigin instOrigXYCoords = new PointingOrigin( 0.0, 0.0 );
 
   /**
    * Desired instrument coordinates for the object being observed.
    */
-  private PointingOrigin instCoords = new PointingOrigin( 0.0, 0.0 );
+  protected PointingOrigin instCoords = new PointingOrigin( 0.0, 0.0 );
 
   /**
    * Name of the units used for this FocalStation.
    */
-  private String unitName;
+  protected String unitName;
 
   /**
    * Scale of this FocalStation's units per mm.
    */
-  private double scale;
+  protected double scale;
 
   /**
    * Instrument Alignment Angle, measured anticlockwise in radians, from the -Y
    * axis.
    */
-  private double iaa;
+  protected double iaa;
 
   /**
    * Sin( iaa ).
    */
-  private double sinIAA;
+  protected double sinIAA;
 
   /**
    * Cos( iaa ).
    */
-  private double cosIAA;
+  protected double cosIAA;
 
 
   /**
    * Constructor for FocalStations.
    */
-  public FocalStation( String _name, PointingOrigin _pointingOrigin, 
-		       double _IAA, double _focusOffset, double _scale, 
-		       String _unitName )
+  public FocalStation( String _name, int _portNumber, double _focus,
+		       PointingOrigin _pointingOrigin, double _IAA,
+		       double _scale, String _unitName )
   {
     name	     = _name;
+    portNumber       = _portNumber;
+    focus            = _focus;
     instOrigXYCoords = _pointingOrigin;
-    focusOffset	     = _focusOffset;
     scale	     = _scale;
     iaa		     = _IAA;
     sinIAA	     = Math.sin( iaa );
@@ -110,6 +117,28 @@ public class FocalStation
   public String getName()
   {
     return name;
+  }
+
+
+  /**
+   * Return the port number of this focal station.
+   * @return portNumber
+   * @seer #portNumber
+   */
+  public int getPortNumber()
+  {
+    return portNumber;
+  }
+
+
+  /**
+   * Return the default focus for this Focal Station.
+   * @return focus
+   * @see #focus
+   */
+  public double getFocus()
+  {
+    return focus;
   }
 
 
@@ -165,27 +194,6 @@ public class FocalStation
 
 
   /**
-   * Return the Focus Offset used by this Focal Station, in millimetres.
-   * @return the focus offset of this focal station in millimetres
-   */
-  public double getFocusOffset()
-  {
-    return focusOffset;
-  }
-
-
-  /**
-   * Set the focusOffset to the new specified value.
-   * @param newFO the new focus offset, in millimetres.
-   * @see #focusOffset
-   */
-  public void setFocusOffset( double newFO )
-  {
-    focusOffset = newFO;
-  }
-
-
-  /**
    * Set the instrument coordinates that define where the observed target is
    * desired in the Instrument plane.
    * @param newTargetOrigin the new centre of this FocalStation
@@ -225,8 +233,11 @@ public class FocalStation
   }
 }
 /*
- *    $Date: 2003-07-01 10:11:30 $
+ *    $Date: 2013-07-02 14:40:07 $
  * $RCSfile: FocalStation.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/FocalStation.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:11:30  je
+ *     Initial revision
+ *
  */
