@@ -14,14 +14,14 @@ public class CatalogSource extends SolarSystemSource implements Serializable {
     /** Constant indicating source:- The SUN.*/
     public static final int SUN  = 0;
     
-    /** Constant indicating source:- The .*/
-    public static final int MOON = 1;
+    /** Constant indicating source:- The MOON.*/
+    public static final int MOON = 3;
     
     /** Constant indicating source:- The planet MERCURY.*/
-    public static final int MERCURY = 2;
+    public static final int MERCURY = 1;
 
     /** Constant indicating source:- The planet VENUS.*/
-    public static final int VENUS = 3;
+    public static final int VENUS = 2;
     
     /** Constant indicating source:- The planet MARS.*/
     public static final int MARS = 4;
@@ -134,7 +134,7 @@ public class CatalogSource extends SolarSystemSource implements Serializable {
     /** Returns readable description. ##TBD##*/
     public String toString() {
 	return "Cat.Source: "+name+
-	    " : Catid"+catalogId+" ..ns tracking is not currently available";
+	    " : Catid"+catalogId;
     }
   
 } // End class def. [CatalogSource].

@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: Group.java,v 1.11 2007-11-27 09:29:42 snf Exp $
+ * $Id: Group.java,v 1.12 2013-07-04 13:34:20 eng Exp $
  */
 public class Group extends NPDBObject implements Serializable {
    
@@ -179,6 +179,8 @@ public class Group extends NPDBObject implements Serializable {
     protected double nominalExecutionTime = 0.0;
 
     protected long startingDate;
+
+    protected boolean moon;
 
     /** Returns a String representing the specified seeing conditions.*/
     public static String toSeeingString(int seeing) {
@@ -373,6 +375,9 @@ public class Group extends NPDBObject implements Serializable {
     
     /** Returns the Group's nominal (per schedule weighting) execution time. */
     public double getNominalExecutionTime() { return nominalExecutionTime;}
+
+    public void setMoon(boolean moon){ this.moon = moon; }
+    public boolean isMoon() { return moon; }
     
     /** Configure various group params.
      * @param file The config file.
