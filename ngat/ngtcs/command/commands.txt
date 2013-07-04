@@ -1,0 +1,400 @@
+
+
+
+6.1 ABORT 
+Function: Abort the current macro command. 
+Command Syntax: ABORT 
+Actioned Syntax: None 
+Completed Syntax: None 
+Timeout: Not applicable 
+Errors: IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. STATEREJECT The command is not allowed in the current system state. 
+Comments: Macro commands employ lower level commands to action a complexprocedure, e.g. pointing calibration. The ABORT command can be used to cause the currently executing procedure to be abandoned. Control may notreturn immediately because procedures can only be interrupted between actions. This command does not result in any messages from the TCS but theaborted procedure will return an appropriate message and status code. The list of procedures that currently support the ABORT option are: CALIBRATE 
+
+
+6.2 AGCENTROID 
+Function: Centroid on current guide source then return pixel, full widthhalf-maximum and stellar magnitude. 
+Command Syntax: AGCENTROID 
+Actioned Syntax: None 
+Completed Syntax: xpixel ypixel fwhm mag 
+Arguments: xpixel 0.000 to 1024.000 [pixels] Absolute xpixel value on Autoguider CCD chip ypixel 0.000 to 1024.000 [pixels] Absolute ypixel value on Autoguider CCD chip fwhm 0.000 to 15.000 [arcsec] Full width half maximum of centroid source. mag 0.0 to 20.0 Approximate stellarmagnitude of centroid source. 
+Timeout: 120 seconds 
+Errors: ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The autoguider is not currently guiding or the commandis not allowed in the current system state. TIMEDOUT The command did not complete before the timeout period had expired. 
+Comments: Pixel numbers range from 1 to 1024, while pixel centres range from0.500 to 1023.500. Before this command is requested, an autoguider must have beenselected either using the AGSELECT command or the INSTRUMENT command. 
+
+
+6.3 AGFILTER 
+Function: Set autoguider filter position. 
+Command Syntax: AGFILTER state 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: state IN or OUT 
+Timeout: 60 seconds 
+Errors: AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the auxiliary mechanism node is not ready to accept commands, e.g. the node software has failed or has notbeen enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Before this command is requested, an autoguider must have beenselected either using the AGSELECT command or the INSTRUMENT command. 
+
+
+6.4 AGFOCUS 
+Function: Set autoguider focus position. 
+Command Syntax: AGFOCUS demand-position 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: demand-position 0.00 to 25.00 [mm] 
+Timeout: 60 seconds 
+Errors: . AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the auxiliary mechanism node is not ready to accept commands, e.g. the node software has failed or has notbeen enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Before this command is requested, an autoguider must have beenselected either using the AGSELECT command or the INSTRUMENT command. . 
+
+
+6.5 AGMOVE 
+Function: Move autoguider probe mirror to a radial position, rotator to amount position angle and set autoguider pixel on which to guide. 
+Command Syntax: AGMOVE position angle pixel_x pixel_y 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: position (Cassegrain) 0.00 to 110.00 [mm] angle (Cassegrain) +-240.00 [degrees] pixel_x (Cassegrain) 0.00 to 1024.00 (pixel centres range from 0.50 to1023.50) pixel_y (Cassegrain) 0.00 to 1024.00 (pixel centres range from 0.50 to1023.50) 
+Timeout: 500 seconds 
+Errors: . AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM An argument was specified incorrectly (see contextualmessage for more details). BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the auxiliary mechanism node or the rotator node is not ready to accept commands, e.g. the node software hasfailed or has not been enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: This command is equivalent to an AGRADIAL command, followed byROTATOR MOUNT command and finally an AUTOGUIDE ON PIXEL command. Before this command is requested, an autoguider must havebeen selected either using the AGSELECT command or the INSTRUMENT command. . 
+
+
+6.6 AGRADIAL 
+Function: Move autoguider probe mirror to a radial position. 
+Command Syntax: AGRADIAL [position | CENTRE] 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: position (Cassegrain) 0.00 to 110.00 [mm] CENTRE Instrument specific field centre. 
+Timeout: 60 seconds 
+Errors: . AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). INVALID_ARGUMENT The field centre is defined with respect to aninstrument but none have been selected. MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the auxiliary mechanism node is not ready to accept commands, e.g. the node software has failed or has notbeen enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Before this command is requested, an autoguider must have beenselected either using the AGSELECT command or the INSTRUMENT command. The CENTRE keyword moves the autoguider probe mirror into thefield centre for the currently selected instrument. If an instrument has not previously been selected then an error is generated. The field centrepositions are configurable via the TCS configurations files. . 
+
+
+6.7 AGSELECT 
+Function: Select which Autoguider to use. 
+Command Syntax: AGSELECT autoguider 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: autoguider CASSEGRAIN 
+Timeout: 20 seconds 
+Errors: AMBIG The argument specified was ambiguous. Try morecharacters. BADPARAM The requested autoguider was specified incorrectly. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: This command send an initialisation command to the selectedautoguider and configures the TCS with the relevant focal plane geometry. The command is complete when the autoguider accepts the command. Onsuccessful completion the cooling of the autoguider CCD will be initiated. While the CCD chip is cooling, the autoguider software state will beWARNING. When the CCD chip temperature is within tolerance the autoguider software state will change to OKAY. . 
+
+
+6.8 AGVIEW 
+Function: To perform an aperture offset to move an image into theautoguider field of view. 
+Command Syntax: AGVIEW 
+Actioned Syntax: None 
+Completed Syntax: None 
+Timeout: 10 seconds 
+Errors: BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. NOFOLLOW The telescope must be tracking before an offset can beperformed. NOMOVING The telescope must be tracking before an offset can beperformed. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: This command allows a field to be viewed using the autoguider. Anoffset is applied to move the image from the nominal aperture (usually the rotator centre) to the centre of the autoguider field. It is essential to tell theTCS which autoguider is in use (use the AGSELECT or INSTRUMENT commands as necessary). . 
+
+
+6.9 AGWAVELENGTH 
+Function: Enter the value of the effective wavelength of light used in theatmospheric refraction calculation for the autoguider. 
+Command Syntax: AGWAVELENGTH wavelength 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: wavelength 0.300 to 35.000 [microns] 
+Timeout: 3 seconds 
+Errors: BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADPARAM The wavelength argument was specified incorrectly. BADRANGE The specified wavelength is outside the valid range ofvalues. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. . 
+
+
+6.10 ALTITUDE 
+Function: Move to specified altitude then stop. 
+Command Syntax: ALTITUDE angle 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: angle 20.000 to 95.000 [degrees] 
+Timeout: 60 seconds 
+Errors: . AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The altitude position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the altitude node is not ready to accept commands, e.g. the node software has failed or has not been enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: If the azimuth or rotator are tracking they are halted by thiscommand. . 
+
+
+6.11 AUTOGUIDE 
+Function: Lock or unlock the autoguider loop. 
+Command Syntax: AUTOGUIDE state (agmode) (n m) (x y) (r) 
+Actioned Syntax: None 
+Completed Syntax: guidemag 
+Arguments: state ON - Activates the autoguider loop OFF - Deactivates the autoguider loop SUSPEND - Put the TCS in a state where pixel co-ordinates are read from the autoguider and the current reference position is maintained, howeverguiding errors are not applied. RESUME - Resume applying guiding errors afterbeing suspended. agmode BRIGHTEST - guide by brightest stellar like objectin current frame. RANGE n m - guide by brightest star in magnituderange n to m. RANK r - guide by star of rank r. PIXEL x y - guide by nearest star to Autoguiderpixel x,y. n m 0.00 to 20.00 r 1 to 10 x y 0.00 to 1024.00 (pixel centres range from 0.50 to 1023.50) guidemag 0.00 to 20.00 [Magnitude] - The magnitude of the guide source. 
+Timeout: 200 seconds 
+Errors: . BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADKEYW The supplied keyword was invalid, e.g. SUSPEND wasmisspelt. BADPARAM An argument was specified incorrectly. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current systemstate, the autoguider node is not ready to accept commands or not all relevant telescope mechanisms arein position, e.g. the node software has failed or is busy or the autoguider deployment mirror is still in motion. TIMEDOUT The command did not complete before the timeout periodhad expired. Comment: The AUTOGUIDE ON command sends a requests to the autoguider tofind a guide star in the current field of view. The parameters agmode informs the TCS which method is to be usedto select a guide star. AUTOGUIDE OFF causes the TCS to open the tracking loop and stop the Autoguider from centroiding. Autoguiding may also besuspended and later resumed using the AUTOGUIDER SUSPEND and AUTOGUIDER RESUME respectively. In suspend mode guide corrections areaccepted from the autoguider but no offset is made to the current tracking demands. The autoguider sends (x,y) pixel co-ordinates of a guide star to the telescopecontrol computer. The TCS then adjusts the telescope drives to keep the star at a given location on the autoguider CCD. If the intention is to maintain thecurrent positioning of a field (e.g. if acquisition onto a spectrograph slit has been verified), then the command AUTOGUIDE ON should be used. Thistakes the first position received from the autoguider after the command is issued, and keeps the guide star there. On the other hand, if the autoguiderco-ordinates are already known, then the appropriate command is AUTOGUIDE ON PIXEL x y. There are two cases where this is likely to be . useful. The first is when an observation is to be repeated and the field is tobe positioned at the same place on the detector. The guide probe and pixel positions should be repeated. The second case is guiding on the target objectusing a slit viewer. The x and y should be the pixel co-ordinates of the centre of the slit. Before this command is requested, an autoguider must have beenselected either using the AGSELECT command or the INSTRUMENT command. If an AUTOGUIDE ON request fails then an error message will bereturned to the TCS client. . 
+
+
+6.12 AZIMUTH 
+Function: Move to the specified azimuth then stop. 
+Command Syntax: AZIMUTH angle 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: angle -180.000 to +360.000 [degrees]. 
+Timeout: 300 seconds 
+Errors: . AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The azimuth position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the azimuth node is not ready to accept commands, e.g. the node software has failed or has not been enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: If the altitude or rotator axes are tracking when this command isaccepted then they are halted. . 
+
+
+6.13 BEAMSWITCH 
+Function: To offset the telescope from the reference position so that animage moves to a given (x,y) position (aperture) in the focal plane. 
+Command Syntax: BEAMSWITCH offset_x offset_y 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: offset_x +-100.00 [arcseconds] offset_y +-100.00 [arcseconds] 
+Timeout: 30 seconds 
+Errors: BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADPARAM The offset position was specified incorrectly. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. NOFOLLOW The telescope must be tracking before an offset can beperformed. NOMOVING The telescope must be tracking before an offset can beperformed. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: . Consecutive BEAMSWITCH commands are not cumulative. On source change (e.g. GOTO), offsets are reset to the nominal values(this can also be done with the BEAMSWITCH 0 0 command). . 
+
+
+6.14 CALIBRATE 
+Function: Update a subset of the pointing coefficients in the pointing model. 
+Command Syntax: CALIBRATE calmode 
+Actioned Syntax: None 
+Completed Syntax: rms-error 
+Arguments: calmode DEFAULT - Reverts to the default pointing solution inthe initialisation file. This is a suitable course of action if the CALIBRATE command fails (e.g. gives very largerms errors). NEW - Initiates an automatic sequence which does arestricted pointing measurement on seven `FK5' stars,, in order to update the values for the encoder zero-points in azimuth and altitude and the left-right collimation error. Stars are selected to be close to themeridian and either North or South of the zenith, depending on the initial azimuth. A range of altitudesmust be covered. The telescope is driven to the first star, pointing errors are measured and then drives tothe next star. LAST - Recalls the last pointing solution. This may beuseful if the running of the control program has been interrupted, but does not ensure very accuratepointing because the encoder zero-points may have changed rms-error 0.000 to 3600.000 [arcseconds] Calibration sky sigma, residual to least square fit forpointing model. 
+Timeout: 1800 seconds 
+Errors: BADFILE The TPOINT executable, result file or the telescope specificcalibrate reduction procedure could not be located. BADIO An error occurred writing to or reading from the calibratedirectory. Check permissions and available disk space. BADKEYW A command keyword or combination of keywords werespecified incorrectly. BADPARAM The requested star was specified incorrectly. ENGREJECT The telescope is currently under engineering control. ERR_OPENING_FILE An error occurred writing a TPOINT procedure file.  . Check permissions and available disk space. IGNORED The command line was blank. INVALID_ARGUMENT The pointing model is specific to an instrument butnone has been selected. This status code is also returned if a calibrate is aborted. MECHERR The deployment of the autoguider deployment mirrorfailed to complete within the timeout period or the autoguider failed to perform a task within the timeoutperiod. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. SYSCALL_ERROR An error was encountered during a system call. The TCSshould recover automatically. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Create a new pointing model by driving the telescope to a position defined bythe previous model, and using the autoguider to determine pointing errors. The procedure can be summarised as: * Point and track an isolated star * Drive autoguider feed mirror to the field centre * Centre rotator by taking autoguider exposures at variousrotator position angles. * Point the telescope at a series of isolated stars from acatalogue. * Calculate pointing error using autoguider exposures. * Calculate new pointing model parameters using TPOINT. * Drive autoguider feed mirror back to field edge. * Return RMS pointing error. . 
+
+
+6.15 DFOCUS 
+Function: Change the focus by a specified amount. 
+Command Syntax: DFOCUS offset 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: offset +-30.00 [mm] 
+Timeout: 300 seconds 
+Errors: AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The focus offset was specified incorrectly. BADRANGE The specified focus offset is outside the valid range. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current systemstate, focusing for this focal station is not under TCS control or the control node is not currently available. TIMEDOUT The command did not complete before the timeout period . had expired. 
+Comments: This command is used when the telescope focus has to be changed tocompensate for the additional optical thickness of a filter. If a DFOCUS request would result in the focus mechanism beingdriven beyond a physical limit, the command will be rejected and an error message returned. Successive DFOCUS offsets are not cumulative and are not reset bythe INSTRUMENT command. To reset the focus offset use DFOCUS 0. DFOCUS offsets are cumulative with handset focus offset but handsetfocus offsets are reset on a change of instrument. . 
+
+
+6.16 ENCLOSURE 
+Function: Open/close the enclosure. 
+Command Syntax: ENCLOSURE [mechanism] [state/pos] 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: mechanism ENCLOSURE, SHUTTER1 or SHUTTER2. state OPEN or CLOSE pos 0.00 to 90.00 [degrees] 
+Timeout: 600 seconds 
+Errors: AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW A keyword was specified incorrectly. BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the enclosure is not ready to accept requests, e.g. the . interface software has failed or has not been enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. Comment: This command is enclosure specific and is used to open the enclosureor to control individual shutters. The keyword list reflects the available enclosure mechanisms. The default mechanism is ENCLOSURE. Examples: ENCLOSURE OPEN ENCLOSURE 46 ENCLOSURE SHUTTER1 OPEN . 
+
+
+6.17 FOCUS 
+Function: Drive the focus to a specified setting. 
+Command Syntax: FOCUS [position | DEFAULT ] 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: position 0.00 to 60.00 [mm] DEFAULT default focus for selected instrument. 
+Timeout: 900 seconds 
+Errors: AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the auxiliary mechanism node is not ready to accept . commands, e.g. the node software has failed or has notbeen enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: The focus is normally adjusted to compensate for changes in tubetemperature and altitude. The input to FOCUS is a virtual position, which should be independent of these corrections. It should not, therefore, varyfrom night to night. Use the DFOCUS command to compensate for known changes of optical path (e.g. filters). The default focus for an instrument is specified in a TCS configurationfile. The TCS configuration files are discussed in the Telescope Control System User Manual. . 
+
+
+6.18 GOTO 
+Function: Move the telescope to a new source and track it. 
+Command Syntax: GOTO source_name ra_hours ra_minutes ra_secondsdec_degrees dec_minutes dec_seconds equinox (epoch diff_rate_in_ra diff_rate_in_decproper_motion_ra proper_motion_dec parallax radial_velocity) 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: source_name Upto 20 characters ra_hours 0 to 23 [hours] ra_minutes 0 to 59 [minutes] ra_seconds 0.00 to 59.99 [seconds] dec_degrees +-89 [degrees] dec_minutes 0 to 59 [arc-minutes] dec_seconds 0.00 to 59.99 [arc-seconds] equinox APPARENT -geocentric apparent co-ordinates of the current date Jyear - FK5 mean co-ordinates Byear - FK4 mean co-ordinates year 1800.00 to 2100.00 [years] epoch 1800.00 to 2100.00 [years] diff_rate_in_ra +-100.00 [seconds/second] diff_rate_in_dec +-100.00 [arcseconds/second] proper_motion_ra +-20.00 [seconds/year] proper_motion_dec +-100.00 [arcseconds/year] parallax 0.00 to 10.00 [arcseconds] radial_velocity +-1000.00 [km per second] 
+Timeout: 300 seconds . 
+Errors: BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor a required mechanism node is not ready to accept commands, e.g. the node software has failed or has notbeen enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Position of source to track. Right Ascension, Declination, equinox,proper motion, epoch and non-sidereal rate. source_name The name of the new source. It must be a string of up to 20characters; extra characters are lost. To include spaces the whole string should be enclosed within double quotes. right_ascension: Specifies the right ascension of the new source in threefields separated by spaces. Format: ra_hours ra_minutes ra_seconds. The right ascension is rejected if any of the components lie outside the followingranges: ra_hours 0-23 inclusive ra_minutes 0-59 inclusive ra_seconds 0.0-59.99. inclusive declination: Specifies the declination of the new source in three fieldsseparated by spaces. The dec_degrees field may be signed. If not signed, the default is '+'. Format: dec_degrees dec_minutes dec_seconds. The declination . is rejected if any of the components lie outside the following ranges: dec_degrees 0-89 inclusive dec_minutes 0-59 inclusive dec_seconds 0.0-59.99 inclusive equinox: Specifies the equinox of the source co-ordinates. A valid equinoxmust have two components: a leading letter indicating the system of the coordinates; and a number indicating the epoch of the mean equator andequinox of that system. Format: letter-year: e.g. B1950, J2000 or APPARENT (for which no number isrequired). Note that only B, J or A are acceptable as leading letters. The year must lie in the range 1800.00 to 2100.00. parallax: For nearest stars allowance can be made for annual parallax. radial_velocity: For stars with known parallax the proper motion is modifiedfor perspective using radial velocity. A positive velocity implies a receding source. The TCS will choose the shortest slew time to decide which wrap touse. The enclosure opening (if provided) will also be controlled by the TCSto prevent the image from being vignetted. . 
+
+
+6.19 HUMIDITY 
+Function: To tell the TCS the relative humidity levels to use in the refractioncalculations. 
+Command Syntax: HUMIDITY value 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: value 0.000 to 1.000 
+Timeout: 3 seconds 
+Errors: BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADPARAM The requested value was specified incorrectly. BADRANGE The specified value is outside the valid range of values forthis command. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Although the TCS serves meteorological information, the parametersused in the calculation of atmospheric refraction only change when requested via the HUMIDITY, PRESSURE and TEMPERATURE commands.Typical defaults are set in the relevant configuration file as described in the user support documentation. . 
+
+
+6.20 INSTRUMENT 
+Function: Configure the telescope and TCS for a particular instrument. Thiscommand will set the focal station, rotator, default focus, fold mirror position and initialise the autoguider. 
+Command Syntax: INSTRUMENT instrument 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: instrument CASSCCD - Main cassegrain imaging CCD. 
+Timeout: 300 seconds 
+Errors: AMBIG The supplied keyword was ambiguous. Try using moreletters. ASTQUEERR An internal inter-process communications error occurred.The TCS should recover automatically. BADPARAM The instrument name was supplied incorrectly, e.g.misspelt. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: This command sets the origin of position angle used for a specificinstrument and the scale and orientation for the TWEAK command. Position angle on the sky is normally defined to be along the slit in a spectrograph . and aligned with one of the detector axes for an imaging instrument. Thescale and orientation parameters are currently set to match the standard TCS xy-co-ordinate system This command is specific to a particular telescope and instrumentconfiguration. A file is provided to allow configuration for a new instrument arrangement. The TCS configuration files are described in the TelescopeControl System User documentation. Any defocus introduced by the DFOCUS command is not reset by thiscommand. DFOCUS offsets are not cumulative and can be reset using DFOCUS 0. Handset focus offsets are reset by this command. . 
+
+
+6.21 MIRROR_COVER 
+Function: Open/Close mirror cover. 
+Command Syntax: MIRROR_COVER state 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: state OPEN CLOSE 
+Timeout: 60 seconds 
+Errors: . AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the services PLC is not ready to accept commands TIMEDOUT The command did not complete before the timeout periodhad expired. . 
+
+
+6.22 MOVE_FOLD 
+Function: Move fold mirror to a predetermined position. 
+Command Syntax: MOVE_FOLD state 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: state STOW 1 2 3 4 
+Errors: . AMBIG An internal parsing error has occurred. Please submit anerror report to software support. BADKEYW An internal parsing error has occurred. Please submit anerror report to software support. BADPARAM The requested position was specified incorrectly. BADRANGE The specified position is outside the valid range of valuesfor this command. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. ILLEGALMEC The specified mechanism is not configured for computercontrol (see user manual for instructions on how to configure telescope mechanisms). MANUAL Computer control of this mechanism has been overridden. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the auxiliary mechanism node is not ready to accept commands, e.g. the node software has failed or has notbeen enabled. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Timeout: 120 seconds 
+Comments: The science fold mirror positions for the four folded cassegraininstrument ports are configurable at the QNX level in the Auxiliary Mechanism Node configuration file. This file may be updated by anauthorised user. The rotational position of the fold mirror is not altered by stowing ordeploying. The TCS will not rotate the fold mirror on deployment unless necessary. . 
+
+
+6.23 OFFBY 
+Function: Offset the telescope from the reference position so that the imagemoves by a specified distance in the sky or tangent plane. 
+Command Syntax: OFFBY offset-mode offset_ra offset_dec 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: offset-mode ARC TIME offset_ra +-3600.00 arcseconds +-240.00 seconds offset_dec +-3600.00 arcseconds +-3600.00 arcseconds 
+Errors: . BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADKEYW Invalid offset mode specified. BADPARAM The offset position was specified incorrectly. BADRANGE An offset value was specified outside the allowed range. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. NOFOLLOW The telescope must be tracking before an offset can beperformed. NOMOVING The telescope must be tracking before an offset can beperformed. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Timeout: 60 seconds 
+Comments: ARC: an offset in the tangent plane along axes parallel to RA and Decat the initial target position. Positive offsets imply that the right ascension and declination of the telescope both increase. The magnitude of the offseton the sky is therefore independent of declination. TIME: an incremental offset, i.e. fixed amounts are added to the RAand Dec co-ordinates. This means that the magnitude of the offset on the sky changes as a function of declination. The change in RA and DEC areassumed to be in the input co-ordinate system. Multiple OFFBY commands are not cumulative also offsets introducedthrough the TWEAK command are not reset. On source change (e.g. GOTO) offsets are reset to zero. . 
+
+
+6.24 OFFTO 
+Function: Offset the telescope from the reference position to a givencatalogue position. 
+Command Syntax: OFFTO ra_hours ra_minutes ra_secondsdec_degrees dec_minutes dec_seconds equinox (epoch diff_rate_in_ra diff_rate_in_decproper_motion_ra proper_motion_dec parallax radial_velocity) 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: ra_hours 0 to 23 [hours] ra_minutes 0 to 59 [minutes] ra_seconds 0.00 to 59.99 [seconds] dec_degrees +-89 [degrees] dec_minutes 0 to 59 [arc-minutes] dec_seconds 0.00 to 59.99 [arc-seconds] equinox APPARENT -geocentric apparent co-ordinates 7of the current date Jyear - FK5 mean co-ordinates Byear - FK4 mean co-ordinates year 1800.00 to 2100.00 [years] epoch 1800.00 to 2100.00 [years] diff_rate_in_ra +-100.00 [seconds/second] diff_rate_in_dec +-100.00 [arcseconds/second] proper_motion_ra +-20.00 [seconds/year] proper_motion_dec +-100.00 [arcseconds/year] parallax 0.00 to 10.00 [arcseconds] radial_velocity +-1000.00 [km per second] 
+Timeout: 300 seconds . 
+Errors: BADPARAM The offset position was specified incorrectly. BADRANGE An offset value was specified outside the allowed range. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor one or more of the axes control nodes is not ready to accept commands. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Multiple OFFTO commands are not cumulative. Also, offsetsintroduced through the TWEAK command are not reset. Position of source to track. Right Ascension, Declination, equinox,proper motion, epoch and non-sidereal rate. right_ascension: Specifies the right ascension of the new source in threefields separated by spaces. Format: ra_hours ra_minutes ra_seconds. The right ascension is rejected if any of the components lie outside the followingranges: ra_hours 0-23 inclusive ra_minutes 0-59 inclusive ra_seconds 0.0-59.99. inclusive declination: Specifies the declination of the new source in three fieldsseparated by spaces. The dec_degrees field may be signed. If not signed, the default is '+'. Format: dec_degrees dec_minutes dec_seconds. The declinationis rejected if any of the components lie outside the following ranges: dec_degrees 0-89 inclusive dec_minutes 0-59 inclusive . dec_seconds 0.0-59.99 inclusive equinox: Specifies the equinox of the source co-ordinates. A valid equinoxmust have two components: a leading letter indicating the system of the coordinates; and a number indicating the epoch of the mean equator andequinox of that system. Format: letter-year: e.g. B1950, J2000 or APPARENT (for which no number isrequired). Note that only B, J or A are acceptable as leading letters. The year must lie in the range 1800.00 to 2100.00. parallax: For nearest stars allowance can be made for annual parallax. radial_velocity: For stars with known parallax the proper motion is modifiedfor perspective using radial velocity. A positive velocity implies a receding source. The enclosure opening (if provided) will also be controlled by the TCSto prevent the image from being vignetted. . 
+
+
+6.25 OPERATIONAL 
+Function: Prepare the telescope for observing or request the telescopestand-down at the end of an observing session. 
+Command Syntax: OPERATIONAL state 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: state ON or OFF 
+Timeout: 600 seconds 
+Errors: ASTQUEERR An internal inter-process communications error occurred.The TCS should recover automatically. BADKEYW Invalid state keyword supplied. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR An error occurred before the command could complete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT This command is not allowed in the current telescopesystem state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: . This command causes the TCS to make a request to the MCS, tochange the telescope system state. The Master Control System may instigate the state change when the TCS registers the request if conditions arefavourable. If the state change is not possible, an explanatory error message is returned. If an OPERATIONAL ON command is successful, the telescopestate will change to OKAY or WARNING. If an OPERATIONAL OFF command is successful, the telescope system state will be STANDBY. An OPERATIONAL ON request would fail if the telescope is inengineering override, the weather is bad or there has been a telescope fault. The state model for the TCS and telescope are discussed in section 3.OPERATIONAL ON is allowed in the following system states: * STANDBY * OKAY * WARN OPERATIONAL OFF is allowed in the following system states: * STANDBY * SUSPEND * OKAY * WARN The following is a typical sequence of events during a successfulOPERATIONAL ON command. * System state is initially STANDBY * The Master Control Process removes authorisation from all clients * The on-mount computer nodes are reboot * The Computer Control Tasks on each computer node is started * The application software on each computer node is started * The hydraulic system is started * All mechanisms are enabled and driven to a home position * System state changes to OKAY or WARNING . 
+
+
+6.26 PARK 
+Function: Park telescope. 
+Command Syntax: PARK position 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: position ZENITH 90 degrees elevation and arbitrary azimuth position. 
+Timeout: 300 seconds 
+Errors: . AMBIG The supplied park position is ambiguous. Try supplyingmore characters. BADPARAM The supplied park position is not valid. BADRANGE The specified park position is outside the valid range ofaxes positions. See the user manual section on park position configuration for instructions. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MANUAL One or more telescope axes are not currently under TCScontrol. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor one of more axes control nodes is not ready to receive commands. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Specific Park positions are pre-set in a TCS configuration file with associatedkeywords. The TCS configuration files are described in the User documentation. There is no default PARK position. . 
+
+
+6.27 POLE 
+Function: Input values of polar motion. 
+Command Syntax: POLE x_position y_position 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: x_position +-1 arc-seconds y_position +-1 arc-seconds 
+Timeout: 3 seconds 
+Errors: BADPARAM The supplied values were incorrectly specified. BADRANGE The supplied values are outside the allowed range. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: This command overrides the initial values for polar motion, which arederived from an interpolation formula supplied by the International Earth Rotation Service. It makes a very small difference to the pointing of thetelescope. . 
+
+
+6.28 PRESSURE 
+Function: To tell the TCS the barometric pressure to use in the refractioncalculations. 
+Command Syntax: PRESSURE value 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: value 500.00 to 1200.00 [millibars] 
+Timeout: 3 seconds 
+Errors: BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADPARAM The supplied values were incorrectly specified. BADRANGE The supplied values are outside the allowed range. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Although the TCS serves meteorological information, the parametersused in the calculation of atmospheric refraction only change when requested via the HUMIDITY, PRESSURE and TEMPERATURE commands. The default pressure is configurable. The TCS configuration files aredescribed in the User documentation. . 
+
+
+6.29 ROTATOR 
+Function: Switch the rotator into different mode and/or move it to aposition. 
+Command Syntax: ROTATOR rotmode demand-pos 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: rotmode SKY: The parameter gives position angle on the sky (measured anticlockwise from North which is 0o). Ifrotator tracking is enabled (as it is at startup) the rotator will follow this PA as the telescope moves. MOUNT: The parameter gives mount position anglein degrees. FLOAT: Floating mode, so that on source changethe sky PA is set to that computed from the current mount PA so ensuring minimum rotator slewing.This mode is used if SKY PA is unimportant but rotator tracking is required. VERTICAL: Move the rotator so that the slit isvertical (as defined in the TCS configuration file). VFLOAT: Puts the rotator into vertical floatingmode, so that on source change the sky PA is set to that computed which gives a vertical slit the rotatorthen track that sky PA. This mode is used if sky PA tracking is required but minimises effects fromatmospheric dispersion. demand-pos0.00 to 360.00 [degrees] for SKY +-240.00 [degrees] for MOUNT 
+Timeout: 300 seconds 
+Errors: . BADKEYW The rotator mode was incorrectly specified. BADPARAM The selected focal station does not include a rotator or thesupplied value was incorrectly specified. BADRANGE The supplied value is outside the allowed range. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the rotator control node is not ready to accept commands. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: The vertical position of the rotator (used by the VERTICAL andVFLOAT keywords) is determined by an instrument specific offset. This offset can be set by modifying the appropriate configuration file as discussedin the TCS user manual. . 
+
+
+6.30 SHOW 
+Function: Deliver Telescope and TCS status information to an RCS.Includes information necessary to build a FITS header. 
+Command Syntax: SHOW keyword 
+Actioned Syntax: None 
+Completed Syntax: See Section 6 
+Arguments: keyword ASTROMETRY provides the user-modifiableastrometric parameters: wavelength, pressure, temperature, relative humidity (all used to calculaterefraction); UT1-UTC, and polar motion. TDT-UTC is also shown. AUTOGUIDER gives the autoguider currentlyselected by the TCS (see AGSELECT), the associated probe position, the guiding pixel co-ordinates andthe state of the guiding loop (unlocked, locked or suspended: see AUTOGUIDE). CALIBRATE displays the values of altitude indexerror, azimuth index error and azimuth collimation, together with their rms errors and the sky sigma forthe last CALIBRATE at the current focal station. The corresponding parameters for the defaultpointing model are also given. FOCAL_STATION gives the current hardware andsoftware selection of focal station. LIMITS lists the software position limits inaltitude, azimuth and rotation (all focal stations). The time is given relative to the current time. Forthe rotator, the sense is either POSITIVE or NEGATIVE depending on which wrap directionlimits the observation. MECHANISMS displays the status of all of themain mechanisms. METEOROLOGY lists present weather conditions. SOURCE gives the current source parameters. STATE list the TCS and telescope states andpresent mode of operation. TIME lists the present time in different formats. VERSION displays the TCS version currently inuse. . 
+Timeout: 60 seconds 
+Errors: BADFILE Unable to open pointing mode file. BADIO Error accessing pointing mode file. BADKEYW The supplied keyword is not valid. BADPARAM IGNORED The command line was blank. MANUAL NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. . 
+
+
+6.31 STOP 
+Function: Stops the named mechanism. 
+Command Syntax: STOP mechanism 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: mechanism ALL - all mechanisms listed here AGFOCUS - currently selected autoguider focus AGPROBE - currently selected autoguider feedmirror ALTITUDE - altitude axis AZIMUTH - azimuth axis ENCLOSURE - all enclosure shutters FOCUS - secondary mirror focus drive FOLD - the main fold mirror ROTATOR - currently selected rotator axis 
+Timeout: 60 seconds 
+Errors: AMBIG More characters are required to unambiguously establishthe required mechanism. BADKEYW The supplied mechanism is not valid. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MANUAL The selected mechanism is not currently under TCScontrol. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system state . or the control node for the required mechanism is notready to receive commands. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: This command is used to immediately stop the required individualmechanism or alternatively all mechanisms via a single command. . 
+
+
+6.32 TEMPERATURE 
+Function: Set temperature used in atmospheric refraction calculations. 
+Command Syntax: TEMPERATURE value 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: value -20.00 to 40.00 [celsius] 
+Timeout: 3 seconds 
+Errors: BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADPARAM The supplied values were incorrectly specified. BADRANGE The supplied values are outside the allowed range. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: Although the TCS serves meteorological information, the parametersused in the calculation of atmospheric refraction only change when requested via the HUMIDITY, PRESSURE and TEMPERATURE commands.Typical defaults are set in the relevant configuration file as described in the user support documentation. . 
+
+
+6.33 TRACK 
+Function: Set the automatic tracking state of various mechanisms 
+Command Syntax: TRACK mechanism state 
+Actioned Syntax: None 
+Completed Syntax: None Parameter: mechanism ALL - all mechanisms listed here ALTITUDE - altitude axis AZIMUTH - azimuth axis FOCUS - secondary mirror focus drive ROTATOR - currently selected rotator axis state ON or OFF 
+Timeout: 3 seconds 
+Errors: BADKEYW The supplied mechanism is either not configured to trackor was specified incorrectly. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the control node for the required mechanism is not ready to receive commands. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: If the mechanism is currently tracking then it will be halted by anTRACK OFF request. . 
+
+
+6.34 TWEAK 
+Function: Apply a given x, y and rotational aperture offset to align a field onan instrument. 
+Command Syntax: TWEAK x_offset y_offset rotation 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: x_offset +-3600.00 [arcseconds] y_offset +-3600.00 [arcseconds] rotation +-3600.00 [arcseconds] 
+Timeout: 30 seconds 
+Errors: BADPARAM The offset position was specified incorrectly. BADRANGE An offset value was specified outside the allowed range. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. NOFOLLOW The telescope must be tracking before an offset can beperformed. NOMOVING The telescope must be tracking before an offset can beperformed. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: . This command is used to position a field precisely on an instrument.It can be used whether or not the telescope is being autoguided. Its main application is to centre a large number of target objects on the slit mask, butit may also be useful for long-slit spectroscopy, especially when two objects are to be placed on the slit simultaneously. It is not advisable to usedisplacements of more than 1 arcsec or rotations of more than 0.10 degrees when autoguiding, since the guide star may be lost. Larger offsets can besplit into successive smaller ones (TWEAK offsets are cumulative), or autoguiding may be suspended whilst the CCD window is moved. The TCSfocal plane (aperture) co-ordinate system is used, with position angle measured anticlockwise. . 
+
+
+6.35 UNWRAP 
+Function: Rotate either the Azimuth axis or the current rotator by 360ofrom its current position, if this is possible. 
+Command Syntax: UNWRAP mechanism 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: mechanism AZIMUTH - The azimuth axis. ROTATOR - The currently selected rotator. 
+Timeout: 220 seconds 
+Errors: BADKEYW The supplied mechanism was specified incorrectly. BADRANGE No limits are specified for this mechanism or the specifiedlimits prevent unwrapping from the current position. Unwrapping will not be attempted. See the user manualfor instructions on setting mechanism limits. ENGREJECT The telescope is currently under engineering control. IGNORED The command line was blank. MECHERR A mechanism error occurred before the command couldcomplete. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not permitted in the current system stateor the control node for the required mechanism is not ready to receive commands. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: The UNWRAP command is used to rotate mechanisms by 360o inorder to avoid tracking into a limit or to reset the mechanism if a limit has . been hit during observing. The TCS will reject a wrap command if the mechanism range does notextend beyond a complete revolution, or if the mechanism is not in a position where a rotation of 360o is possible. After a successful UNWRAP the telescope will continue tracking. . 
+
+
+6.36 UT1UTC 
+Function: Set the current UT1-UTC within the control system pointingcalculations. 
+Command Syntax: UT1UTC value 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: value +-1.000000 [seconds] 
+Timeout: 3 seconds 
+Errors: BADPARAM The supplied value was not specified correctly. BADRANGE The specified value is outside the permitted range. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: This command overrides the start-up value of UT1-UTC, which isdetermined from an interpolation formula supplied by the International Earth Rotation Service. . 
+
+
+6.37 WAVELENGTH 
+Function: Enter the value of the wavelength of light used in the calculationof atmospheric refraction. 
+Command Syntax: WAVELENGTH value 
+Actioned Syntax: None 
+Completed Syntax: None 
+Arguments: value 0.30 to 35.00 [microns] 
+Timeout: 3 seconds 
+Errors: BADIO An input/output error occurred within the TCS. It isadvisable to wait for the TCS state to return to OKAY before continuing. BADPARAM The supplied value was not specified correctly. BADRANGE The specified value is outside the permitted range. IGNORED The command line was blank. NETDISABLED The network command interface has been disabled by aninteractive user. NETDISALL This command has been disabled through the networkinterface. NETPARSE A parsing error occurred before the command could beexecuted. NETUNK The command was specified incorrectly and could not beidentified. OVER The command was overridden by a more recent request. STATEREJECT The command is not allowed in the current system state. TIMEDOUT The command did not complete before the timeout periodhad expired. 
+Comments: The default wavelength is configurable. The TCS configuration files aredescribed in the TCS User Manual. 
