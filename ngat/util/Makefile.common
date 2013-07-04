@@ -1,0 +1,4 @@
+#
+# Common util definitions between util Makefile and sub-dirs
+#
+UTIL_NAME	=util
