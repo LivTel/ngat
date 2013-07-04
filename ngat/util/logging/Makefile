@@ -13,12 +13,16 @@ SRCS           = BasicLogFilter.java \
                  ConsoleLogHandler.java \
                  CsvLogFormatter.java \
                  DefaultLogFilter.java \
+		DatagramLogHandler.java \
 		DefaultMutableTimeProvider.java \
+		ExtendedLogHandler.java \
 		ExtendedLogRecord.java \
                  FileLogHandler.java \
                  HtmlLogFormatter.java \
                  HtmlTableLogFormatter.java \
 		ILoggingProvider.java \
+		LogCollator.java \
+		LogGenerator.java \
                  LogClient.java \
                  LogFilter.java \
                  LogFilterPattern.java \
