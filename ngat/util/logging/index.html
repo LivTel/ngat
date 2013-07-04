@@ -1,0 +1,960 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Developer Resources for Java Technology</title>
+<meta name="keywords" content="Java, platform, Web, Web 2.0, developers, JVM, Java SE, J2SE, Jave EE, J2EE, Java ME, J2ME, JavaFX, NetBeans, MySQL, GlassFish, JavaDB, Java DB, desktop, embedded, mobile, mobility, wireless, micro, enterprise, database, James Gosling, Jonathan Schwartz, open source, open-source, community, resources, code, code samples, API, APIs, API's, docs, documentation, student, students, bug, bugs, training, certification, training and certification, time zone, timezone, videos, tutorials, compiler, compilers, Solaris, free, FOSS, podcast, multimedia, web services, blogs, Tech Days, OpenJDK, OpenSolaris, Mobile & Embedded, OpenJFX, forums, newsletters, user groups, java.net, ask the experts, network, network is the computer, networks, Sun, Sun Microsystems, news, software, support, articles, solutions, events, scripting, Ruby, JRuby, Rails, Gems, products, participate, the network is the computer">
+<meta name="collection" content="reference">
+<meta name="description" content="Whether you're creating software for mobile devices, desktops, enterprise systems, the Internet, or games, java.sun.com gets you what you need: code samples, developer tools, downloads, open-source projects, resource centers, and support.">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="date" content="2008-09-04">
+<meta name="verify-v1" content="xFwIhtGNyBWUmeKTeTqvC5QP9R+g+swsMtwlwZxGF38=" />
+<link href="http://developers.sun.com/rss/java.xml" rel="alternate" type="application/rss+xml" title="rss" />
+</head>
+<!--stopindex-->
+
+<link rel="stylesheet" href="/css/default_developer.css" />
+
+<!-- END METADATA -->
+<script type="text/javascript" language="JavaScript" src="/js/popUp.js"></script>
+<script language="javascript1.2" type="text/javascript" src="/js/sniff.js"></script>
+<script language="javascript1.2" type="text/javascript" src="/js/menucontent.js"></script>
+<script language="javascript1.2" type="text/javascript" src="/js/menucode.js"></script>
+<script language="javascript1.2" type="text/javascript" src="/js/homepage.js"></script>
+<script language="javascript1.2" type="text/javascript" src="/js/developer.js"></script>
+</head>
+<!--stopindex-->
+
+<body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0" rightmargin="0" bgcolor="#ffffff" onload="prepmenus();prephome();done = true" class="a0v0">
+
+<script language="JavaScript">
+<!--
+var s_pageName="home page"
+//--></script>
+
+
+<a name="top"></a>
+
+<!-- BEGIN MASTHEAD -->
+<!-- BEGIN A1 COMPONENT V.0 -->
+<div class="a1 a1r2">
+<div class="a1v0">
+<a href="#skip2content" class="skiplink">Skip to Content</a>
+<span class="toolbarlinks">
+<a href="/global/mh/suncom/index.html">Sun</a>
+<a href="/global/mh/java/">Java</a>
+<a href="/global/mh/solaris/">Solaris</a>
+<a href="/global/mh/communities/" class="dividelink">Communities</a>
+<a href="http://developers.sun.com/global/my_profile.html">My SDN Account</a>
+<a href="http://developers.sun.com/global/join_sdn.html" class="dividelink">Join SDN</a>
+</span>
+</div>
+</div>
+<!-- END A1 COMPONENT V.0 -->
+
+<!-- BEGIN A2 COMPONENT V.1 -->
+<div class="a2w0">
+<div class="a2" id="a2v1">
+<div class="a2w1"><div class="a2w2"><div class="a2w3"><div class="a2w4">
+<div class="a2topiclinks">
+<div class="a2search">
+<form action="http://developers.sun.com/search/onesearch/index.jsp" accept-charset="utf-8" method="GET">
+<input type="hidden" name="charset" value="utf-8">
+<input type="hidden" name="col" value="developer-reference">
+<span class="rightarrowwhite">&raquo;</span>&nbsp;<a href="http://developers.sun.com/global/search_tips.html">search tips</a>&nbsp;
+<input class="searchfield" name="qt" class="medium" size="7" onFocus="if( this.value==this.defaultValue ) this.value='';" value="Search">
+<input id="searchbttn" type="image" border="0" src="/im/a2_bttn_search.gif" alt="Submit Search">
+</form>
+</div>
+<a href="http://www.sun.com" title="Sun Microsystems Home Page" id="sunlogo"><img src="/im/a.gif" alt="Home Page" width="98" height="58" border="0" /></a>
+<a href="http://developers.sun.com" title="Sun Developer Network"><img src="/im/a.gif" id="venuespacer" alt="Sun Developer Network" width="400" height="33" border="0" /></a>
+<ul id="mtopics">
+<li id="mtopic1"><a id="glink1" class="tpclink a2menu" title="See All APIs" href="/global/mh/api/index.html">APIs</a></li>
+<li id="mtopic2"><a id="glink2" class="tpclink a2menu" title="See All Downloads" href="/global/mh/downloads/index.html">Downloads</a></li>
+<li id="mtopic3"><a id="glink3" class="tpclink a2menu" title="See All Products" href="/global/mh/products/index.html">Products</a></li>
+<li id="mtopic4"><a id="glink4" class="tpclink a2menu" title="See All Support" href="/global/mh/support/index.html">Support</a></li>
+<li id="mtopic5"><a id="glink5" class="tpclink a2menu" title="See All Training" href="/global/mh/training/index.html">Training</a></li>
+<li id="mtopic6"><a id="glink6" class="tpclink a2menu" title="See All Participate" href="/global/mh/participate/index.html">Participate</a></li>
+</ul>
+</div>
+</div></div></div></div>
+</div></div>
+<!-- END A2 COMPONENT V.1 -->
+
+<!-- END MASTHEAD -->
+
+
+<!-- BEGIN BREADCRUMB -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="vatop">
+<tr>
+<td><div class="breadcrumb"><a href="http://developers.sun.com/">Developers Home</a> &gt; <a href="http://developers.sun.com/prodtech/">Products &amp; Technologies</a> &gt;
+</div></td>
+</tr>
+<tr><td><img src="/im/a.gif" width="770" height="1" border="0" alt=" " /></td></tr>
+</table>
+<br/>
+
+<!-- END BREADCRUMB -->
+
+<!-- BEGIN PAGETITLE TWO LINE -->
+<div class="pagetitle2">Java.sun.com</div>
+<div class="smallpagetitle">The Source for Java Developers</div>
+<!-- END PAGETITLE TWO LINE -->
+
+<!-- BEGIN WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+<table border="0" cellpadding="0" cellspacing="10" width="100%">
+<tr><td width="100%" valign="top">
+<!-- BEGIN CENTRAL COLUMN COMPONENTS -->
+
+<a name="skip2content"> </a>
+
+<!--startindex-->
+
+<!-- ============ -->
+<!-- MAIN CONTENT -->
+<!-- ============ -->
+
+
+<!-- BEGIN FEATURED CONTENT SECTION -->
+<!-- BEGIN PN1 COMPONENT V.0 -->
+<table bgcolor="#eeeeee" border="0" cellpadding="2" cellspacing="0" width="100%" class="vtop">
+
+<tr>
+<td colspan="2" class="headerbar3">
+
+<div class="headerpadding2">
+
+<span style="color:#fff;">Featured Content</span>
+</div>
+</td>
+</tr>
+</table>
+<!-- END PN1 COMPONENT V.0 -->
+
+<!-- BEGIN PN2 COMPONENT V.0 -->
+<div class="pn2v0">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="layout">
+<tr valign="top">
+<td class="col1" width="100%">
+<div class="col1">
+<!-- END PN2 COMPONENT V.0 -->
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td align="left"><a href="http://developers.sun.com/appserver/reference/techart/cometslideshow.html"><img src="http://www.sun.com/images/l2/l2_comet.gif" alt="RESTful Web Services and Comet" width="100" height="88" border="0" /></a></td>
+<td width="10">
+<img src="/im/a.gif" width="10" height="1" border="0" alt="" />
+</td>
+<td>
+<span style="color:#666;">September 4, 2008</span><br />
+<b><a href="http://developers.sun.com/appserver/reference/techart/cometslideshow.html">RESTful Web Services and Comet</a></b><br />
+Users can interact remotely with a Comet web app. Learn how to build one with Dojo, Java EE technologies, and GlassFish.<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td align="left"><a href="/developer/Meet-Eng/sahoo/"><img src="http://www.sun.com/images/l2/l2_sahoo.gif" alt="Meet Sanjeeb Kumar Sahoo, GlassFish Engineer at Sun Microsystems" width="100" height="88" border="0" /></a></td>
+<td width="10">
+<img src="/im/a.gif" width="10" height="1" border="0" alt="" />
+</td>
+<td>
+<span style="color:#666;">August 28, 2008</span><br />
+<b><a href="/developer/Meet-Eng/sahoo/">Meet Sanjeeb Kumar Sahoo, GlassFish Engineer at Sun Microsystems</a></b><br />
+Sun GlassFish engineer Sahoo provides an update on GlassFish, discusses the Java EE portability checking tool he's writing, and offers insight into the benefits of working in an open-source community.<br /> 
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<span style="color:#666;">August 26, 2008</span><br />
+<b><a href="/developer/technicalArticles/javame/msa2-intro/">Mobile Service Architecture 2&ndash;Coming Your Way</a></b><br />
+MSA2's Public Review phase is coming soon. Here's an opportunity to review the various JSRs planned for inclusion in its Limited, Subset, and Full versions.<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+
+
+
+
+
+
+
+
+
+
+<hr style="background:#e3e3e3;color:#e3e3e3;height:2px;padding:0px;border:0px" />
+<a href="/features/">&raquo; See All Articles</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="http://developers.sun.com/newsletters/">&raquo; Newsletters and Tips</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="/news/">&raquo; News and Updates</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="/developer/media/">&raquo; Videos</a>
+
+
+<!-- BEGIN PN2 COMPONENT V.2 -->
+</div></td></tr></table></div>
+<!-- END PN2 COMPONENT V.2 -->
+<!-- END FEATURED ARTICLES SECTION -->
+
+
+<!-- BEGIN DEVELOPER SPOTLIGHT SECTION -->
+<!-- BEGIN PN1 COMPONENT V.0 -->
+<table bgcolor="#eeeeee" border="0" cellpadding="2" cellspacing="0" width="100%" class="vtop">
+
+<tr>
+<td colspan="2" class="headerbar3">
+
+<div class="headerpadding2">
+
+<span style="color:#fff;">Developer Spotlight</span>
+</div>
+</td>
+</tr>
+</table>
+<!-- END PN1 COMPONENT V.0 -->
+
+<!-- BEGIN PN2 COMPONENT V.0 -->
+<div class="pn2v0">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="layout">
+<tr valign="top">
+<td class="col1" width="100%">
+<div class="col1">
+<!-- END PN2 COMPONENT V.0 -->
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td align="left"><a href="http://download.netbeans.org/netbeans/6.5/beta/" target="_blank"><img src="http://www.sun.com/images/l2/l2_nb65beta.gif" alt="NetBeans IDE 6.5 Beta!" width="100" height="88" border="0" /></a></td>
+<td width="10">
+<img src="/im/a.gif" width="10" height="1" border="0" alt="" />
+</td>
+<td>
+<b><a href="http://download.netbeans.org/netbeans/6.5/beta/" target="_blank">Download NetBeans IDE 6.5 Beta!</a></b><br />
+NetBeans IDE 6.5 Beta introduces several new features, including a robust IDE for PHP, JavaScript debugging for Firefox and IE, and support for Groovy and Grails. This release also includes a number of enhancements for Java, Ruby and Rails, and C/C++ development. NetBeans IDE 6.5 Beta is a must-download for all developers!
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<b><a href="/javase/downloads/ea.jsp">Java SE 6 Update 10 Beta - Itanium Platform</a></b><br />
+Java SE 6 Update 10 for the Itanium platform, beta release, is available in time for the release of the quad-core version of the chip in 2009.<br /> 
+<div class="bluearrows"><a href="/javase/downloads/ea.jsp">Try it now</a></div>
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<b><a href="/developer/community/askxprt/sessions/2008/jl0818.jsp">Ask the Experts Transcript: JavaFX Preview</a></b><br />
+What does the 'tween' keyword do? Why did the JavaFX language designers favor multiple inheritance over interfaces? Can you mix Swing and graphics components in JavaFX? Read the answers to these and a wide variety of other questions in the transcript of the recently-held Ask the Experts session on the JavaFX Preview.
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<div class="bluearrows"><b><a href="/javafx/downloads/">JavaFX Preview SDK Available</a></b></div><br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+
+
+
+<!-- BEGIN PN2 COMPONENT V.2 -->
+</div></td></tr></table></div> 
+
+<!-- END PN2 COMPONENT V.2 -->
+<!-- END DEVELOPER SPOTLIGHT SECTION -->
+
+<!-- BEGIN JAVA LEARNING SECTION -->
+<!-- BEGIN PN1 COMPONENT V.0 -->
+<table bgcolor="#eeeeee" border="0" cellpadding="2" cellspacing="0" width="100%" class="vtop">
+
+<tr>
+<td colspan="2" class="headerbar3">
+
+<div class="headerpadding2">
+
+<span style="color:#fff;">Java Learning and Certification</span>
+</div>
+</td>
+</tr>
+</table>
+<!-- END PN1 COMPONENT V.0 -->
+
+<!-- BEGIN PN2 COMPONENT V.0 -->
+<div class="pn2v0">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="layout">
+<tr valign="top">
+<td class="col1" width="100%">
+<div class="col1">
+<!-- END PN2 COMPONENT V.0 -->
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td align="left"><a href="/new2java/learning/young_developers.jsp"><img src="http://www.sun.com/images/l2/l2_wombats.gif" alt="Young Developers" width="100" height="88" border="0" /></a></td>
+<td width="10">
+<img src="/im/a.gif" width="10" height="1" border="0" alt="" />
+</td>
+<td>
+<b><a href="/new2java/learning/young_developers.jsp">Young Developers</a></b><br />
+Programming is not just for adults anymore! The Young Developer Series teaches Java programming to anyone over 10 years of age, using a tool called Greenfoot:<br />
+<span class="bluearrows"><a href="http://java.sun.com/developer/technicalArticles/wombat_basics/">Wombat Object Basics</a></span><br />
+<span class="bluearrows"><a href="http://java.sun.com/developer/technicalArticles/wombat_world/">Wombat Classes Basics</a></span><br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<b><a href="http://www.sun.com/training/catalog/courses/SL-352-EE5.xml">EJB 3.0 Technology Update Workshop</a></b><br />
+Are you an experienced EJB developer looking to migrate to EJB 3.0? Check out this new workshop. 
+<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<b><a href="http://www.sun.com/training/catalog/java/packages_java.html">Certification Success Packages</a></b><br />
+It's easy to prepare for certification with packages that include training, practice exams and certification exam vouchers. All-in-one packages can save you up to 25%. 
+<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+
+<!--
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td width="100%" valign="top"><a href="https://reg.sun.com/register"><b>Join the Sun Developer Network</b></a><br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+-->
+
+<hr style="background:#e3e3e3;color:#e3e3e3;height:2px;padding:0px;border:0px" />
+<a href="/developer/onlineTraining/new2java/">&raquo; New to Java</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="/developer/onlineTraining/">&raquo; Tutorials</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="http://www.sun.com/training/certification/java/index.xml">&raquo; Certification</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="http://www.sun.com/training/catalog/java/index.xml">&raquo; Training</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="http://developers.sun.com/students/">&raquo; Students</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="/learning/">&raquo; See All</a>
+
+<!-- BEGIN PN2 COMPONENT V.2 -->
+</div></td></tr></table></div>
+<!-- END PN2 COMPONENT V.2 -->
+<!-- END JAVA LEARNING SECTION -->
+
+
+<!-- BEGIN FROM THE BLOGSPHERE SECTION -->
+<!-- BEGIN PN1 COMPONENT V.0 -->
+<table bgcolor="#eeeeee" border="0" cellpadding="2" cellspacing="0" width="100%" class="vtop">
+
+<tr>
+<td colspan="2" class="headerbar3">
+
+<div class="headerpadding2">
+
+<span style="color:#fff;">From the Blogosphere</span>
+</div>
+</td>
+</tr>
+</table>
+<!-- END PN1 COMPONENT V.0 -->
+
+<!-- BEGIN PN2 COMPONENT V.0 -->
+<div class="pn2v0">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="layout">
+<tr valign="top">
+<td class="col1" width="100%">
+<div class="col1">
+<!-- END PN2 COMPONENT V.0 -->
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td><b><a href="http://weblogs.java.net/blog/edburns/archive/2008/08/jsf_20_eg_issue.html" target="_blank" class="windowicon">Ed Burns on JavaServer Face Technology</a></b><br />
+The expert group for JSR 314 met recently to track issues with JSF 2.0.
+<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td><b><a href="http://weblogs.java.net/blog/terrencebarr/archive/2008/08/fire_eagle_upda.html" target="_blank" class="windowicon">Terrence Barr on Java ME Technology</a></b><br />
+Tired of those 3 a.m. phone calls? Try Yahoo's Fire Eagle Mobile Updater, a Java ME app.
+<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<hr style="background:#e3e3e3;color:#e3e3e3;height:2px;padding:0px;border:0px" />
+<a href="/developer/blogs/">&raquo; Blogs</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="http://blogs.sun.com/">&raquo; Blogs.sun.com</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="http://weblogs.java.net/">&raquo; Java.net Blogs</a>
+
+<!-- BEGIN PN2 COMPONENT V.2 -->
+</div></td></tr></table></div>
+<!-- END PN2 COMPONENT V.2 -->
+<!-- END FROM THE BLOGSPHERE SECTION -->
+
+
+<!-- BEGIN PARTICIPATE SECTION -->
+<!-- BEGIN PN1 COMPONENT V.0 -->
+<table bgcolor="#eeeeee" border="0" cellpadding="2" cellspacing="0" width="100%" class="vtop">
+
+<tr>
+<td colspan="2" class="headerbar3">
+
+<div class="headerpadding2">
+
+<span style="color:#fff;">Participate</span>
+</div>
+</td>
+</tr>
+</table>
+<!-- END PN1 COMPONENT V.0 -->
+
+<!-- BEGIN PN2 COMPONENT V.0 -->
+<div class="pn2v0">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="layout">
+<tr valign="top">
+<td class="col1" width="100%">
+<div class="col1">
+<!-- END PN2 COMPONENT V.0 -->
+
+<!-- removed
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td align="left"><a href="http://jdk6.dev.java.net/6uNea.html" target="_blank"><img src="http://www.sun.com/images/l2/l2_duke_javase6uN.gif" alt="Get Java SE 6uN" width="100" height="88" border="0" /></a></td>
+<td width="10">
+<img src="/im/a.gif" width="10" height="1" border="0" alt="" />
+</td>
+<td>
+<b><a href="http://jdk6.dev.java.net/6uNea.html" target="_blank">Get Early Access to the Next Java SE 6 Update</a></b><br />
+Download <a href="http://jdk6.dev.java.net/6uNea.html" target="_blank">Java SE 6 Update N</a>, formerly known as the Consumer JRE, and provide feedback on these exciting features: Direct3D, Java Quick Starter, Nimbus, and Deployment Toolkit. Get the <a href="http://blogs.sun.com/SDNProgramNews/feed/entries/atom?cat=%2FJava+SE+6+Update+N">RSS feed</a>.
+<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br /> -->
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<b><a href="http://forum.java.sun.com/index.jspa?intcmp=1817">Developer Forums</a></b><br />
+Ask a question or offer expertise on Sun's developer forums.
+<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<b><a href="http://sdnshare.sun.com/?intcmp=1818">SDN Share</a></b><br />
+SDN Share is the place to submit technical tips, code samples, or articles. Interact with peers through voting and comments.
+<br />
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<!-- <table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<b>Recent Posts:</b> <a href="http://sdnshare.com/index_rss.jsp"><img src="http://www.sun.com/im/ic_feed_16x.gif" title="Subscribe to the SDN Share Feed" height="16" width="16" border="0" align="baseline" alt="RSS button" hspace="10" vspace="0"></a><br />
+<ul>
+<li><a href="http://sdnshare.com/view.jsp?id=1033">Change Text Color in a Game for Flashing</a></li>
+<li><a href="http://sdnshare.com/view.jsp?id=1013">A Very Simple Way to Skip Part of Code Without Using Comment Symbols</a></li>
+</ul>
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+-->
+
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td><b><a href="http://www.sun.com/opensource/java/">Sun Open Sources Java Platform Implementations</a></b><br />
+<a href="http://www.sun.com/software/opensource/java/">Get involved!</a> New Communities:<br> 
+<ul>
+<li><a href="http://openjdk.java.net/">OpenJDK</a></li>
+<li><a href="http://community.java.net/mobileandembedded/">Mobile & Embedded</a></li>
+<li><a href="https://glassfish.dev.java.net/">GlassFish</a></li>
+<li><a href="https://openjfx.dev.java.net/">OpenJFX</a></li>
+</ul>
+</td>
+</tr>
+</table>
+<span class="sp10">&nbsp;</span><br />
+
+<hr style="background:#e3e3e3;color:#e3e3e3;height:2px;padding:0px;border:0px" />
+
+<a href="http://forum.java.sun.com/index.jspa">&raquo; Forums</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="/developer/community/askxprt/">&raquo; Ask the Experts</a>
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+
+<a href="/community/usergroups/">&raquo; User Groups</a>
+<!-- <b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="http://bugs.sun.com/bugdatabase/">&raquo; Bug Database</a> -->
+<b style="color:#d1d1d1;"> &nbsp;|&nbsp; </b>
+<a href="/community/">&raquo; See All</a>
+
+<!-- BEGIN PN2 COMPONENT V.2 -->
+</div></td></tr></table></div>
+<!-- END PN2 COMPONENT V.2 -->
+<!-- END COMMUNITY SECTION -->
+
+
+
+
+
+<!-- BEGIN EVENTS SECTION -->
+<!-- BEGIN PN1 COMPONENT V.0 -->
+
+<!-- END EVENTS SECTION -->
+
+<!-- =================== -->
+<!-- END OF MAIN CONTENT -->
+<!-- =================== -->
+
+<!--stopindex-->
+
+<!-- END CENTRAL COLUMN COMPONENTS -->
+</td><td valign="top">
+<!-- BEGIN RIGHT COLUMN COMPONENTS -->
+
+
+
+<!-- BEGIN E19 COMPONENT V.0 -->
+<!--
+<div class="e19 e19v0"><div class="e19w1">
+<p><a href="http://developers.sun.com/global/join_sdn.html"><img src="http://www.sun.com/images/e19/e19_sdn_join.gif" alt="Join SDN" width="340" height="40" class="spriteswap" /></a></p>
+<p><a href="http://www.netbeans.org" target="_blank"><img src="http://www.sun.com/images/e19/e19_netbeans.gif" alt="Netbeans - Simple, Intuitive IDE" width="340" height="40" class="spriteswap" /></a></p>
+<p><a href="http://java.com/en/download/index.jsp"><img src="http://www.sun.com/images/e19/e19_jre.gif" width="340" height="40" border="0" alt="Download Java" class="spriteswap" /></a></p>
+</div></div>
+-->
+<!-- END E19 COMPONENT V.0 -->
+
+
+<!--/* Openads Javascript Tag v2.3.39-beta */-->
+
+<script type='text/javascript'><!--//<![CDATA[
+   var m3_u = (location.protocol=='https:'?'https://ads.sun.com/ads/www/delivery/ajs.php':'http://ads.sun.com/ads/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=567&amp;withtext=1&amp;block=1&amp;blockcampaign=1");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='http://ads.sun.com/ads/www/delivery/ck.php?n=af6ea797&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://ads.sun.com/ads/www/delivery/avw.php?zoneid=567&amp;n=af6ea797' border='0' alt='' /></a></noscript>
+
+
+<!-- BEGIN E19 ROTATION BOX A -->
+<!--/* Openads Javascript Tag v2.3.39-beta */-->
+
+<script type='text/javascript'><!--//<![CDATA[
+   var m3_u = (location.protocol=='https:'?'https://ads.sun.com/ads/www/delivery/ajs.php':'http://ads.sun.com/ads/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=565&amp;withtext=1&amp;block=1&amp;blockcampaign=1");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='http://ads.sun.com/ads/www/delivery/ck.php?n=a5b7abee&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://ads.sun.com/ads/www/delivery/avw.php?zoneid=565&amp;n=a5b7abee' border='0' alt='' /></a></noscript>
+
+<!-- END BEGIN E19 ROTATION BOX A -->
+
+
+
+<!-- BEGIN E19 ROTATION BOX B -->
+<!--/* Openads Javascript Tag v2.3.39-beta */-->
+
+<script type='text/javascript'><!--//<![CDATA[
+   var m3_u = (location.protocol=='https:'?'https://ads.sun.com/ads/www/delivery/ajs.php':'http://ads.sun.com/ads/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=566&amp;withtext=1&amp;block=1&amp;blockcampaign=1");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='http://ads.sun.com/ads/www/delivery/ck.php?n=a942d830&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://ads.sun.com/ads/www/delivery/avw.php?zoneid=566&amp;n=a942d830' border='0' alt='' /></a></noscript>
+<!-- END E19 ROTATION BOX B -->
+
+<!-- BEGIN VIRTUALBOX E19 -->
+<!-- BEGIN E19 COMPONENT V.0 -->
+<div class="e19 e19v0"><div class="e19w1">
+<p><a href="http://www.sun.com/software/products/virtualbox/get.jsp"><img src="http://www.sun.com/images/e19/e19_virtual_box.jpg" alt="xVM VirtualBox. OpenSource Desktop Virtualization - Get it Now" width="340" height="40" class="spriteswap" /></a></p>
+</div></div>
+<!-- END E19 COMPONENT V.0 -->
+<!-- END VIRTUALBOX E19 -->
+
+
+<!-- END JSC FRONT PAGE ONLY AD SERVER ZONE -->
+
+<script type='text/javascript'><!--//<![CDATA[
+   var m3_u = (location.protocol=='https:'?'https://ads.sun.com/ads/www/delivery/ajs.php':'http://ads.sun.com/ads/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=561&amp;withtext=1&amp;block=1&amp;blockcampaign=1");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='http://ads.sun.com/ads/www/delivery/ck.php?n=a966b205&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://ads.sun.com/ads/www/delivery/avw.php?zoneid=561&amp;n=a966b205' border='0' alt='' /></a></noscript>
+<!-- END JSC FRONT PAGE ONLY AD SERVER ZONE -->
+
+
+<!-- BEGIN NETBEANS 6 DOWNLOAD GRAPHIC -->
+<!--
+<div align="center"><a href="http://www.netbeans.org/" target="_blank"><img class="rollover" src="/images/download_nb6.gif" alt="Download Netbeans 6" border="0" /></a></div>
+<span class="sp10">&nbsp;</span><br /> 
+-->
+<!-- END NETBEANS 6 DOWNLOAD GRAPHIC -->
+
+<!-- BEGIN LEARN MORE ABOUT JAVA -->
+<div class="e15"><div class="e15v0">
+<div class="cornerTL"><div class="cornerTR"></div></div>
+<div class="pad">
+
+<div class="navtitle">Want to Learn Java Technology?</div>
+<div class="bluearrows"><a href="http://java.sun.com/new2java/">New to Java Programming Center</a></div>
+<div class="bluearrows"><a href="http://java.sun.com/new2java/learning/young_developers.jsp">Young Developers</a></div>
+<div class="bluearrows"><a href="http://java.sun.com/new2java/educators/index.jsp">Educators</a></div>
+</div>
+<div class="cornerBL"><div class="cornerBR"></div></div>
+</div></div>
+<span class="sp10">&nbsp;</span><br /> 
+<!-- END LEARN MORE ABOUT JAVA -->
+
+<!-- BEGIN POPULAR DOWNLOADS AND RESOURCES-->
+<div class="e15"><div class="e15v0">
+<div class="cornerTL"><div class="cornerTR"></div></div>
+<div class="pad">
+
+<div class="navtitle">Popular Downloads:</div>
+<span class="bluearrows"></span><a href="http://java.sun.com/javase/downloads/?intcmp=1281">Java SE</a><br>
+<span class="bluearrows"></span><a href="http://java.sun.com/javaee/downloads/?intcmp=1282">Java EE 5 SDK</a><br>
+<span class="bluearrows"></span><a href="http://java.sun.com/javame/downloads/?intcmp=1283">Java ME</a><br>
+<span class="bluearrows"></span><a href="http://www.netbeans.info/downloads/index.php">NetBeans IDE</a><br>
+<span class="bluearrows"></span><a href="http://www.sun.com/software/products/mysql/getit.jsp">MySQL</a><br>
+<span class="bluearrows"></span><a href="http://java.sun.com/webservices/downloads/?intcmp=1285">Web Services</a><br>
+<span class="bluearrows"></span><a href="http://java.sun.com/downloads/?intcmp=1286">See All</a><br /><br />
+
+<div class="navtitle">Technologies:</div>
+<span class="bluearrows"></span><a href="/javase/">Java SE</a><br>
+<span class="bluearrows"></span><a href="/javaee/">Java EE</a><br>
+<span class="bluearrows"></span><a href="/javame/">Java ME</a><br>
+<span class="bluearrows"></span><a href="/javafx/">JavaFX</a><br>
+<span class="bluearrows"></span><a href="/webservices/">Web Services</a><br>
+<span class="bluearrows"></span><a href="http://developers.sun.com/prodtech/">See All</a><br /><br />
+
+<div class="navtitle">Resources:</div>
+<span class="bluearrows"></span><a href="/developer/codesamples/">Code Samples &amp; Apps</a><br>
+<span class="bluearrows"></span><a href="/reference/api/">APIs</a><br>
+<span class="bluearrows"></span><a href="/reference/docs/">Documentation</a><br>
+<span class="bluearrows"></span><a href="/developer/onlineTraining/">Tutorials</a><br>
+<span class="bluearrows"></span><a href="/developer/media/">Videos</a><br>
+<span class="bluearrows"></span><a href="/javase/timezones/">Timezone Updates</a><br>
+<span class="bluearrows"></span><a href="http://developers.sun.com/students/">Student Developers</a><br>
+<span class="bluearrows"></span><a href="http://www.sun.com/training/catalog/developer.xml">Developer Training</a><br>
+<span class="bluearrows"></span><a href="http://bugs.sun.com/bugdatabase/">Bug Database</a><br>
+<span class="bluearrows"></span><a href="/reference/blueprints/">Java Blueprints</a><br>
+<span class="bluearrows"></span><a href="http://developers.sun.com/sunstudio/downloads/">Solaris C/C++/Fortran Compilers</a><br>
+</div>
+<div class="cornerBL"><div class="cornerBR"></div></div>
+</div></div>
+<span class="sp10">&#160;</span><br />
+<!-- END POPULAR DOWNLOADS AND RESOURCES -->
+
+<!-- BEGIN SUN TECH DAYS ANNOUNCEMENT --> 
+<!-- BEGIN E9 COMPONENT V.1 -->
+
+<!-- END E9 COMPONENT V.0 -->
+<!-- END BEGIN SUN TECH DAYS ANNOUNCEMENT -->
+
+<!-- BEGIN COMMUNITIES -->
+<div class="e15"><div class="e15v0">
+<div class="cornerTL"><div class="cornerTR"></div></div>
+<div class="pad">
+
+<div class="navtitle">Communities:</div>
+<div class="bluearrows"><a href="http://openjdk.java.net/">OpenJDK</a></div>
+<div class="bluearrows"><a href="http://community.java.net/mobileandembedded/">Mobile & Embedded</a></div>
+<div class="bluearrows"><a href="https://glassfish.dev.java.net/">GlassFish</a></div>
+<div class="bluearrows"><a href="https://openjfx.dev.java.net/">OpenJFX</a></div>
+<div class="bluearrows"><a href="http://netbeans.org">NetBeans</a></div>
+<div class="bluearrows"><a href="http://java.net">java.net</a></div>
+<div class="bluearrows"><a href="http://jcp.org/">Java Community Process</a></div>
+<div class="bluearrows"><a href="http://developers.sun.com/sdnshare/">SDN Share</a></div>
+</div>
+<div class="cornerBL"><div class="cornerBR"></div></div>
+</div></div>
+<span class="sp10">&nbsp;</span><br /> 
+<!-- END COMMUNITIES -->
+
+<!-- BEGIN RELATED RESOURCES -->
+<div class="e15"><div class="e15v0">
+<div class="cornerTL"><div class="cornerTR"></div></div>
+<div class="pad">
+
+<div class="navtitle">Related Resources:</div>
+<div class="bluearrows"><a href="http://www.sun.com/opensource/java/">Open-Source Java Project</a></div>
+<div class="bluearrows"><a href="http://developers.sun.com/web/">Web Developer Resource Center</a></div>
+<div class="bluearrows"><a href="http://java.com/en/">java.com</a></div>
+
+</div>
+<div class="cornerBL"><div class="cornerBR"></div></div>
+</div></div>
+<span class="sp10">&nbsp;</span><br /> 
+<!-- END RELATED RESOURCES -->
+
+<!-- BEGIN SDN GENERAL ZONE A -->
+<script type='text/javascript'><!--//<![CDATA[
+   var m3_u = (location.protocol=='https:'?'https://ads.sun.com/ads/www/delivery/ajs.php':'http://ads.sun.com/ads/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=563&amp;withtext=1&amp;block=1&amp;blockcampaign=1");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='http://ads.sun.com/ads/www/delivery/ck.php?n=a4b7f0d5&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://ads.sun.com/ads/www/delivery/avw.php?zoneid=563&amp;n=a4b7f0d5' border='0' alt='' /></a></noscript>
+<!-- END SDN GENERAL ZONE A -->
+
+<!-- BEGIN SDN GENERAL ZONE B -->
+
+<script type='text/javascript'><!--//<![CDATA[
+   var m3_u = (location.protocol=='https:'?'https://ads.sun.com/ads/www/delivery/ajs.php':'http://ads.sun.com/ads/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=564&amp;withtext=1&amp;block=1&amp;blockcampaign=1");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='http://ads.sun.com/ads/www/delivery/ck.php?n=a10d2d01&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://ads.sun.com/ads/www/delivery/avw.php?zoneid=564&amp;n=a10d2d01' border='0' alt='' /></a></noscript>
+
+<!-- END SDN GENERAL ZONE B -->
+
+
+<!-- END RIGHT COLUMN COMPONENTS -->
+</td></tr>
+<!-- BEGIN SPACER ROW -->
+<tr><td><img src="/im/a.gif" width="570" height="1" border="0" alt="" /></td><td><img src="/im/a.gif" width="170" height="1" border="0" alt="" /></td></tr>
+<!-- END SPACER ROW -->
+</table>
+<!-- END WRAPPER TABLE, 2 COLUMN, MAIN/RIGHT -->
+
+<br /><img src="/im/a.gif" width="170" height="1" border="0" alt=" " /></td></tr>
+<tr><td rowspan="2" valign="bottom"><img src="/im/a.gif" width="170" height="1" border="0" alt=" " /><br />
+<!--  BEGIN CELL FOR OPTIONAL MASTHEAD CAPTION -->
+
+<script language="JavaScript"><!--
+if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+//--></script>
+<noscript><img src="//sundeveloper.112.2O7.net/b/ss/sundeveloper/1/G.7--NS/0" height="0" width="0" border="0" alt="" />
+</noscript>
+<!--  END CELL FOR OPTIONAL MASTHEAD CAPTION --></td></tr>
+<!-- END SPACER ROW -->
+
+</table>
+
+<!-- END WRAPPER TABLE, 3 COLUMN, LEFT/MAIN/RIGHT -->
+<!-- BEGIN G9 VARIATION 0 -->
+<script language="javascript" type="text/javascript" charset="UTF-8" src="/js/op/oo_engine.js"></script>
+<script language="javascript" type="text/javascript" charset="UTF-8" src="/js/op/oo_conf_en-US.js"></script>
+<!-- END G9 VARIATION 0 -->
+<!-- BEGIN VNV5 FOOTER  -->
+<table border="0" cellpadding="0" cellspacing="10" width="100%">
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="vatop">
+<tr>
+<td colspan="4" valign="top" class="grey3"><img src="/im/a.gif" width="1" height="2" border="0" alt="" /></td></tr>
+<tr>
+<td><img src="/im/a.gif" width="190" height="1" border="0" alt="" /><br />
+<a href="http://www.sun.com"><img src="/im/logo_sun_small_sdn.gif" width="61" height="29" border="0" alt="" vspace="5"/></a></td>
+<td width="100%" valign="top"><img src="/im/a.gif" width="350" height="1" border="0" alt="" /><br />
+<div class="footer">
+<a href="http://developers.sun.com/global/aboutsun.html">About Sun</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/aboutsdn.html">About This Site</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/newsletters.html">Newsletters</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/contact.html">Contact Us</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/employment.html">Employment</a><br />
+<a href="http://developers.sun.com/global/howtobuy.html">How to Buy</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/licensing.html">Licensing</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/termsofuse.html">Terms of Use</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/privacy.html">Privacy</a> &nbsp;|&nbsp;
+<a href="http://developers.sun.com/global/trademarks.html">Trademarks</a>
+<br /><span class="sp10">&nbsp;</span><br />
+<br /><span class="sp10">&nbsp;</span><br />
+Copyright <span id="copyDate" class="cssDate"></span> Sun Microsystems, Inc.
+</div></td>
+<td><img src="/im/a.gif" width="40" height="1" border="0" alt="" /></td>
+<td valign="top"><div class="footer"><b><a href="http://developers.sun.com/global/aboutsdn.html">A Sun Developer Network Site</a></b></div>
+<div class="footer">
+<img src="/im/a.gif" width="170" height="1" border="0" alt="" /><br />
+Unless otherwise licensed, code in all technical manuals herein (including articles, FAQs, samples) is provided under this <a href="http://developers.sun.com/global/berkeley_license.html">License</a>.
+<br /><span class="sp5">&nbsp;</span><br />
+<a href="http://developers.sun.com/global/rss_sdn.html"><img src="/im/ic_feed_16x.gif" width="16" height="16" align="top" border="0" alt="XML" /></a>&nbsp;<a href="http://developers.sun.com/global/content_feeds.html">Sun Developer RSS Feeds</a>
+</div></td></tr>
+<tr><td colspan="4" valign="top" class="grey3"><img src="/im/a.gif" width="1" height="2" border="0" alt="" /></td></tr>
+</table>
+</td></tr>
+</table>
+<!-- END VNV5 FOOTER -->
+
+
+<script type="text/javascript">
+printmenus();
+</script>
+
+<!-- BEGIN SDN SURVEY 08/08 -->
+
+
+ 
+<script language="JavaScript">
+<!--
+function openSurvey() {
+
+         var myval = document.location; //Gets referring URL for site ID and other information.
+         setCookie(); //sets cookie if the person is selected
+         // var opener = "http://sw.sun.com/sunsurveys/homepage/surveyRequest.html?"+myval;
+
+// Get random integers between zero and 8 (9 random numbers)
+var ran_number = Math.round(Math.random()*6);
+
+if(ran_number == 0) // survey 0
+{
+window.open("http://www.javelinfeedback.com/sun/index.jsp?pi=e2184df1dc52daa04cfae4572e805b22", "survey", "width=800,height=675,top=0,left=0,screenX=0,screenY=0,resizable=yes,alwaysRaised=yes,scrollbars=yes");
+}
+
+if(ran_number == 1) // survey 1
+{
+window.open("http://www.javelinfeedback.com/sun/index.jsp?pi=6e4a45f48857ba6185903f1b59daf35c", "survey", "width=800,height=675,top=0,left=0,screenX=0,screenY=0,resizable=yes,alwaysRaised=yes,scrollbars=yes");
+}
+
+if(ran_number == 2) // survey 2
+{
+window.open("http://www.javelinfeedback.com/sun/index.jsp?pi=364ee23815656123133ae64886bc5e6d", "survey", "width=800,height=675,top=0,left=0,screenX=0,screenY=0,resizable=yes,alwaysRaised=yes,scrollbars=yes");
+}
+
+if(ran_number == 3) // survey 3
+{
+window.open("http://www.javelinfeedback.com/sun/index.jsp?pi=fa9df43c35f62d37a300f25ae54f0292", "survey", "width=800,height=675,top=0,left=0,screenX=0,screenY=0,resizable=yes,alwaysRaised=yes,scrollbars=yes");
+}
+
+if(ran_number == 4) // survey 4
+{
+window.open("http://www.javelinfeedback.com/sun/index.jsp?pi=6cfa45f1ff160f1bf5207976edaed36c", "survey", "width=800,height=675,top=0,left=0,screenX=0,screenY=0,resizable=yes,alwaysRaised=yes,scrollbars=yes");
+}
+
+
+} // End openSurvey()
+
+function setCookie() {
+     var expireDate = new Date();
+     var fortyFiveDaysFromNow = expireDate.getTime() + (45*24*60*60*1000);
+     expireDate.setTime(fortyFiveDaysFromNow);
+     //document.cookie = "SunSurvey=true; expires=" + expireDate + "; path=/; domain=.sun.com";
+     document.cookie = "SunSurvey=true;expires="+expireDate+";path=/;domain=.sun.com";
+}
+
+function hasNotSeenSunSurvey() {
+     var cookieName = "SunSurvey=";
+     var allcookies = document.cookie;
+     var offset = allcookies.indexOf(cookieName) + cookieName.length;
+     var endOffSet = allcookies.indexOf (";", offset);
+     if (endOffSet == -1) {
+           endOffSet = allcookies.length;
+     }
+     var cookieValue = allcookies.substring(offset, endOffSet);
+     if (cookieValue == "true" || cookieValue == 1) {
+           return false;
+     } else {
+           return true;
+     }
+}
+
+if (hasNotSeenSunSurvey()){
+     var nth = 40; // 1 in nth people will be selected to get popup window triggered by openSurvey()
+     var rnd = Math.floor(Math.random() * nth) + 1;
+     if (rnd == nth) {
+           openSurvey();
+     }
+}
+
+//-->
+</script>
+
+ 
+<!-- END SDN SURVEY 08/08 -->
+
+<!-- Test server reboot - 5/25/08 -->
+</body>
+<script language="JavaScript" src="/js/omi/jsc/s_code_remote.js"></script></html>
+
