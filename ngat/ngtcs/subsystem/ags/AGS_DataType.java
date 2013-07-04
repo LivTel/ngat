@@ -32,23 +32,23 @@ import ngat.ngtcs.subsystem.TTL_GenericData;
  * <li>D_AGS_PEAKPIXEL</li>
  * <li>D_AGS_AGTEMP</li>
  * </ul>
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AGS_DataType
   implements java.io.Serializable, TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGS_DataType.java,v 1.1 2003-09-19 16:08:38 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGS_DataType.java,v 1.2 2013-07-04 12:55:58 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -70,11 +70,11 @@ public class AGS_DataType
    */
   private static final TTL_Package ttlPackage = TTL_Package.AGS;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -202,11 +202,11 @@ public class AGS_DataType
     D_AGS_AGTEMP
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -223,11 +223,11 @@ public class AGS_DataType
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the AGS_DataType with the String
@@ -258,11 +258,11 @@ public class AGS_DataType
     return( (AGS_DataType)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -354,10 +354,13 @@ public class AGS_DataType
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:38 $
+ *    $Date: 2013-07-04 12:55:58 $
  * $RCSfile: AGS_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGS_DataType.java,v $
- *      $Id: AGS_DataType.java,v 1.1 2003-09-19 16:08:38 je Exp $
+ *      $Id: AGS_DataType.java,v 1.2 2013-07-04 12:55:58 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:38  je
+ *     Initial revision
+ *
  *
  */

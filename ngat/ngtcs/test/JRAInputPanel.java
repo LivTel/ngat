@@ -10,41 +10,41 @@ import ngat.ngtcs.common.*;
  * Panel containing the hours, minutes and seconds fields to be able to input
  * a right ascension.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class JRAInputPanel extends JApplet
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: JRAInputPanel.java,v 1.1 2003-07-01 10:13:54 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: JRAInputPanel.java,v 1.2 2013-07-04 13:01:41 cjm Exp $" );
 
     /**
      * Hour input field.
      */
-    private JTextField hourInput = new JTextField( " 00 " );
+    protected JTextField hourInput = new JTextField( " 00 " );
 
     /**
      * Minute input field.
      */
-    private JTextField minuteInput = new JTextField( " 00 " );
+    protected JTextField minuteInput = new JTextField( " 00 " );
 
     /**
      * Second input field.
      */
-    private JTextField secondInput = new JTextField( " 00.0000 " );
+    protected JTextField secondInput = new JTextField( " 00.0000 " );
 
     /**
      * This panel's LayoutManager.
      */
-    private GridBagLayout layout = new GridBagLayout();
+    protected GridBagLayout layout = new GridBagLayout();
 
     /**
      *
      */
-    private JFrame frame;
+    protected JFrame frame;
 
     /**
      * NumberFormatter for hours.
@@ -175,9 +175,12 @@ public class JRAInputPanel extends JApplet
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:54 $
+ *    $Date: 2013-07-04 13:01:41 $
  * $RCSfile: JRAInputPanel.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/JRAInputPanel.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:54  je
+ *     Initial revision
+ *
  */
 

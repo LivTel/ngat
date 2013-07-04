@@ -11,22 +11,22 @@ package ngat.ngtcs.subsystem.amn;
  * <li>E_AGD_IR_IN_LINE</li>
  * </ul>
   * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AGD_FilterPosition implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGD_FilterPosition.java,v 1.1 2003-09-19 16:08:45 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGD_FilterPosition.java,v 1.2 2013-07-04 12:57:27 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -43,11 +43,11 @@ public class AGD_FilterPosition implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * No position is currently set or the position is unknown.
@@ -79,11 +79,11 @@ public class AGD_FilterPosition implements java.io.Serializable
     E_AGD_IR_IN_LINE
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -100,11 +100,11 @@ public class AGD_FilterPosition implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the AGD_FilterPosition with the String
@@ -135,11 +135,11 @@ public class AGD_FilterPosition implements java.io.Serializable
     return( (AGD_FilterPosition)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -221,10 +221,13 @@ public class AGD_FilterPosition implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:45 $
+ *    $Date: 2013-07-04 12:57:27 $
  * $RCSfile: AGD_FilterPosition.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/AGD_FilterPosition.java,v $
- *      $Id: AGD_FilterPosition.java,v 1.1 2003-09-19 16:08:45 je Exp $
+ *      $Id: AGD_FilterPosition.java,v 1.2 2013-07-04 12:57:27 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:45  je
+ *     Initial revision
+ *
  *
  */

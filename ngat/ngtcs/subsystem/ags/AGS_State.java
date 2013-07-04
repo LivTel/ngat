@@ -21,23 +21,23 @@ package ngat.ngtcs.subsystem.ags;
  * <li>E_AGS_NON_RECOVERABLE_ERROR</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AGS_State
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGS_State.java,v 1.1 2003-09-19 16:08:38 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGS_State.java,v 1.2 2013-07-04 12:56:08 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -54,11 +54,11 @@ public class AGS_State
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Not ready to accept observing commands.
@@ -160,11 +160,11 @@ public class AGS_State
     E_AGS_NON_RECOVERABLE_ERROR
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -181,11 +181,11 @@ public class AGS_State
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the AGS_State with the String
@@ -216,11 +216,11 @@ public class AGS_State
     return( (AGS_State)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -312,10 +312,13 @@ public class AGS_State
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:38 $
+ *    $Date: 2013-07-04 12:56:08 $
  * $RCSfile: AGS_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGS_State.java,v $
- *      $Id: AGS_State.java,v 1.1 2003-09-19 16:08:38 je Exp $
+ *      $Id: AGS_State.java,v 1.2 2013-07-04 12:56:08 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:38  je
+ *     Initial revision
+ *
  *
  */

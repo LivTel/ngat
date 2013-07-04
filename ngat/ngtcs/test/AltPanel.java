@@ -8,9 +8,9 @@ public class AltPanel extends Panel
 
     final Dimension SIZE = new Dimension(200,200);
 
-    private double alt = 0.0;
+    protected double alt = 0.0;
 
-    private DecimalFormat df = new DecimalFormat( "+000.00;-000.00" );
+    protected DecimalFormat df = new DecimalFormat( "+000.00;-000.00" );
 
     AltPanel()
     {

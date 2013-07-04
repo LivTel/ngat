@@ -18,22 +18,22 @@ package ngat.ngtcs.subsystem.ags;
  * <li>E_AGG_CONF_CALIB</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AGG_Keyword implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGG_Keyword.java,v 1.1 2003-09-19 16:08:38 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGG_Keyword.java,v 1.2 2013-07-04 12:55:42 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -50,11 +50,11 @@ public class AGG_Keyword implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Turn on (ie guiding, loop)
@@ -134,11 +134,11 @@ public class AGG_Keyword implements java.io.Serializable
     E_AGG_CONF_CALIB
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -155,11 +155,11 @@ public class AGG_Keyword implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the AGG_Keyword with the String
@@ -190,11 +190,11 @@ public class AGG_Keyword implements java.io.Serializable
     return( (AGG_Keyword)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -276,10 +276,13 @@ public class AGG_Keyword implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:38 $
+ *    $Date: 2013-07-04 12:55:42 $
  * $RCSfile: AGG_Keyword.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG_Keyword.java,v $
- *      $Id: AGG_Keyword.java,v 1.1 2003-09-19 16:08:38 je Exp $
+ *      $Id: AGG_Keyword.java,v 1.2 2013-07-04 12:55:42 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:38  je
+ *     Initial revision
+ *
  *
  */

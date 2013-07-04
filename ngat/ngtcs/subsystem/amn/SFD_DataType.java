@@ -30,23 +30,23 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>D_SFD_DATAID_EOL</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public final class SFD_DataType
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SFD_DataType.java,v 1.1 2003-09-19 16:08:45 je Exp $" );
+    new String( "$Id: SFD_DataType.java,v 1.2 2013-07-04 12:57:51 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -68,11 +68,11 @@ public final class SFD_DataType
    */
   private static final TTL_Package ttlPackage = TTL_Package.SFD;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -235,11 +235,12 @@ public final class SFD_DataType
     D_SFD_DATAID_EOL
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -256,11 +257,11 @@ public final class SFD_DataType
    */
   private final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the SFD_DataType with the String
@@ -291,11 +292,11 @@ public final class SFD_DataType
     return( (SFD_DataType)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -388,10 +389,10 @@ public final class SFD_DataType
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:45 $
+ *    $Date: 2013-07-04 12:57:51 $
  * $RCSfile: SFD_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SFD_DataType.java,v $
- *      $Id: SFD_DataType.java,v 1.1 2003-09-19 16:08:45 je Exp $
+ *      $Id: SFD_DataType.java,v 1.2 2013-07-04 12:57:51 cjm Exp $
  *     $Log: not supported by cvs2svn $
  *
  */

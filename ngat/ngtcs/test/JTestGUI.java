@@ -18,18 +18,18 @@ import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.command.*;
 
 /**
+ * Simple GUI to test the NGTCS commands and execution.
  * 
- * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class JTestGUI extends JApplet implements ActionListener
 {
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: JTestGUI.java,v 1.2 2003-09-22 18:16:45 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: JTestGUI.java,v 1.3 2013-07-04 13:02:29 cjm Exp $" );
 
   /**
    *
@@ -104,6 +104,11 @@ public class JTestGUI extends JApplet implements ActionListener
   /**
    *
    */
+  protected JTextField agWavelength;
+
+  /**
+   *
+   */
   protected JComboBox positionAngleCB;
 
   /**
@@ -125,6 +130,11 @@ public class JTestGUI extends JApplet implements ActionListener
    *
    */
   protected Vector equinoxObjs = new Vector();
+
+  /**
+   * The autoguidder IN selected Radio Button.
+   */
+  protected JRadioButton agFiltInB;
 
   /**
    *
@@ -181,7 +191,7 @@ public class JTestGUI extends JApplet implements ActionListener
 
 
     p1 = new JPanel();
-    p1.setLayout( new GridLayout( 8, 1 ) );
+    p1.setLayout( new GridLayout( 10, 1 ) );
 
 
     p2 = new JPanel();
@@ -359,6 +369,34 @@ public class JTestGUI extends JApplet implements ActionListener
     logB.setActionCommand( "log" );
     logB.addActionListener( this );
     p2.add( logB );
+    p1.add( p2 );
+
+
+    p2 = new JPanel();
+    p2.add( new JLabel( "Autoguider wavelength :" ) );
+    agWavelength = new JTextField( "  550" );
+    p2.add( agWavelength );
+    p2.add( new JLabel( "nm" ) );
+    JButton agWavelengthB = new JButton( "AG Wavelength" );
+    agWavelengthB.setActionCommand( "agWavelength" );
+    agWavelengthB.addActionListener( this );
+    p2.add( agWavelengthB );
+    p1.add( p2 );
+
+
+    p2 = new JPanel();
+    p2.add( new JLabel( "Autoguider Filter :" ) );
+    ButtonGroup agFiltBGrp = new ButtonGroup();
+    agFiltInB = new JRadioButton( "IN", false );
+    agFiltBGrp.add( agFiltInB );
+    p2.add( agFiltInB );
+    JRadioButton agFiltOutB = new JRadioButton( "OUT", true );
+    agFiltBGrp.add( agFiltOutB );
+    p2.add( agFiltOutB );
+    JButton agFiltB = new JButton( "Select" );
+    agFiltB.setActionCommand( "agFilt" );
+    agFiltB.addActionListener( this );
+    p2.add( agFiltB );
     p1.add( p2 );
 
 
@@ -618,13 +656,37 @@ public class JTestGUI extends JApplet implements ActionListener
       sendCommand( time );
     }
 
+    if( ae.getActionCommand().equals( "agWavelength" ) )
+    {
+      double d;
+      try
+      {
+	d = Double.parseDouble( agWavelength.getText().trim() ) * 1.0E-09;
+      }
+      catch( Exception e )
+      {
+	new JExceptionMessage( e, frame );
+	return;
+      }
+      AGWAVELENGTH agW = new AGWAVELENGTH( cmdPath, d );
+      sendCommand( agW );
+    }
+
+    if( ae.getActionCommand().equals( "agFilt" ) )
+    {
+      boolean deploy = false;
+      if( agFiltInB.isSelected() )
+	deploy = true;
+      AGFILTER agF = new AGFILTER( cmdPath, deploy );
+      sendCommand( agF );
+    }
+
     if( ae.getActionCommand().equals( "shutdown" ) )
     {
       running = false;
       SHUTDOWN shutdown = new SHUTDOWN( cmdPath, "dummy" );
       sendCommand( shutdown );
     }
-
   }
 
 
@@ -633,13 +695,12 @@ public class JTestGUI extends JApplet implements ActionListener
    */
   public void sendCommand( Command command )
   {
-    System.out.println( "sending "+command.getClass().getName()+
-			" command" );
+    System.out.println( "sending "+command.getClass().getName()+" command" );
 
     TCPClientConnectionThreadMA cct = new TCPClientConnectionThreadMA
       ( commandAddress, commandPort, command );
     cct.setErrorStream( new PrintWriter( System.err, true ) );
-    new Thread( new DoneThread( cct ) ).start();
+    new Thread( new DoneThread( cct, command ) ).start();
     cct.start();    
   }
 
@@ -651,43 +712,75 @@ public class JTestGUI extends JApplet implements ActionListener
   {
     private TCPClientConnectionThreadMA cConThread;
 
-    private CommandDone cmdDone;
-    private COMMAND_DONE _cmdDone;
+    private Command command;
 
-    public DoneThread( TCPClientConnectionThreadMA cct )
+    private CommandDone cmdDone;
+
+    public DoneThread( TCPClientConnectionThreadMA cct, Command cmd )
     {
       cConThread = cct;
+      command = cmd;
     }
 
     public void run()
     {
+      int sleep = 500, slept = 0, totalSlept = 0, timeout = 999999;
+      Acknowledge ack = null, lastAck = null;
+      boolean success = false;
+      String msg;
+
       do
       {
-	System.err.print( "." );
 	try
 	{
-	  Thread.sleep( 500 );
+	  Thread.sleep( sleep );
+	  slept += sleep;
 	}
 	catch( InterruptedException ie )
 	{
 	  System.err.println( ie );
 	}
-	_cmdDone = cConThread.getDone();
 
-	System.err.println( "done = "+_cmdDone );
+	ack = (Acknowledge)( cConThread.getAcknowledge() );
+	cmdDone = (CommandDone)( cConThread.getDone() );
 
+	if( ( ack != null )&&( ack != lastAck ) )
+	{
+	  timeout = ack.getTimeToComplete();
+	  String toStr = ""+timeout;
+	  if( timeout == Integer.MAX_VALUE )
+	    toStr = new String( "NOT APPLICABLE" );
+	  totalSlept += slept;
+	  slept = 0;
+	  System.err.println( "       Timeout : "+timeout+"\n"+
+			      "Slept this Ack : "+slept+"\n"+
+			      "   Total Slept : "+totalSlept );
+	  lastAck = ack;
+	}
       }
-      while( _cmdDone == null );
+      while( ( cmdDone == null )&&( slept < timeout ) );
 
-      System.err.println( "\nCommandDone received" );
+      if( cmdDone != null )
+      {
+	System.err.println( "\nCommandDone received" );
 
-      cmdDone = (CommandDone)_cmdDone;
+	success = cmdDone.getSuccessful();
+	System.out.println( "Command ["+cmdDone.getCommand()+
+			    "] returned : SUCCESS = "+success );
 
-      String msg = cmdDone.getReturnMessage();
-      if( msg == null ) msg = cmdDone.getErrorMessage();
+	if( success == true )
+	  msg = cmdDone.getReturnMessage();
+	else
+	  msg = cmdDone.getErrorMessage();
 
-      System.out.println( "Command ["+cmdDone.getCommand()+"] returned:\n\t"+
-			  msg+"\n\tSUCCESS = "+cmdDone.getSuccessful() );
+	System.out.println( "Command returned : "+msg );
+      }
+      else
+      {
+	totalSlept += slept;
+	System.err.println( "Command ["+command+"] has timed out after "+
+			    totalSlept+"ms" );
+      }
     }
   }
 
@@ -804,10 +897,13 @@ public class JTestGUI extends JApplet implements ActionListener
   }
 }
 /*
- *    $Date: 2003-09-22 18:16:45 $
+ *    $Date: 2013-07-04 13:02:29 $
  * $RCSfile: JTestGUI.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/JTestGUI.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/22 18:16:45  je
+ *     Sorted out TestExecutionThread stuff.
+ *
  *     Revision 1.1  2003/07/01 10:13:54  je
  *     Initial revision
  *

@@ -13,23 +13,23 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SMF_STATE_ERROR</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public final class SMF_State
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: SMF_State.java,v 1.1 2003-09-19 16:08:45 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: SMF_State.java,v 1.2 2013-07-04 12:58:06 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -51,11 +51,11 @@ public final class SMF_State
    */
   private static final TTL_Package ttlPackage = TTL_Package.SMF;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -99,11 +99,11 @@ public final class SMF_State
     E_SMF_STATE_ERROR
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -120,11 +120,11 @@ public final class SMF_State
    */
   private final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the SMF_State with the String
@@ -155,11 +155,11 @@ public final class SMF_State
     return( (SMF_State)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -252,10 +252,13 @@ public final class SMF_State
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:45 $
+ *    $Date: 2013-07-04 12:58:06 $
  * $RCSfile: SMF_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SMF_State.java,v $
- *      $Id: SMF_State.java,v 1.1 2003-09-19 16:08:45 je Exp $
+ *      $Id: SMF_State.java,v 1.2 2013-07-04 12:58:06 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:45  je
+ *     Initial revision
+ *
  *
  */

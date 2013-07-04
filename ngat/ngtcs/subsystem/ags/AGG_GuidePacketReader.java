@@ -13,22 +13,22 @@ import ngat.ngtcs.subsystem.*;
  * <p>
  * The interface is described in TTL document <b>97-001-AGS-TEL_ICD</b>.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AGG_GuidePacketReader
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGG_GuidePacketReader.java,v 1.1 2003-09-19 16:08:38 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGG_GuidePacketReader.java,v 1.2 2013-07-04 12:55:03 cjm Exp $" );
 
 
   /**
@@ -41,11 +41,11 @@ public class AGG_GuidePacketReader
    */
   protected final static int CHECKSUM_END = 29;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -57,18 +57,18 @@ public class AGG_GuidePacketReader
    */
   protected BufferedReader br = null;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -251,9 +251,12 @@ public class AGG_GuidePacketReader
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:38 $
+ *    $Date: 2013-07-04 12:55:03 $
  * $RCSfile: AGG_GuidePacketReader.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG_GuidePacketReader.java,v $
- *      $Id: AGG_GuidePacketReader.java,v 1.1 2003-09-19 16:08:38 je Exp $
+ *      $Id: AGG_GuidePacketReader.java,v 1.2 2013-07-04 12:55:03 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:38  je
+ *     Initial revision
+ *
  */

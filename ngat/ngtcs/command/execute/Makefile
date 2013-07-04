@@ -37,6 +37,7 @@ SRCS           = AGCENTROIDImplementor.java \
                  STATUSImplementor.java \
                  STOPImplementor.java \
                  SUBSYSTEMLISTImplementor.java \
+		 SubCommandImplementorThread.java \
                  TEMPERATUREImplementor.java \
                  TESTImplementor.java \
                  TIMEImplementor.java \
@@ -47,11 +48,14 @@ SRCS           = AGCENTROIDImplementor.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $
-# $Revision: 1.8 $
-#       $Id: Makefile,v 1.8 2003-09-22 14:56:26 je Exp $
-#     $Date: 2003-09-22 14:56:26 $
+#   $Author: cjm $
+# $Revision: 1.9 $
+#       $Id: Makefile,v 1.9 2013-07-04 13:11:58 cjm Exp $
+#     $Date: 2013-07-04 13:11:58 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.8  2003/09/22 14:56:26  je
+#      Added AGMOVE using make_makefile.csh
+#
 #

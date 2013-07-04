@@ -27,23 +27,23 @@ package ngat.ngtcs.subsystem.ags;
  * <li>E_AGG_TSTATE_ERROR</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AGG_State
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AGG_State.java,v 1.1 2003-09-19 16:08:38 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AGG_State.java,v 1.2 2013-07-04 12:55:46 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -60,11 +60,11 @@ public class AGG_State
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -230,11 +230,11 @@ public class AGG_State
         E_AGG_TSTATE_ERROR
     };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -251,11 +251,11 @@ public class AGG_State
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the AGG_State with the String
@@ -286,11 +286,11 @@ public class AGG_State
     return( (AGG_State)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -382,10 +382,13 @@ public class AGG_State
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:38 $
+ *    $Date: 2013-07-04 12:55:46 $
  * $RCSfile: AGG_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG_State.java,v $
- *      $Id: AGG_State.java,v 1.1 2003-09-19 16:08:38 je Exp $
+ *      $Id: AGG_State.java,v 1.2 2013-07-04 12:55:46 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:38  je
+ *     Initial revision
+ *
  *
  */

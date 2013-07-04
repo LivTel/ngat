@@ -13,6 +13,7 @@ SRCS           = AltPanel.java \
                  JRAInputPanel.java \
                  JTestGUI.java \
                  NGAT_NET_Communicator.java \
+		 OffsetTest.java \
                  RoundTest.java \
                  SerialFileReader.java \
                  TestExecutionThread.java \
@@ -24,13 +25,16 @@ SRCS           = AltPanel.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $
-# $Revision: 1.2 $
-#       $Id: Makefile,v 1.2 2003-09-19 16:10:27 je Exp $
-#     $Date: 2003-09-19 16:10:27 $
+#   $Author: cjm $
+# $Revision: 1.3 $
+#       $Id: Makefile,v 1.3 2013-07-04 13:07:15 cjm Exp $
+#     $Date: 2013-07-04 13:07:15 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.2  2003/09/19 16:10:27  je
+#      Updated Command tx/rx and TTL subsystem interfaces.
+#
 #      Revision 1.1  2003/07/01 10:14:01  je
 #      Initial revision
 #

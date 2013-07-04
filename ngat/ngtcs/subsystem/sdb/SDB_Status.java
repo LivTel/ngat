@@ -37,22 +37,22 @@ package ngat.ngtcs.subsystem.sdb;
  * <li>E_SDB_STATUS_MAX_VALUE</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class SDB_Status implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: SDB_Status.java,v 1.1 2003-09-19 16:09:40 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: SDB_Status.java,v 1.2 2013-07-04 12:59:47 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -69,11 +69,11 @@ public class SDB_Status implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -286,11 +286,11 @@ public class SDB_Status implements java.io.Serializable
     E_SDB_NOT_AUTH
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -307,11 +307,11 @@ public class SDB_Status implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the SDB_Status with the String
@@ -342,11 +342,11 @@ public class SDB_Status implements java.io.Serializable
     return( (SDB_Status)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -428,10 +428,13 @@ public class SDB_Status implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:09:40 $
+ *    $Date: 2013-07-04 12:59:47 $
  * $RCSfile: SDB_Status.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/sdb/SDB_Status.java,v $
- *      $Id: SDB_Status.java,v 1.1 2003-09-19 16:09:40 je Exp $
+ *      $Id: SDB_Status.java,v 1.2 2013-07-04 12:59:47 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:40  je
+ *     Initial revision
+ *
  *
  */

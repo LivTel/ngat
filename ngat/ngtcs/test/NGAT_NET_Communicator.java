@@ -15,29 +15,29 @@ import ngat.ngtcs.command.*;
  * This class implements the <code>ngat.message</code> and
  * <code>ngat.net</code> method of client<->server communication for the NGTCS.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  *
  */
 public class NGAT_NET_Communicator implements Communicator
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: NGAT_NET_Communicator.java,v 1.3 2003-09-23 12:29:17 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: NGAT_NET_Communicator.java,v 1.4 2013-07-04 13:05:55 cjm Exp $" );
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * The shutdown flag.
@@ -56,11 +56,11 @@ public class NGAT_NET_Communicator implements Communicator
 
   protected Hashtable commandReplyHash = new Hashtable();
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create the <code>ngat.net</code> implementing NGTCS
@@ -134,7 +134,7 @@ public class NGAT_NET_Communicator implements Communicator
       (TestExecutionThread)( commandReplyHash.get( c ) );
     try
     {
-      System.err.println( "about to send ack ["+c+"] using "+t );
+      logger.log( 3, logName, "Sending Acknowledge" );
       t.sendAcknowledge( ack );
     }
     catch( IOException ioe )
@@ -157,10 +157,8 @@ public class NGAT_NET_Communicator implements Communicator
       (TestExecutionThread)( commandReplyHash.get( c ) );
     try
     {
-      System.err.println( "about to send done ["+c+"] using "+t );
-
-      System.err.println( "done = "+done+" "+this );
-
+      logger.log( 3, logName, "Sending CommandDone "+
+		  done.getClass().getName() );
       t.sendDone();
     }
     catch( IOException ioe )
@@ -220,10 +218,13 @@ public class NGAT_NET_Communicator implements Communicator
   }
 }
 /*
- * $Date: 2003-09-23 12:29:17 $
+ * $Date: 2013-07-04 13:05:55 $
  * $RCSfile: NGAT_NET_Communicator.java,v $
  * $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/NGAT_NET_Communicator.java,v $
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2003/09/23 12:29:17  je
+ * Changed init routine to use defualt if no config file is found
+ *
  * Revision 1.2  2003/09/23 11:58:09  je
  * Added documentation.
  *

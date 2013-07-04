@@ -60,23 +60,23 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_EPT_STATE_EOL</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public final class EPT_State
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: EPT_State.java,v 1.1 2003-09-19 16:09:30 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: EPT_State.java,v 1.2 2013-07-04 12:58:50 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -98,11 +98,11 @@ public final class EPT_State
    */
   private static final TTL_Package ttlPackage = TTL_Package.EPT;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Analogue
@@ -476,11 +476,11 @@ public final class EPT_State
   };
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -497,11 +497,11 @@ public final class EPT_State
    */
   private final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the EPT_State with the String
@@ -532,11 +532,11 @@ public final class EPT_State
     return( (EPT_State)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -629,10 +629,13 @@ public final class EPT_State
   }
 }
 /*
- *    $Date: 2003-09-19 16:09:30 $
+ *    $Date: 2013-07-04 12:58:50 $
  * $RCSfile: EPT_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ept/EPT_State.java,v $
- *      $Id: EPT_State.java,v 1.1 2003-09-19 16:09:30 je Exp $
+ *      $Id: EPT_State.java,v 1.2 2013-07-04 12:58:50 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:09:30  je
+ *     Initial revision
+ *
  *
  */

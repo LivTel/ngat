@@ -10,16 +10,16 @@ import ngat.ngtcs.common.*;
  * Panel containing the degrees, minutes and seconds fields to be able to input
  * a declination.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class JDecInputPanel extends JApplet
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: JDecInputPanel.java,v 1.1 2003-07-01 10:13:54 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: JDecInputPanel.java,v 1.2 2013-07-04 13:01:36 cjm Exp $" );
 
     /**
      * Degree input field.
@@ -185,8 +185,11 @@ public class JDecInputPanel extends JApplet
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:54 $
+ *    $Date: 2013-07-04 13:01:36 $
  * $RCSfile: JDecInputPanel.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/JDecInputPanel.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:54  je
+ *     Initial revision
+ *
  */

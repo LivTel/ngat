@@ -20,34 +20,25 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SFD_HOME_ERR</li>
  * <li>E_SFD_MOVE_ERR</li>
  * <li>E_SFD_STOPPED</li>
- * <li>E_SFD_STATE_DISABLED</li>
- * <li>E_SFD_STATE_ENABLED</li>
- * <li>E_SFD_STATE_HOMING</li>
- * <li>E_SFD_STATE_READY</li>
- * <li>E_SFD_STATE_MOVING</li>
- * <li>E_SFD_STATE_ERROR</li>
- * <li>E_SFD_POS_UNSET</li>
- * <li>E_SFD_POS_STOW</li>
- * <li>E_SFD_POS_DEPLOY</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public final class SFD_Status
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SFD_Status.java,v 1.1 2003-09-19 16:08:45 je Exp $" );
+    new String( "$Id: SFD_Status.java,v 1.2 2013-07-04 12:58:02 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -69,11 +60,11 @@ public final class SFD_Status
    */
   private static final TTL_Package ttlPackage = TTL_Package.SFD;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -160,60 +151,6 @@ public final class SFD_Status
       new SFD_Status( "E_SFD_STOPPED", 13 );
 
   /**
-   * 
-   */
-  public final static SFD_Status E_SFD_STATE_DISABLED =
-      new SFD_Status( "E_SFD_STATE_DISABLED", 14 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_STATE_ENABLED =
-      new SFD_Status( "E_SFD_STATE_ENABLED", 15 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_STATE_HOMING =
-      new SFD_Status( "E_SFD_STATE_HOMING", 16 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_STATE_READY =
-      new SFD_Status( "E_SFD_STATE_READY", 17 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_STATE_MOVING =
-      new SFD_Status( "E_SFD_STATE_MOVING", 18 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_STATE_ERROR =
-      new SFD_Status( "E_SFD_STATE_ERROR", 19 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_POS_UNSET =
-      new SFD_Status( "E_SFD_POS_UNSET", 20 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_POS_STOW =
-      new SFD_Status( "E_SFD_POS_STOW", 21 );
-
-  /**
-   * 
-   */
-  public final static SFD_Status E_SFD_POS_DEPLOY =
-      new SFD_Status( "E_SFD_POS_DEPLOY", 22 );
-
-  /**
    * Array allowing serialization.
    */
   protected static final SFD_Status[] array =
@@ -231,23 +168,15 @@ public final class SFD_Status
     E_SFD_RECEIVE_ERR,
     E_SFD_HOME_ERR,
     E_SFD_MOVE_ERR,
-    E_SFD_STOPPED,
-    E_SFD_STATE_DISABLED,
-    E_SFD_STATE_ENABLED,
-    E_SFD_STATE_HOMING,
-    E_SFD_STATE_READY,
-    E_SFD_STATE_MOVING,
-    E_SFD_STATE_ERROR,
-    E_SFD_POS_UNSET,
-    E_SFD_POS_STOW,
-    E_SFD_POS_DEPLOY
+    E_SFD_STOPPED
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -264,11 +193,11 @@ public final class SFD_Status
    */
   private final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the SFD_Status with the String
@@ -299,11 +228,11 @@ public final class SFD_Status
     return( (SFD_Status)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -396,10 +325,10 @@ public final class SFD_Status
   }
 }
 /*
- *    $Date: 2003-09-19 16:08:45 $
+ *    $Date: 2013-07-04 12:58:02 $
  * $RCSfile: SFD_Status.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SFD_Status.java,v $
- *      $Id: SFD_Status.java,v 1.1 2003-09-19 16:08:45 je Exp $
+ *      $Id: SFD_Status.java,v 1.2 2013-07-04 12:58:02 cjm Exp $
  *     $Log: not supported by cvs2svn $
  *
  */

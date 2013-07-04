@@ -8,13 +8,13 @@ public class AzPanel extends Panel
 {
     final Dimension SIZE = new Dimension(200,200);
 	
-    private double wrap;
+    protected double wrap;
 
-    private double az;
+    protected double az;
 
-    private DecimalFormat df = new DecimalFormat( "+000.00;-000.00" );
+    protected DecimalFormat df = new DecimalFormat( "+000.00;-000.00" );
 
-    private final float coeff = 255.0f/270.f;
+    protected final float coeff = 255.0f/270.f;
 
     AzPanel()
     {

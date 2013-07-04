@@ -15,28 +15,28 @@ import ngat.ngtcs.command.execute.*;
  * This class is a wrapper for the ngat.net.TCPServerConnectionThread to 
  * implement the JMS protocol for NGTCS command communication.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class TestExecutionThread extends TCPServerConnectionThread
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TestExecutionThread.java,v 1.3 2003-09-23 11:48:45 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TestExecutionThread.java,v 1.4 2013-07-04 13:07:05 cjm Exp $" );
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * The NGTCS ExecutionThread for which this is a wrapper.
@@ -63,18 +63,18 @@ public class TestExecutionThread extends TCPServerConnectionThread
    */
   protected String logName = null;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create a TestExecutionThread wityh the specified Socket for the
@@ -192,11 +192,14 @@ public class TestExecutionThread extends TCPServerConnectionThread
   }
 }
 /*
- *    $Date: 2003-09-23 11:48:45 $
+ *    $Date: 2013-07-04 13:07:05 $
  * $RCSfile: TestExecutionThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/TestExecutionThread.java,v $
- *      $Id: TestExecutionThread.java,v 1.3 2003-09-23 11:48:45 je Exp $
+ *      $Id: TestExecutionThread.java,v 1.4 2013-07-04 13:07:05 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/23 11:48:45  je
+ *     Documentation change and replaced System.err reporting with logger.log
+ *
  *     Revision 1.2  2003/09/19 16:10:27  je
  *     Updated Command tx/rx and TTL subsystem interfaces.
  *

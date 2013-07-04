@@ -7,29 +7,29 @@ import ngat.ngtcs.command.*;
 /**
  * Basic <b><code>ngat.message</code></b> wrapper 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  *
  */
-public class TestCommand extends COMMAND
+public class TestCommand extends Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: TestCommand.java,v 1.1 2003-07-01 10:13:54 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: TestCommand.java,v 1.2 2013-07-04 13:07:01 cjm Exp $" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The NGTCS <code>Command</code> for which this is a wrapper.
@@ -37,18 +37,18 @@ public class TestCommand extends COMMAND
     protected Command command = null;
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Constructor.
@@ -71,9 +71,12 @@ public class TestCommand extends COMMAND
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:54 $
+ *    $Date: 2013-07-04 13:07:01 $
  * $RCSfile: TestCommand.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/TestCommand.java,v $
- *      $Id: TestCommand.java,v 1.1 2003-07-01 10:13:54 je Exp $
+ *      $Id: TestCommand.java,v 1.2 2013-07-04 13:07:01 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:54  je
+ *     Initial revision
+ *
  */

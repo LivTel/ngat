@@ -8,27 +8,25 @@ import javax.swing.*;
 import ngat.ngtcs.*;
 import ngat.ngtcs.common.*;
 
-import ttl.lt.*;
-
 /**
  * Simple GUI to experiment with (x,y), (xi,eta), (RA,Dec) and (alt,az).
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class VTTests implements ActionListener
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: VTTests.java,v 1.1 2003-07-01 10:13:54 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: VTTests.java,v 1.2 2013-07-04 13:07:08 cjm Exp $" );
 
   /**
    * String formatter for the Azimuth.
@@ -68,11 +66,11 @@ public class VTTests implements ActionListener
    */
   protected static double altitude = 0.0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Input panel for Right Ascension.
@@ -155,11 +153,11 @@ public class VTTests implements ActionListener
   protected GridBagConstraints gbc = new GridBagConstraints();
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   public static void main( String[] args )
   {
@@ -204,11 +202,11 @@ public class VTTests implements ActionListener
     new VTTests( f );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create the GUI.
@@ -329,9 +327,9 @@ public class VTTests implements ActionListener
 	
     ac.setSiteData( new SiteData( longitude, latitude, altitude ) );
 
-    focalStation = new FocalStation( "test focal station",
+    focalStation = new FocalStation( "test focal station", 123, 0.0,
 				     new PointingOrigin( 0, 0 ),
-				     0.0, 0.0, 1.0, "mm" );
+				     0.0, 1.0, "mm" );
 
     vt = new VirtualTelescope
       ( focalStation, ac, 1.0, pointingModel );
@@ -586,9 +584,12 @@ public class VTTests implements ActionListener
   }
 }
 /*
- *    $Date: 2003-07-01 10:13:54 $
+ *    $Date: 2013-07-04 13:07:08 $
  * $RCSfile: VTTests.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/VTTests.java,v $
- *      $Id: VTTests.java,v 1.1 2003-07-01 10:13:54 je Exp $
+ *      $Id: VTTests.java,v 1.2 2013-07-04 13:07:08 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:54  je
+ *     Initial revision
+ *
  */

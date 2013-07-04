@@ -10,84 +10,91 @@ import ngat.util.*;
  */
 public class ConnectionThread extends ControlThread
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: ConnectionThread.java,v 1.1 2003-07-01 10:13:54 je Exp $" );
-
-
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: ConnectionThread.java,v 1.2 2013-07-04 13:01:31 cjm Exp $" );
 
 
-  
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     *
-     */
-    public ConnectionThread()
-    {
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    }
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
+
+  /**
+   *
+   */
+  public ConnectionThread()
+  {
+
+  }
     
 
-    /**
-     * Carry out any initialization.
-     */
-    public void initialise()
-    {
-    }
+  /**
+   * Carry out any initialization.
+   */
+  public void initialise()
+  {
+  }
 
 
-    /**
-     * The mainTask() method is made final to force subclasses to follow the
-     * specified execution template. Calls implement() on the attached
-     * ProtocolImpl. The implementor <b>must</b> block to stop this thread
-     * from returning from its run method and dieing prematurely.
-     */
-    public final void mainTask()
-    {
-	//implementor.implement();
-    }
+  /**
+   * The mainTask() method is made final to force subclasses to follow the
+   * specified execution template. Calls implement() on the attached
+   * ProtocolImpl. The implementor <b>must</b> block to stop this thread
+   * from returning from its run method and dieing prematurely.
+   */
+  public void mainTask()
+  {
+    //implementor.implement();
+  }
     
 
-    /**
-     * Force the implementor to give up any live connections
-     * and release this thread from a blocked I/O state.
-     */
-    public void abort()
-    {
-	System.err.println( "CCT: called abort()" );
-	//implementor.cancel();
-    }
+  /**
+   * Force the implementor to give up any live connections
+   * and release this thread from a blocked I/O state.
+   */
+  public void abort()
+  {
+    System.err.println( "CCT: called abort()" );
+    //implementor.cancel();
+  }
 
 
-    /**
-     * Carry out any shutdown procedures.
-     */
-    public void shutdown()
-    {
-    }
+  /**
+   * Carry out any shutdown procedures.
+   */
+  public void shutdown()
+  {
+  }
 }
 /*
- *    $Date: 2003-07-01 10:13:54 $
+ *    $Date: 2013-07-04 13:01:31 $
  * $RCSfile: ConnectionThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/ConnectionThread.java,v $
- *      $Id: ConnectionThread.java,v 1.1 2003-07-01 10:13:54 je Exp $
+ *      $Id: ConnectionThread.java,v 1.2 2013-07-04 13:01:31 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:54  je
+ *     Initial revision
+ *
  */

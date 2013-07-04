@@ -11,23 +11,23 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SFD_POS_DEPLOY</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public final class SFD_DeployState
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SFD_DeployState.java,v 1.1 2003-10-16 15:31:40 je Exp $" );
+    new String( "$Id: SFD_DeployState.java,v 1.2 2013-07-04 12:57:53 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -49,11 +49,11 @@ public final class SFD_DeployState
    */
   private static final TTL_Package ttlPackage = TTL_Package.SFD;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -84,11 +84,11 @@ public final class SFD_DeployState
   };
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -105,11 +105,11 @@ public final class SFD_DeployState
    */
   private final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the SFD_DeployState with the String
@@ -140,11 +140,11 @@ public final class SFD_DeployState
     return( (SFD_DeployState)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -237,10 +237,13 @@ public final class SFD_DeployState
   }
 }
 /*
- *    $Date: 2003-10-16 15:31:40 $
+ *    $Date: 2013-07-04 12:57:53 $
  * $RCSfile: SFD_DeployState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SFD_DeployState.java,v $
- *      $Id: SFD_DeployState.java,v 1.1 2003-10-16 15:31:40 je Exp $
+ *      $Id: SFD_DeployState.java,v 1.2 2013-07-04 12:57:53 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/10/16 15:31:40  je
+ *     Initial revision
+ *
  *
  */

@@ -5,12 +5,9 @@ import java.net.*;
 
 import ngat.util.*;
 import ngat.util.logging.*;
-
 import ngat.ngtcs.*;
 import ngat.ngtcs.common.*;
-
 import ngat.ngtcs.subsystem.*;
-import ngat.ngtcs.net.cil.*;
 
 /**
  * This class is a singleton and represents the TTL Autoguider System.
@@ -18,44 +15,35 @@ import ngat.ngtcs.net.cil.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AMN extends ngat.ngtcs.subsystem.TTL_System
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: AMN.java,v 1.1 2003-09-19 16:08:45 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: AMN.java,v 1.2 2013-07-04 12:57:46 cjm Exp $" );
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
-  /**
-   *
-   */
-  protected TTL_CIL incomingCIL = null;
 
-  /**
-   *
-   */
-  protected TTL_CIL outgoingCIL = null;
-
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -66,11 +54,11 @@ public class AMN extends ngat.ngtcs.subsystem.TTL_System
   }
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * The non-public Constructor required by singleton classes.
@@ -91,12 +79,10 @@ public class AMN extends ngat.ngtcs.subsystem.TTL_System
 
     NGATProperties np = getProperties();
 
-    initialiseCIL( np, "in", incomingCIL );
-    initialiseCIL( np, "out", outgoingCIL );
-
-    valueSetter = new TTL_CIL_ValueSetter( incomingCIL, outgoingCIL );
-    valueGetter = new TTL_CIL_ValueGetter( incomingCIL, outgoingCIL );
-    commandSender = new TTL_CIL_SendCommand( incomingCIL, outgoingCIL );
+    txCIL = new TTL_CIL( TTL_CIL_Node.E_CIL_OMC );
+    rxCIL = new TTL_CIL( TTL_CIL_Node.E_CIL_OMS );
+    initialiseCIL( np, "rx.", rxCIL );
+    initialiseCIL( np, "tx.", txCIL );
 
     initialised = true;
   }
@@ -107,9 +93,12 @@ public class AMN extends ngat.ngtcs.subsystem.TTL_System
    */
 }
 /*
- *    $Date: 2003-09-19 16:08:45 $
+ *    $Date: 2013-07-04 12:57:46 $
  * $RCSfile: AMN.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/AMN.java,v $
- *      $Id: AMN.java,v 1.1 2003-09-19 16:08:45 je Exp $
+ *      $Id: AMN.java,v 1.2 2013-07-04 12:57:46 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:08:45  je
+ *     Initial revision
+ *
  */
