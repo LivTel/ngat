@@ -1,0 +1,49 @@
+AGCENTROID : what happens if NOT autoguiding?
+
+AGFILTER : can I use "while( ag.get_AGD_State() == AGD_State.E_AGD_STATE_MOVING );" for checking deployment?
+
+AGFILTER : if position = "AGD_FilterPosition.E_AGD_IR_UNSET", do I need to home or something?
+
+AGMOVE : for AMN set, do I demand using D_AMC_AXIS_POSITION_DEMAND and get actual using D_AMC_AXIS_POSITION?  If not, what?
+
+CALIBRATE : use current VT to create instrument-specific pointing model?
+
+CALIBRATE : catalogue of stars to use?
+
+ENCLOSURE : how to check for completion - state = EPT_STATE_OPEN/CLOSED?
+
+FOCUS : does a FOCUS command reset the focus offset (DFOCUS 0)?  I think it should to avoid confusion by forgetting "DFOCUS 0".
+
+INSTRUMENT : initialise autoguider (TCS_NW_ICD v1.7) - what does this mean?
+
+MIRROR_COVER : does the TCS "OPER ON" command enable all SPT stuff (Secondary Mirror power enable, Axis power enable, etc.)?
+
+MOVE_FOLD : must the TCS wait until the Fold Mirror is fully deployed before issuing a Fold Mirror position demand (port-demand)?
+
+MOVE_FOLD : what does deploy do to the position data - does the D_SFP_PORT become unset, or does it retain the setting?  And does the fold mirror have a position if it is stowed when the TCS is started?
+
+OPERATIONAL : what are the exact duties of the TCS for this command?
+
+PARK : what are exact duties?  Is state still OKAY/WARN?  If so, I can just move to zenith=90, non?
+
+SHOW : What happens if there was no CALIBRATE at the current focal station - i.e. the CALIBRATE was performed with a different inst (CCD) and then an INST change was performed?
+
+
+
+What CIL node is the AMN on/using?  What exactly is Aux Mech (Optical)?  What's non-Optical? What is the non-Optical CIL node?
+
+What happens if RETRIEVE_1R returns less elements than requested?
+
+Is the E_CIL_XXR the correct sourceID for the axis SDB data?
+
+Are the demands that are made of each axis also reported to the SDB, i.e. I set the demand on the actual ACN, but then read the demand from the SDB - is this right?
+
+Does E_CIL_OMR report the SecondaryMirror SDB data?
+
+Does E_CIL_OMR report the FoldMirror SDB data?
+
+In SDB : what calendar and timesacle does the SDB use? GREGORIAN : UTC?
+
+What systems have 2 CIL nodes - 1 rx, 1 tx, and do the corresponding messages have the same CIL node arg in the msg hdr.
+
+Does the TCS implement the SAFE request for its subsystems, or just for its own files etc?
