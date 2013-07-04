@@ -3,35 +3,35 @@ package ngat.ngtcs.net.cil;
 import java.io.*;
 import java.net.*;
 
+import ngat.net.cil.*;
 import ngat.ngtcs.common.*;
-
 import ngat.ngtcs.subsystem.*;
 
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class TTL_CIL_ValueSetter
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TTL_CIL_ValueSetter.java,v 1.1 2003-09-19 16:00:50 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TTL_CIL_ValueSetter.java,v 1.2 2013-07-04 10:48:59 cjm Exp $" );
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -53,26 +53,32 @@ public class TTL_CIL_ValueSetter
    */
   protected boolean two_CIL = false;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /**
+   *
+   */
+  protected TTL_CIL_Node cilNode = null;
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
   /**
    *
    */
-  public TTL_CIL_ValueSetter( TTL_CIL c )
+  public TTL_CIL_ValueSetter( TTL_CIL c, TTL_CIL_Node n )
   {
     cil = c;
+    cilNode = n;
     two_CIL = false;
   }
 
@@ -80,12 +86,14 @@ public class TTL_CIL_ValueSetter
   /**
    *
    */
-  public TTL_CIL_ValueSetter( TTL_CIL c1,  TTL_CIL c2 )
+  public TTL_CIL_ValueSetter( TTL_CIL c1,  TTL_CIL c2, TTL_CIL_Node n )
   {
     in_CIL = c1;
     out_CIL = c2;
+    cilNode = n;
     two_CIL = true;
   }
+
 
   /**
    *
@@ -93,28 +101,46 @@ public class TTL_CIL_ValueSetter
   public void setValue( TTL_DataValue v )
     throws TTL_SystemException
   {
-    TTL_CIL_Message msg, reply;
+    CIL_Message msg, reply;
     try
     {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       DataOutputStream dos = new DataOutputStream( baos );
 
+      // write OID
+      dos.writeInt( v.getType().getInt() );
+      // write error
+      dos.writeInt( 0 );
+      // write data type - 4 or 8 byte data
+      //
+      // NEEDS CHANGING!
+      //
+      dos.writeInt( 0 );
+      // write high bytes (5-8)
+      dos.writeInt( 0 );
+      // write low bytes (1-4)
+      dos.writeInt( v.getValue() );
+      // write timestamp seconds
+      dos.writeInt( 0 );
+      // write timestamp nanoseconds
+      dos.writeInt( 0 );
+      // write units
+      dos.writeInt( 0 );
 
-      msg = new TTL_CIL_Message
-	( TTL_CIL_Node.E_CIL_TCS, TTL_CIL_Node.E_CIL_AGS,
-	  TTL_CIL_MessageClass.E_CIL_CMD_CLASS,
-	  TTL_CIL_ServiceClass.E_MCP_SET_1,
+      msg = new CIL_Message
+	( TTL_CIL_Node.E_CIL_TCS.getInt(), cilNode.getInt(),
+	  TTL_CIL_MessageClass.E_CIL_CMD_CLASS.getInt(),
+	  TTL_CIL_GenericService.E_MCP_SET_1.getInt(),
 	  0, baos.toByteArray() );
 
       if( two_CIL )
       {
 	out_CIL.sendMessage( msg );
-	reply = (TTL_CIL_Message)in_CIL.getReply( msg );
+	reply = in_CIL.getReply( msg );
       }
       else
       {
-	reply = (TTL_CIL_Message)
-	  cil.sendMessageGetReply( msg );
+	reply = cil.sendMessageGetReply( msg );
       }
     }
     catch( Exception e )
@@ -126,9 +152,12 @@ public class TTL_CIL_ValueSetter
   }
 }
 /*
- *    $Date: 2003-09-19 16:00:50 $
+ *    $Date: 2013-07-04 10:48:59 $
  * $RCSfile: TTL_CIL_ValueSetter.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/cil/TTL_CIL_ValueSetter.java,v $
- *      $Id: TTL_CIL_ValueSetter.java,v 1.1 2003-09-19 16:00:50 je Exp $
+ *      $Id: TTL_CIL_ValueSetter.java,v 1.2 2013-07-04 10:48:59 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:00:50  je
+ *     Initial revision
+ *
  */

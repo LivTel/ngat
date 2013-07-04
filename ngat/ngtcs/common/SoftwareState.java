@@ -10,25 +10,25 @@ package ngat.ngtcs.common;
  * <li>INITIALISING</li>
  * <li>SAFE</li>
  * <li>ERROR</li>
- * <li>WARNING</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
-public class SoftwareState implements java.io.Serializable
+public class SoftwareState
+  implements ngat.util.TypeSafeEnumeration, java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: SoftwareState.java,v 1.2 2003-09-19 16:00:03 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: SoftwareState.java,v 1.3 2013-07-04 10:46:03 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -45,42 +45,35 @@ public class SoftwareState implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Everything nominal.
    */
   public static final SoftwareState OKAY =
-    new SoftwareState( "OKAY", 500002 );
+    new SoftwareState( "OKAY" );
 
   /**
    * Software initialising.
    */
   public static final SoftwareState INITIALISING =
-    new SoftwareState( "INITIALISING", 500002 );
+    new SoftwareState( "INITIALISING" );
 
   /**
    * Software is ready to be shutdown.
    */
   public static final SoftwareState SAFE =
-    new SoftwareState( "SAFE", 500002 );
+    new SoftwareState( "SAFE" );
 
   /**
    * A serious error has occurred.
    */
   public static final SoftwareState ERROR =
-    new SoftwareState( "ERROR", 500002 );
-
-  /**
-   * A non-serious error has occurred.
-   */
-  public static final SoftwareState WARNING =
-    new SoftwareState( "WARNING", 500002 );
-
+    new SoftwareState( "ERROR" );
 
   /**
    * Array to allow serialization.
@@ -90,15 +83,14 @@ public class SoftwareState implements java.io.Serializable
     OKAY,
     INITIALISING,
     SAFE,
-    ERROR,
-    WARNING
+    ERROR
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -115,11 +107,11 @@ public class SoftwareState implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the SoftwareState with the String
@@ -150,11 +142,11 @@ public class SoftwareState implements java.io.Serializable
     return( (SoftwareState)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -236,10 +228,13 @@ public class SoftwareState implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:00:03 $
+ *    $Date: 2013-07-04 10:46:03 $
  * $RCSfile: SoftwareState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/SoftwareState.java,v $
- *      $Id: SoftwareState.java,v 1.2 2003-09-19 16:00:03 je Exp $
+ *      $Id: SoftwareState.java,v 1.3 2013-07-04 10:46:03 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/19 16:00:03  je
+ *     Updated Command tx/rx and TTL subsystem interfaces.
+ *
  *
  */

@@ -1,56 +1,74 @@
 package ngat.ngtcs.common;
 
+import java.util.Hashtable;
+
 /**
- * Type-safe enumerations.
- * =======================
+ * Abstract super-class of all NGTCS-pluggable systems states and status.
  *
- * These are the only instances of this class that can be used, defining 
- * possible States for any NGTCS-pluggable modules.
- *
- * This class should be sub-classed for all PluggableSubSystem-specific states 
- * that need to be defined.
- * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public abstract class State
 {
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: State.java,v 1.2 2003-09-19 16:00:03 je Exp $" );
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
+
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: State.java,v 1.3 2013-07-04 10:46:08 cjm Exp $" );
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
+
+  /**
+   * Hashtable of Objects describing the mechanism-specific state.
+   */
+  protected Hashtable stateHash = new Hashtable();
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /**
-     * Constructor.  Private to ensure that the only instances of this class 
-     * are those declared in this class.
-     * @param s the name of the state
-     * @param i the int representation of the state
-     */
-    protected State( String s, int i )
-    {
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    }
+  /**
+   * Create a State.
+   */
+  public State()
+  {
+  }
 
 
-    /**
-     * Constructor.  Private to ensure that the only instances of this class 
-     * are those declared in this class.
-     * @param s the name of the state
-     */
-    protected State( String s )
-    {
-
-    }
+  /**
+   * Return the state Hashtable.
+   * @return stateHash
+   * @see #stateHash
+   */
+  public Hashtable getHashtable()
+  {
+    return( stateHash );
+  }
 }
 /*
- *    $Date: 2003-09-19 16:00:03 $
+ *    $Date: 2013-07-04 10:46:08 $
  * $RCSfile: State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/State.java,v $
- *      $Id: State.java,v 1.2 2003-09-19 16:00:03 je Exp $
+ *      $Id: State.java,v 1.3 2013-07-04 10:46:08 cjm Exp $
  *     $Log: not supported by cvs2svn $
- *     Revision 1.1  2003/07/01 10:13:04  je
- *     Initial revision
  *
  */

@@ -3,38 +3,62 @@ package ngat.ngtcs.common;
 /**
  * The generic SubSystemStatus class - used only for testing
  *
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class SubSystemStatus extends Status
 {
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: SubSystemStatus.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
+
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: SubSystemStatus.java,v 1.2 2013-07-04 10:46:31 cjm Exp $" );
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
+
+  /**
+   * PluggableSubSystem for which this is a Status.
+   */
+  protected String systemName = null;
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /**
-     * Constructor.
-     */
-    public SubSystemStatus( State s )
-    {
-	super( s );
-    }
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
-
-    /**
-     * Return the current State of the Status-returner.
-     */
-    public State getState()
-    {
-	return state;
-    }
+  /**
+   * Constructor.
+   */
+  public SubSystemStatus( String s )
+  {
+    super();
+    systemName = new String( s );
+  }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:46:31 $
  * $RCSfile: SubSystemStatus.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/SubSystemStatus.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
  */

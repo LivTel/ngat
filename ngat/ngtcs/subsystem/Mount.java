@@ -9,369 +9,394 @@ import ngat.ngtcs.common.*;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public abstract class Mount extends BasicMechanism
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: Mount.java,v 1.1 2003-07-01 10:13:46 je Exp $" );
-
-
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
-
-    /**
-     *
-     */
-    private MountState mountState = null;
-
-    /**
-     * Previous timestamp of previous mount position.
-     */
-    protected Timestamp oldMountTimestamp = 
-	new Timestamp( 0, 0, CalendarType.GREGORIAN, TimescaleType.UTC );
-
-    /**
-     * Previous position of Mount.
-     */
-    protected XYZMatrix oldMountPosition = new XYZMatrix();
-
-    /**
-     * Current timestamp.
-     */
-    protected Timestamp currentMountTimestamp =
-	new Timestamp( 0, 0, CalendarType.GREGORIAN, TimescaleType.UTC );
-
-    /**
-     * Current position of Mount.
-     */
-    protected XYZMatrix currentMountPosition = new XYZMatrix();
-
-    /**
-     * Timer for this Mount's Telescope.
-     */
-    protected Timer timer;
-
-    /**
-     * Pointing Model for this Mount.
-     */
-    protected PointingModel pointingModel;
-
-    /**
-     * AstrometryCalculator used by the Telescope for which this is the Mount.
-     */
-    protected AstrometryCalculator astroCalc;
-
-    /**
-     * Lower limit of Telescope operation in radians.
-     */
-    protected final double LOWER_LIMIT = Math.toRadians( 20.0 );
-
-    /**
-     * Upper limit of Telescope operation in radians (blind spot).
-     */
-    protected final double UPPER_LIMIT = Math.toRadians( 88.0 );
-
-    /**
-     * Flag to represent enter state of Limit.
-     */
-    protected final boolean enter = false;
-
-    /**
-     * Flag to represent exit state of Limit.
-     */
-    protected final boolean exit = true;
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: Mount.java,v 1.2 2013-07-04 10:54:21 cjm Exp $" );
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
+
+  /**
+   * Previous timestamp of previous mount position.
+   */
+  protected TimestampedPosition oldTP = new TimestampedPosition
+    ( new XYZMatrix(), new Timestamp() );
+
+  /**
+   * Current timestaped position of Mount.
+   */
+  protected TimestampedPosition currentTP = new TimestampedPosition
+    ( new XYZMatrix(), new Timestamp() );
+
+  /**
+   * new timestaped position demand of Mount.
+   */
+  protected TimestampedPosition demandTP = new TimestampedPosition
+    ( new XYZMatrix(), new Timestamp() );
+
+  /**
+   * Timer for this Mount's Telescope.
+   */
+  protected Timer timer;
+
+  /**
+   * Pointing Model for this Mount.
+   */
+  protected PointingModel pointingModel;
+
+  /**
+   * AstrometryCalculator used by the Telescope for which this is the Mount.
+   */
+  protected AstrometryCalculator astroCalc;
+
+  /**
+   * Lower limit of Telescope operation in radians.
+   */
+  protected double LOWER_LIMIT = Math.toRadians( 20.0 );
+
+  /**
+   * Upper limit of Telescope operation in radians (blind spot).
+   */
+  protected double UPPER_LIMIT = Math.toRadians( 88.0 );
+
+  /**
+   * Flag to represent enter state of Limit.
+   */
+  protected final boolean enter = false;
+
+  /**
+   * Flag to represent exit state of Limit.
+   */
+  protected final boolean exit = true;
+
+  /**
+   * Object used to protect the access synchronisation of the current position.
+   */
+  protected Object positionLock = new Object();
+
+  /**
+   * Length of the first in-first out list.
+   */
+  private final int FIFO_SIZE = 100;
+
+  /**
+   * Next index to update in the position FIFO.
+   */
+  private int positionIndex = 0;
+
+  /**
+   * Next index to update in the demand FIFO.
+   */
+  private int demandIndex = 0;
+
+  /**
+   * First in-first out list of timestamped positions of this Mount.
+   */
+  private Vector positionFIFO = new Vector( FIFO_SIZE );
+
+  /**
+   * First in-first out list of timestamped demands of this Mount.
+   */
+  private Vector demandFIFO = new Vector( FIFO_SIZE );
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * Constructor for Mount objects.
-     */
-    public Mount()
+  /**
+   * Constructor for Mount objects.
+   */
+  public Mount()
+  {
+    super();
+  }
+
+
+  /**
+   * Initialise the Mount for operation.
+   */
+  protected void _initialise( Telescope t ) throws InitialisationException
+  {
+    getProperties();
+    String pmName = np.getProperty( "pointingModel.class" );
+    if( pmName == null )
     {
-	super();
+      InitialisationException ie = new InitialisationException
+	( "Mount : No specified pointingModel class" );
+      logger.log( 1, logName, ie );
+      throw ie;
     }
 
-
-    /**
-     * Initialise the Mount for operation.
-     */
-    public void initialise( Telescope t ) throws InitialisationException
+    try
     {
-	super.initialise( t );
+      pointingModel = (PointingModel)
+	( Class.forName( pmName ).newInstance() );
+      pointingModel.initialise( telescope );
+    }
+    catch( Exception e )
+    {
+      InitialisationException ie = 
+	new InitialisationException( "Mount : "+e );
+      logger.log( 1, logName, ie );
+      throw ie;
+    }
+    logger.log( 1, logName, "Pointing Model ["+pmName+"] initialised" );
+  }
 
-	getProperties();
-	String pmName = np.getProperty( "pointingModel.class" );
-	if( pmName == null )
+
+  /**
+   * Return the PointingModel object used with this Mount.
+   * @return the PointingModel for this mount.
+   */
+  public PointingModel getPointingModel()
+  {
+    return pointingModel;
+  }
+
+
+  /**
+   * Send the specified position demand to the Mount Control System.
+   * @param timePos the Timestamped position demand
+   */
+  public final void sendPositionDemand( TimestampedPosition newTP )
+    throws SystemException
+  {
+    track( newTP );
+    demandFIFO.set( demandIndex, newTP );
+    demandIndex++;
+    demandIndex %= FIFO_SIZE;
+  }
+
+
+  /**
+   * Retrieve the current position of the Mount from the Mount Control 
+   * System.
+   * @return the latest Timestamped position from the Mount Control System
+   */
+  public final TimestampedPosition getCurrentPosition()
+    throws SystemException
+  {
+    TimestampedPosition tp = getLatestTimestampedPosition();
+    positionFIFO.set( positionIndex, tp );
+    positionIndex++;
+    positionIndex %= FIFO_SIZE;
+    return( tp );
+  }
+
+
+  /**
+   * 
+   */
+  public final TimestampedPosition getTimestampedDemand( Timestamp t )
+    throws SystemException
+  {
+    return( calcTimestampedPosition( t, demandIndex, demandFIFO ) );
+  }
+
+
+  /**
+   *
+   */
+  public final TimestampedPosition getTimestampedPosition( Timestamp t )
+    throws SystemException
+  {
+    return( calcTimestampedPosition( t, positionIndex, positionFIFO ) );
+  }
+
+
+  /**
+   *
+   */
+  protected abstract void track( TimestampedPosition tp )
+    throws SystemException;
+
+
+  /**
+   *
+   */
+  protected abstract void move( XYZMatrix m )
+    throws SystemException;
+
+
+  /**
+   *
+   */
+  protected abstract TimestampedPosition getLatestTimestampedPosition()    
+    throws SystemException;
+
+
+  /**
+   * Return the type of Mount that this is.
+   * @return one of the pre-defined MountTypes
+   */
+  public abstract MountType getType();
+
+
+  /**
+   *
+   *
+   */
+  public abstract List calculateLimits( Target target );
+
+
+  /**
+   * This method calculates the position error for the current mount
+   * position compared to the demanded.
+   * @return the position error in arcseconds
+   */
+  public final double calcPositionError()
+    throws SystemException
+  {
+    TimestampedPosition curTP = getLatestTimestampedPosition();
+    TimestampedPosition demTP = getTimestampedDemand( curTP.getTimestamp() );
+
+    // implies NO demands are within 0.5 seconds of now
+    if( demTP == null )
+      return( 0.0 );
+
+    XYZMatrix curPos = curTP.getPosition();
+    XYZMatrix demPos = demTP.getPosition();
+
+    double x1 = curPos.getX();
+    double y1 = curPos.getY();
+    double z1 = curPos.getZ();
+    double x2 = demPos.getX();
+    double y2 = demPos.getY();
+    double z2 = demPos.getZ();
+
+    double posDiff = Math.sqrt( ( x2 - x1 ) * ( x2 - x1 ) +
+				( y2 - y1 ) * ( y2 - y1 ) +
+				( z2 - z1 ) * ( z2 - z1 ) );
+
+    double posError = ( 2.0 * Math.asin( 0.5 * posDiff ) );
+
+    return( posError * 180.0 / Math.PI );
+  }
+
+
+  /**
+   *
+   */
+  protected final TimestampedPosition calcTimestampedPosition( Timestamp t,
+							       int i,
+							       Vector v )
+  {
+    int n;
+    TimestampedPosition tpLower, tpUpper;
+    Timestamp t1;
+    double timestamp = t.getTime();
+
+    for( n = 1; n <= FIFO_SIZE; n++ )
+    {
+      // get last position
+      tpLower = (TimestampedPosition)v.get
+	( ( i - n + FIFO_SIZE ) % FIFO_SIZE );
+      if( tpLower != null )
+      {
+	t1 = tpLower.getTimestamp();
+	// see if position is older than t
+	if( t1.getTime() < timestamp )
+	{
+	  // see if only just older
+	  //USE GET METHOD instead of 0.5s
+	  if( ( timestamp - t1.getTime() ) < 0.50000000 )
+	  {
+	    // get next newest position
+	    tpUpper = (TimestampedPosition)v.get
+	      ( ( i - n + FIFO_SIZE + 1 ) % FIFO_SIZE );
+	    if( tpUpper != null )
 	    {
-		InitialisationException ie = new InitialisationException
-		    ( "Mount : No specified pointingModel class" );
-		logger.log( 1, logName, ie );
-		throw ie;
+	      t1 = tpUpper.getTimestamp();
+	      // see if position is newer
+	      if( t1.getTime() > timestamp )
+	      {
+		// see if only just newer
+		if( ( t1.getTime() - timestamp ) < 0.50000000 )
+		{
+		  // interpolate results and return
+		  return( calcInterpolatedPosition( tpLower, tpUpper, t ) );
+		}
+	      }
 	    }
-
-	try
-	    {
-		pointingModel = (PointingModel)
-		    ( Class.forName( pmName ).newInstance() );
-		pointingModel.initialise( telescope );
-	    }
-	catch( Exception e )
-	    {
-		InitialisationException ie = 
-		    new InitialisationException( "Mount : "+e );
-		logger.log( 1, logName, ie );
-		throw ie;
-	    }
-	logger.log( 1, logName, "Pointing Model [ "+pmName+" ] initialised" );
-
-	//Make hardware connection to MCS etc...
+	  }
+	}
+      }
     }
+    return( null );
+  }
 
 
-    /**
-     * Activate the Mount as per the PowerController interface.
-     */
-    public void activate()
-    {
-	super.activate();
-	// do stuff
-    }
+  /**
+   * This method will calculate a TimestampedPosition, using a linear
+   * interpolation beteen tp1 and tp2, solved at the point defined by t.
+   * @param tp1 the start Timestamp time and XYZMatrix position
+   * @param tp2 the end Timestamp time and XYZMatrix position
+   * @param t the timestamp for the desired result
+   */
+  protected final TimestampedPosition calcInterpolatedPosition
+    ( TimestampedPosition tp1, TimestampedPosition tp2, Timestamp t )
+  {
+    XYZMatrix m1 = tp1.getPosition();
+    XYZMatrix m2 = tp2.getPosition();
 
+    double x1 = m1.getX();
+    double y1 = m1.getY();
+    double z1 = m1.getZ();
+    double x2 = m2.getX();
+    double y2 = m2.getY();
+    double z2 = m2.getZ();
 
-    /**
-     * De-activate the Mount as per the PowerController interface.
-     */
-    public void deActivate()
-    {
-	// do hardware stuff...
-	super.deActivate();
-    }
+    double xDiff = x2 - x1;
+    double yDiff = y2 - y1;
+    double zDiff = z2 - z1;
 
+    double t1 = tp1.getTimestamp().getTime();
+    double t2 = tp2.getTimestamp().getTime();
 
-    /**
-     * Make the Mount safe in preparation for a shutdown or power cut.
-     */
-    public boolean makeSafe()
-    {
-	// do hardware stuff - remembering state...
-	return super.makeSafe();
-    }
+    double timeCoeff = ( t.getTime() - t1 ) / ( t2 - t1 );
 
+    XYZMatrix predicted = new XYZMatrix
+      ( ( x1 + xDiff * timeCoeff ),
+	( y1 + yDiff * timeCoeff ),
+	( z1 + zDiff * timeCoeff ) );
 
-    /**
-     * Return the status of this Mount as per the Monitor interface.
-     * @return status of this Mount
-     */
-    public Status getStatus()
-    {
-	return( Status )( new MountStatus( softwareState, 
-					   mountState,
-					   currentMountTimestamp, 
-					   currentMountPosition ) );
-    }
+    predicted.normalise();
 
-
-    /**
-     * Send the specified position demand to the Mount Control System.
-     * @param timePos the Timestamped position demand
-     */
-    public void sendPositionDemand( TimestampedPosition currentTP )
-    {
-	oldMountTimestamp     = currentMountTimestamp;
-	oldMountPosition      = currentMountPosition;
-	currentMountTimestamp = currentTP.getTimestamp(); 
-	currentMountPosition  = currentTP.getPosition();
-    }
-
-
-    /**
-     * Retrieve the current position of the Mount from the Mount Control 
-     * System.
-     * @return the latest Timestamped position from the Mount Control System
-     */
-    public TimestampedPosition getTimestampedPosition()
-    {
-	return new TimestampedPosition
-	    ( currentMountPosition, currentMountTimestamp );
-    }
-
-
-    /**
-     * Returns the current position
-     * @return the current position
-     */
-    public XYZMatrix getCurrentPosition()
-    {
-	return currentMountPosition;
-    }
-
-
-    /**
-     *
-     */
-    public XYZMatrix predictPosition( Timestamp tStamp )
-    {
-	// if current timestamp older than X
-	// get update for pos rot and T
-
-	double oldTime = oldMountTimestamp.getTime();
-
-	double x1 = oldMountPosition.getX();
-	double y1 = oldMountPosition.getY();
-	double z1 = oldMountPosition.getZ();
-	double xDiff = currentMountPosition.getX() - x1;
-	double yDiff = currentMountPosition.getY() - y1;
-	double zDiff = currentMountPosition.getZ() - z1;
-
-	double timeDiff = currentMountTimestamp.getTime() - oldTime;
-	double timeCoeff = ( tStamp.getTime() - oldTime ) / timeDiff;
-
-	XYZMatrix predicted = new XYZMatrix
-	    ( ( x1 + xDiff * timeCoeff ),
-	      ( y1 + yDiff * timeCoeff ),
-	      ( z1 + zDiff * timeCoeff ) );
-
-	predicted.normalise();
-
-	return predicted;
-    }
-
-
-    /**
-     *
-     *
-     */
-    public abstract List calculateLimits( SiteData siteData, Target target );
-    /*
-    {
-	// RUBBISH !!!
-
-	Vector limits = new Vector();
-
-	limits.add( calcAltLimit( siteData, target, LOWER_LIMIT, enter ) );
-	limits.add( calcAltLimit( siteData, target, LOWER_LIMIT, exit  ) );
-	limits.add( calcAltLimit( siteData, target, UPPER_LIMIT, enter ) );
-	limits.add( calcAltLimit( siteData, target, UPPER_LIMIT, exit  ) );
-
-	return limits;
-    }
-    */
-
-    /**
-     * 
-     */
-    /*
-    protected Limit calcAltLimit( SiteData siteData, Target target, 
-				  double altitudeLimit, boolean state )
-    {		       
-	Timestamp utcLimit, utcGuess;
-	double    lst, lstNow, lstDiff, lstGuess, timeDiff;
-	double    acosLST, cosZD, x, y, z;
-	XYZMatrix appPos;
-	double    lat    = siteData.getLatitude();
-	double    cosLat = Math.cos( lat );
-	double    sinLat = Math.sin( lat );
-
-	utcLimit = timer.getTime();
-	cosZD = Math.cos( LOWER_LIMIT );
-	do
-	    {
-		utcGuess = utcLimit;
-
-		appPos = astroCalc.calcApparentPosition( utcGuess, target );
-
-		x = appPos.getX();
-		y = appPos.getY();
-		z = appPos.getZ();
-
-		acosLST = Math.sqrt( ( (cosZD - sinLat*z)*(cosZD - sinLat*z) -
-				       (y*y*cosLat*cosLat ) ) /
-				     ( x*x*cosLat*cosLat - 
-				       y*y*cosLat*cosLat ) );
-
-		if( ( acosLST > 1.0 )||( acosLST < -1.0 ) )
-		    {		      
-			return null;
-		    }
-
-		lst = Math.acos( acosLST );
-
-		//calculate UTC from LST
-		lstGuess = astroCalc.getLST( utcGuess );
-
-		if( state )
-		    {
-			lstDiff = lst - lstGuess;
-		    }
-		else
-		    {
-			lstDiff = lstGuess - lst;
-		    }
-
-		timeDiff = ( lstDiff * astroCalc.RADS2SECS * 
-			     astroCalc.SIDEREAL2ATOMIC );
-
-		utcLimit = new Timestamp( utcGuess.getSeconds() - 
-					  (int)timeDiff, 0,
-					  CalendarType.GREGORIAN,
-					  TimescaleType.UTC );
-
-	    }
-	while ( utcLimit.getSeconds() != utcGuess.getSeconds() );
-
-	return new Limit( new Timestamp ( utcLimit.getSeconds(), 0,
-					  CalendarType.GREGORIAN,
-					  TimescaleType.UTC ), state );
-    }
-    */
-
-
-    /**
-     * Return the PointingModel object used with this Mount.
-     * @return the PointingModel for this mount.
-     */
-    public PointingModel getPointingModel()
-    {
-	return pointingModel;
-    }
-
-
-    /**
-     * Return the type of Mount that this is.
-     * @return one of the pre-defined MountTypes
-     */
-    public abstract MountType getType();
-
+    return( new TimestampedPosition( predicted, t ) );
+  }
 }
 /*
- *    $Date: 2003-07-01 10:13:46 $
+ *    $Date: 2013-07-04 10:54:21 $
  * $RCSfile: Mount.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Mount.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:46  je
+ *     Initial revision
+ *
  */

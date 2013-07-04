@@ -7,46 +7,42 @@ import ngat.util.*;
 import ngat.util.logging.*;
 import ngat.ngtcs.*;
 import ngat.ngtcs.common.*;
+
 import ngat.ngtcs.subsystem.*;
 import ngat.ngtcs.subsystem.ags.*;
 import ngat.ngtcs.subsystem.amn.*;
 import ngat.ngtcs.subsystem.sdb.*;
 
 /**
- * This class is a singleton and represents the TTL Autoguider System.
- * <p>
- * As with all singletons, the object reference is obtained by calling the
- * static method <code>getReference</code>.
+ * This class represents the TTL Autoguider System.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
-public class TTL_Autoguider
-  extends BasicSingletonMechanism
-  implements ControllableSubSystem
+public class TTL_Autoguider extends BasicMechanism
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TTL_Autoguider.java,v 1.3 2003-09-24 13:07:51 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TTL_Autoguider.java,v 1.4 2013-07-04 10:55:18 cjm Exp $" );
 
   /**
    * The single instance of this class.
    */
   protected static TTL_Autoguider instance = null;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * The TTL AGS subsystem used by this autoguider.
@@ -59,14 +55,14 @@ public class TTL_Autoguider
   protected AGG agg = null;
 
   /**
-   * The TTL SDB subsystem used by this autoguider.
-   */
-  protected SDB sdb = null;
-
-  /**
    * The TTL AMN subsystem used by this autoguider.
    */
   protected AMN amn = null;
+
+  /**
+   * The TTL SDB subsystem used by this autoguider.
+   */
+  protected SDB sdb = null;
 
   /**
    * VirtualTelescope object used to perform the astrometry in the autoguider
@@ -88,11 +84,11 @@ public class TTL_Autoguider
    */
   protected double focusPositionTolerance = 0.0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return the ONLY instance of this TTL_Autoguider class.
@@ -109,11 +105,11 @@ public class TTL_Autoguider
     return instance;
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * The non-public Constructor required by singleton classes.
@@ -130,24 +126,108 @@ public class TTL_Autoguider
   /**
    *
    */
-  public void initialise( Telescope t )
+  protected void _initialise( Telescope t )
     throws InitialisationException
   {
-    super.initialise( t );
+    String name = logName, units = null;
+    double x = 0.0, y = 0.0, scale = 0.0, iaa = 0.0, focus = 0.0;
+    double focalLength = 0.0;
+    int portNumber = 0;
 
     // get properties file
-    //getProperties();
+    getProperties();
+
+    try
+    {
+      x = np.getDouble( "centreFOV.X" );
+      logger.log( 3, logName, "centreFOV.X = "+x );
+
+      y = np.getDouble( "centreFOV.Y" );
+      logger.log( 3, logName, "centreFOV.Y = "+y );
+
+      focus = np.getDouble( "focusPosition" );
+      logger.log( 3, logName, "focusPosition = "+focus );
+
+      scale = np.getDouble( "unitScale" );
+      logger.log( 3, logName, "unitScale = "+scale );
+
+      iaa = np.getDouble( "detectorAngle" );
+      logger.log( 3, logName, "detectorAngle = "+iaa );
+
+      units = np.getProperty( "units" );
+      logger.log( 3, logName, "units = "+units );
+
+      portNumber = np.getInt( "portNumber" );
+      logger.log( 3, logName, "portNumber = "+portNumber );
+
+      positionTolerance = np.getDouble( "positionTolerance" );
+      logger.log( 3, logName, "positionTolerance = "+positionTolerance );
+
+      focusPositionTolerance = np.getDouble( "focusPositionTolerance" );
+      logger.log
+	( 3, logName, "focusPositionTolerance= "+focusPositionTolerance );
+
+      focalLength = np.getDouble( "focalLength" );
+      logger.log( 3, logName, "focalLength = "+focalLength );
+    }
+    catch( NGATPropertyException npe )
+    {
+      String err = new String( "Cannot initialise "+logName+" : "+npe );
+      logger.log( 1, logName, err );
+      throw new InitialisationException( err );
+    }
 
     // define FocalStation
+    if( units == null )
+      throw new InitialisationException
+	( "Need \"units\" field in configuring the "+
+	  "autoguider VirtualTelescope" );
 
+    FocalStation fs = new FocalStation
+      ( name, portNumber, focus, new PointingOrigin( x, y ),
+	iaa, scale, units );;
 
     // create new Virtual Telescope to look after the transformations
-    //vt = new VirtualTelescope( telescope );
-
-
-    // read config file and get TTL_Autoguider focus tolerance
+    vt = new VirtualTelescope( telescope, fs );
 
     initialised = true;
+  }
+
+
+  /**
+   *
+   */
+  public State getState()
+  {
+    AGS_State agsState = get_AGS_State();
+    AGS_Status agsStatus = get_AGS_Status();
+    AGG_State aggState = get_AGG_State();
+    AGG_Status aggStatus = get_AGG_Status();
+    AGD_State agdState = get_AGD_State();
+    AGD_Status agdStatus = get_AGD_Status();
+    AGF_State agfState = get_AGF_State();
+    AGF_Status agfStatus = get_AGF_Status();
+
+    return( (State)( new TTL_AutoguiderState
+		     () ) );
+  }
+
+
+  /**
+   *
+   */
+  protected void _shutdown() throws SystemException
+  {
+    return;
+  }
+
+
+  /**
+   *
+   */
+  public void makeSafe() throws SystemException
+  {
+    return;
   }
 
 
@@ -220,15 +300,22 @@ public class TTL_Autoguider
   {
     double x, y;
     Timestamp t;
-    TTL_DataValue v;
+    SDB_DataType demands[] = new SDB_DataType[ 2 ];
+    TTL_DataValue vals[] = new TTL_DataValue[ 2 ];
 
-    v = sdb.retrieveValue( AGS_DataType.D_AGS_CENTROIDX );
-    x = (double)( v.getValue() / 1000.0 );
-    t = v.getTimestamp();
-    v = sdb.retrieveValue( AGS_DataType.D_AGS_CENTROIDY );
-    y = (double)( v.getValue() / 1000.0 );
-    if( v.getTimestamp().getTime() > t.getTime() )
-      t = v.getTimestamp();
+    demands[ 0 ] = new SDB_DataType
+      ( (TTL_DataType)AGS_DataType.D_AGS_CENTROIDX, TTL_CIL_Node.E_CIL_AGS );
+    demands[ 1 ] = new SDB_DataType
+      ( (TTL_DataType)AGS_DataType.D_AGS_CENTROIDY, TTL_CIL_Node.E_CIL_AGS );
+
+    vals = sdb.retrieveMultipleValues( demands );
+
+    x = (double)( vals[ 0 ].getValue() / 1000.0 );
+    t = vals[ 0 ].getTimestamp();
+    y = (double)( vals[ 1 ].getValue() / 1000.0 );
+
+    if( vals[ 1 ].getTimestamp().getTime() > t.getTime() )
+      t = vals[ 1 ].getTimestamp();
 
     return new TTL_AutoguiderCentroid( x, y, t );
   }
@@ -257,13 +344,13 @@ public class TTL_Autoguider
     return positionTolerance;
   }
 
-  /*=======================================================================*/
+  /*=========================================================================*/
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* AGS commands                                                          */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* AGS commands                                                            */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Request the operational state of the AGS.
@@ -272,7 +359,9 @@ public class TTL_Autoguider
   public AGS_State get_AGS_State()
     throws TTL_SystemException
   {
-    TTL_DataValue val = ags.getValue( AGS_DataType.D_AGS_AGSTATE );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGS_DataType.D_AGS_AGSTATE,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (AGS_State)( AGS_State.getReference( val.getValue() ) ) );
   }
 
@@ -283,7 +372,7 @@ public class TTL_Autoguider
   public void guideOnBrightest()
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_AUTOGUIDE_ON_BRIGHTEST, 0, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_AUTOGUIDE_ON_BRIGHTEST, 0, 0 );
   }
 
 
@@ -296,7 +385,7 @@ public class TTL_Autoguider
   public void guideOnRange( double min, double max )
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_AUTOGUIDE_ON_RANGE,
+    ags.sendCommand( AGS_Service.E_AGS_AUTOGUIDE_ON_RANGE,
 		     ( (int)( min * 1000.0 ) ),
 		     ( (int)( max * 1000.0 ) ) );
   }
@@ -311,7 +400,7 @@ public class TTL_Autoguider
   public void guideOnRank( int n )
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_AUTOGUIDE_ON_RANK, n, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_AUTOGUIDE_ON_RANK, n, 0 );
   }
 
 
@@ -324,7 +413,7 @@ public class TTL_Autoguider
   public void guideOnPixel( double x, double y )
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_AUTOGUIDE_ON_PIXEL,
+    ags.sendCommand( AGS_Service.E_AGS_AUTOGUIDE_ON_PIXEL,
 		     ( (int)( x * 1000.0 ) ),
 		     ( (int)( y * 1000.0 ) ) );
   }
@@ -335,7 +424,7 @@ public class TTL_Autoguider
   public void stopGuiding()
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_AUTOGUIDE_OFF, 0, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_AUTOGUIDE_OFF, 0, 0 );
   }
 
   /**
@@ -345,7 +434,7 @@ public class TTL_Autoguider
   public void setExposureTime( int t )
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_CONF_EXP_TIME, t, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_CONF_EXP_TIME, t, 0 );
   }
 
   /**
@@ -354,7 +443,7 @@ public class TTL_Autoguider
   public void setFrameRate( int i )
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_CONF_FRAME_RATE, i, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_CONF_FRAME_RATE, i, 0 );
   }
 
   /**
@@ -363,7 +452,7 @@ public class TTL_Autoguider
   public void setFrameAverage( int i )
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_CONF_FRAME_AVERAGE, i, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_CONF_FRAME_AVERAGE, i, 0 );
   }
 
   /**
@@ -372,7 +461,7 @@ public class TTL_Autoguider
   public void configureCalibration( int i1, int i2 )
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_CONF_CALIB, i1, i2 );
+    ags.sendCommand( AGS_Service.E_AGS_CONF_CALIB, i1, i2 );
   }
 
   /**
@@ -381,7 +470,7 @@ public class TTL_Autoguider
   public void startSession()
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_START_SESSION, 0, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_START_SESSION, 0, 0 );
   }
 
 
@@ -391,7 +480,7 @@ public class TTL_Autoguider
   public void endSession()
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_END_SESSION, 0, 0 );
+    ags.sendCommand( AGS_Service.E_AGS_END_SESSION, 0, 0 );
   }
 
 
@@ -401,7 +490,7 @@ public class TTL_Autoguider
   public void startLogging()
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_LOGGING,
+    ags.sendCommand( AGS_Service.E_AGS_LOGGING,
 		     AGG_Keyword.E_AGG_ON.getInt(), 0 );
   }
 
@@ -412,18 +501,18 @@ public class TTL_Autoguider
   public void stopLogging()
     throws TTL_SystemException
   {
-    ags.sendCommand( AGS_Command.E_AGS_LOGGING,
+    ags.sendCommand( AGS_Service.E_AGS_LOGGING,
 		     AGG_Keyword.E_AGG_OFF.getInt(), 0 );
   }
 
 
-  /*=======================================================================*/
+  /*=========================================================================*/
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* AGS data in the SDB                                                   */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* AGS data in the SDB                                                     */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return the X pixel coordinate of the guiding centroid currently stored
@@ -433,7 +522,9 @@ public class TTL_Autoguider
   public double getCentroidXPixel()
     throws TTL_SystemException
   {
-    TTL_DataValue val = sdb.retrieveValue( AGS_DataType.D_AGS_CENTROIDX );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGS_DataType.D_AGS_CENTROIDX,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (double)( val.getValue() ) / 1000.0 );
   }
 
@@ -446,7 +537,9 @@ public class TTL_Autoguider
   public double getCentroidYPixel()
     throws TTL_SystemException
   {
-    TTL_DataValue val = sdb.retrieveValue( AGS_DataType.D_AGS_CENTROIDY );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGS_DataType.D_AGS_CENTROIDY,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (double)( val.getValue() ) / 1000.0 );
   }
 
@@ -459,7 +552,9 @@ public class TTL_Autoguider
   public double getCentroidFWHM()
     throws TTL_SystemException
   {
-    TTL_DataValue val = sdb.retrieveValue( AGS_DataType.D_AGS_FWHM );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGS_DataType.D_AGS_FWHM,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (double)( val.getValue() ) / 1000.0 );
   }
 
@@ -472,18 +567,20 @@ public class TTL_Autoguider
   public double getCentroidMagnitude()
     throws TTL_SystemException
   {
-    TTL_DataValue val = sdb.retrieveValue( AGS_DataType.D_AGS_GUIDEMAG );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGS_DataType.D_AGS_GUIDEMAG,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (double)( val.getValue() ) / 1000.0 );
   }
 
 
   //========================================================================
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* AMN commands                                                          */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* AMN commands                                                            */
+  /*                                                                         */
+  /*=========================================================================*/
 
   // Autoguider Deployment
   // =====================
@@ -495,7 +592,9 @@ public class TTL_Autoguider
   public AGD_State get_AGD_State()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGD_DataType.D_AGD_STATE );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGD_DataType.D_AGD_STATE,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (AGD_State)( AGD_State.getReference( val.getValue() ) ) );
   }
 
@@ -521,7 +620,9 @@ public class TTL_Autoguider
   public double getDemandPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGD_DataType.D_AGD_DEMAND );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGD_DataType.D_AGD_DEMAND,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (double)( val.getValue() ) / 1000.0 );
   }
 
@@ -533,7 +634,9 @@ public class TTL_Autoguider
   public double getActualPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGD_DataType.D_AGD_ACTUAL );
+    TTL_DataValue val = sdb.retrieveValue
+    ( new SDB_DataType( AGD_DataType.D_AGD_ACTUAL,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( ( (double)val.getValue() ) / 1000.0 );
   }
 
@@ -574,7 +677,9 @@ public class TTL_Autoguider
   public AGD_FilterPosition getDemandFilterPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGD_DataType.D_AGD_FILTER_DEMAND );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGD_DataType.D_AGD_FILTER_DEMAND,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (AGD_FilterPosition)( AGD_FilterPosition.getReference
 				  ( val.getValue() ) ) );
   }
@@ -587,7 +692,9 @@ public class TTL_Autoguider
   public AGD_FilterPosition getActualFilterPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGD_DataType.D_AGD_FILTER_ACTUAL );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGD_DataType.D_AGD_FILTER_ACTUAL,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (AGD_FilterPosition)( AGD_FilterPosition.getReference
 				  ( val.getValue() ) ) );
   }
@@ -616,7 +723,9 @@ public class TTL_Autoguider
   public AGF_State get_AGF_State()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGF_DataType.D_AGF_STATE );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGF_DataType.D_AGF_STATE,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( (AGF_State)( AGF_State.getReference( val.getValue() ) ) );
   }
 
@@ -628,7 +737,9 @@ public class TTL_Autoguider
   public double getActualFocusPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGF_DataType.D_AGF_ACTUAL );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGF_DataType.D_AGF_ACTUAL,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( ( (double)val.getValue() ) / 1000.0 );
   }
 
@@ -653,16 +764,21 @@ public class TTL_Autoguider
   public double getDemandFocusPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( AGF_DataType.D_AGF_DEMAND );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( AGF_DataType.D_AGF_DEMAND,
+			  TTL_CIL_Node.E_CIL_AGS ) );
     return( ( (double)val.getValue() ) / 1000.0 );
   }
 }
 /*
- *    $Date: 2003-09-24 13:07:51 $
+ *    $Date: 2013-07-04 10:55:18 $
  * $RCSfile: TTL_Autoguider.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Autoguider.java,v $
- *      $Id: TTL_Autoguider.java,v 1.3 2003-09-24 13:07:51 je Exp $
+ *      $Id: TTL_Autoguider.java,v 1.4 2013-07-04 10:55:18 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/24 13:07:51  je
+ *     Added positionTolerance and focusPositionTolerance.
+ *
  *     Revision 1.2  2003/09/22 11:29:02  je
  *     Changed '...DemandedPosition' for '...DemandPosition'
  *

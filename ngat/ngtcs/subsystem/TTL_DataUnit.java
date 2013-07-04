@@ -108,22 +108,22 @@ package ngat.ngtcs.subsystem;
  * <li>E_SDB_UNITS_MAX_VALUE</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class TTL_DataUnit implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TTL_DataUnit.java,v 1.1 2003-09-19 16:01:09 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TTL_DataUnit.java,v 1.2 2013-07-04 10:55:29 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -140,11 +140,11 @@ public class TTL_DataUnit implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -839,11 +839,11 @@ public class TTL_DataUnit implements java.io.Serializable
     E_SDB_UNITS_MAX_VALUE
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -860,11 +860,11 @@ public class TTL_DataUnit implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the TTL_DataUnit with the String
@@ -895,11 +895,11 @@ public class TTL_DataUnit implements java.io.Serializable
     return( (TTL_DataUnit)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -981,10 +981,13 @@ public class TTL_DataUnit implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2013-07-04 10:55:29 $
  * $RCSfile: TTL_DataUnit.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_DataUnit.java,v $
- *      $Id: TTL_DataUnit.java,v 1.1 2003-09-19 16:01:09 je Exp $
+ *      $Id: TTL_DataUnit.java,v 1.2 2013-07-04 10:55:29 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:01:09  je
+ *     Initial revision
+ *
  *
  */

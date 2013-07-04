@@ -3,16 +3,16 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class Util
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: Util.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: Util.java,v 1.2 2013-07-04 10:47:41 cjm Exp $" );
 
 
     /**
@@ -53,8 +53,11 @@ public class Util
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:47:41 $
  * $RCSfile: Util.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Util.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
  */

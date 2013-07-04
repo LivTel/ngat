@@ -7,17 +7,18 @@ import ngat.util.*;
 import ngat.util.logging.*;
 import ngat.ngtcs.*;
 import ngat.ngtcs.common.*;
+
 import ngat.ngtcs.subsystem.amn.*;
 import ngat.ngtcs.subsystem.sdb.*;
 
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class TTL_SecondaryMirror
-  extends BasicSingletonMechanism
+  extends BasicMechanism
   implements ControllableSubSystem
 {
   /*=========================================================================*/
@@ -29,8 +30,13 @@ public class TTL_SecondaryMirror
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TTL_SecondaryMirror.java,v 1.1 2003-09-19 16:01:09 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TTL_SecondaryMirror.java,v 1.2 2013-07-04 10:56:44 cjm Exp $" );
+
+  /**
+   * The single instance of this class.
+   */
+  protected static TTL_SecondaryMirror instance = null;
 
   /*=========================================================================*/
   /*                                                                         */
@@ -39,14 +45,14 @@ public class TTL_SecondaryMirror
   /*=========================================================================*/
 
   /**
-   * The TTL SDB subsystem used by this Secondary Mirror.
-   */
-  protected SDB sdb = null;
-
-  /**
    * The TTL AMN subsystem used by this Secondary Mirror.
    */
   protected AMN amn = null;
+
+  /**
+   * The TTL SDB subsystem used by this Secondary Mirror.
+   */
+  protected SDB sdb = null;
 
   /**
    * Acceptable maximum position error for demanded focus positions,
@@ -87,7 +93,7 @@ public class TTL_SecondaryMirror
    * otherwise the previous instantiation is returned.
    * @return the ONLY instance of this class.
    */
-  public static PluggableSubSystem getInstance()
+  public static TTL_SecondaryMirror getInstance()
   {
     if( instance == null )
       instance = new TTL_SecondaryMirror();
@@ -107,7 +113,7 @@ public class TTL_SecondaryMirror
   protected TTL_SecondaryMirror()
   {
     amn = AMN.getInstance();
-    sdb = SDB.getInstance();    
+    sdb = SDB.getInstance();
   }
 
 
@@ -145,6 +151,15 @@ public class TTL_SecondaryMirror
   public void setFocusPosition( double d )
   {
     focusPosition = d;
+  }
+
+
+  /**
+   * This method sets the focus position to the current position.
+   */
+  public void setFocusPosition() throws TTL_SystemException
+  {
+    focusPosition = getActualPosition();
   }
 
 
@@ -205,7 +220,9 @@ public class TTL_SecondaryMirror
   public SMF_State get_SMF_State()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( SMF_DataType.D_SMF_PROC_STATE );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( SMF_DataType.D_SMF_PROC_STATE,
+			  TTL_CIL_Node.E_CIL_OMR ) );
     return( (SMF_State)( SMF_State.getReference( val.getValue() ) ) );
   }
 
@@ -217,7 +234,9 @@ public class TTL_SecondaryMirror
   public double getActualPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( SMF_DataType.D_SMF_ACTUAL );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( SMF_DataType.D_SMF_ACTUAL,
+			  TTL_CIL_Node.E_CIL_OMR ) );
     return( ( (double)val.getValue() ) / 1000.000 );
   }
 
@@ -229,7 +248,9 @@ public class TTL_SecondaryMirror
   public double getDemandPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( SMF_DataType.D_SMF_DEMAND );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( SMF_DataType.D_SMF_DEMAND,
+			  TTL_CIL_Node.E_CIL_OMR ) );
     return( ( (double)val.getValue() ) / 1000.000 );
   }
 
@@ -254,7 +275,9 @@ public class TTL_SecondaryMirror
   public double getMinimumDemandPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( SMF_DataType.D_SMF_SMF_RANGE_LO );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( SMF_DataType.D_SMF_SMF_RANGE_LO,
+			  TTL_CIL_Node.E_CIL_OMR ) );
     return( ( (double)val.getValue() ) / 1000.000 );
   }
 
@@ -266,19 +289,19 @@ public class TTL_SecondaryMirror
   public double getMaximumDemandPosition()
     throws TTL_SystemException
   {
-    TTL_DataValue val = amn.getValue( SMF_DataType.D_SMF_SMF_RANGE_HI );
+    TTL_DataValue val = sdb.retrieveValue
+      ( new SDB_DataType( SMF_DataType.D_SMF_SMF_RANGE_HI,
+			  TTL_CIL_Node.E_CIL_OMR ) );
     return( ( (double)val.getValue() ) / 1000.000 );
   }
-
-
-  /**
-   *
-   */
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2013-07-04 10:56:44 $
  * $RCSfile: TTL_SecondaryMirror.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_SecondaryMirror.java,v $
- *      $Id: TTL_SecondaryMirror.java,v 1.1 2003-09-19 16:01:09 je Exp $
+ *      $Id: TTL_SecondaryMirror.java,v 1.2 2013-07-04 10:56:44 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:01:09  je
+ *     Initial revision
+ *
  */

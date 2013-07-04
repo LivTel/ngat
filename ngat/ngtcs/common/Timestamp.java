@@ -3,41 +3,50 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class Timestamp implements java.io.Serializable
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: Timestamp.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: Timestamp.java,v 1.2 2013-07-04 10:47:35 cjm Exp $" );
 
     /**
      * Integer number of whole seconds since 01/01/1970.
      */
-    private long intSeconds;
+    protected long intSeconds;
 
     /**
      * Integer number of nanoseconds through current second.
      */
-    private long intNanoseconds;
+    protected long intNanoseconds;
 
     /**
      * Timestamp as a double in seconds since 01/01/1970.
      */
-    private double doubleSeconds;
+    protected double doubleSeconds;
 
     /**
      * Calendar used for this Timestamp.
      */
-    private CalendarType calendar;
+    protected CalendarType calendar;
 
     /**
      * Timescale of this Timestamp.
      */
-    private TimescaleType timescale;
+    protected TimescaleType timescale;
+
+    /**
+     * Constructor for Timestamp objects.
+     */
+    public Timestamp()
+    {
+      this( 0, 0, CalendarType.GREGORIAN, TimescaleType.UTC );
+    }
+
 
     /**
      * Constructor for Timestamp objects.
@@ -118,8 +127,11 @@ public class Timestamp implements java.io.Serializable
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:47:35 $
  * $RCSfile: Timestamp.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Timestamp.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
  */

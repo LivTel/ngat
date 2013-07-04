@@ -6,8 +6,8 @@ import ngat.ngtcs.subsystem.PluggableSubSystem;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class TTL_AutoguiderFactory
   implements PluggableSubSystemCreator
@@ -21,8 +21,8 @@ public class TTL_AutoguiderFactory
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TTL_AutoguiderFactory.java,v 1.1 2003-09-19 16:01:09 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TTL_AutoguiderFactory.java,v 1.2 2013-07-04 10:55:06 cjm Exp $" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -56,9 +56,12 @@ public class TTL_AutoguiderFactory
   }
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2013-07-04 10:55:06 $
  * $RCSfile: TTL_AutoguiderFactory.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_AutoguiderFactory.java,v $
- *      $Id: TTL_AutoguiderFactory.java,v 1.1 2003-09-19 16:01:09 je Exp $
+ *      $Id: TTL_AutoguiderFactory.java,v 1.2 2013-07-04 10:55:06 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:01:09  je
+ *     Initial revision
+ *
  */

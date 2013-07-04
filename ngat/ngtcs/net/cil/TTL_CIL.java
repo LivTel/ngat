@@ -15,8 +15,8 @@ import ngat.ngtcs.command.*;
  * A java (Datagram socket) implementation of the CIL interface, converting
  * to TTL's C-readable format.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  *
  */
 public class TTL_CIL implements Runnable, CIL
@@ -24,8 +24,8 @@ public class TTL_CIL implements Runnable, CIL
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TTL_CIL.java,v 1.1 2003-09-19 16:00:50 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TTL_CIL.java,v 1.2 2013-07-04 10:48:40 cjm Exp $" );
 
   /**
    * The 28 bytes taken up by the 7 Int32_t headers.
@@ -124,13 +124,11 @@ public class TTL_CIL implements Runnable, CIL
   /**
    *
    */
-  public void sendMessage( CIL_Message m, boolean b )
+  public void sendMessage( CIL_Message msg, boolean b )
     throws IOException, SecurityException
   {
     if( b == true )
-      m.setSequenceNumber( ++seqNo );
-
-    TTL_CIL_Message msg = (TTL_CIL_Message)m;
+      msg.setSequenceNumber( ++seqNo );
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     DataOutputStream dos = new DataOutputStream( baos );
@@ -138,17 +136,11 @@ public class TTL_CIL implements Runnable, CIL
     baos.flush();
     dos.flush();
 
-    //int srvInt = msg.getSystem().getInt() << 16;
-    //srvInt += ( (TTL_CIL_ServiceClass)msg.getServiceClass() ).getInt();
-
     logger.log( 5, logName,
 		"    txId = "+msg.getSourceNode()+"\n"+
 		"    rxId = "+msg.getDestinationNode()+"\n"+
 		"  msgInt = "+msg.getMessageClass()+"\n"+
-		//"  system = "+msg.getSystem().getName()+"\n"+
 		" service = "+msg.getServiceClass()+"\n"+
-		//"  srvInt = "+srvInt+" = "+
-		//Integer.toHexString( srvInt )+"\n"+
 		"   seqNo = "+msg.getSequenceNumber()+"\n"+
 		"    secs = "+msg.getSeconds()+"\n"+
 		"nanosecs = "+msg.getNanoseconds() );
@@ -157,11 +149,10 @@ public class TTL_CIL implements Runnable, CIL
     /*
      * Write the CIL Routing Headers.
      */
-    dos.writeInt( ( (TTL_CIL_Node)msg.getSourceNode() ).getInt() );
-    dos.writeInt( ( (TTL_CIL_Node)msg.getDestinationNode() ).getInt() );
-    dos.writeInt
-      ( ( (TTL_CIL_MessageClass)msg.getMessageClass() ).getInt() );
-    //dos.writeInt( srvInt );
+    dos.writeInt( msg.getSourceNode() );
+    dos.writeInt( msg.getDestinationNode() );
+    dos.writeInt( msg.getMessageClass() );
+    dos.writeInt( msg.getServiceClass() );
     dos.writeInt( msg.getSequenceNumber() );
     dos.writeInt( msg.getSeconds() );
     dos.writeInt( msg.getNanoseconds() );
@@ -180,7 +171,7 @@ public class TTL_CIL implements Runnable, CIL
     /*
      * Pack the data/byte stream into a DatagramPacket and send.
      */
-    byte[] buffer = new byte[ baos.size() ];
+    byte buffer[] = new byte[ baos.size() ];
     buffer = baos.toByteArray();
  
     socket.send( new DatagramPacket( buffer, buffer.length ) );
@@ -209,7 +200,7 @@ public class TTL_CIL implements Runnable, CIL
   public CIL_Message getReply( CIL_Message msg )
   {
     long msgSeqNo = msg.getSequenceNumber();
-    CIL_Node msgReceiver = msg.getDestinationNode();
+    int msgReceiver = msg.getDestinationNode();
     int oldCount = 0;
 
     // loop until reply is received.
@@ -233,13 +224,13 @@ public class TTL_CIL implements Runnable, CIL
       oldCount = msgList.size();
       for( int i = 0; i < oldCount; i++ )
       {
-	TTL_CIL_Message m = null;
+	CIL_Message m = null;
 
 	DatagramPacket dp = (DatagramPacket)
 	  ( msgList.get( i ) );
 	try
 	{
-	  m = bytesToTTL_CIL_Message( dp );
+	  m = bytesToCIL_Message( dp );
 	}
 	catch( IOException ioe )
 	{
@@ -283,7 +274,7 @@ public class TTL_CIL implements Runnable, CIL
       packet = null;
     }
 
-    TTL_CIL_Message msg = bytesToTTL_CIL_Message( packet );
+    CIL_Message msg = bytesToCIL_Message( packet );
     return( (CIL_Message)msg );
   }
 
@@ -341,12 +332,12 @@ public class TTL_CIL implements Runnable, CIL
 
   /**
    * Convert a <code>DatagramPacket</code> into a
-   * <code>TTL_CIL_Message</code>
+   * <code>CIL_Message</code>
    * @param packet the <code>DatagramPacket</code> to be converted
-   * @return a converted <code>TTL_CIL_Message</code>
-   * @see ngat.ngtcs.net.cil.TTL_CIL_Message
+   * @return a converted <code>CIL_Message</code>
+   * @see ngat.net.cil.CIL_Message
    */
-  public TTL_CIL_Message bytesToTTL_CIL_Message( DatagramPacket packet )
+  public CIL_Message bytesToCIL_Message( DatagramPacket packet )
     throws IOException
   {
     if( packet == null )
@@ -401,12 +392,8 @@ public class TTL_CIL implements Runnable, CIL
     /*
      * Pack the data into a CIL_Message.
      */
-    TTL_CIL_Message message = new TTL_CIL_Message
-      ( (CIL_Node)TTL_CIL_Node.getReference( txId ),
-	(CIL_Node)TTL_CIL_Node.getReference( rxId ),
-	(CIL_MessageClass)TTL_CIL_MessageClass.getReference( msgInt ),
-	(CIL_ServiceClass)TTL_CIL_ServiceClass.getReference( sysSrv ),
-	seqNo, secs, nanosecs, data );
+    CIL_Message message = new CIL_Message
+      (  txId, rxId, msgInt, sysSrv, seqNo, secs, nanosecs, data );
 
     return( message );
   }
@@ -421,9 +408,12 @@ public class TTL_CIL implements Runnable, CIL
   }
 }
 /*
- *    $Date: 2003-09-19 16:00:50 $
+ *    $Date: 2013-07-04 10:48:40 $
  * $RCSfile: TTL_CIL.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/cil/TTL_CIL.java,v $
- *      $Id: TTL_CIL.java,v 1.1 2003-09-19 16:00:50 je Exp $
+ *      $Id: TTL_CIL.java,v 1.2 2013-07-04 10:48:40 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:00:50  je
+ *     Initial revision
+ *
  */

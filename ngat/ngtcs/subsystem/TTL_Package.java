@@ -6,6 +6,7 @@ package ngat.ngtcs.subsystem;
  * <p>
  * Class defining allowable references of TTL_Package.  These are:
  * <ul>
+ * <li>NO_SYS</li>
  * <li>SYS</li>
  * <li>CIL</li>
  * <li>ACN</li>
@@ -112,22 +113,22 @@ package ngat.ngtcs.subsystem;
  * <li>MBT</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class TTL_Package implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TTL_Package.java,v 1.1 2003-09-19 16:01:09 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TTL_Package.java,v 1.2 2013-07-04 10:55:55 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -144,11 +145,17 @@ public class TTL_Package implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
+
+  /**
+   * No system.
+   */
+  public static TTL_Package NO_SYS =
+    new TTL_Package( "NO_SYS", 0x0000 );
 
   /**
    * Generic system messages
@@ -780,6 +787,7 @@ public class TTL_Package implements java.io.Serializable
    */
   protected final static TTL_Package[] array =
   {
+    NO_SYS,
     SYS,
     CIL,
     ACN,
@@ -886,11 +894,11 @@ public class TTL_Package implements java.io.Serializable
     MBT
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -907,11 +915,11 @@ public class TTL_Package implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the TTL_Package with the String
@@ -942,11 +950,11 @@ public class TTL_Package implements java.io.Serializable
     return( (TTL_Package)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -1028,10 +1036,13 @@ public class TTL_Package implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2013-07-04 10:55:55 $
  * $RCSfile: TTL_Package.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Package.java,v $
- *      $Id: TTL_Package.java,v 1.1 2003-09-19 16:01:09 je Exp $
+ *      $Id: TTL_Package.java,v 1.2 2013-07-04 10:55:55 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:01:09  je
+ *     Initial revision
+ *
  *
  */

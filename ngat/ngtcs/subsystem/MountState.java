@@ -3,245 +3,110 @@ package ngat.ngtcs.subsystem;
 import ngat.ngtcs.common.*;
 
 /**
- * Class to define Type-safe Enumerations.  This class defines <b>ALL</b>
- * possible references of type MountState.
- * <p>
- * The list of States is:
- * <ul>
- * <li>OKAY</li>
- * <li>INITIALISING</li>
- * <li>SAFE</li>
- * <li>ERROR</li>
- * <li>WARNING</li>
- * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * 
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
-public class MountState implements java.io.Serializable
+public class MountState extends SystemState
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: MountState.java,v 1.2 2003-09-19 16:01:09 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: MountState.java,v 1.3 2013-07-04 10:54:26 cjm Exp $" );
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
-   * Hashtable of instances for retrieval by the enumeration's String name.
+   * Mount for which this is the State.
    */
-  protected static java.util.Hashtable nameHash = new java.util.Hashtable();
+  protected String mount = null;
 
   /**
-   * Hashtable of instances for retrieval by the enumeration's int value.
+   * Current MountState.
    */
-  protected static java.util.Hashtable intHash = new java.util.Hashtable();
+  protected MountState mountState = null;
 
   /**
-   * Index of the next enumeration to be added.
+   * Current position of this Mount.
    */
-  protected static int nextIndex = 0;
-
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  protected XYZMatrix currentPos = null;
 
   /**
-   * Everything nominal.
+   * The Rotator object used on the specified Mount.
    */
-  public static final MountState OKAY =
-    new MountState( "OKAY", 500002 );
+  protected double rotatorAngle = 0.0;
 
   /**
-   * Mount initialising.
+   * Timestamp of the `current' positions.
    */
-  public static final MountState INITIALISING =
-    new MountState( "INITIALISING", 500002 );
+  protected Timestamp timestamp = null;
+
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
-   * Mount is ready to be shutdown.
+   * Constructor.
    */
-  public static final MountState SAFE =
-    new MountState( "SAFE", 500002 );
-
-  /**
-   * A serious error has occurred.
-   */
-  public static final MountState ERROR =
-    new MountState( "ERROR", 500002 );
-
-  /**
-   * A non-serious error has occurred.
-   */
-  public static final MountState WARNING =
-    new MountState( "WARNING", 500002 );
-
-
-  /**
-   * Array to allow serialization.
-   */
-  protected final static MountState[] array =
+  public MountState( MountState ms, Timestamp t, XYZMatrix pos )
   {
-    OKAY,
-    INITIALISING,
-    SAFE,
-    ERROR,
-    WARNING
-  };
-
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
-
-  /**
-   * String name of this type-safe enumeration.
-   */
-  protected transient String name;
-
-  /**
-   * Optional integer for int representation of this Type-safe Enumeration.
-   */
-  protected transient int intValue;
-
-  /**
-   * Assign an index to this enumeration.
-   */
-  protected final int index = nextIndex++;
-
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
-
-  /**
-   * Return an object reference of the MountState with the String
-   * name specified.
-   * <p>
-   * <b>NOTE:</b> if there is no matching reference <code>null</code> will be
-   * returned.
-   * @param s the name of the MountState
-   * @return a reference to the MountState specified by the argument
-   */
-  public static MountState getReference( String s )
-  {
-    return( (MountState)( nameHash.get( s ) ) );
+    super();
+    mountState = ms;
+    currentPos = pos;
+    timestamp = t;
   }
 
 
   /**
-   * Return an object reference of the MountState with the int value
-   * specified.
-   * <p>
-   * <b>NOTE:</b> if there is no matching reference <code>null</code> will be
-   * returned.
-   * @param i the int representation of the MountState
-   * @return a reference to the MountState specified by the argument
+   * Return the current position of the Mount as an XYZMatrix.
+   * @return currentPos
    */
-  public static MountState getReference( int i )
+  public XYZMatrix getPosition()
   {
-    return( (MountState)( intHash.get( new Integer( i ) ) ) );
-  }
-
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
-
-  /**
-   * Create an enumeration of the specified name.
-   * <p>
-   * <b>NOTE:</b> the <code><b>int</b></code> representation of this
-   * enumeration is assigned to the index (index) of this enumeration in
-   * the array.
-   * @param s the name of this enumeration
-   * @see #name
-   * @see #intValue
-   * @see #array
-   */
-  protected MountState( String s )
-  {
-    name = s;
-    nameHash.put( s, this );
-    intValue = index;
-    intHash.put( new Integer( intValue ), this );
+    return currentPos;
   }
 
 
   /**
-   * Create an enumeration of the specified name and int representation.
-   * @param s the name of this enumeration
-   * @param i the int representation of this enumeration
-   * @see #name
-   * @see #intValue
-   * @see #array
+   * Return the current rotator angle.
+   * @return rotatorAngle
    */
-  protected MountState( String s, int i )
+  public double getRotatorAngle()
   {
-    name = s;
-    nameHash.put( s, this );
-    intValue = i;
-    intHash.put( new Integer( intValue ), this );
+    return rotatorAngle;
   }
 
 
   /**
-   * Return the name of this MountState.
-   * @return name
-   * @see #name
+   * Return the Timestamp
+   * @return timestamp
    */
-  public String getName()
+  public Timestamp getTimestamp()
   {
-    return name;
-  }
-
-
-  /**
-   * Return the int representation of this MountState.
-   * @return intValue
-   * @see #intValue
-   */
-  public int getInt()
-  {
-    return intValue;
-  }
-
-
-  /**
-   * Over-ride the Serializable method to ensure the same Object references
-   * are returned after Serialization.
-   */
-  protected Object readResolve() throws java.io.ObjectStreamException
-  {
-    return( array[ index ] );
-  }
-
-
-  /**
-   * Return the name of this enumeration.
-   * @return name
-   * @see #name
-   */
-  public String toString()
-  {
-    return name;
+    return timestamp;
   }
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2013-07-04 10:54:26 $
  * $RCSfile: MountState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/MountState.java,v $
- *      $Id: MountState.java,v 1.2 2003-09-19 16:01:09 je Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:46  je
+ *     Initial revision
  *
  */

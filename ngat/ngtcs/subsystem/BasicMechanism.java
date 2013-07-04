@@ -9,20 +9,32 @@ import ngat.ngtcs.*;
 import ngat.ngtcs.common.*;
 
 /**
+ * Basic super-class of Controllable subsystem used by the NGTCS commands.
  * 
- * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  *
  */
-public class BasicMechanism
+public abstract class BasicMechanism
   implements ControllableSubSystem
 {
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
+
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: BasicMechanism.java,v 1.2 2003-09-19 16:01:09 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: BasicMechanism.java,v 1.3 2013-07-04 10:53:08 cjm Exp $" );
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Name of this PluggableSubSystem.
@@ -46,52 +58,43 @@ public class BasicMechanism
   protected Telescope telescope = null;
 
   /**
-   * State of the PluggableSubSystem.
-   */
-  protected SubSystemState subSystemState = SubSystemState.INACTIVE;
-
-  /**
-   * State of the PluggableSubSystem.
-   */
-  protected SoftwareState softwareState = null;
-
-  /**
-   * Error message - to be set when an error occurs, describing the error.
-   */
-  protected String errorMessage;
-
-  /**
-   * Status of the PluggableSubSystem.
-   */
-  protected Status status = null;
-
-  /**
-   * boolean Object representing whether this mechanism is active.
-   */
-  protected boolean active = false;
-
-  /**
    * logger Object used by this mechanism.
    */
   protected Logger logger = null;
 
   /**
-   *
+   * Boolean describing whether a shutdown has been initiated.
    */
   protected boolean shutdownInProgress = false;
+
+  /**
+   * Boolean describing whether this mechanism has been initialised.
+   */
+  protected boolean initialised = false;
 
   /**
    * Synchronisation lock for the shutdown process.
    */
   protected Object shutdownLock = new Object();
 
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
+
+
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
-   * PluggableSubSystem constructor.
+   *
    */
   public BasicMechanism()
   {
-    subSystemState = SubSystemState.INACTIVE;
   }
 
 
@@ -106,52 +109,38 @@ public class BasicMechanism
 
 
   /**
-   * Method to return the State of this PluggableSubSystem.
-   * @return the State of this PluggableSubSystem.
-   */
-  public SubSystemState getSubSystemState()
-  {
-    return subSystemState;
-  }
-
-
-  /**
-   * Method to return the State of this PluggableSubSystem.
-   * @return the State of this PluggableSubSystem.
-   */
-  public SoftwareState getSoftwareState()
-  {
-    return softwareState;
-  }
-
-
-  /**
-   * Method to return the Status of this PluggableSubSystem.
-   * @return the TelescopeStatus of this PluggableSubSystem.
-   */
-  public Status getStatus()
-  {
-    return status;
-  }
-
-
-  /**
-   * Activate the mechanism implementing this interface.
-   */
-  public void activate()
-  {
-
-  }
-
-
-  /**
    * Initialise the mechanism implementing this interface.
    */
-  public void initialise( Telescope t ) throws InitialisationException
+  public final void initialise( Telescope t ) throws InitialisationException
   {
+    initialised = false;
     telescope = t;
-    logger = telescope.getLogger( this.getClass() );
-    logName = logger.getName();
+    if( logger == null )
+    {
+      logger = telescope.getLogger( this.getClass() );
+      logName = logger.getName();
+    }
+    logger.log( 2, logName, "Logging for "+logName+" on "+logger );
+
+    // call mechanism-specific initialisation
+    _initialise();
+
+    initialised = true;
+  }
+
+
+  /**
+   * Implemented by all sub-classes to perform system-specific intialisation.
+   */
+  protected abstract void _initialise() throws InitialisationException;
+
+
+  /**
+   *
+   */
+  public boolean isInitialised()
+  {
+    return( initialised );
   }
 
 
@@ -160,10 +149,11 @@ public class BasicMechanism
    */
   protected void getProperties() throws InitialisationException
   {
+    String configFilename = telescope.getName()+"-"+logName+".cfg";
     np = new NGATProperties();
     try
     {
-      np.load( telescope.getName()+"-"+logName+".cfg" );
+      np.load( configFilename );
     }
     catch( Exception e )
     {
@@ -171,36 +161,8 @@ public class BasicMechanism
 	( "Could not get "+logName+
 	  " properties for "+telescope.getName()+" : "+e );
     }
-  }
 
-
-  /**
-   * The mechanism implementing this interface into a safe state in 
-   * preparation for a shutdown or power cut.
-   */
-  public boolean makeSafe()
-  {
-    logger.log( 1, logName, "PluggableSubSystem ["+this+"] safe" );
-    return true;
-  }
-
-
-  /**
-   * De-activate the mechanism implementing this interface.
-   */
-  public void deActivate()
-  {
-    active = false;
-    //state = SubSystemState.DEACTIVATED;
-  }
-
-  /**
-   * Return a descriptor of whether the mechanism implementing this interface
-   * is currently active.
-   */
-  public boolean isActive()
-  {
-    return active;
+    logger.log( 2, logName, configFilename+" loaded" );
   }
 
 
@@ -220,19 +182,37 @@ public class BasicMechanism
 
 
   /**
-   * Sets the state defining that a shutdown is in progress.
-   * This should be called FIRST by all concrete PluggableSubSystems.
+   *
    */
-  public boolean shutdown()
+  public abstract void makeSafe() throws SystemException;
+
+
+  /**
+   * Sets the state defining that a shutdown is in progress.
+   */
+  public final void shutdown() throws SystemException 
   {
+    boolean temp;
     synchronized( shutdownLock )
     {
-      if( shutdownInProgress ) return false;
+      temp = shutdownInProgress;
 
-      shutdownInProgress = true;
+      if( shutdownInProgress == false )
+	shutdownInProgress = true;
     }
-    return true;
+
+    // system-specific shutdown
+    if( temp == false )
+      _shutdown();
+
+    return;
   }
+
+
+  /**
+   * Implement the subsystem-specific shutdown.
+   */
+  protected abstract void _shutdown() throws SystemException;
 
 
   /**
@@ -242,23 +222,16 @@ public class BasicMechanism
   {
     logger.setLogLevel( newLogLevel );
   }
-
-
-  /**
-   *
-   */
-  public String getErrorMessage()
-  {
-    return( this+" has an error!" );
-  }
-
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2013-07-04 10:53:08 $
  * $RCSfile: BasicMechanism.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/BasicMechanism.java,v $
- *      $Id: BasicMechanism.java,v 1.2 2003-09-19 16:01:09 je Exp $
+ *      $Id: BasicMechanism.java,v 1.3 2013-07-04 10:53:08 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/19 16:01:09  je
+ *     Updated Command tx/rx and TTL subsystem interfaces.
+ *
  *     Revision 1.1  2003/07/01 10:13:46  je
  *     Initial revision
  *

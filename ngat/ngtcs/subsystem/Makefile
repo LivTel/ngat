@@ -9,12 +9,10 @@ DIRS           = acn ags amn ept mcp sdb spt
 DIRS_TARGET    = dirs
 
 SRCS           = BasicMechanism.java \
-                 BasicPluggableSubSystem.java \
                  ControllableSubSystem.java \
                  Enclosure.java \
                  Mount.java \
                  MountState.java \
-                 MountStatus.java \
                  MountType.java \
                  PluggableSubSystem.java \
                  PluggableSubSystemCreator.java \
@@ -63,13 +61,16 @@ SRCS           = BasicMechanism.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $
-# $Revision: 1.15 $
-#       $Id: Makefile,v 1.15 2003-11-13 14:42:29 je Exp $
-#     $Date: 2003-11-13 14:42:29 $
+#   $Author: cjm $
+# $Revision: 1.16 $
+#       $Id: Makefile,v 1.16 2013-07-04 10:58:31 cjm Exp $
+#     $Date: 2013-07-04 10:58:31 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Makefile,v $
 #      $Log: not supported by cvs2svn $
+#      Revision 1.15  2003/11/13 14:42:29  je
+#      Added TTL_Boolean data type.
+#
 #      Revision 1.14  2003/11/13 13:02:30  je
 #      Removed RotatorFactory as Rotator was made abstract.
 #

@@ -5,91 +5,99 @@ import ngat.ngtcs.subsystem.*;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
-public class TelescopeStatus extends Status
+public class TelescopeStatus
 {
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: TelescopeStatus.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: TelescopeStatus.java,v 1.2 2013-07-04 10:47:14 cjm Exp $" );
 
-    /**
-     * Telescope state.
-     */
-    private TelescopeState telescopeState = null;
+  /**
+   *
+   */
+  protected SoftwareState softwareState = null;
 
-    /**
-     * Telescope for which this is the Status.
-     */
-    private String telescopeName = null;
+  /**
+   * Operational mode.
+   */
+  protected OperationalMode operationalMode = null;
 
-    /**
-     * Current Target set on this Telescope.
-     */
-    private Target target = null;
+  /**
+   * Telescope for which this is the Status.
+   */
+  protected String telescopeName = null;
 
-    /**
-     * Current MountStatus.
-     */
-    private MountStatus mountStatus = null;
+  /**
+   * Current Target set on this Telescope.
+   */
+  protected Target target = null;
 
-    /**
-     *
-     */
-    private ReportedTarget reported = null;
+  /**
+   * Current MountState.
+   */
+  protected MountState mountState = null;
 
-
-    /**
-     * Constructor.
-     * @param t the Telescope for which this is the Status
-     */
-    public TelescopeStatus( String name, SoftwareState ss, TelescopeState ts,
-			    Target t, ReportedTarget rt, MountStatus ms )
-    {
-	super( ss );
-	telescopeState = ts;
-	telescopeName = name;
-	target = t;
-	reported = rt;
-	mountStatus = ms;
-    }
+  /**
+   *
+   */
+  protected ReportedTarget reported = null;
 
 
-    /**
-     * Return the current target for the specified Telescope.
-     * @return target
-     */
-    public Target getTarget()
-    {
-	return target;
-    }
+  /**
+   * Constructor.
+   * @param t the Telescope for which this is the Status
+   */
+  public TelescopeStatus( String name, SoftwareState ss, OperationalMode om,
+			  Target t, ReportedTarget rt, MountState ms )
+  {
+    telescopeName = name;
+    softwareState = ss;
+    operationalMode = om;
+    target = t;
+    reported = rt;
+    mountState = ms;
+  }
 
 
-    /**
-     * Return the MountStatus of the specified Mount
-     * @return mountStatus
-     */
-    public MountStatus getMountStatus()
-    {
-	return mountStatus;
-    }
+  /**
+   * Return the current target for the specified Telescope.
+   * @return target
+   */
+  public Target getTarget()
+  {
+    return target;
+  }
 
 
-    /**
-     * Return the ReportedTarget of the current mount position.
-     * @return reported
-     */
-    public ReportedTarget getRportedTarget()
-    {
-	return reported;
-    }
+  /**
+   * Return the MountState of the specified Mount
+   * @return mountState
+   */
+  public MountState getMountState()
+  {
+    return mountState;
+  }
+
+
+  /**
+   * Return the ReportedTarget of the current mount position.
+   * @return reported
+   */
+  public ReportedTarget getRportedTarget()
+  {
+    return reported;
+  }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:47:14 $
  * $RCSfile: TelescopeStatus.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/TelescopeStatus.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
  */

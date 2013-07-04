@@ -3,8 +3,8 @@ package ngat.ngtcs.subsystem;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class TimerFactory extends PluggableSubSystemFactory
   implements PluggableSubSystemCreator
@@ -18,8 +18,8 @@ public class TimerFactory extends PluggableSubSystemFactory
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TimerFactory.java,v 1.1 2003-09-19 16:01:09 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TimerFactory.java,v 1.2 2013-07-04 10:54:48 cjm Exp $" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -42,9 +42,12 @@ public class TimerFactory extends PluggableSubSystemFactory
   /*=========================================================================*/
 }
 /*
- *    $Date: 2003-09-19 16:01:09 $
+ *    $Date: 2013-07-04 10:54:48 $
  * $RCSfile: TimerFactory.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TimerFactory.java,v $
- *      $Id: TimerFactory.java,v 1.1 2003-09-19 16:01:09 je Exp $
+ *      $Id: TimerFactory.java,v 1.2 2013-07-04 10:54:48 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/09/19 16:01:09  je
+ *     Initial revision
+ *
  */

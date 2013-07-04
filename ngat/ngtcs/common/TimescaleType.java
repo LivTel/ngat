@@ -14,22 +14,22 @@ package ngat.ngtcs.common;
  * <li>TDT</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class TimescaleType implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: TimescaleType.java,v 1.2 2003-09-19 16:00:03 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: TimescaleType.java,v 1.3 2013-07-04 10:47:25 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -46,11 +46,11 @@ public class TimescaleType implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Type-safe Enumeration of the Universal Time timescale (UT).
@@ -97,11 +97,11 @@ public class TimescaleType implements java.io.Serializable
     TDT
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -118,11 +118,11 @@ public class TimescaleType implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the TimescaleType with the String
@@ -153,11 +153,11 @@ public class TimescaleType implements java.io.Serializable
     return( (TimescaleType)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -239,10 +239,13 @@ public class TimescaleType implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:00:03 $
+ *    $Date: 2013-07-04 10:47:25 $
  * $RCSfile: TimescaleType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/TimescaleType.java,v $
- *      $Id: TimescaleType.java,v 1.2 2003-09-19 16:00:03 je Exp $
+ *      $Id: TimescaleType.java,v 1.3 2013-07-04 10:47:25 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/19 16:00:03  je
+ *     Updated Command tx/rx and TTL subsystem interfaces.
+ *
  *
  */

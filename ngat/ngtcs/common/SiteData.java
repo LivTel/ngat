@@ -12,16 +12,16 @@ import ngat.util.*;
  * Some method overloading has been used to re-direct references to make access
  * from the Java Native Interface easier.
  * 
- * @version $Revision: 1.1 $
- * @author $Author: je $
+ * @version $Revision: 1.2 $
+ * @author $Author: cjm $
  */
 public class SiteData extends Data
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-        new String( "$Id: SiteData.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+    public static final String rcsid =
+        new String( "$Id: SiteData.java,v 1.2 2013-07-04 10:45:58 cjm Exp $" );
 
     /**
      * Mean observatory longitude in radians.
@@ -178,8 +178,11 @@ public class SiteData extends Data
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:45:58 $
  * $RCSfile: SiteData.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/SiteData.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
  */

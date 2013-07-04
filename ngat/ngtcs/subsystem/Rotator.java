@@ -5,10 +5,10 @@ import ngat.ngtcs.common.*;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
-public class Rotator
+public abstract class Rotator extends BasicMechanism
 {
   /*=========================================================================*/
   /*                                                                         */
@@ -19,8 +19,8 @@ public class Rotator
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: Rotator.java,v 1.1 2003-07-01 10:13:46 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: Rotator.java,v 1.2 2013-07-04 10:54:46 cjm Exp $" );
 
 
   /*=========================================================================*/
@@ -57,6 +57,7 @@ public class Rotator
   /*                                                                         */
   /*=========================================================================*/
 
+
   /*=========================================================================*/
   /*                                                                         */
   /* OBJECT METHODS.                                                         */
@@ -68,7 +69,7 @@ public class Rotator
    */
   public Rotator()
   {
-
+    super();
   }
 
 
@@ -127,8 +128,11 @@ public class Rotator
 
 }
 /*
- *    $Date: 2003-07-01 10:13:46 $
+ *    $Date: 2013-07-04 10:54:46 $
  * $RCSfile: Rotator.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/Rotator.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:46  je
+ *     Initial revision
+ *
  */

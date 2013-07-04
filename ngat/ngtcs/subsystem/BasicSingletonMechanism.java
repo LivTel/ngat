@@ -12,70 +12,70 @@ import ngat.ngtcs.common.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class BasicSingletonMechanism
-    extends ngat.ngtcs.subsystem.BasicMechanism
+  extends ngat.ngtcs.subsystem.BasicMechanism
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String RevisionString =
-	new String( "$Id: BasicSingletonMechanism.java,v 1.2 2003-07-02 14:10:37 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id: BasicSingletonMechanism.java,v 1.3 2013-07-04 10:53:11 cjm Exp $" );
 
-    /**
-     * The <b>ONLY</b> instance of this class.
-     */
-    protected static BasicSingletonMechanism instance = null;
+  /**
+   * The <b>ONLY</b> instance of this class.
+   */
+  protected static BasicSingletonMechanism instance = null;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     *
-     */
-    protected Telescope telescope;
+  /**
+   *
+   */
+  protected Telescope telescope;
 
-    /**
-     *
-     */
-    protected Logger logger;
+  /**
+   *
+   */
+  protected Logger logger;
 
-    /**
-     *
-     */
-    protected String logName;
+  /**
+   *
+   */
+  protected String logName;
 
-    /**
-     * The Software state of this object.
-     */
-    protected SoftwareState state;
+  /**
+   * The Software state of this object.
+   */
+  protected SoftwareState state;
 
-    /**
-     * Boolean describing the initialisation state of this object.
-     */
-    protected boolean initialised = false;
+  /**
+   * Boolean describing the initialisation state of this object.
+   */
+  protected boolean initialised = false;
 
-    /**
-     *
-     */
-    protected String errMsg = "Error!";
+  /**
+   *
+   */
+  protected String errMsg = "Error!";
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return the ONLY instance of this class.  If the instance reference is
@@ -92,26 +92,29 @@ public class BasicSingletonMechanism
     return instance;
   }
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * The non-public Constructor required by singleton classes.
-     */
-    protected BasicSingletonMechanism()
-    {
+  /**
+   * The non-public Constructor required by singleton classes.
+   */
+  protected BasicSingletonMechanism()
+  {
 
-    }
+  }
 }
 /*
- *    $Date: 2003-07-02 14:10:37 $
+ *    $Date: 2013-07-04 10:53:11 $
  * $RCSfile: BasicSingletonMechanism.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/BasicSingletonMechanism.java,v $
- *      $Id: BasicSingletonMechanism.java,v 1.2 2003-07-02 14:10:37 je Exp $
+ *      $Id: BasicSingletonMechanism.java,v 1.3 2013-07-04 10:53:11 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/07/02 14:10:37  je
+ *     Changed BasicSingletonMechanism for PluggableSubSystem in getInstance return type.
+ *
  *     Revision 1.1  2003/07/01 10:13:46  je
  *     Initial revision
  *
