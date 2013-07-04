@@ -8,47 +8,47 @@ import ngat.ngtcs.subsystem.*;
  * Change the focus by a specified amount.
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.5 $
  */
 public class DFOCUSImplementor extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: DFOCUSImplementor.java,v 1.4 2003-09-29 13:27:41 je Exp $" );
+    new String( "$Id: DFOCUSImplementor.java,v 1.5 2013-07-04 10:16:21 cjm Exp $" );
 
   /**
    * The timeout for the DFOCUS command (300 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 300000;
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -131,11 +131,14 @@ public class DFOCUSImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 13:27:41 $
+ *    $Date: 2013-07-04 10:16:21 $
  * $RCSfile: DFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/DFOCUSImplementor.java,v $
- *      $Id: DFOCUSImplementor.java,v 1.4 2003-09-29 13:27:41 je Exp $
+ *      $Id: DFOCUSImplementor.java,v 1.5 2013-07-04 10:16:21 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/29 13:27:41  je
+ *     Added execute documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *

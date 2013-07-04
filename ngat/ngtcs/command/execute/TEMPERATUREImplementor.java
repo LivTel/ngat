@@ -8,47 +8,47 @@ import ngat.ngtcs.command.*;
  * This implementor sets the temperature in the MeteorologicalData object used
  * by the AstrometryCalculator on the specified telescope.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class TEMPERATUREImplementor extends CommandImplementor
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
-     */
+  */
     public static final String rcsid =
-	new String( "$Id: TEMPERATUREImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+	new String( "$Id: TEMPERATUREImplementor.java,v 1.4 2013-07-04 10:29:33 cjm Exp $" );
 
   /**
    * The timeout for the TEMPERATURE command (3 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 3000;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
     /**
      * Create the TEMPERATURE command implementor using the specified thread,
@@ -56,7 +56,7 @@ public class TEMPERATUREImplementor extends CommandImplementor
      * @param eT the ExecutionThread executing this CommandImplementor
      * @param ts the Telescope on which this CommandImplementor is executing
      * @param c the Command (ngat.ngtcs.command.TEMPERATURE) to execute
-     */
+  */
     public TEMPERATUREImplementor( Telescope ts, Command c )
     {
 	super( ts, c );
@@ -66,7 +66,7 @@ public class TEMPERATUREImplementor extends CommandImplementor
     /**
      * This execute method sets the temperature in the MeteorologicalData
      * object used by the AstrometryCalculator.
-     */
+  */
     public void execute()
     {
 	telescope.getAstrometryCalculator().getMeteorologicalData().
@@ -86,11 +86,14 @@ public class TEMPERATUREImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:29:33 $
  * $RCSfile: TEMPERATUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TEMPERATUREImplementor.java,v $
- *      $Id: TEMPERATUREImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: TEMPERATUREImplementor.java,v 1.4 2013-07-04 10:29:33 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

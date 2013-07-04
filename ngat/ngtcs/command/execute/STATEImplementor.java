@@ -9,11 +9,11 @@ import ngat.ngtcs.command.*;
 /**
  *
  * The <code>STATE</code> command returns the current
- * <code>TelescopeState</code> <code>and SoftwareState</code> of the NGTCS
+ * <code>OperationalMode</code> <code>and SoftwareState</code> of the NGTCS
  * application.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  *
  */
 public class STATEImplementor extends CommandImplementor
@@ -22,7 +22,7 @@ public class STATEImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: STATEImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: STATEImplementor.java,v 1.4 2013-07-04 10:28:22 cjm Exp $" );
 
   /**
    * The timeout for the STATE command (5 seconds), in milliseconds
@@ -41,11 +41,13 @@ public class STATEImplementor extends CommandImplementor
    */
   public void execute()
   {
+    OperationalMode telescopeOp = telescope.getOperationalMode();
     TelescopeState telescopeState = telescope.getTelescopeState();
     SoftwareState softwareState = telescope.getSoftwareState();
     commandDone.setReturnMessage
-      ( "\n software : "+softwareState+
-	"\ntelescope : "+telescopeState+"\n" );
+      ( "\n    state : "+telescopeState+
+	"\n software : "+softwareState+
+	"\ntelescope : "+telescopeOp+"\n" );
     commandDone.setSuccessful( true );
   }
 
@@ -61,10 +63,13 @@ public class STATEImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:28:22 $
  * $RCSfile: STATEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/STATEImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

@@ -9,47 +9,47 @@ import ngat.ngtcs.command.*;
  * This implementor sets the pressure in the MeteorologicalData object used by
  * the AstrometryCalculator on the specified telescope.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class PRESSUREImplementor extends CommandImplementor
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
-     */
+  */
     public static final String rcsid =
-	new String( "$Id: PRESSUREImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+	new String( "$Id: PRESSUREImplementor.java,v 1.4 2013-07-04 10:25:37 cjm Exp $" );
 
   /**
    * The timeout for the PRESSURE command (3 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 3000;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
     /**
      * Create the PRESSURE command implementor using the specified thread, to
@@ -57,7 +57,7 @@ public class PRESSUREImplementor extends CommandImplementor
      * @param eT the ExecutionThread executing this CommandImplementor
      * @param ts the Telescope on which this CommandImplementor is executing
      * @param c the Command (ngat.ngtcs.command.PRESSURE) to execute
-     */
+  */
     public PRESSUREImplementor( Telescope ts, Command c )
     {
 	super( ts, c );
@@ -67,7 +67,7 @@ public class PRESSUREImplementor extends CommandImplementor
     /**
      * This execute method sets the pressure in the MeteorologicalData object
      * used by the AstrometryCalculator.
-     */
+  */
     public void execute()
     {
 	telescope.getAstrometryCalculator().getMeteorologicalData().
@@ -87,11 +87,14 @@ public class PRESSUREImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:25:37 $
  * $RCSfile: PRESSUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/PRESSUREImplementor.java,v $
- *      $Id: PRESSUREImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: PRESSUREImplementor.java,v 1.4 2013-07-04 10:25:37 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

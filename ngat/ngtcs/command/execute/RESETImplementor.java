@@ -11,8 +11,8 @@ import ngat.ngtcs.subsystem.*;
  * name is <code><i>the telescope system name</i></code>,
  * <code>all</code> or <code>telescope</code>.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class RESETImplementor extends CommandImplementor
 {
@@ -20,7 +20,7 @@ public class RESETImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: RESETImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: RESETImplementor.java,v 1.4 2013-07-04 10:25:58 cjm Exp $" );
 
   /**
    * The timeout for the RESET command (30 seconds), in milliseconds
@@ -41,7 +41,7 @@ public class RESETImplementor extends CommandImplementor
   {
     RESET reset = (RESET)command;
 
-    telescope.setTelescopeState( TelescopeState.IDLE );
+    telescope.setOperationalMode( OperationalMode.IDLE );
 
     String systemName = reset.getSystemName();
 
@@ -57,10 +57,7 @@ public class RESETImplementor extends CommandImplementor
       }
       catch( InitialisationException nie )
       {
-	String err = new String
-	  ( "Failed to reset "+systemName+" : "+nie.toString() );
-	logger.log( 1, logName, err );
-	commandDone.setErrorMessage( err );
+	logError( "Failed to reset "+systemName+" : "+nie.toString() );
 	return;
       }
     }
@@ -71,10 +68,8 @@ public class RESETImplementor extends CommandImplementor
 
       if( mechanism == null )
       {
-	String err = new String
+	logError
 	  ( "No such mechanism ["+systemName+"] : execution terminated" );
-	logger.log( 1, logName, err );
-	commandDone.setErrorMessage( err );
 	return;
       }
 
@@ -87,10 +82,7 @@ public class RESETImplementor extends CommandImplementor
       }
       catch( InitialisationException nie )
       {
-	String err = new String
-	  ( "Failed to reset "+systemName+" : "+nie.toString() );
-	logger.log( 1, logName, err );
-	commandDone.setErrorMessage( err );
+	logError( "Failed to reset "+systemName+" : "+nie.toString() );
 	return;
       }
     }
@@ -108,11 +100,14 @@ public class RESETImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:25:58 $
  * $RCSfile: RESETImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/RESETImplementor.java,v $
- *      $Id: RESETImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: RESETImplementor.java,v 1.4 2013-07-04 10:25:58 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

@@ -9,22 +9,22 @@ import ngat.ngtcs.subsystem.*;
  * will set the focal station, rotator, default focus, fold mirror position
  * and initialise the autoguider.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.5 $
  */
 public class INSTRUMENTImplementor extends CommandImplementor
 {
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS FIELDS.                                                           */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS FIELDS.  /*                                                       */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: INSTRUMENTImplementor.java,v 1.4 2003-10-14 13:55:15 je Exp $" );
+    new String( "$Id: INSTRUMENTImplementor.java,v 1.5 2013-07-04 10:16:31 cjm Exp $" );
 
   /**
    * The timeout for the INSTRUMENT command (300 seconds), in milliseconds.
@@ -32,9 +32,9 @@ public class INSTRUMENTImplementor extends CommandImplementor
   public static final int TIMEOUT = 300000;
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT FIELDS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT FIELDS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
@@ -49,16 +49,16 @@ public class INSTRUMENTImplementor extends CommandImplementor
   protected FocalStation fs;
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS METHODS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS METHODS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT METHODS.                                                         */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT METHODS.  /*                                                     */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
@@ -152,7 +152,7 @@ public class INSTRUMENTImplementor extends CommandImplementor
      * The Thread.run() method.  This thread moves the secondary mirror to the
      * new default position, and then moves the mirror to the currently set
      * focus offset.
-     */
+  */
     public void run()
     {
       // change focus position
@@ -203,7 +203,7 @@ public class INSTRUMENTImplementor extends CommandImplementor
     /**
      * The Thread.run() method.  This thread moves the science fold-mirror
      * to the orientation required by the outer INSTRUMENT command.
-     */
+  */
     public void run()
     {
       // move fold mirror
@@ -221,11 +221,14 @@ public class INSTRUMENTImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-10-14 13:55:15 $
+ *    $Date: 2013-07-04 10:16:31 $
  * $RCSfile: INSTRUMENTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/INSTRUMENTImplementor.java,v $
- *      $Id: INSTRUMENTImplementor.java,v 1.4 2003-10-14 13:55:15 je Exp $
+ *      $Id: INSTRUMENTImplementor.java,v 1.5 2013-07-04 10:16:31 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/10/14 13:55:15  je
+ *     Implemented execute.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *

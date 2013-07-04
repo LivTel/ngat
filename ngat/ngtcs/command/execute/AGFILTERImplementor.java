@@ -12,47 +12,47 @@ import ngat.ngtcs.subsystem.amn.*;
  * This implementor will move the autoguider filter either in or out of the
  * autoguider beam.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.6 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.7 $
  */
 public class AGFILTERImplementor
   extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGFILTERImplementor.java,v 1.6 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: AGFILTERImplementor.java,v 1.7 2013-07-04 10:15:30 cjm Exp $" );
 
   /**
    * The timeout for the AGFILTER command (60 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 60000;
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -172,11 +172,14 @@ public class AGFILTERImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:15:30 $
  * $RCSfile: AGFILTERImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFILTERImplementor.java,v $
- *      $Id: AGFILTERImplementor.java,v 1.6 2003-09-26 09:58:41 je Exp $
+ *      $Id: AGFILTERImplementor.java,v 1.7 2013-07-04 10:15:30 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.6  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.5  2003/09/22 14:21:36  je
  *     Removed MAX_TIMEOUTS field.
  *

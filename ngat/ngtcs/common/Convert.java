@@ -7,16 +7,16 @@ import java.util.StringTokenizer;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class Convert
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-	new String( "$Id: Convert.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+    public static final String rcsid =
+	new String( "$Id: Convert.java,v 1.2 2013-07-04 10:35:38 cjm Exp $" );
 
     /**
      * Format used to align argument values.
@@ -274,7 +274,7 @@ public class Convert
   }
 
 
-  private static double getMod( double arg1, double arg2 )
+  protected static double getMod( double arg1, double arg2 )
   {
     double argInt;
 
@@ -341,7 +341,7 @@ public class Convert
      *
      *
      */
-    private static String formatAngle( String formatString, double angleIn )
+    protected static String formatAngle( String formatString, double angleIn )
     {
 	String units=null, minutes=null, seconds=null;
 	double remainder;
@@ -526,7 +526,7 @@ public class Convert
 		break;
 
 	    default:
-		return( "No such type [ "+type+"] formatting!" );
+		return( "No such type ["+type+"] formatting!" );
 	    }
 
 	absDecimalLong = (long)Math.abs( allDecimalLong );
@@ -576,9 +576,12 @@ public class Convert
 
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:35:38 $
  * $RCSfile: Convert.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Convert.java,v $
- *      $Id: Convert.java,v 1.1 2003-07-01 10:13:04 je Exp $
+ *      $Id: Convert.java,v 1.2 2013-07-04 10:35:38 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
  */

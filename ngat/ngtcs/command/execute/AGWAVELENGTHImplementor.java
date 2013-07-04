@@ -17,48 +17,48 @@ import ngat.ngtcs.subsystem.*;
  * Enter the value of the effective wavelength of light used in
  * theatmospheric refraction calculation for the autoguider.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.5 $
  */
 public class AGWAVELENGTHImplementor
   extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGWAVELENGTHImplementor.java,v 1.4 2003-09-29 12:04:32 je Exp $" );
+    new String( "$Id: AGWAVELENGTHImplementor.java,v 1.5 2013-07-04 10:16:11 cjm Exp $" );
 
   /**
    * The timeout for the AGWAVELENGTH command (3 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 3000;
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -94,11 +94,14 @@ public class AGWAVELENGTHImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 12:04:32 $
+ *    $Date: 2013-07-04 10:16:11 $
  * $RCSfile: AGWAVELENGTHImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGWAVELENGTHImplementor.java,v $
- *      $Id: AGWAVELENGTHImplementor.java,v 1.4 2003-09-29 12:04:32 je Exp $
+ *      $Id: AGWAVELENGTHImplementor.java,v 1.5 2013-07-04 10:16:11 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/29 12:04:32  je
+ *     Added execute documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *

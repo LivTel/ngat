@@ -9,27 +9,27 @@ import ngat.ngtcs.command.*;
  * Super-class for all executives of <code>Command</code> objects that are to
  * be implemented by the telescope control system.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.6 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.7 $
  */
 public abstract class CommandImplementor
 {
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS FIELDS.                                                           */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS FIELDS.  /*                                                       */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: CommandImplementor.java,v 1.6 2003-09-29 13:58:53 je Exp $" );
+    new String( "$Id: CommandImplementor.java,v 1.7 2013-07-04 10:16:18 cjm Exp $" );
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT FIELDS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT FIELDS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
@@ -67,15 +67,15 @@ public abstract class CommandImplementor
   protected int slept = 0;
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS METHODS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS METHODS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT METHODS.                                                         */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT METHODS.  /*                                                     */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
@@ -175,10 +175,13 @@ public abstract class CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 13:58:53 $
+ *    $Date: 2013-07-04 10:16:18 $
  * $RCSfile: CommandImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/CommandImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.6  2003/09/29 13:58:53  je
+ *     Added logError method.
+ *
  *     Revision 1.5  2003/09/29 13:12:18  je
  *     Added generic sleep method.
  *

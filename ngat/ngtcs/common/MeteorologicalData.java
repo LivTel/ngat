@@ -3,36 +3,36 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @version $Revision: 1.1 $
- * @author $Author: je $
+ * @version $Revision: 1.2 $
+ * @author $Author: cjm $
  */
 public class MeteorologicalData extends Data
 {
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-        new String( "$Id: MeteorologicalData.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+    public static final String rcsid =
+        new String( "$Id: MeteorologicalData.java,v 1.2 2013-07-04 10:37:57 cjm Exp $" );
 
     /**
      *
      */
-    private double temperature = 273.0;
+    protected double temperature = 273.0;
 
     /**
      *
      */
-    private double pressure = 775.0;
+    protected double pressure = 775.0;
 
     /**
      *
      */
-    private double humidity = 0.5;
+    protected double humidity = 0.5;
 
     /**
      *
      */
-    private double troposphericLapseRate = 0.0065;
+    protected double troposphericLapseRate = 0.0065;
 
 
     /**
@@ -203,8 +203,11 @@ public class MeteorologicalData extends Data
 
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:37:57 $
  * $RCSfile: MeteorologicalData.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/MeteorologicalData.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
 */

@@ -30,65 +30,173 @@ import ngat.ngtcs.subsystem.*;
  * In the run method the position error determines the state of the telescope,
  * i.e. SLEWING or TRACKING.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class GOTOImplementor extends CommandImplementor
   implements java.lang.Runnable
 {
+  /*=========================================================================*/
+  /*  /*                                                                     */
+  /* CLASS FIELDS.  /*                                                       */
+  /*  /*                                                                     */
+  /*=========================================================================*/
+
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: GOTOImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: GOTOImplementor.java,v 1.4 2013-07-04 10:25:03 cjm Exp $" );
 
   /**
    * The timeout for the GOTO command (300 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 300000;
 
+  /*=========================================================================*/
+  /*  /*                                                                     */
+  /* OBJECT FIELDS.  /*                                                      */
+  /*  /*                                                                     */
+  /*=========================================================================*/
 
+  /**
+   * The target to GOTO.
+   */
   protected Target target;
 
+  /**
+   * The reported target of the current position.
+   */
   protected ReportedTarget reported;
 
+  /**
+   * The timestamp for the position demands.
+   */
   protected Timestamp timestamp;
 
+  /**
+   * The Timestamped position demand.
+   */
   protected TimestampedPosition demand;
 
+  /**
+   * The old and new timestamped position demands.
+   */
   protected TimestampedPosition oldTP, newTP;
 
+  /**
+   * The old and new rotator demands.
+   */
   protected double newRotPos, oldRotPos;
 
+  /**
+   * The currently used wavelength of observation.
+   */
   protected double wavelength;
 
+  /**
+   * The GOTO command that invoked this implementor.
+   */
   protected GOTO gotoCommand;
 
+  /**
+   * The mount to send the position demands to.
+   */
   protected Mount mount;
 
-  protected XYZMatrix obsRADec, meanRADec;
+  /**
+   * The Observed RA,Dec as an XYZMatrix.
+   */
+  protected XYZMatrix obsRADec;
 
-  protected double obsRA, obsDec, meanRA, meanDec;
+  /**
+   * The catalogue Mean RA,Dec as an XYZMatrix.
+   */
+  protected XYZMatrix meanRADec;
 
+  /**
+   * The Observed RA, in radians.
+   */
+  protected double obsRA;
+
+  /**
+   * The Observed RA, in radians.
+   */
+  protected double obsDec;
+
+  /**
+   * The catalogue Mean RA, in radians.
+   */
+  protected double meanRA;
+
+  /**
+   * The catalogue Mean RA, in radians.
+   */
+  protected double meanDec;
+
+  /**
+   * The currently-active VirtualTelescope, used to define the pointing in this
+   * GOTO command execution.
+   */
   protected VirtualTelescope activeVT;
 
+  /**
+   * The PointingModel used in this GOTO command execution.
+   */
   protected PointingModel pointing;
 
+  /**
+   * A list of the tracking limits that will impact upon this GOTO command
+   * execution.
+   */
   protected List limits;
 
+  /**
+   * The timer mechanism used to trigger the timestamped positon-demands.
+   */
   protected Timer timer;
 
+  /**
+   * Object used to protect the access synchronisation of the current position.
+   */
   protected Object positionLock = new Object();
 
+  /**
+   * The Equinox used in the rotator transformations.
+   */
   protected Equinox rotatorEquinox;
 
+  /**
+   * The desired rotator position angle.
+   */
   protected double desiredPositionAngle;
 
+  /**
+   * A boolean describing whether equatorial rotation is to be used.
+   */
   protected boolean equatorialRotation = false;
 
+  /**
+   * A boolean flag used to stop this GOT command execution.
+   */
   protected boolean stopTracking = false;
 
+  /**
+   * The AstrometryCalculator used for the transformations.
+   */
   protected AstrometryCalculator astroCalc;
+
+  /*=========================================================================*/
+  /*  /*                                                                     */
+  /* CLASS METHODS.  /*                                                      */
+  /*  /*                                                                     */
+  /*=========================================================================*/
+
+  /*=========================================================================*/
+  /*  /*                                                                     */
+  /* OBJECT METHODS.  /*                                                     */
+  /*  /*                                                                     */
+  /*=========================================================================*/
 
   /**
    * The GOTOImplementor is instantiated. This sets the telescope state to
@@ -97,7 +205,7 @@ public class GOTOImplementor extends CommandImplementor
   public GOTOImplementor( Telescope ts, Command c )
   {
     super( ts, c );
-    telescope.setTelescopeState( TelescopeState.IDLE );
+    telescope.setOperationalMode( OperationalMode.IDLE );
   }
 
 
@@ -116,13 +224,14 @@ public class GOTOImplementor extends CommandImplementor
   {
     // stop previous gotos
     STOPImplementor stop = new STOPImplementor
-      ( telescope, new STOP( command.getId() ) );
+      ( telescope, new STOP( command.getId()+"[STOP]" ) );
     stop.execute();
 
     // set relevant mechanisms
     timer       = telescope.getTimer();
     timestamp   = timer.trigger();
     mount       = telescope.getMount();
+    Rotator rotator     = telescope.getRotator();
     pointing    = mount.getPointingModel();
     gotoCommand = (GOTO)command;
     target      = gotoCommand.getTarget();
@@ -132,7 +241,6 @@ public class GOTOImplementor extends CommandImplementor
 
     telescope.setCurrentTarget( target );
     target.setNonSiderealTrackingStart( timestamp );
-
 
     // convert rotatorMode into either SKY or MOUNT system.
     RotatorMode rotatorMode = telescope.getRotatorMode();
@@ -151,13 +259,16 @@ public class GOTOImplementor extends CommandImplementor
       // apply pointing model stuff here
 
 
+      //
       desiredPositionAngle = activeVT.calcPositionAngle
 	( timestamp, targetPos );
     }
 
     if( rotatorMode == RotatorMode.VERTICAL_POSITION )
+    {
       //      desiredPositionAngle -=
       //	activeVT.getInstrumentAlignmentAngle();
+    }
 
     // set old and new time position so that GOTO is not obtained
     // immediately and no null positions are given
@@ -174,50 +285,29 @@ public class GOTOImplementor extends CommandImplementor
     t.setPriority( Thread.MAX_PRIORITY );
     t.start();
 
-    telescope.setTelescopeState( TelescopeState.SLEWING );
+    telescope.setOperationalMode( OperationalMode.SLEWING );
 
     int gotoOK = 0;
     double mountPositionError = 0.0;
 
-    // either timeout after 500 seconds or if thread is killed
-    int sleep = 10000;
+    // either timeout after 500 seconds or exit if thread is killed
     while( ( slept < TIMEOUT ) && ( t.isAlive() ) )
     {
       gotoOK = 0;
-
-      try
-      {
-	Thread.sleep( 10000 );
-	slept += sleep;
-      }
-      catch( InterruptedException ie )
-      {
-	logger.log( 1, logName, ie );
-      }
+      sleep( 1000 );
 
       // check position error
       // if GOTO is OK for 3 seconds return success
-      int okSleep = 500;
       mountPositionError = calcMountPositionError();
       while( mountPositionError < telescope.MAX_TRACKING_ERROR )
       {
 	gotoOK++;
-
-	try
-	{
-	  Thread.sleep( okSleep );
-	  slept += okSleep;
-	}
-	catch( InterruptedException ie )
-	{
-	  logger.log( 1, logName, ie );
-	}
-
+	sleep( 500 );
 	mountPositionError = calcMountPositionError();
 
 	if( gotoOK >= 6 )
 	{
-	  telescope.setTelescopeState( TelescopeState.TRACKING );
+	  telescope.setOperationalMode( OperationalMode.TRACKING );
 	  String msg = new String( "Telescope tracking" );
 	  logger.log( 3, logName, msg );
 	  commandDone.setReturnMessage( msg );
@@ -227,22 +317,31 @@ public class GOTOImplementor extends CommandImplementor
       }
     }
 
-    String err;
-    if( slept > TIMEOUT )
+    String err = null;
+    OperationalMode tState = telescope.getOperationalMode();
+
+    if( tState == OperationalMode.ERROR )
+    {
+      err = new String( "Telescope state is ERROR" );
+    }
+    else if( tState == OperationalMode.IDLE )
     {
       err = new String
-	( "Could not reach tracking tolerance within "+
-	  TIMEOUT+"ms : execution terminated " );
+	( "Telescope state has been set to IDLE (STOP command)" );
+    }
+    else if( slept > TIMEOUT )
+    {
+      err = new String( "Could not reach tracking tolerance within "+
+			TIMEOUT+"ms : execution terminated " );
       stopTracking = true;
     }
-    else
+    else if( ! t.isAlive() )
     {
       err = new String( "GOTO thread has mysteriously died" );
       stopTracking = true;
     }
 
-    logger.log( 1, logName, err );
-    commandDone.setErrorMessage( err );
+    logError( err );
     stop.execute();
   }
 
@@ -258,13 +357,9 @@ public class GOTOImplementor extends CommandImplementor
   {
     double positionError, rotatorPos;
     XYZMatrix mountPos;
-    TelescopeState telescopeState = TelescopeState.TRACKING;
+    OperationalMode telescopeState = OperationalMode.TRACKING;
     TimestampedPosition upperTP, lowerTP;
     XYZMatrix upperPos, lowerPos;
-
-
-
-
     TimestampedPosition observedTP;
     TimestampedPosition demandTP;
     XYZMatrix observedPos;
@@ -302,8 +397,8 @@ public class GOTOImplementor extends CommandImplementor
     logger.log( 2, logName, "Entering tracking loop" );
 
     while( ( telescope.getSoftwareState() == SoftwareState.OKAY )&&
-	   ( ( telescope.getTelescopeState() == TelescopeState.TRACKING )||
-	     ( telescope.getTelescopeState() == TelescopeState.SLEWING ) )&&
+	   ( ( telescope.getOperationalMode() == OperationalMode.TRACKING )||
+	     ( telescope.getOperationalMode() == OperationalMode.SLEWING ) )&&
 	   ( stopTracking == false ) )
     {
       // calc VT output
@@ -337,31 +432,49 @@ public class GOTOImplementor extends CommandImplementor
 		  "\nsending position demand : \n"+
 		  demandTP.getPosition()+
 		  "\n     and rotator demand : "+rotatorDemand+"\n"+
-		  "\n           at timestamp : "+timestamp );
+		  "\n          for timestamp : "+timestamp );
 
-      // send demands
-      mount.sendPositionDemand( demandTP );
-      //      mount.sendRotatorDemand( rotatorDemand, timestamp );
+      try
+      {
+	// send demands
+	mount.sendPositionDemand( demandTP );
+	//      mount.sendRotatorDemand( rotatorDemand, timestamp );
 
-      // monitor position error
-      positionError = calcMountPositionError();
+	// monitor position error
+	positionError = calcMountPositionError();
+      }
+      catch( SystemException se )
+      {
+	logError( "Failed sending position demand : "+se.toString()+
+		  "\nterminatinf execution" );
+	telescope.setOperationalMode( OperationalMode.ERROR );
+	mount.stop();
+	rotator.stop();
+	
+	target    = null;
+	limits    = null;
+	timestamp = null;
+	demand    = null;
+	return;
+      }
+
       if( positionError >= telescope.MAX_TRACKING_ERROR )
       {
-	if( telescopeState == TelescopeState.TRACKING )
+	if( telescopeState == OperationalMode.TRACKING )
 	{
-	  telescope.setTelescopeState
-	    ( TelescopeState.SLEWING );
-	  telescopeState = TelescopeState.SLEWING;
+	  telescope.setOperationalMode
+	    ( OperationalMode.SLEWING );
+	  telescopeState = OperationalMode.SLEWING;
 	  logger.log( 1, logName, "position error exceeded" );
 	  logger.log( 2, logName, "entered SLEWING state" );
 	}
       }
       else
       {
-	if( telescopeState == TelescopeState.SLEWING )
+	if( telescopeState == OperationalMode.SLEWING )
 	{
-	  telescope.setTelescopeState( TelescopeState.TRACKING );
-	  telescopeState = TelescopeState.TRACKING;
+	  telescope.setOperationalMode( OperationalMode.TRACKING );
+	  telescopeState = OperationalMode.TRACKING;
 	  logger.log( 2, logName, "entered TRACKING state" );
 	}
       }
@@ -383,6 +496,7 @@ public class GOTOImplementor extends CommandImplementor
    * @return the position error in arcseconds
    */
   protected double calcMountPositionError()
+    throws SystemException
   {
     TimestampedPosition oldDemand, newDemand, mountPosTime;
     double oldTime, newTime, mountTime;
@@ -404,7 +518,7 @@ public class GOTOImplementor extends CommandImplementor
     oldPos = oldDemand.getPosition();
     newPos = newDemand.getPosition();
 
-    mountPosTime = mount.getTimestampedPosition();
+    mountPosTime = mount.getCurrentPosition();
     mountTime = mountPosTime.getTimestamp().getTime();
     mountPos = mountPosTime.getPosition();
 
@@ -448,10 +562,13 @@ public class GOTOImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:25:03 $
  * $RCSfile: GOTOImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/GOTOImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

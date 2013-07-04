@@ -12,47 +12,47 @@ import ngat.ngtcs.subsystem.ags.*;
  * Move autoguider probe mirror to a radial position, rotator to a
  * mount-position angle and set autoguider pixel on which to guide.
  * 
- * @author $Author: je $
- * @version $Revision: 1.5 $
+ * @author $Author: cjm $
+ * @version $Revision: 1.6 $
  */
 public class AGMOVEImplementor
   extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGMOVEImplementor.java,v 1.5 2003-09-29 11:55:56 je Exp $" );
+    new String( "$Id: AGMOVEImplementor.java,v 1.6 2013-07-04 10:15:48 cjm Exp $" );
 
   /**
    * The timeout for the AGMOVE command (500 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 500000;
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -194,11 +194,14 @@ public class AGMOVEImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 11:55:56 $
+ *    $Date: 2013-07-04 10:15:48 $
  * $RCSfile: AGMOVEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGMOVEImplementor.java,v $
- *      $Id: AGMOVEImplementor.java,v 1.5 2003-09-29 11:55:56 je Exp $
+ *      $Id: AGMOVEImplementor.java,v 1.6 2013-07-04 10:15:48 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.5  2003/09/29 11:55:56  je
+ *     Copied code from AUTOGUIDEImplementor.
+ *
  *     Revision 1.4  2003/09/29 11:37:17  je
  *     Added execute documentation.
  *

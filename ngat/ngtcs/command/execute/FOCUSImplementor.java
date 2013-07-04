@@ -9,47 +9,47 @@ import ngat.ngtcs.subsystem.amn.*;
  * Drive the focus to a specified setting.
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.5 $
  */
 public class FOCUSImplementor extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: FOCUSImplementor.java,v 1.4 2003-09-29 14:16:44 je Exp $" );
+    new String( "$Id: FOCUSImplementor.java,v 1.5 2013-07-04 10:23:34 cjm Exp $" );
 
   /**
    * The timeout for the FOCUS command (900 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 900000;
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -80,7 +80,8 @@ public class FOCUSImplementor extends CommandImplementor
     {
       if( focus.isDefaultPosition() )
       {
-	demand = telescope.getActiveVT().getFocalStation().getFocus();
+	demand = telescope.getActiveVirtualTelescope().
+	  getFocalStation().getFocus();
 	sm.setDemandPosition( demand );
 
 	do
@@ -134,8 +135,8 @@ public class FOCUSImplementor extends CommandImplementor
 	if( posError > tolerance )
 	{
 	  logError
-	    ( 1, logName, "The Secondary Mirror focus has stopped at "+
-	      actual+"mm which is more than the acceptable position error ["+
+	    ( "The Secondary Mirror focus has stopped at "+actual+
+	      "mm which is more than the acceptable position error ["+
 	      tolerance+"mm ] away from the demand ["+demand+
 	      "mm ] : execution terminated" );
 	  return;
@@ -145,11 +146,11 @@ public class FOCUSImplementor extends CommandImplementor
 	sm.setFocusPosition();
 	sm.setFocusOffset( 0.0 );
       }
-      catch( TTL_SystemException se )
-      {
-	logError( se.toString() );
-	return;
-      }
+    }
+    catch( TTL_SystemException se )
+    {
+      logError( se.toString() );
+      return;
     }
     commandDone.setSuccessful( true );
   }
@@ -166,11 +167,14 @@ public class FOCUSImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 14:16:44 $
+ *    $Date: 2013-07-04 10:23:34 $
  * $RCSfile: FOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/FOCUSImplementor.java,v $
- *      $Id: FOCUSImplementor.java,v 1.4 2003-09-29 14:16:44 je Exp $
+ *      $Id: FOCUSImplementor.java,v 1.5 2013-07-04 10:23:34 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/29 14:16:44  je
+ *     Implemented execute and added documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *

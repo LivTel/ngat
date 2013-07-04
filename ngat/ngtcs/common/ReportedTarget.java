@@ -3,8 +3,8 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class ReportedTarget extends Target
     implements java.io.Serializable
@@ -12,79 +12,79 @@ public class ReportedTarget extends Target
     /**
      * String used to identify RCS revision details.
      */
-    public static final String RevisionString =
-        new String( "$Id: ReportedTarget.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+    public static final String rcsid =
+        new String( "$Id: ReportedTarget.java,v 1.2 2013-07-04 10:38:20 cjm Exp $" );
 
     /**
      *
      */
-    private XYZMatrix observed;
+    protected XYZMatrix observed;
 
     /**
      * The unrefracted `Observed' position as an XYZMatrix in Horizon
      * coordinates.
      */
-    private XYZMatrix unrefracted;
+    protected XYZMatrix unrefracted;
 
     /**
      *
      */
-    private XYZMatrix observedRADec;
+    protected XYZMatrix observedRADec;
 
     /**
      *
      */
-    private XYZMatrix topocentric;
+    protected XYZMatrix topocentric;
 
     /**
      *
      */
-    private XYZMatrix apparentHADec;
+    protected XYZMatrix apparentHADec;
 
     /**
      *
      */
-    private XYZMatrix apparentRADec;
+    protected XYZMatrix apparentRADec;
 
     /**
      *
      */
-    private XYZMatrix systemRADec;
+    protected XYZMatrix systemRADec;
 
     /**
      *
      */
-    private XYZMatrix outputRADec;
+    protected XYZMatrix outputRADec;
 
     /**
      *
      */
-    private Equinox outputEquinox;
+    protected Equinox outputEquinox;
 
     /**
      *
      */
-    private double airmass;
+    protected double airmass;
 
     /**
      * Timestamp of this ReportedTarget
      */
-    private Timestamp timestamp;
+    protected Timestamp timestamp;
 
     /**
      *
      */
-    private double lstRadians;
+    protected double lstRadians;
 
     /**
      *
      */
-    private double mjd;
+    protected double mjd;
 
     /**
      *
      */
-    private double julianEpoch;
+    protected double julianEpoch;
 
 
     /**
@@ -522,8 +522,11 @@ public class ReportedTarget extends Target
     }
 }
 /*
- *    $Date: 2003-07-01 10:13:04 $
+ *    $Date: 2013-07-04 10:38:20 $
  * $RCSfile: ReportedTarget.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/ReportedTarget.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.1  2003/07/01 10:13:04  je
+ *     Initial revision
+ *
 */

@@ -27,16 +27,16 @@ import ngat.ngtcs.subsystem.*;
  * refracted, pointing model etc.)
  * </li></ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class TESTImplementor extends CommandImplementor
 {
     /**
      * String used to identify RCS revision details.
-     */
+  */
     public static final String rcsid =
-	new String( "$Id: TESTImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+	new String( "$Id: TESTImplementor.java,v 1.4 2013-07-04 10:29:41 cjm Exp $" );
 
   /**
    * The timeout for the  command (3 seconds), in milliseconds
@@ -47,7 +47,7 @@ public class TESTImplementor extends CommandImplementor
     /**
      *
      *
-     */
+  */
     public TESTImplementor( Telescope ts, Command c )
     {
 	super( ts, c );
@@ -57,7 +57,7 @@ public class TESTImplementor extends CommandImplementor
     /**
      *
      *
-     */
+  */
     public void execute()
     {
 	TEST test                 = (TEST)command;
@@ -151,11 +151,14 @@ public class TESTImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:29:41 $
  * $RCSfile: TESTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TESTImplementor.java,v $
- *      $Id: TESTImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: TESTImplementor.java,v 1.4 2013-07-04 10:29:41 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

@@ -8,47 +8,47 @@ import ngat.ngtcs.command.*;
  * current position, if this is possible.
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class UNWRAPImplementor extends CommandImplementor
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
-     */
+  */
     public static final String rcsid =
-	new String( "$Id: UNWRAPImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+	new String( "$Id: UNWRAPImplementor.java,v 1.4 2013-07-04 10:30:17 cjm Exp $" );
 
   /**
    * The timeout for the UNWRAP command (220 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 220000;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
   /**
    *
    */
@@ -78,11 +78,14 @@ public class UNWRAPImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:30:17 $
  * $RCSfile: UNWRAPImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/UNWRAPImplementor.java,v $
- *      $Id: UNWRAPImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: UNWRAPImplementor.java,v 1.4 2013-07-04 10:30:17 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

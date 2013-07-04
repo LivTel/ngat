@@ -9,22 +9,22 @@ import ngat.ngtcs.command.*;
  * This implementor sets the humidity in the MeteorologicalData object used by
  * the AstrometryCalculator on the specified telescope.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.5 $
  */
 public class HUMIDITYImplementor extends CommandImplementor
 {
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS FIELDS.                                                           */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS FIELDS.  /*                                                       */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: HUMIDITYImplementor.java,v 1.4 2003-10-02 12:35:30 je Exp $" );
+    new String( "$Id: HUMIDITYImplementor.java,v 1.5 2013-07-04 10:16:29 cjm Exp $" );
 
   /**
    * The timeout for the HUMIDITY command (3 seconds), in milliseconds.
@@ -32,23 +32,23 @@ public class HUMIDITYImplementor extends CommandImplementor
   public static final int TIMEOUT = 3000;
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT FIELDS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT FIELDS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS METHODS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS METHODS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT METHODS.                                                         */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT METHODS.  /*                                                     */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
@@ -86,11 +86,14 @@ public class HUMIDITYImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-10-02 12:35:30 $
+ *    $Date: 2013-07-04 10:16:29 $
  * $RCSfile: HUMIDITYImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/HUMIDITYImplementor.java,v $
- *      $Id: HUMIDITYImplementor.java,v 1.4 2003-10-02 12:35:30 je Exp $
+ *      $Id: HUMIDITYImplementor.java,v 1.5 2013-07-04 10:16:29 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/10/02 12:35:30  je
+ *     Updated documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *

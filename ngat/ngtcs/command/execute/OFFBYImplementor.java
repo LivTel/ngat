@@ -10,47 +10,47 @@ import ngat.ngtcs.subsystem.*;
  * a specified distance in the sky or tangent plane.
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.5 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.6 $
  */
 public class OFFBYImplementor extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: OFFBYImplementor.java,v 1.5 2003-10-16 16:50:30 je Exp $" );
+    new String( "$Id: OFFBYImplementor.java,v 1.6 2013-07-04 10:25:25 cjm Exp $" );
 
   /**
    * The timeout for the OFFBY command (60 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 60000;
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -85,26 +85,21 @@ public class OFFBYImplementor extends CommandImplementor
     }
     else if( om == OffsetMode.ARC )
     {
-      VirtualTelescope vt = telescope.getActiveVirtualTelescope();
-      XYZMatrix mntPos = telescope.getMount().getCurrentPosition();
-      Timestamp time = telescope.getTimer().getTime();
-      Rotator rot = telescope.getRotator();
-      double angle = ( ( rot == null ) ? 0.0 : rot.getPositionAngle() );
-      PointingOrigin po1 = vt.calcPointingOrigin( time, tgt, mntPos, angle );
-      // Y is in the -ve Alt/Dec direction.
-      PointingOrigin po2 = new PointingOrigin
-	( ( po1.getX() + offsetX ), ( po1.getY() - offsetY ) );
-      /*
-	ReportedTarget repTgt = vt.calcSomething( 
-	XYZMatrix out = repTgt.getOutputRADec();
-	double outRA = Math.atan2( out.getY(), out.getX() );
-	double outDec = Math.asin( out.getZ() );
-	double offRA = outRA - tgt.getRA();
-	double offDec = outDec - tgt.getDec();
-	tgt.setOffsetRA( offRA );
-	tgt.setOffsetDec( offDec );
-	commandDone.setSuccessful( true );
-      */
+      double ra = tgt.getRA(), dec = tgt.getDec();
+      double sinDec = Math.sin( dec );
+      double cosDec = Math.cos( dec );
+      double denom = cosDec - offsetX * sinDec;
+
+      double newRA = Math.atan2( offsetX, denom ) + ra;
+      double newDec =
+	Math.atan2( sinDec + offsetY * cosDec,
+		    Math.sqrt( offsetX * offsetX + offsetY * offsetY ) );
+
+      if( newRA < 0.0 ) newRA += ( 2.0 * Math.PI );
+
+      tgt.setOffsetRA( newRA - ra );
+      tgt.setOffsetDec( newDec - dec );
+      commandDone.setSuccessful( true );
     }
     else
     {
@@ -127,11 +122,14 @@ public class OFFBYImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-10-16 16:50:30 $
+ *    $Date: 2013-07-04 10:25:25 $
  * $RCSfile: OFFBYImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/OFFBYImplementor.java,v $
- *      $Id: OFFBYImplementor.java,v 1.5 2003-10-16 16:50:30 je Exp $
+ *      $Id: OFFBYImplementor.java,v 1.6 2013-07-04 10:25:25 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.5  2003/10/16 16:50:30  je
+ *     Added documentation.
+ *
  *     Revision 1.4  2003/10/16 16:48:03  je
  *     Implemented the execute method.
  *

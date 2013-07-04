@@ -10,23 +10,23 @@ import ngat.ngtcs.subsystem.*;
 /**
  * Select which Autoguider to use.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.4 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.5 $
  */
 public class AGSELECTImplementor
   extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGSELECTImplementor.java,v 1.4 2003-09-29 12:03:13 je Exp $" );
+    new String( "$Id: AGSELECTImplementor.java,v 1.5 2013-07-04 10:16:04 cjm Exp $" );
 
   /**
    * The timeout for the AGSELECT command (20 seconds), in milliseconds.
@@ -38,18 +38,18 @@ public class AGSELECTImplementor
    */
   protected static TTL_Autoguider selectedAutoguider = null;
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * 
@@ -59,11 +59,11 @@ public class AGSELECTImplementor
     return selectedAutoguider;
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
+  /*=========================================================================*/
+  /*                                                                         */
   /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*                                                                         */
+  /*=========================================================================*/
 
 
   /**
@@ -113,11 +113,14 @@ public class AGSELECTImplementor
   }
 }
 /*
- *    $Date: 2003-09-29 12:03:13 $
+ *    $Date: 2013-07-04 10:16:04 $
  * $RCSfile: AGSELECTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGSELECTImplementor.java,v $
- *      $Id: AGSELECTImplementor.java,v 1.4 2003-09-29 12:03:13 je Exp $
+ *      $Id: AGSELECTImplementor.java,v 1.5 2013-07-04 10:16:04 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.4  2003/09/29 12:03:13  je
+ *     Added execute documentation.
+ *
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
  *

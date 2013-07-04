@@ -13,8 +13,8 @@ import ngat.ngtcs.subsystem.*;
  * name is <code><i>the telescope system name</i></code>,
  * <code>all</code> or <code>telescope</code>.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class SHUTDOWNImplementor extends CommandImplementor
 {
@@ -22,7 +22,7 @@ public class SHUTDOWNImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SHUTDOWNImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: SHUTDOWNImplementor.java,v 1.4 2013-07-04 10:28:14 cjm Exp $" );
 
   /**
    * The timeout for the SHUTDOWN command (not applicable - set to
@@ -53,7 +53,7 @@ public class SHUTDOWNImplementor extends CommandImplementor
     {
       if( !telescope.shutdownInProgress() )
       {
-	telescope.setTelescopeState( TelescopeState.IDLE );
+	telescope.setOperationalMode( OperationalMode.IDLE );
 	telescope.shutdown();
 	commandDone.setSuccessful( true );
       }
@@ -104,11 +104,14 @@ public class SHUTDOWNImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:28:14 $
  * $RCSfile: SHUTDOWNImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SHUTDOWNImplementor.java,v $
- *      $Id: SHUTDOWNImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: SHUTDOWNImplementor.java,v 1.4 2013-07-04 10:28:14 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

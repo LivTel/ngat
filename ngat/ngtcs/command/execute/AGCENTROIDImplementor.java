@@ -14,47 +14,47 @@ import ngat.ngtcs.subsystem.ags.*;
  * half-maximum of the object's Gaussian point-spread function, and the
  * magnitude.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.5 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.6 $
  */
 public class AGCENTROIDImplementor
   extends CommandImplementor
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGCENTROIDImplementor.java,v 1.5 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: AGCENTROIDImplementor.java,v 1.6 2013-07-04 10:15:18 cjm Exp $" );
 
   /**
    * The timeout for the AGCENTROID command (120 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 120000;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -111,11 +111,14 @@ public class AGCENTROIDImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:15:18 $
  * $RCSfile: AGCENTROIDImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGCENTROIDImplementor.java,v $
- *      $Id: AGCENTROIDImplementor.java,v 1.5 2003-09-26 09:58:41 je Exp $
+ *      $Id: AGCENTROIDImplementor.java,v 1.6 2013-07-04 10:15:18 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.5  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.4  2003/09/22 13:33:22  je
  *     Added timeout variable 'public static final int TIMEOUT'
  *

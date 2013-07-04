@@ -15,47 +15,47 @@ import ngat.ngtcs.command.*;
  * configuration file, such as Autoguider VTs) will have to have their
  * wavelength set explicitly.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class WAVELENGTHImplementor extends CommandImplementor
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
-     */
+  */
     public static final String rcsid =
-	new String( "$Id: WAVELENGTHImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+	new String( "$Id: WAVELENGTHImplementor.java,v 1.4 2013-07-04 10:30:23 cjm Exp $" );
 
   /**
    * The timeout for the WAVELENGTH command (3 seconds), in milliseconds.
    */
   public static final int TIMEOUT = 3000;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
     /**
      * Create the WAVELENGTH command implementor using the specified thread, to
@@ -63,7 +63,7 @@ public class WAVELENGTHImplementor extends CommandImplementor
      * @param eT the ExecutionThread executing this CommandImplementor
      * @param ts the Telescope on which this CommandImplementor is executing
      * @param c the Command (ngat.ngtcs.command.WAVELENGTH) to execute
-     */
+  */
     public WAVELENGTHImplementor( Telescope ts, Command c )
     {
 	super( ts, c );
@@ -72,7 +72,7 @@ public class WAVELENGTHImplementor extends CommandImplementor
 
     /**
      * Set the observing wavelength on every top-level VirtualTelescope.
-     */
+  */
     public void execute()
     {
 	telescope.setObservingWavelength( (WAVELENGTH)command );
@@ -91,11 +91,14 @@ public class WAVELENGTHImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:30:23 $
  * $RCSfile: WAVELENGTHImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/WAVELENGTHImplementor.java,v $
- *      $Id: WAVELENGTHImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id: WAVELENGTHImplementor.java,v 1.4 2013-07-04 10:30:23 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.
  *

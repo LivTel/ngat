@@ -9,23 +9,23 @@ import ngat.ngtcs.command.*;
  * Returns a list of all <code>PluggableSubSystem</code> implementing objects
  * used on the telescope.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.5 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.6 $
  *
  */
 public class SUBSYSTEMLISTImplementor extends CommandImplementor
 {
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS FIELDS.                                                           */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS FIELDS.  /*                                                       */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.5 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.6 2013-07-04 10:29:22 cjm Exp $" );
 
   /**
    * The timeout for the SUBSYSTEMLIST command (3 seconds), in milliseconds
@@ -33,21 +33,21 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
   public static final int TIMEOUT = 3000;
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT FIELDS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT FIELDS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* CLASS METHODS.                                                          */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* CLASS METHODS.  /*                                                      */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /*=========================================================================*/
-  /*                                                                         */
-  /* OBJECT METHODS.                                                         */
-  /*                                                                         */
+  /*  /*                                                                     */
+  /* OBJECT METHODS.  /*                                                     */
+  /*  /*                                                                     */
   /*=========================================================================*/
 
   /**
@@ -95,10 +95,13 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
   }
 }
 /*
- *    $Date: 2003-09-26 09:58:41 $
+ *    $Date: 2013-07-04 10:29:22 $
  * $RCSfile: SUBSYSTEMLISTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SUBSYSTEMLISTImplementor.java,v $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.5  2003/09/26 09:58:41  je
+ *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()
+ *
  *     Revision 1.4  2003/09/23 12:26:50  je
  *     Forgot to cast Hashtable.get() from Object to String
  *

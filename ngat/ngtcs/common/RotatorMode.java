@@ -13,22 +13,22 @@ package ngat.ngtcs.common;
  * <li> RotatorMode.FLOATING_VERTICAL_POSITION
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class RotatorMode implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: RotatorMode.java,v 1.2 2003-09-19 16:00:03 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: RotatorMode.java,v 1.3 2013-07-04 10:38:36 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -45,11 +45,11 @@ public class RotatorMode implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
   public static RotatorMode SKY_POSITION = 
@@ -79,11 +79,11 @@ public class RotatorMode implements java.io.Serializable
     FLOATING_VERTICAL_POSITION
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -110,11 +110,11 @@ public class RotatorMode implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the RotatorMode with the String
@@ -145,11 +145,11 @@ public class RotatorMode implements java.io.Serializable
     return( (RotatorMode)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -284,10 +284,13 @@ public class RotatorMode implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-19 16:00:03 $
+ *    $Date: 2013-07-04 10:38:36 $
  * $RCSfile: RotatorMode.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/RotatorMode.java,v $
- *      $Id: RotatorMode.java,v 1.2 2003-09-19 16:00:03 je Exp $
+ *      $Id: RotatorMode.java,v 1.3 2013-07-04 10:38:36 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/19 16:00:03  je
+ *     Updated Command tx/rx and TTL subsystem interfaces.
+ *
  *
  */
