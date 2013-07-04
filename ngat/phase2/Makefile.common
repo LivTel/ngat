@@ -1,0 +1,5 @@
+#
+# Common phase 2 definitions between phase2 Makefile and sub-dirs
+#
+PHASE2_NAME	=phase2
+LIBDIR		=$(NGAT_SRC_HOME)/$(PHASE2_NAME)/tmp
