@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.text.*;
 
-public class FileLogHandler extends LogHandler {
+public class FileLogHandler extends LogHandler implements ExtendedLogHandler {
 
     /** Delimiter for rotating files.*/
     protected final static String ROTATING_FILE_DELIMITER = "_";
@@ -277,6 +277,91 @@ public class FileLogHandler extends LogHandler {
 	}
 	out.println(formatter.format(record));
     }
+    
+    public void publish(ExtendedLogRecord record) {
+	recordCount++;
+        if (rotate) {
+            if (recordCount > recordLimit) {
+                // Close the current stream.
+                close();
+                // Rotate.
+                if (fileCount < fileLimit)
+                    fileCount++;
+                else
+                    fileCount = fileStart;
+                // Record count back to 0 whatever.
+                recordCount = 0;
+                try {
+                    out = new PrintStream(new FileOutputStream(filename+ROTATING_FILE_DELIMITER+
+                                                               fileCount+"."+
+                                                               fileExtension, append));
+                    out.println(formatter.getHead());
+                } catch (IOException e) {}
+            }
+        } else if (timed) {
+
+	    if (System.currentTimeMillis() > timeLimit) {
+                // Close the current stream.
+                close();
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeZone(LogFormatter.UTC);
+                String genCount = "";
+                String timCount = "";
+                switch (period) {
+                case HOURLY_ROTATION:
+                    sdf1 = new SimpleDateFormat("DDD");    // Day of year.
+                    sdf2 = new SimpleDateFormat("'H'HH");  // Hour of day (0-23).
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.roll(Calendar.HOUR_OF_DAY, true);
+                    break;
+                case DAILY_ROTATION:
+		    sdf1 = new SimpleDateFormat("yyyy");   // Year.
+                    sdf2 = new SimpleDateFormat("'D'DDD"); // Day of year.
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.roll(Calendar.DAY_OF_YEAR, true);
+                    break;
+                case WEEKLY_ROTATION:
+                    sdf1 = new SimpleDateFormat("yyyy");   // Year.
+                    sdf2 = new SimpleDateFormat("'W'ww");  // Week in year.
+                    int dow = cal.get(Calendar.DAY_OF_WEEK);
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.roll(Calendar.DATE, 8-dow);
+                    break;
+                default:
+                    // Default to Hourly logs with datestamp.
+                    sdf1 = new SimpleDateFormat("yyyyMMdd");
+                    sdf2 = new SimpleDateFormat("HH");
+                    period = HOURLY_ROTATION;
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.roll(Calendar.HOUR_OF_DAY, true);
+                }
+		timeLimit = cal.getTime().getTime();
+                sdf1.setTimeZone(LogFormatter.UTC);
+                sdf2.setTimeZone(LogFormatter.UTC);
+                genCount = sdf1.format(new Date());
+                timCount = sdf2.format(new Date());
+                try {
+                    out = new PrintStream(new FileOutputStream(filename+ROTATING_FILE_DELIMITER+
+                                                               genCount+ROTATING_FILE_DELIMITER+
+                                                               timCount+"."+
+                                                               fileExtension, append));
+                    out.println();
+                } catch (IOException e) {}
+            }
+        }
+        out.println(record.toString());
+    }
+
+    public boolean isLoggable(ExtendedLogRecord record) {
+        return (record.getLevel() <= logLevel);
+    }
+
     
     /** Write the tail and close the file.*/
     public void close() {

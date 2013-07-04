@@ -38,7 +38,28 @@ public interface Logging {
     
     /** Log level 9.*/
     public final static int LEVEL_9 = 9;
-    
+
+    // Compatibility with C-logging.
+    public final static int VERBOSITY_VERY_TERSE = 1;
+    public final static int VERBOSITY_TERSE = 2;
+    public final static int VERBOSITY_INTERMEDIATE = 3;
+    public final static int VERBOSITY_VERBOSE = 4;
+    public final static int VERBOSITY_VERY_VERBOSE = 5;
+
+    // Default level names.
+    public final static int LEVEL_SUMMARY = 1;
+    public final static int LEVEL_DETAIL = 2;
+    public final static int LEVEL_FINE = 3;
+    public final static int LEVEL_DEBUG = 4;
+    public final static int LEVEL_TRACE = 5;
+
+    // Alternative level names.
+    public final static int LOG_LEVEL_PITHY = 1;
+    public final static int LOG_LEVEL_STINGY = 2;
+    public final static int LOG_LEVEL_THOROUGH = 3;
+    public final static int LOG_LEVEL_CHATTY = 4;
+    public final static int LOG_LEVEL_PRATTLING = 5;
+
     /** Constant to indicate Logging category: WARNING.*/
     public static final String WARNING = "WARNING";
    
@@ -106,19 +127,19 @@ public interface Logging {
     public static final String GREY_TEXT = "GREY_TEXT";
 
     /** Severity level: FATAL.*/
-    public static final int SEVERITY_FATAL= 6;
+    public static final int SEVERITY_FATAL= 5;
 
     /** Severity level: CRITICAL.*/
-    public static final int SEVERITY_CRITICAL = 5;
+    public static final int SEVERITY_CRITICAL = 4;
     
     /** Severity level: ERROR.*/
-    public static final int SEVERITY_ERROR = 4;
+    public static final int SEVERITY_ERROR = 3;
     
     /** Severity level: WARNING.*/
-    public static final int SEVERITY_WARNING = 3;
+    public static final int SEVERITY_WARNING = 2;
     
-    /** Severity level: HARMLESS.*/
-    public static final int SEVERITY_HARMLESS = 2;
+    // /** Severity level: HARMLESS.*/
+    //    public static final int SEVERITY_HARMLESS = 2;
     
     /** Severity level:INFORMATION. */
     public static final int SEVERITY_INFORMATION = 1 ;
