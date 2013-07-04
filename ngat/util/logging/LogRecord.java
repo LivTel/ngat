@@ -45,6 +45,9 @@ public class LogRecord implements Serializable {
    * upto the application calling the Logger.*/
   protected Object[] params;
 
+    /** Extra to allow channel identification in enhanced logging system.*/
+    protected String channelID;
+
   /** An exception to log.*/
   protected Exception exception;
 
@@ -136,10 +139,20 @@ public class LogRecord implements Serializable {
   /** @return The logging level of this record.*/
   public int getLevel() {  return level; }
 
+
+    public void setChannelID(String channelID) {
+	this.channelID = channelID;
+    }
+
+    public String getChannelID() {return channelID; }
+
+
   public String toString() {
     return 
       "ngat.util.logging.LogRecord {"+
       "\nLoggerName: "+loggerName+
+      "\nChannelID:  "+channelID+
+      "\nLevel: "+level+
       "\nClazz: "+clazz+
       "\nSource: "+source+
       "\nMethod: "+method+

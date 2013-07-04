@@ -57,6 +57,7 @@ public class Logger implements Logging {
     /** Provides the timestanp for the log records.*/
     protected TimeProvider timeProvider;
 
+    /** The channel ID.*/
     protected String channelID;
 
     /** Create a Logger with the specified name. You should <b>never</b> call
@@ -80,6 +81,11 @@ public class Logger implements Logging {
      * @param name The name / id of the Logger.*/
     public static Logger getLogger(String name) {
 	return LogManager.getLogger(name);
+    }
+
+    /** Create a LogGenerator bound to this logger.*/
+    public LogGenerator generate() {
+	return new LogGenerator(this);
     }
 
     /** Add the specifed handler to the set of handlers which
@@ -152,7 +158,7 @@ public class Logger implements Logging {
 	ExtendedLogHandler handler = null;
 
 	objectList = (handlers.toArray());
-	handlerList = new LogHandler[objectList.length];
+	handlerList = new ExtendedLogHandler[objectList.length];
 	for(int i = 0;i < objectList.length;i++)
 	{
 	    o = objectList[i];
@@ -192,7 +198,12 @@ public class Logger implements Logging {
     /** @return The name/id of this Logger.*/  
     public String getName() {return name; }
     
+    /** Set the channelID.*/
     public void setChannelID(String channelID) { this.channelID = channelID;}
+
+    /** Return the channelID.*/
+    public String getChannelID() { return channelID;}
+
 
     /** Generate a LogRecord with the supplied parameters and
      * hand off to any handlers to format and publish.
@@ -400,19 +411,34 @@ public class Logger implements Logging {
     /** Publish an ExtendedLogRecord.*/
     public void xlog(ExtendedLogRecord elr) {
 	
+	//System.err.println("Logger:xlog(): using "+elr);
+
 	// Cheap test.
-	if (elr.getlevel() != ALL)
-	    if (elr.getlevel() > logLevel) return;
+	//System.err.println("Logger:xlog(): Elr level: "+elr.getLevel()+" Logger level: "+logLevel);
+	if (logLevel != Logging.ALL) {
+	    if (elr.getLevel() > logLevel) 
+		return;
+	}
+
+	//System.err.println("Logger:xlog(): passed elr level test");
+
 	seqno++;
 
 	ExtendedLogHandler handler = null;
 	// Iterate over handlers.
+	//System.err.println("Logger:xlog(): count extended handlers: "+xhandlers.size());
+
 	Iterator it = xhandlers.iterator();
 	while (it.hasNext()) {
-	    handler = (ExtendedLogHandler)it.next();	 
-	    handler.publish(elr);
-	}
+	    handler = (ExtendedLogHandler)it.next();
+	    //System.err.println("Logger:xlog(): xhandler: "+handler);
 
+	    if (handler.isLoggable(elr)) {
+		//System.err.println("Logger:xlog(): xhandler can publish");
+		handler.publish(elr);
+	    }
+	}
+	
     }
 	
 
