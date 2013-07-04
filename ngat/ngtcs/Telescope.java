@@ -20,28 +20,28 @@ import ngat.ngtcs.subsystem.*;
  * Timer and PluggableSubSystems).  It is these references that this class will
  * provide for the CommandImplementor classes.
  *
- * @author $Author: je $
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $
+ * @version $Revision: 1.3 $
  */
 public class Telescope
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: Telescope.java,v 1.2 2003-09-19 15:58:40 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: Telescope.java,v 1.3 2013-07-04 09:47:03 cjm Exp $" );
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Logger for this Telescope.
@@ -71,7 +71,7 @@ public class Telescope
   /**
    * Logging Level for the NGTCS logs, set to the default of 3.
    */
-  protected int logLevel = 3;
+  protected int logLevel = 4;
 
   /**
    * List of all Loggers used in this Telescope.
@@ -89,19 +89,20 @@ public class Telescope
   protected Hashtable loggerNameCounts = null;
 
   /**
-   * The current state of the Telescope, set to the default of SAFE
+   * The current state of the control system.
    */
-  protected volatile TelescopeState telescopeState = TelescopeState.SAFE;
+  protected volatile SoftwareState softwareState = null;
 
   /**
-   * The current state of the Telescope, set to the default of SAFE
+   * Current state of the telescope as a whole, implemented for specific
+   * telescopes using the TelescopeState interface.
    */
-  protected volatile SoftwareState softwareState = SoftwareState.SAFE;
+  protected volatile TelescopeState telescopeState = null;
 
   /**
-   * The current Status of the Telescope.
+   * The current operational mode of the telescope, initialised to IDLE.
    */
-  protected TelescopeStatus status;
+  protected volatile OperationalMode operationalMode = OperationalMode.STOPPED;
 
   /**
    * The Communicator used to listen for incoming Commands.
@@ -246,7 +247,6 @@ public class Telescope
      */
     protected int count;
     
-
     /**
      * Initialse the count.
      */
@@ -255,7 +255,6 @@ public class Telescope
       count = 0;
     }
     
-
     /**
      * Add 1 to the count.
      */
@@ -264,7 +263,6 @@ public class Telescope
       count++;
     }
     
-
     /**
      * Retrieve the current count.
      * @return count
@@ -287,11 +285,11 @@ public class Telescope
     }
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    *
@@ -310,18 +308,18 @@ public class Telescope
     }
     catch( InitialisationException nie )
     {
-      System.err.println( "Cannot initialise Telescope ["+args[ 0 ]+
-			  "] : "+nie );
+      System.err.println
+	( "Cannot initialise Telescope ["+args[ 0 ]+"] : "+nie );
       System.exit( 1 );
     }
   }
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Constructor for Telescope objects.  Creates a Telescope object with
@@ -495,6 +493,7 @@ public class Telescope
     /*********************************************************************/
     // Read the name of the Rotator class
     /*********************************************************************/
+    /*
     String rotatorClassName = np.getProperty( "rotatorClass" );
     if( rotatorClassName == null )
     {
@@ -509,6 +508,7 @@ public class Telescope
       rotator.initialise( this );
       logger.log( 1, logName, "Rotator ["+rotatorClassName+"] initialised" );
     }
+    */
     /*********************************************************************/
     // Read the name of the Timer class
     /*********************************************************************/
@@ -649,7 +649,7 @@ public class Telescope
 
 	  goodDesc = true;
 	  logger.log
-	    ( 3, logName, "Configuring VirtualTelescopeT ["+n+"] with:"+
+	    ( 3, logName, "Configuring VirtualTelescope ["+n+"] with:"+
 	      "\n               port number = "+p+
 	      "\n             default focus = "+f+
 	      "\n     instrument centre (X) = "+x+
@@ -746,7 +746,9 @@ public class Telescope
     PluggableSubSystem subsys;
     if( fr != null )
     {
+      subsysClassName = null;
       BufferedReader br = new BufferedReader( fr );
+      String subsysName = null;
       try
       {
 	/* Read Class name of PluggableSubSystem */
@@ -754,33 +756,28 @@ public class Telescope
 
 	while( subsysClassName != null )
 	{
-	  logger.log( 1, logName, "Initialising "+subsysClassName );
-
-	  subsys = null;
+	  logger.log( 1, logName, "Instantiating "+subsysClassName );
 
 	  /* Instantiate PluggableSubSystem */
-	  subsys = (PluggableSubSystem)
-	    instantiateByName( subsysClassName );
+	  subsys = null;
+	  subsys = (PluggableSubSystem)( instantiateByName( subsysClassName ));
 
 	  /* Use hashtable to prevent same name being 
 	   * used twice. */
 	  String shortSubsysName =
-	    StringUtilities.getLeaf
-	    ( subsysClassName, '.' );
+	    StringUtilities.getLeaf( subsysClassName, '.' );
 
-	  if( ! subsysNameCounts.containsKey
-	      ( shortSubsysName ) )
+	  if( ! subsysNameCounts.containsKey( shortSubsysName ) )
 	  {
-	    subsysNameCounts.put( shortSubsysName,
-				  new Counter() );
+	    subsysNameCounts.put( shortSubsysName, new Counter() );
 	  }
 
-	  Counter c = (Counter)
-	    ( subsysNameCounts.get( shortSubsysName ) );
+	  Counter c = (Counter)( subsysNameCounts.get( shortSubsysName ) );
 	  c.increment();
 
-	  String subsysName = shortSubsysName+c.
-	    toString();
+	  subsysName = shortSubsysName+c.toString();
+
+	  logger.log( 1, logName, "Initialising "+subsysName );
 
 	  /* Initialise PluggableSubSystem */
 	  subsys.initialise( this );
@@ -790,10 +787,11 @@ public class Telescope
 
 	  if( subsys instanceof ControllableSubSystem )
 	  {
-	    conSubsystemHash.put
-	      ( subsysName, subsys );
+	    conSubsystemHash.put( subsysName, subsys );
 	    conSubsystemList.add( subsysName );
 	  }
+
+	  logger.log( 1, logName, subsysName+" initialised" );
 
 	  subsysClassName = br.readLine();
 	}
@@ -801,9 +799,8 @@ public class Telescope
       }
       catch( Exception e )
       {
-	InitialisationException ie =
-	  new InitialisationException
-	  ( "cannot initialise subsystems : "+e );
+	InitialisationException ie = new InitialisationException
+	  ( "cannot initialise subsystems ["+subsysName+"] : "+e );
 	logger.log( 1, logName, ie );
 	throw ie;
       }
@@ -832,10 +829,17 @@ public class Telescope
 		"] initialised" );
 
     /*********************************************************************/
-    softwareState = SoftwareState.OKAY;
-    telescopeState = TelescopeState.IDLE;
+    /* Starting State monitor                                            */
+    /*********************************************************************/
+
+
+
+    /*********************************************************************/
+    //    telescopeState = TelescopeState.;
+    operationalMode = OperationalMode.STOPPED;
 
     logger.log( 1, logName, "Telescope ["+name+"] initialised" );
+
     System.out.println( "ready" );
   }
 
@@ -923,6 +927,8 @@ public class Telescope
       PluggableSubSystemCreator fac =
 	(PluggableSubSystemCreator)facClazz.newInstance();
 
+      logger.log( 1, logName, "Factory ["+facClazz+"] = "+fac );
+
       Object o = fac.getInstance();
 
       if( o != null )
@@ -933,7 +939,7 @@ public class Telescope
 	    ".getInstance() returns null" );
     }
     catch( Exception e )
-    {	    
+    {
       throw new InitialisationException
 	( "couldn't instantiate "+s+" : "+e );
     }
@@ -1151,7 +1157,6 @@ public class Telescope
     synchronized( shutdownLock )
     {
       if( shutdownInProgress ) return;
-
       shutdownInProgress = true;
     }
 
@@ -1169,17 +1174,18 @@ public class Telescope
 	(ControllableSubSystem)
 	( conSubsystemHash.get( subsysName ) );
 
-      System.err.println( "making-safe "+subsysName+" ["+
-			  subsystem+"]" );
+      System.err.println( "making-safe "+subsysName+" ["+subsystem+"]" );
 
-      if( subsystem.shutdown() )
+      try
       {
+	subsystem.shutdown();
 	System.err.println( subsysName+" shutdown" );
       }
-      else
+      catch( SystemException se )
       {
-	System.err.println( "problem shutting down "+
-			    subsysName );
+
+	System.err.println( "Problem shutting down "+subsysName );
+
       }
     }
 
@@ -1201,23 +1207,25 @@ public class Telescope
     {
       String subsysName = (String)( conSubsystemList.get( i ) );
       ControllableSubSystem subsystem = 
-	(ControllableSubSystem)
-	( conSubsystemHash.get( subsysName ) );
+	(ControllableSubSystem)( conSubsystemHash.get( subsysName ) );
 
-      System.err.println( "making-safe "+subsysName+" ["+
-			  subsystem+"]" );
+      System.err.println( "making-safe "+subsysName+" ["+subsystem+"]" );
 
-      if( subsystem.makeSafe() )
+      try
       {
-	System.err.println( subsysName+" safe" );
+	subsystem.makeSafe();
       }
-      else
+      catch( SystemException se )
       {
-	System.err.println( "problem making "+subsysName+
-			    " safe!" );
+	String err = new String( "Problem making "+subsysName+" safe : "+se );
+	logger.log( 1, logName, err );
+	System.err.println( err );
       }
+      System.err.println( subsysName+" safe" );
     }
+
     softwareState = SoftwareState.SAFE;
+
     logger.close();
   }
 
@@ -1245,6 +1253,30 @@ public class Telescope
       This needs to be synchronized
     */
     return softwareState;
+  }
+
+
+  /**
+   *
+   */
+  public void setOperationalMode( OperationalMode om )
+  {
+    /*
+      This needs to be synchronized
+    */
+    operationalMode = om;
+  }
+
+
+  /**
+   *
+   */
+  public OperationalMode getOperationalMode()
+  {
+    /*
+      This needs to be synchronized
+    */
+    return operationalMode;
   }
 
 
@@ -1278,13 +1310,15 @@ public class Telescope
    * Return the current Status of this Telescope.
    * @return the status of this Telescope
    */
-  public Status getStatus()
+  public TelescopeStatus getStatus()
+    throws SystemException
   {
-    MountStatus ms = (MountStatus)( mount.getStatus() );
-    ReportedTarget rt = activeVT.calcObservedTarget
-      ( ms.getTimestamp(), ms.getPosition() );
+    MountState mountState = (MountState)( mount.getState() );
+    ReportedTarget reportedTarget = activeVT.calcObservedTarget
+      ( mountState.getTimestamp(), mountState.getPosition() );
     return new TelescopeStatus
-      ( name, softwareState, telescopeState, currentTarget, rt, ms );
+      ( name, softwareState, operationalMode, currentTarget,
+	reportedTarget, mountState );
   }
 
 
@@ -1355,11 +1389,14 @@ public class Telescope
   }
 }
 /*
- *    $Date: 2003-09-19 15:58:40 $
+ *    $Date: 2013-07-04 09:47:03 $
  * $RCSfile: Telescope.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/Telescope.java,v $
- *      $Id: Telescope.java,v 1.2 2003-09-19 15:58:40 je Exp $
+ *      $Id: Telescope.java,v 1.3 2013-07-04 09:47:03 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/19 15:58:40  je
+ *     Updated Command tx/rx and TTL subsystem interfaces.
+ *
  *     Revision 1.1  2003/07/01 10:11:30  je
  *     Initial revision
  *

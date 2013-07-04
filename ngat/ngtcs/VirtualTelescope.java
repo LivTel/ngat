@@ -20,8 +20,8 @@ import ngat.ngtcs.subsystem.*;
  * above transformations such as the calculating of the tangent plane
  * coordinates from the focal station X,Y and the rotator position angle.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class VirtualTelescope
 {
@@ -34,8 +34,8 @@ public class VirtualTelescope
   /**
    * String used to identify RCS revision details.
    */
-  public static final String RevisionString =
-    new String( "$Id: VirtualTelescope.java,v 1.2 2003-09-24 14:26:15 je Exp $" );
+  public static final String rcsid =
+    new String( "$Id: VirtualTelescope.java,v 1.3 2013-07-04 09:49:52 cjm Exp $" );
 
   /**
    * AstrometryCalculator used to perform all astrometric transformations.
@@ -57,6 +57,11 @@ public class VirtualTelescope
    * Telescope system for which this is a VirtualTelescope..
    */
   protected Telescope telescope;
+
+  /**
+   *
+   */
+  protected Mount mount;
 
   /**
    * Mount for the Telescope.
@@ -114,6 +119,28 @@ public class VirtualTelescope
    */
   protected Target target;
 
+
+
+  /**
+   * Virtual Telescope constructor.
+   * @param t the telescope for which this is a virtual representation
+   * @param fs the FocalStation defining this VT's coordinates
+   * @param d the focal length of this VT
+   */
+  public VirtualTelescope( Telescope t, FocalStation fs )
+  {
+    telescope     = t;
+    focalStation  = fs;
+    name          = focalStation.getName();
+    focalLength   = telescope.getFocalLength();
+    astroCalc     = telescope.getAstrometryCalculator();
+    rotator       = telescope.getRotator();
+    mount         = telescope.getMount();
+    mountType     = mount.getType();
+    pointingModel = mount.getPointingModel();
+
+    // read relevant config scripts and initiallise
+  }
 
 
   /**
@@ -734,11 +761,14 @@ public class VirtualTelescope
   }
 }
 /*
- *    $Date: 2003-09-24 14:26:15 $
+ *    $Date: 2013-07-04 09:49:52 $
  * $RCSfile: VirtualTelescope.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/VirtualTelescope.java,v $
- *      $Id: VirtualTelescope.java,v 1.2 2003-09-24 14:26:15 je Exp $
+ *      $Id: VirtualTelescope.java,v 1.3 2013-07-04 09:49:52 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/24 14:26:15  je
+ *     Added documentation for constructors.
+ *
  *     Revision 1.1  2003/07/01 10:11:30  je
  *     Initial revision
  *
