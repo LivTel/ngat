@@ -13,28 +13,28 @@ package ngat.ngtcs.command;
  * &plusmn;<code>MAX_RA_OFFSET_TIME</code> (240.00) in Right Ascension, and
  * &plusmn;<code>MAX_DEC_OFFSET_TIME</code> (3600.00) in Decliantion.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class OFFBY extends ngat.ngtcs.command.Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: OFFBY.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: OFFBY.java,v 1.3 2013-07-04 10:07:05 cjm Exp $" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Mode to offset in, defaulted to <code>OffsetMode.ARC</code>.
@@ -51,11 +51,11 @@ public class OFFBY extends ngat.ngtcs.command.Command
      */
     protected double dec;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Minimum Right Ascension offset, in seconds (240.00).
@@ -77,11 +77,11 @@ public class OFFBY extends ngat.ngtcs.command.Command
      */
     public static final double MAX_DEC_OFFSET_ARC = 3600.000;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create an OFFBY command with the specified ID, using the specified
@@ -166,11 +166,14 @@ public class OFFBY extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:07:05 $
  * $RCSfile: OFFBY.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/OFFBY.java,v $
- *      $Id: OFFBY.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: OFFBY.java,v 1.3 2013-07-04 10:07:05 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

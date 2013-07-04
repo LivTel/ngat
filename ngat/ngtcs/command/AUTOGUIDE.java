@@ -5,22 +5,22 @@ import ngat.ngtcs.common.*;
 /**
  * Set the <code>AutoguideMode</code> and relevant parameters to autoguide.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class AUTOGUIDE extends ngat.ngtcs.command.Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: AUTOGUIDE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: AUTOGUIDE.java,v 1.3 2013-07-04 10:06:24 cjm Exp $" );
 
     /**
      * The brightest magnitude of star to guide on.
@@ -52,11 +52,11 @@ public class AUTOGUIDE extends ngat.ngtcs.command.Command
      */
     public static double HIGHEST_PIXEL = 1023.0;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Description of whether this command is to start autoguiding (as opposed
@@ -94,18 +94,18 @@ public class AUTOGUIDE extends ngat.ngtcs.command.Command
      */
     protected double yPixel = 0.0;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * This constructor will autoguide using the
@@ -262,11 +262,14 @@ public class AUTOGUIDE extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:24 $
  * $RCSfile: AUTOGUIDE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AUTOGUIDE.java,v $
- *      $Id: AUTOGUIDE.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: AUTOGUIDE.java,v 1.3 2013-07-04 10:06:24 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

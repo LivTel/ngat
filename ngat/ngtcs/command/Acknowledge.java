@@ -8,22 +8,22 @@ import java.util.*;
  * An Acknowledge is returned after command receipt with a timeout.  Further
  * Acknowledges may be sent to increase this timeout.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class Acknowledge extends ngat.message.base.ACK
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Acknowledge.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+    new String( "$Id: Acknowledge.java,v 1.3 2013-07-04 10:05:28 cjm Exp $" );
 
   /**
    * Total number of acknowledges sent.
@@ -31,11 +31,11 @@ public class Acknowledge extends ngat.message.base.ACK
   protected static long totalAcknowledgeNumber = 0;
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * This acknowledges number.
@@ -53,11 +53,11 @@ public class Acknowledge extends ngat.message.base.ACK
   protected Command command;
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return the total number of acknowledge sent.
@@ -70,11 +70,11 @@ public class Acknowledge extends ngat.message.base.ACK
   }
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Constructor.
@@ -135,11 +135,14 @@ public class Acknowledge extends ngat.message.base.ACK
   }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:05:28 $
  * $RCSfile: Acknowledge.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Acknowledge.java,v $
- *      $Id: Acknowledge.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: Acknowledge.java,v 1.3 2013-07-04 10:05:28 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision
  *

@@ -9,23 +9,23 @@ package ngat.ngtcs.command;
  * @see ngat.ngtcs.command.CommandDone
  * @see ngat.ngtcs.Communicator
  *
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public abstract class Message extends ngat.message.base.MESSAGE
   implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Message.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+    new String( "$Id: Message.java,v 1.3 2013-07-04 10:06:59 cjm Exp $" );
 
   /**
    * Total number of messages sent.
@@ -33,11 +33,11 @@ public abstract class Message extends ngat.message.base.MESSAGE
   protected static long totalMessageNumber = 0;
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * ID of this Message.
@@ -49,11 +49,11 @@ public abstract class Message extends ngat.message.base.MESSAGE
    */
   protected long messageNumber;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return the total number of message sent.
@@ -66,11 +66,11 @@ public abstract class Message extends ngat.message.base.MESSAGE
   }
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Constructor.
@@ -109,11 +109,14 @@ public abstract class Message extends ngat.message.base.MESSAGE
 
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:59 $
  * $RCSfile: Message.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Message.java,v $
- *      $Id: Message.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: Message.java,v 1.3 2013-07-04 10:06:59 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision
  *

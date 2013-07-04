@@ -3,46 +3,46 @@ package ngat.ngtcs.command;
 /**
  * This command will open or close the mirror cover.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class MIRROR_COVER extends ngat.ngtcs.command.Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: MIRROR_COVER.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: MIRROR_COVER.java,v 1.3 2013-07-04 10:07:01 cjm Exp $" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Description of whether the mirror cover should be open.
      */
     protected boolean open;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create a MIRROR_COVER command with the specified ID, stating whether the
@@ -68,11 +68,14 @@ public class MIRROR_COVER extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:07:01 $
  * $RCSfile: MIRROR_COVER.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/MIRROR_COVER.java,v $
- *      $Id: MIRROR_COVER.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: MIRROR_COVER.java,v 1.3 2013-07-04 10:07:01 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

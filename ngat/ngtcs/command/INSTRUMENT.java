@@ -5,46 +5,46 @@ package ngat.ngtcs.command;
  * mechanism, rotator and fold-mirror) ready for an exposure on the specified
  * instrument port.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class INSTRUMENT extends ngat.ngtcs.command.Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: INSTRUMENT.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: INSTRUMENT.java,v 1.3 2013-07-04 10:06:54 cjm Exp $" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The String name of the instrument port to initialise.
      */
     protected String instPortName;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create an INSTRUMENT command with the specified ID, to change instrument
@@ -70,11 +70,14 @@ public class INSTRUMENT extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:54 $
  * $RCSfile: INSTRUMENT.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/INSTRUMENT.java,v $
- *      $Id: INSTRUMENT.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: INSTRUMENT.java,v 1.3 2013-07-04 10:06:54 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

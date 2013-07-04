@@ -4,22 +4,22 @@ package ngat.ngtcs.command;
  * Super-class of ALL NGTCS commands.  This class holds the top-level values
  * used by every command.
  *
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public abstract class Command extends ngat.message.base.COMMAND
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Command.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: Command.java,v 1.3 2013-07-04 10:06:39 cjm Exp $" );
 
     /**
      * Total number of commands sent.
@@ -27,11 +27,11 @@ public abstract class Command extends ngat.message.base.COMMAND
     protected static long totalCommandNumber = 0;
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Number of this command.
@@ -39,11 +39,11 @@ public abstract class Command extends ngat.message.base.COMMAND
     protected long commandNumber = 0;
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
     /**
@@ -55,11 +55,11 @@ public abstract class Command extends ngat.message.base.COMMAND
     }
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The command constructor.  This constructor sets the id of the command.
@@ -134,11 +134,14 @@ public abstract class Command extends ngat.message.base.COMMAND
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:39 $
  * $RCSfile: Command.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Command.java,v $
- *      $Id: Command.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: Command.java,v 1.3 2013-07-04 10:06:39 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision
  *

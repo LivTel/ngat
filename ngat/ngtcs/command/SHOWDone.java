@@ -14,232 +14,168 @@ import ngat.ngtcs.common.*;
  * <b>MUST</b> be checked for in the control process that requested the data
  * with the SHOW command.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $
+ * @version $Revision: 1.3 $
  */
-public class SHOWDone extends CommandDone
+public class SHOW_CALIBRATE_Done extends CommandDone
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * String used to identify RCS revision details.
-     */
-    public static final String rcsid =
-	new String( "$Id: SHOWDone.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+  /**
+   * String used to identify RCS revision details.
+   */
+  public static final String rcsid =
+    new String( "$Id:" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * The object that hold all the Meteorological data used in the astrometry
-     * transformations.
-     */
-    protected MeteorologicalData metData = null;
+  public double calibrateDefaultAzimuthIndexError();
+  public double calibrateDefaultAltitudeIndexError();
+  public double calibrateDefaultRotatorIndexError();
+  public double calibrateCurrentAzimuthIndexError();
+  public double calibrateCurrentAltitudeIndexError();
+  public double calibrateCurrentRotatorIndexError();
+  public double calibrateLastCalibrationAzimuthIndexError();
+  public double calibrateLastCalibrationAzimuthRMS();
+  public double calibrateLastCalibrationAltitudeIndexError();
+  public double calibrateLastCalibrationAltitudeRMS();
+  public double calibrateLastCalibrationCollimationError();
+  public double calibrateLastCalibrationCollimationRMS();
+  public double calibrateLastCalibrationSkyRMS();
 
-    /**
-     * The object that hold all the International Earth Rotation Service data
-     * used in the astrometry transformations.
-     */
-    protected IERSData iersData = null;
-
-    /**
-     * The PointingModel object being used on the Mount.
-     */
-    protected PointingModel pointingModel = null;
-
-    /**
-     * The FocalStation defining the current acticve VirtualTelescope.
-     */
-    protected FocalStation focalStation = null;
-
-    /**
-     * A list of Limit objects that will prevent tracking.
-     */
-    protected List limitList = null;
-
-    /**
-     * A list of the requested mechanism status.
-     */
-    protected List statusList = null;
-
-    /**
-     * The currently set target on the Telescope.
-     */
-    protected Target target = null;
-
-    /**
-     * A list of the requested systems states.
-     */
-    protected List stateList = null;
-
-    /**
-     * A parsed Time object filled with various representations of the
-     * current TCS time.
-     */
-    protected Time time = null;
-
-    /**
-     * A String representing the version ID of the TCS.
-     */
-    protected String versionString = null;
-
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
-    /**
-     * Initialise the reply to the specified SHOW command containing the
-     * <code><b>true</b></code> successful flag and requested data or a
-     * <code><b>false</b></code> successful flag.
-     * @param s the SHOW command to which this is a reply
-     */
-    public SHOWDone( SHOW s )
-    {
-        super( (Command)s );
-    }
+  /**
+   * Initialise the reply to the specified SHOW command containing the
+   * <code><b>true</b></code> successful flag and requested data or a
+   * <code><b>false</b></code> successful flag.
+   * @param s the SHOW command to which this is a reply
+   */
+  public SHOWDone( SHOW s )
+  {
+    super( (Command)s );
 
-
-    /**
-     * Method to set the returned MeteorologicalData object being used in the
-     * astrometric transformations.
-     * @param md the returned MeteorologicalData
-     * @see #metData
-     */
-    public void setMeteorologicalData( MeteorologicalData md )
-    {
-        metData = md;
-    }
-
-
-    /**
-     * Method to set the returned IERSData object being used in the
-     * astrometric transformations.
-     * @param id the returned IERSData
-     * @see #iersData
-     */
-    public void setIERSData( IERSData id )
-    {
-        iersData = id;
-    }
+    calibrateDefaultAzimuthIndexError();
+    calibrateDefaultAltitudeIndexError();
+    calibrateDefaultRotatorIndexError();
+    calibrateCurrentAzimuthIndexError();
+    calibrateCurrentAltitudeIndexError();
+    calibrateCurrentRotatorIndexError();
+    calibrateLastCalibrationAzimuthIndexError();
+    calibrateLastCalibrationAzimuthRMS();
+    calibrateLastCalibrationAltitudeIndexError();
+    calibrateLastCalibrationAltitudeRMS();
+    calibrateLastCalibrationCollimationError();
+    calibrateLastCalibrationCollimationRMS();
+    calibrateLastCalibrationSkyRMS();
+  }
 
 
-    /**
-     * Method to set the returned PointingModel object being used by the
-     * Mount. 
-     * @param pm the returned PointingModel
-     * @see #pointingModel
-     */
-    public void setPointingModel( PointingModel pm )
-    {
-	pointingModel = pm;
-    }
+  public void setCalibrateDefaultAzimuthIndexError()
+  {
+
+  }
 
 
-    /**
-     * Method to set the returned FocalStation object for the current active
-     * VirtualTelescope.
-     * @param fs the returned FocalStation
-     * @see #focalStation
-     */
-    public void setFocalStation( FocalStation fs )
-    {
-	focalStation = fs;
-    }
+  public void setCalibrateDefaultAltitudeIndexError();
+  {
+
+  }
 
 
-    /**
-     * Method to set the returned Limits object.
-     * <p>
-     * <b>NOTE:</b><br>
-     * This object will return <code>null</code> if the telescope state is
-     * neither TRACKING or SLEWING.
-     * @param l a list of Limit objects that will prevent tracking
-     * @see #limitList
-     */
-    public void setLimits( List l )
-    {
-	limitList = l;
-    }
+  public void setCalibrateDefaultRotatorIndexError();
+  {
+
+  }
 
 
-    /**
-     * Method to set the returned mechanism status for all mechanisms.
-     * @param l a list of the requested status
-     * @see #statusList
-     */
-    public void setStatus( List l )
-    {
-	statusList = l;
-    }
+  public void setCalibrateCurrentAzimuthIndexError();
+  {
+
+  }
 
 
-    /**
-     * Method to set the returned Target that is currently set on the
-     * telescope.
-     * @param t the returned Target
-     * @see #target
-     */
-    public void setTarget( Target t )
-    {
-	target = t;
-    }
+  public void setCalibrateCurrentAltitudeIndexError();
+  {
+
+  }
 
 
-    /**
-     * Method to set the various States of the Telescope soft/hardware systems
-     * and current mode of operation.
-     * @param l a list of the requested states
-     * @see #stateList
-     */
-    public void setState( List l )
-    {
-	stateList = l;
-    }
+  public void setCalibrateCurrentRotatorIndexError();
+  {
+
+  }
 
 
-    /**
-     * Method to set the returned Time object.
-     * @param t the current time, packed into an object 
-     * @see #time
-     */
-    public void setTime( Time t )
-    {
-	time = t;
-    }
+  public void setCalibrateLastCalibrationAzimuthIndexError();
+  {
+
+  }
 
 
-    /**
-     * Method to set the Version string
-     * @param versionString
-     * @see #versionString
-     */
-    public void setVersionString( String s )
-    {
-        versionString = s;
-    }
+  public void setCalibrateLastCalibrationAzimuthRMS();
+  {
+
+  }
+
+
+  public void setCalibrateLastCalibrationAltitudeIndexError();
+  {
+
+  }
+
+
+  public void setCalibrateLastCalibrationAltitudeRMS();
+  {
+
+  }
+
+
+  public void setCalibrateLastCalibrationCollimationError();
+  {
+
+  }
+
+
+  public void setCalibrateLastCalibrationCollimationRMS();
+  {
+
+  }
+
+
+  public void setCalibrateLastCalibrationSkyRMS();
+  {
+
+  }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:08:05 $
  * $RCSfile: SHOWDone.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/SHOWDone.java,v $
- *      $Id: SHOWDone.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: SHOWDone.java,v 1.3 2013-07-04 10:08:05 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision
  *

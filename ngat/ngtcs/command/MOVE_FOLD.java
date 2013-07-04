@@ -5,28 +5,28 @@ package ngat.ngtcs.command;
  * An IllegalArgument Exception is thrown if the position specified is outside
  * the lagal values of MIN_POSITION (0) and MAX_POSITION (4).
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class MOVE_FOLD extends ngat.ngtcs.command.Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: MOVE_FOLD.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: MOVE_FOLD.java,v 1.3 2013-07-04 10:07:03 cjm Exp $" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The position to move the fold mirror to.
@@ -42,11 +42,11 @@ public class MOVE_FOLD extends ngat.ngtcs.command.Command
      */
     protected int position;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Minimum value for the mirror position.
@@ -58,11 +58,11 @@ public class MOVE_FOLD extends ngat.ngtcs.command.Command
      */
     public static final int MAX_POSITION = 4;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Creat a MOVE_FOLD command with the specified ID and position for the
@@ -95,11 +95,14 @@ public class MOVE_FOLD extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:07:03 $
  * $RCSfile: MOVE_FOLD.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/MOVE_FOLD.java,v $
- *      $Id: MOVE_FOLD.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: MOVE_FOLD.java,v 1.3 2013-07-04 10:07:03 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

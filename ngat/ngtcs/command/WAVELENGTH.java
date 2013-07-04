@@ -7,22 +7,22 @@ package ngat.ngtcs.command;
  * the range <code><b>MIN_WAVELENGTH</b></code> (250 nm) to 
  * <code><b>MAX_WAVELENGTH</b></code> (1.0 m)
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class WAVELENGTH extends Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: WAVELENGTH.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: WAVELENGTH.java,v 1.3 2013-07-04 10:08:36 cjm Exp $" );
 
     /**
      * The minimum allowable value for the wavelength in metres (2.5E-07)
@@ -34,29 +34,29 @@ public class WAVELENGTH extends Command
      */
     public static final double MAX_WAVELENGTH = 1.00;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The wavelength in metres.
      */
     protected double wavelength;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create a WAVELENGTH command with the specified ID and wavelength to set
@@ -91,11 +91,14 @@ public class WAVELENGTH extends Command
 
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:08:36 $
  * $RCSfile: WAVELENGTH.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/WAVELENGTH.java,v $
- *      $Id: WAVELENGTH.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: WAVELENGTH.java,v 1.3 2013-07-04 10:08:36 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision
  *

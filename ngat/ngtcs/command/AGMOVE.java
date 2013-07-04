@@ -7,22 +7,22 @@ package ngat.ngtcs.command;
  * (110.00mm).  If the radius is outside this position an
  * IllegalArgumentException will be thrown.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.2 $
  */
 public class AGMOVE extends ngat.ngtcs.command.Command
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGMOVE.java,v 1.1 2003-09-26 12:09:00 je Exp $" );
+    new String( "$Id: AGMOVE.java,v 1.2 2013-07-04 10:06:14 cjm Exp $" );
 
   /**
    * Minimum radius of the autoguider probe mirror.
@@ -54,11 +54,11 @@ public class AGMOVE extends ngat.ngtcs.command.Command
    */
   public static final double MAX_PIXEL = 1023.500;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Radial position in millimetres.
@@ -80,18 +80,18 @@ public class AGMOVE extends ngat.ngtcs.command.Command
    */
   protected double yPixel;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * This constructor creates an AGMOVE command with the ID specified by
@@ -172,9 +172,9 @@ public class AGMOVE extends ngat.ngtcs.command.Command
   }
 }
 /*
- *    $Date: 2003-09-26 12:09:00 $
+ *    $Date: 2013-07-04 10:06:14 $
  * $RCSfile: AGMOVE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGMOVE.java,v $
- *      $Id: AGMOVE.java,v 1.1 2003-09-26 12:09:00 je Exp $
+ *      $Id: AGMOVE.java,v 1.2 2013-07-04 10:06:14 cjm Exp $
  *     $Log: not supported by cvs2svn $
  */

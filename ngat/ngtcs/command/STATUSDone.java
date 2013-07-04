@@ -9,30 +9,30 @@ import ngat.ngtcs.common.*;
  * This class is used to return the status of the telescope and/or any 
  * specified mechanisms on that Telescope.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  *
  */
 public class STATUSDone extends CommandDone
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: STATUSDone.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: STATUSDone.java,v 1.3 2013-07-04 10:08:22 cjm Exp $" );
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Telescope status
@@ -44,18 +44,18 @@ public class STATUSDone extends CommandDone
      */
     protected List statusList = null;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Constructor.
@@ -107,10 +107,13 @@ public class STATUSDone extends CommandDone
     }
 }
 /*
- * $Date: 2003-09-26 12:10:06 $
+ * $Date: 2013-07-04 10:08:22 $
  * $RCSfile: STATUSDone.java,v $
  * $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/STATUSDone.java,v $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2003/09/26 12:10:06  je
+ * Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  * Revision 1.1  2003/07/01 10:12:39  je
  * Initial revision
  *

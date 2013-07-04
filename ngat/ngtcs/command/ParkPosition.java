@@ -7,22 +7,22 @@ import java.util.Hashtable;
  * possible references of type ParkPosition.
  * <p>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class ParkPosition implements java.io.Serializable
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ParkPosition.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+    new String( "$Id: ParkPosition.java,v 1.3 2013-07-04 10:07:14 cjm Exp $" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -39,11 +39,11 @@ public class ParkPosition implements java.io.Serializable
    */
   protected static int nextIndex = 0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* ENUMERATIONS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* ENUMERATIONS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * The Zenith pointing park position.
@@ -58,11 +58,11 @@ public class ParkPosition implements java.io.Serializable
     ZENITH
   };
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String name of this type-safe enumeration.
@@ -79,11 +79,11 @@ public class ParkPosition implements java.io.Serializable
    */
   protected final int index = nextIndex++;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Return an object reference of the ParkPosition with the String
@@ -114,11 +114,11 @@ public class ParkPosition implements java.io.Serializable
     return( (ParkPosition)( intHash.get( new Integer( i ) ) ) );
   }
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Create an enumeration of the specified name.
@@ -200,11 +200,14 @@ public class ParkPosition implements java.io.Serializable
   }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:07:14 $
  * $RCSfile: ParkPosition.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/ParkPosition.java,v $
- *      $Id: ParkPosition.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: ParkPosition.java,v 1.3 2013-07-04 10:07:14 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

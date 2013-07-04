@@ -6,22 +6,22 @@ package ngat.ngtcs.command;
  * <code><b>MAX_WAVELENGTH</b></code> an IllegalArgumentException will be
  * thrown.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.4 $
  */
 public class AGWAVELENGTH extends ngat.ngtcs.command.Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: AGWAVELENGTH.java,v 1.3 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: AGWAVELENGTH.java,v 1.4 2013-07-04 10:06:22 cjm Exp $" );
 
     /**
      * Minimum wavelength in metres.
@@ -33,11 +33,11 @@ public class AGWAVELENGTH extends ngat.ngtcs.command.Command
      */
     public static final double MAX_WAVELENGTH = 3.500E-05;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The wavelength of light to be used by the autoguider (in micrometres),
@@ -45,18 +45,18 @@ public class AGWAVELENGTH extends ngat.ngtcs.command.Command
      */
     protected double wavelength = 5.5E-07;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create an AGWAVELENGTH command with the specified command path and the
@@ -90,11 +90,14 @@ public class AGWAVELENGTH extends ngat.ngtcs.command.Command
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:22 $
  * $RCSfile: AGWAVELENGTH.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGWAVELENGTH.java,v $
- *      $Id: AGWAVELENGTH.java,v 1.3 2003-09-26 12:10:06 je Exp $
+ *      $Id: AGWAVELENGTH.java,v 1.4 2013-07-04 10:06:22 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.3  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.2  2003/09/24 12:21:55  je
  *     Added documentation and changed internal units to metres.
  *

@@ -3,28 +3,28 @@ package ngat.ngtcs.command;
 /**
  * The TTL ENCLOSURE command to control the Cammell Laird Enclosure.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class ENCLOSURE extends Command
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ENCLOSURE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+    new String( "$Id: ENCLOSURE.java,v 1.3 2013-07-04 10:06:45 cjm Exp $" );
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Description of whether this command refers to shutter1.
@@ -53,11 +53,11 @@ public class ENCLOSURE extends Command
    */
   double angle = 0.0;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * This constructor takes all the arguments necessary for the
@@ -142,11 +142,14 @@ public class ENCLOSURE extends Command
   }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:45 $
  * $RCSfile: ENCLOSURE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/ENCLOSURE.java,v $
- *      $Id: ENCLOSURE.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: ENCLOSURE.java,v 1.3 2013-07-04 10:06:45 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

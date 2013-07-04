@@ -3,22 +3,22 @@ package ngat.ngtcs.command;
 /**
  * Offset the focus of the telescope by the amount specified.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class DFOCUS extends ngat.ngtcs.command.FOCUS
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: DFOCUS.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: DFOCUS.java,v 1.3 2013-07-04 10:06:44 cjm Exp $" );
 
     /**
      * Minimum offset (-30.00) to the current focus position in millimetres.
@@ -30,29 +30,29 @@ public class DFOCUS extends ngat.ngtcs.command.FOCUS
      */
     public static final double MAX_OFFSET = +30.00;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The offset to the focus position in millimetres.
      */
     protected double offset;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create a DFOCUS command with the ID and focus offset (mm) specified.
@@ -83,11 +83,14 @@ public class DFOCUS extends ngat.ngtcs.command.FOCUS
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:44 $
  * $RCSfile: DFOCUS.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/DFOCUS.java,v $
- *      $Id: DFOCUS.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: DFOCUS.java,v 1.3 2013-07-04 10:06:44 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

@@ -7,22 +7,22 @@ package ngat.ngtcs.command;
  * the range <code><b>MIN_PRESSURE</b></code> (0.0 mB) to 
  * <code><b>MAX_PRESSURE</b></code> (1030.0 mB)
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class PRESSURE extends Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: PRESSURE.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: PRESSURE.java,v 1.3 2013-07-04 10:07:18 cjm Exp $" );
 
     /**
      * The minimum allowable value for the pressure (0.00)
@@ -34,29 +34,29 @@ public class PRESSURE extends Command
      */
     public static final double MAX_PRESSURE = 1030.00;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT FIELDS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT FIELDS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * The pressure in millibars.
      */
     protected double pressure;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create a PRESSURE command with the specified ID and pressure to set
@@ -91,11 +91,14 @@ public class PRESSURE extends Command
 
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:07:18 $
  * $RCSfile: PRESSURE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/PRESSURE.java,v $
- *      $Id: PRESSURE.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: PRESSURE.java,v 1.3 2013-07-04 10:07:18 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision
  *

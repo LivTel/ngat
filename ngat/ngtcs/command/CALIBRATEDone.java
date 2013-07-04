@@ -5,45 +5,45 @@ import ngat.ngtcs.PointingModelCoefficients;
 /**
  *
  * 
- * @author $Author: je $
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $
+ * @version $Revision: 1.3 $
  */
 public class CALIBRATEDone extends CommandDone
 {
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS FIELDS.                                                         */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS FIELDS.                                                           */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: CALIBRATEDone.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+    new String( "$Id: CALIBRATEDone.java,v 1.3 2013-07-04 10:06:29 cjm Exp $" );
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT FIELDS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT FIELDS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * The coefficient set that resulted from the CALIBRATE command.
    */
   protected PointingModelCoefficients pmc;
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* CLASS METHODS.                                                        */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* CLASS METHODS.                                                          */
+  /*                                                                         */
+  /*=========================================================================*/
 
-  /*=======================================================================*/
-  /*                                                                       */
-  /* OBJECT METHODS.                                                       */
-  /*                                                                       */
-  /*=======================================================================*/
+  /*=========================================================================*/
+  /*                                                                         */
+  /* OBJECT METHODS.                                                         */
+  /*                                                                         */
+  /*=========================================================================*/
 
   /**
    * Initialises this CommandDone to have the same ID as the instigating
@@ -74,11 +74,14 @@ public class CALIBRATEDone extends CommandDone
   }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:06:29 $
  * $RCSfile: CALIBRATEDone.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/CALIBRATEDone.java,v $
- *      $Id: CALIBRATEDone.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: CALIBRATEDone.java,v 1.3 2013-07-04 10:06:29 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/09/19 16:09:49  je
  *     Initial revision
  *

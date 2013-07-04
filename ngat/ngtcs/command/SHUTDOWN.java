@@ -3,46 +3,46 @@ package ngat.ngtcs.command;
 /**
  * This command will shutdown the sub-system with the specified name.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author: cjm $ 
+ * @version $Revision: 1.3 $
  */
 public class SHUTDOWN extends Command
 {
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS FIELDS.                                                         */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS FIELDS.                                                           */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: SHUTDOWN.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id: SHUTDOWN.java,v 1.3 2013-07-04 10:08:18 cjm Exp $" );
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Name of the Telescope or PluggableSubSystem to shut down.
      */
     protected String systemName = null;
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* CLASS METHODS.                                                        */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* CLASS METHODS.                                                          */
+    /*                                                                         */
+    /*=========================================================================*/
 
 
-    /*=======================================================================*/
-    /*                                                                       */
-    /* OBJECT METHODS.                                                       */
-    /*                                                                       */
-    /*=======================================================================*/
+    /*=========================================================================*/
+    /*                                                                         */
+    /* OBJECT METHODS.                                                         */
+    /*                                                                         */
+    /*=========================================================================*/
 
     /**
      * Create a SHUTDOWN command with the specifed ID, to shutdown the
@@ -87,11 +87,14 @@ public class SHUTDOWN extends Command
     }
 }
 /*
- *    $Date: 2003-09-26 12:10:06 $
+ *    $Date: 2013-07-04 10:08:18 $
  * $RCSfile: SHUTDOWN.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/SHUTDOWN.java,v $
- *      $Id: SHUTDOWN.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id: SHUTDOWN.java,v 1.3 2013-07-04 10:08:18 cjm Exp $
  *     $Log: not supported by cvs2svn $
+ *     Revision 1.2  2003/09/26 12:10:06  je
+ *     Changed 'RevisionString' to 'rcsid' for ident command.
+ *
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision
  *
