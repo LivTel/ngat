@@ -16,7 +16,9 @@ import ngat.message.base.*;
  * <dt>ack params: </dt>
  *    none.
  * <dt>done params: </dt>
- * <dd>model - state model information</dd>
+ * <dd>variable - state model variable information</dd>
+ * <dd>currentState - current state</dd>
+ * <dd>currentOperation - current operation</dd>
  * </dl>
  * <br>
  */
