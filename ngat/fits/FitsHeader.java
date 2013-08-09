@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 // FitsHeader.java
-// $Header: /space/home/eng/cjm/cvs/ngat/fits/FitsHeader.java,v 0.9 2012-10-01 16:00:20 cjm Exp $
+// $Header: /home/dev/src/ngat/fits/RCS/FitsHeader.java,v 0.11 2013/08/08 13:28:06 cjm Exp $
 package ngat.fits;
 
 import java.lang.*;
@@ -31,7 +31,7 @@ import ngat.util.logging.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.9 $
+ * @version $Revision: 0.11 $
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -39,7 +39,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.9 2012-10-01 16:00:20 cjm Exp $");
+	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.11 2013/08/08 13:28:06 cjm Exp $");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -296,7 +296,16 @@ public class FitsHeader
 	}
 
 	/**
-	 * Routine to write out the keyword-value combinations into a new file in the FITS format.
+	 * Get the number of keywords and values to write into the FITS header.
+	 * @see #cardImageList
+	 */
+	public int getKeywordValueCount()
+	{
+		return cardImageList.size();
+	}
+
+	/**
+	 * Routine to write out the keyword-value combinations into a new or existing file in the FITS format.
 	 * This method is synchronised, as using CFITSIO to write headers to two FITS
 	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
 	 * been compiled re-entrant).
@@ -421,7 +430,16 @@ public class FitsHeader
 	}
 }
 //
-// $Log: not supported by cvs2svn $
+// $Log: FitsHeader.java,v $
+// Revision 0.11  2013/08/08 13:28:06  cjm
+// Added getKeywordValueCount method.
+//
+// Revision 0.10  2013/08/08 10:08:15  cjm
+// Fixed comment.
+//
+// Revision 0.9  2012/10/01 16:00:20  cjm
+// Fixed comments.
+//
 // Revision 0.8  2012/10/01 15:54:27  cjm
 // The native part of the library completely re-written.
 // Native methods now throw a FitsHeaderException on failure.
