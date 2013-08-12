@@ -61,18 +61,37 @@ public class FitsFilename
 	public final static char INSTRUMENT_CODE_CCD_CAMERA 		= 'c';
 	/**
 	 * Instrument code constant - Dillcam North CCD Camera (originally/currently 'c').
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_DILLCAM_NORTH 		= 'd';
 	/**
 	 * Instrument code constant - Dillcam South CCD Camera (originally/currently 'c').
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_DILLCAM_SOUTH 		= 'e';
 	/**
 	 * Instrument code constant - FTSpec (North).
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_FTSPEC_NORTH 	        = 'f';
 	/**
+	 * Instrument code constant - RingoIII Red.
+	 * This code is now deprecated.
+	 */
+	public final static char INSTRUMENT_CODE_RINGOIII_RED 	        = 'd';
+	/**
+	 * Instrument code constant - RingoIII Blue.
+	 * This code is now deprecated.
+	 */
+	public final static char INSTRUMENT_CODE_RINGOIII_BLUE 		= 'e';
+	/**
+	 * Instrument code constant - RingoIII Green.
+	 * This code is now deprecated.
+	 */
+	public final static char INSTRUMENT_CODE_RINGOIII_GREEN 	= 'f';
+	/**
 	 * Instrument code constant - FTSpec (South).
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_FTSPEC_SOUTH 	        = 'g';
 	/**
@@ -85,14 +104,17 @@ public class FitsFilename
 	public final static char INSTRUMENT_CODE_O        	        = 'm';
 	/**
 	 * Instrument code constant - NuView.
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_NUVIEW 		= 'n';
 	/**
 	 * Instrument code constant - Ringo Star / Grope Polarimeter.
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_RINGO_STAR 	        = 'o';
 	/**
 	 * Instrument code constant - Ringo2 Polarimeter.
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_RINGO2 	        = 'p';
 	/**
@@ -105,6 +127,7 @@ public class FitsFilename
 	public final static char INSTRUMENT_CODE_FRODOSPEC_RED 	        = 'r';
 	/**
 	 * Instrument code constant - SupIRCam.
+	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_SUPIRCAM        	= 's';
 
@@ -506,6 +529,9 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_DILLCAM_SOUTH
 	 * @see #INSTRUMENT_CODE_FTSPEC_NORTH
 	 * @see #INSTRUMENT_CODE_FTSPEC_SOUTH
+	 * @see #INSTRUMENT_CODE_RINGOIII_RED
+	 * @see #INSTRUMENT_CODE_RINGOIII_BLUE
+	 * @see #INSTRUMENT_CODE_RINGOIII_GREEN
 	 * @see #INSTRUMENT_CODE_NUVIEW
 	 * @see #INSTRUMENT_CODE_RINGO_STAR
 	 * @see #INSTRUMENT_CODE_RINGO2
@@ -535,6 +561,8 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_FTSPEC_NORTH) && (ch != INSTRUMENT_CODE_FTSPEC_SOUTH) &&
 		   (ch != INSTRUMENT_CODE_NUVIEW) && 
 		   (ch != INSTRUMENT_CODE_RINGO_STAR) && (ch != INSTRUMENT_CODE_RINGO2) && 
+		   (ch != INSTRUMENT_CODE_RINGOIII_RED) &&(ch != INSTRUMENT_CODE_RINGOIII_BLUE) &&
+		   (ch != INSTRUMENT_CODE_RINGOIII_GREEN) &&
 		   (ch != INSTRUMENT_CODE_RISE) && 
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
 		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O))
