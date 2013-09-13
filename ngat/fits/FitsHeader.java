@@ -222,13 +222,14 @@ public class FitsHeader
 	 */
 	public FitsHeaderCardImage get(String keyword)
 	{
+		FitsHeaderCardImage testCardImage = null;
 		FitsHeaderCardImage cardImage = null;
 		int index;
 
 	// construct card image with keyword set to test against
-		cardImage = new FitsHeaderCardImage(keyword,null,null,null,1);
+		testCardImage = new FitsHeaderCardImage(keyword,null,null,null,1);
 	// search for the index in the list, of a card image with the same keyword.
-		index = cardImageList.indexOf(cardImage);
+		index = cardImageList.indexOf(testCardImage);
 		if(index > -1)
 			cardImage = (FitsHeaderCardImage)(cardImageList.get(index));
 		return cardImage;
