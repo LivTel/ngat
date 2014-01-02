@@ -20,7 +20,6 @@ SRCS           = BlockingQueue.java \
 		ControlableThread.java \
                  ControlThread.java \
                  CPUScheduler.java \
-                 DateParser.java \
                  ExecuteCommand.java \
                  FileUtilities.java \
                  FileUtilitiesNativeException.java \
@@ -72,6 +71,9 @@ SRCS           = BlockingQueue.java \
 		XmlConfigurable.java \
 		XmlConfigurator.java
 
+# Do we need this anymore?
+# Also it creates a dependency on ngat.astrometry which we don't want
+# DateParser.java
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #

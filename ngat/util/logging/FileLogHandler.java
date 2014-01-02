@@ -19,10 +19,10 @@ public class FileLogHandler extends LogHandler implements ExtendedLogHandler {
     public final static int WEEKLY_ROTATION = 3;
 
     /** Date formatter1.*/
-    protected SimpleDateFormat sdf1 = null;
+    protected SimpleDateFormat sdf1 = new SimpleDateFormat();
     
     /** Date formatter2.*/
-    protected SimpleDateFormat sdf2 = null;
+    protected SimpleDateFormat sdf2 = new SimpleDateFormat();
 
     protected SimpleTimeZone UTC = new SimpleTimeZone(0,"UTC");
 
@@ -223,47 +223,59 @@ public class FileLogHandler extends LogHandler implements ExtendedLogHandler {
 	    if (System.currentTimeMillis() > timeLimit) {
 		// Close the current stream.
 		close();
+		long time = System.currentTimeMillis();
+	
 		Calendar cal = Calendar.getInstance();	
 		cal.setTimeZone(LogFormatter.UTC);
+		
+
 		String genCount = "";
 		String timCount = "";
 		switch (period) {
 		case HOURLY_ROTATION:
-		    sdf1 = new SimpleDateFormat("DDD");    // Day of year.
-		    sdf2 = new SimpleDateFormat("'H'HH");  // Hour of day (0-23).			  
+		    time += 3600*1000L;
+		    cal.setTime(new Date(time));
+		    //sdf1.applyPattern("DDD");    // Day of year.
+		    //sdf2.applyPattern("'H'HH");  // Hour of day (0-23).			  
 		    cal.set(Calendar.MINUTE, 0);
 		    cal.set(Calendar.SECOND, 0);
-		    cal.roll(Calendar.HOUR_OF_DAY, true);
+		    //cal.roll(Calendar.HOUR_OF_DAY, true);
 		    break;
 		case DAILY_ROTATION:
-		    sdf1 = new SimpleDateFormat("yyyy");   // Year.
-		    sdf2 = new SimpleDateFormat("'D'DDD"); // Day of year. 
+		    time += 24*3600*1000L;
+		    //sdf1.applyPattern("yyyy");   // Year.
+		    //sdf2.applyPattern("'D'DDD"); // Day of year. 
 		    cal.set(Calendar.HOUR_OF_DAY, 0);
 		    cal.set(Calendar.MINUTE, 0);
 		    cal.set(Calendar.SECOND, 0);
-		    cal.roll(Calendar.DAY_OF_YEAR, true);
+		    //cal.roll(Calendar.DAY_OF_YEAR, true);
 		    break;
 		case WEEKLY_ROTATION:
-		    sdf1 = new SimpleDateFormat("yyyy");   // Year.
-		    sdf2 = new SimpleDateFormat("'W'ww");  // Week in year. 
+		    time += 7*24*3600*1000L;
+		    cal.setTime(new Date(time));
+		    //sdf1.applyPattern("yyyy");   // Year.
+		    //sdf2.applyPattern("'W'ww");  // Week in year. 
 		    int dow = cal.get(Calendar.DAY_OF_WEEK);		  
 		    cal.set(Calendar.HOUR_OF_DAY, 0);
 		    cal.set(Calendar.MINUTE, 0);
 		    cal.set(Calendar.SECOND, 0);
-		    cal.roll(Calendar.DATE, 8-dow);
+		    // cal.roll(Calendar.DATE, 8-dow);
 		    break; 
 		default:
 		    // Default to Hourly logs with datestamp.
-		    sdf1 = new SimpleDateFormat("yyyyMMdd");
-		    sdf2 = new SimpleDateFormat("HH");
+		    time += 3600*1000L;
+		    cal.setTime(new Date(time));
+		    //sdf1.applyPattern("yyyyMMdd");
+		    // sdf2.applyPattern("HH");
 		    period = HOURLY_ROTATION;   
 		    cal.set(Calendar.MINUTE, 0);
 		    cal.set(Calendar.SECOND, 0);
-		    cal.roll(Calendar.HOUR_OF_DAY, true); 		  
+		    // cal.roll(Calendar.HOUR_OF_DAY, true); 		  
 		}  
 		timeLimit = cal.getTime().getTime();
-		sdf1.setTimeZone(LogFormatter.UTC);
-		sdf2.setTimeZone(LogFormatter.UTC);
+		//cal.setTime(new Date(time));
+		//sdf1.setTimeZone(LogFormatter.UTC);
+		//sdf2.setTimeZone(LogFormatter.UTC);
 		genCount = sdf1.format(new Date());
 		timCount = sdf2.format(new Date());
 		try {
