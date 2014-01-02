@@ -5,7 +5,6 @@ import java.text.*;
 import java.util.*;
 import java.io.*;
 
-import ngat.phase2.*;
 
 /** Test class for automatically mailing PI when a Proposal is inserted in the PhaseII database.*/
 public class SMTPMailer {
