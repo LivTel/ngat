@@ -7,7 +7,6 @@ import java.text.*;
 import java.applet.*;
 
 
-import ngat.astrometry.*;
 import ngat.util.*;
 
 public class LogServer extends Thread {
