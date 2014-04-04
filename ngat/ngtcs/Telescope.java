@@ -20,8 +20,8 @@ import ngat.ngtcs.subsystem.*;
  * Timer and PluggableSubSystems).  It is these references that this class will
  * provide for the CommandImplementor classes.
  *
- * @author $Author: cjm $
- * @version $Revision: 1.3 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class Telescope
 {
@@ -35,7 +35,7 @@ public class Telescope
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Telescope.java,v 1.3 2013-07-04 09:47:03 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -1392,7 +1392,7 @@ public class Telescope
  *    $Date: 2013-07-04 09:47:03 $
  * $RCSfile: Telescope.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/Telescope.java,v $
- *      $Id: Telescope.java,v 1.3 2013-07-04 09:47:03 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/19 15:58:40  je
  *     Updated Command tx/rx and TTL subsystem interfaces.

@@ -14,7 +14,7 @@ import java.io.*;
  * a Controlling thread to register any threads it has started so it can
  * tidy them up on its own shutdown.
  * <br><br>
- * $Id: SocketServer.java,v 1.1 2008-07-23 12:41:17 eng Exp $ 
+ * $Id$ 
  */
 public class SocketServer extends ControlThread implements Server {
 

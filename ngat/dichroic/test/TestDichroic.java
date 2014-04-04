@@ -14,14 +14,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the IO:O dichroic.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class TestDichroic
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TestDichroic.java,v 1.2 2012-01-18 15:14:40 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The dichroic instance.
 	 */

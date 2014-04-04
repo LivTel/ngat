@@ -14,14 +14,14 @@ import ngat.util.*;
  * Puts command line arguments as x,y values in data list.
  * Then does a quadratic fit and prints the result out.
  * @author Chris Mottram
- * @version $Revision: 0.6 $
+ * @version $Revision$
  */
 public class QuadraticFitTest implements ChiSquaredFitUpdateListener
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFitTest.java,v 0.6 2004-07-28 11:09:40 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Degrees of freedom value.
 	 */

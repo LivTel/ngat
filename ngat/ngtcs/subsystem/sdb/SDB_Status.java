@@ -37,8 +37,8 @@ package ngat.ngtcs.subsystem.sdb;
  * <li>E_SDB_STATUS_MAX_VALUE</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SDB_Status implements java.io.Serializable
 {
@@ -52,7 +52,7 @@ public class SDB_Status implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SDB_Status.java,v 1.2 2013-07-04 12:59:47 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -431,7 +431,7 @@ public class SDB_Status implements java.io.Serializable
  *    $Date: 2013-07-04 12:59:47 $
  * $RCSfile: SDB_Status.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/sdb/SDB_Status.java,v $
- *      $Id: SDB_Status.java,v 1.2 2013-07-04 12:59:47 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:09:40  je
  *     Initial revision

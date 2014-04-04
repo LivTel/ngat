@@ -4,8 +4,8 @@ package ngat.ngtcs.command;
  * Super-class of ALL NGTCS commands.  This class holds the top-level values
  * used by every command.
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class Command extends ngat.message.base.COMMAND
 {
@@ -19,7 +19,7 @@ public abstract class Command extends ngat.message.base.COMMAND
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Command.java,v 1.3 2013-07-04 10:06:39 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Total number of commands sent.
@@ -137,7 +137,7 @@ public abstract class Command extends ngat.message.base.COMMAND
  *    $Date: 2013-07-04 10:06:39 $
  * $RCSfile: Command.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Command.java,v $
- *      $Id: Command.java,v 1.3 2013-07-04 10:06:39 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

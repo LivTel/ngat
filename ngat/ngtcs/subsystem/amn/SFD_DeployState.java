@@ -11,8 +11,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SFD_POS_DEPLOY</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SFD_DeployState
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -27,7 +27,7 @@ public final class SFD_DeployState
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SFD_DeployState.java,v 1.2 2013-07-04 12:57:53 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -240,7 +240,7 @@ public final class SFD_DeployState
  *    $Date: 2013-07-04 12:57:53 $
  * $RCSfile: SFD_DeployState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SFD_DeployState.java,v $
- *      $Id: SFD_DeployState.java,v 1.2 2013-07-04 12:57:53 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/10/16 15:31:40  je
  *     Initial revision

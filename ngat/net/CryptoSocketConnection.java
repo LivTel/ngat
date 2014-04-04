@@ -7,7 +7,7 @@ import javax.net.*;
 /** Implements an abstraction of a TCP socket connection using 
  * CryptoOutput and CryptoInput streams.
  *
- * $Id: CryptoSocketConnection.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public class CryptoSocketConnection extends SocketConnection {

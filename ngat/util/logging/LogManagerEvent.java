@@ -6,12 +6,12 @@ import java.util.*;
  *
  * <dl>
  * <dt><b>RCS:</b>
- * <dd>$Id: LogManagerEvent.java,v 1.1 2007-02-28 06:17:00 snf Exp $
+ * <dd>$Id$
  * <dt><b>Source:</b>
  * <dd>$Source: /space/home/eng/cjm/cvs/ngat/util/logging/LogManagerEvent.java,v $
  * </dl>
- * @author $Author: snf $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class LogManagerEvent extends EventObject {
     

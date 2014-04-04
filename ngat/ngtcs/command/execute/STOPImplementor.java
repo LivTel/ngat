@@ -11,8 +11,8 @@ import ngat.ngtcs.subsystem.*;
  * This is because all telescope operation is (or <i>should</i> be) performed
  * under conditional testing of this state.
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class STOPImplementor extends CommandImplementor
 {
@@ -20,7 +20,7 @@ public class STOPImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: STOPImplementor.java,v 1.4 2013-07-04 10:29:20 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the STOP command (60 seconds), in milliseconds.

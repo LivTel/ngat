@@ -14,7 +14,7 @@ import ngat.util.*;
  * TelnetSocketConnection is live immediately without having to call open(). 
  * It is intended for use at the server end.
  *
- * $Id: TelnetSocketConnection.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public class TelnetSocketConnection implements IConnection {

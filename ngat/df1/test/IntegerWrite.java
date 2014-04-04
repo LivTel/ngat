@@ -16,14 +16,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the Frodospec Df1 library, by writing an integer value to a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class IntegerWrite
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: IntegerWrite.java,v 1.4 2013-06-28 10:41:25 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_NONE

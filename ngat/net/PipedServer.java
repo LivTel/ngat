@@ -2,7 +2,7 @@ package ngat.net;
 
 /** Abstract base class for PipedServers.
  * <br><br>
- * $Id: PipedServer.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class PipedServer implements Server {
 

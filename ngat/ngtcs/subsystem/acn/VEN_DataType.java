@@ -142,8 +142,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>D_VEN_DATAID_EOL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class VEN_DataType
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -158,7 +158,7 @@ public final class VEN_DataType
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: VEN_DataType.java,v 1.1 2013-07-04 12:54:07 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -1288,7 +1288,7 @@ public final class VEN_DataType
  *    $Date: 2013-07-04 12:54:07 $
  * $RCSfile: VEN_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/acn/VEN_DataType.java,v $
- *      $Id: VEN_DataType.java,v 1.1 2013-07-04 12:54:07 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

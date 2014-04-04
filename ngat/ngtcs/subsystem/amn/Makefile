@@ -28,9 +28,9 @@ SRCS           = AGD_DataType.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $
-# $Revision: 1.4 $
-#       $Id: Makefile,v 1.4 2003-10-15 15:41:19 je Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2003-10-15 15:41:19 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/Makefile,v $

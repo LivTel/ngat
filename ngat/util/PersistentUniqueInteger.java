@@ -21,7 +21,7 @@ import java.lang.*;
  * persistent integer.
  * @see LockFile
  * @see LockFile#unLock
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @author Chris Mottram
  */
 public class PersistentUniqueInteger
@@ -29,7 +29,7 @@ public class PersistentUniqueInteger
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PersistentUniqueInteger.java,v 1.2 2001-07-31 10:56:49 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Default name used for the lock file name paramater.
 	 * This is embeddded into the symbolic link. 

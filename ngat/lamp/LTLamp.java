@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * This class holds information about an individual lamp as part of a lamp unit.
  * @author Chris Mottram
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class LTLamp implements LampInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTLamp.java,v 1.5 2011-01-12 14:16:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Basic lamp log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE

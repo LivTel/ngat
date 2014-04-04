@@ -108,8 +108,8 @@ package ngat.ngtcs.subsystem;
  * <li>E_SDB_UNITS_MAX_VALUE</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_DataUnit implements java.io.Serializable
 {
@@ -123,7 +123,7 @@ public class TTL_DataUnit implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_DataUnit.java,v 1.2 2013-07-04 10:55:29 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -984,7 +984,7 @@ public class TTL_DataUnit implements java.io.Serializable
  *    $Date: 2013-07-04 10:55:29 $
  * $RCSfile: TTL_DataUnit.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_DataUnit.java,v $
- *      $Id: TTL_DataUnit.java,v 1.2 2013-07-04 10:55:29 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:01:09  je
  *     Initial revision

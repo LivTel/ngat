@@ -24,8 +24,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SMF_ALT_COMP_ERR</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SMF_Status
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -40,7 +40,7 @@ public final class SMF_Status
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SMF_Status.java,v 1.2 2013-07-04 12:58:08 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -343,7 +343,7 @@ public final class SMF_Status
  *    $Date: 2013-07-04 12:58:08 $
  * $RCSfile: SMF_Status.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SMF_Status.java,v $
- *      $Id: SMF_Status.java,v 1.2 2013-07-04 12:58:08 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:45  je
  *     Initial revision

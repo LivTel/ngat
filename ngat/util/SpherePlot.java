@@ -8,7 +8,7 @@ import java.awt.*;
  * given viewing direction.
  *
  *
- * $Id: SpherePlot.java,v 1.2 2002-09-25 10:56:17 cjm Exp $
+ * $Id$
  *
  * */
 public class SpherePlot extends GraphPlot {

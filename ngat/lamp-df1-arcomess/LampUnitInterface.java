@@ -10,7 +10,7 @@ import ngat.util.logging.*;
  * installed on the telescope. This allows the turning on and off of lamps, measuring their brightness
  * and error checking.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public interface LampUnitInterface
 {

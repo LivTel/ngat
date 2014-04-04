@@ -20,8 +20,8 @@ import ngat.ngtcs.subsystem.*;
  * above transformations such as the calculating of the tangent plane
  * coordinates from the focal station X,Y and the rotator position angle.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class VirtualTelescope
 {
@@ -35,7 +35,7 @@ public class VirtualTelescope
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: VirtualTelescope.java,v 1.3 2013-07-04 09:49:52 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * AstrometryCalculator used to perform all astrometric transformations.
@@ -764,7 +764,7 @@ public class VirtualTelescope
  *    $Date: 2013-07-04 09:49:52 $
  * $RCSfile: VirtualTelescope.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/VirtualTelescope.java,v $
- *      $Id: VirtualTelescope.java,v 1.3 2013-07-04 09:49:52 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/24 14:26:15  je
  *     Added documentation for constructors.

@@ -118,9 +118,9 @@ SRCS           = ADD_COI_USER.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: cjm $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2013-07-05 15:06:27 cjm Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2013-07-05 15:06:27 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/message/OSS/Makefile,v $

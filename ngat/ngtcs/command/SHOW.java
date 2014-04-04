@@ -4,8 +4,8 @@ package ngat.ngtcs.command;
  * This command will return data and/or status information, depending upon the 
  * specified subject.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SHOW extends Command
 {
@@ -19,7 +19,7 @@ public class SHOW extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: SHOW.java,v 1.3 2013-07-04 10:08:12 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -105,7 +105,7 @@ public class SHOW extends Command
  *    $Date: 2013-07-04 10:08:12 $
  * $RCSfile: SHOW.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/SHOW.java,v $
- *      $Id: SHOW.java,v 1.3 2013-07-04 10:08:12 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

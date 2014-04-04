@@ -10,7 +10,7 @@ import java.text.*;
  * Stores the location on the sky, of a target or of a pointing position.
  * Includes methods to translate between coordinate systems.
  * <br>
- * $Id: Position.java,v 1.1 2013-06-28 10:11:49 cjm Exp $    
+ * $Id$    
  *
  */
 public class Position implements Serializable {

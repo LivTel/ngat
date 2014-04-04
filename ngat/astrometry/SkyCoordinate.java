@@ -8,7 +8,7 @@ import java.io.*;
  * This class represents an instantaneous snapshot of an instance of 
  * ngat.astrometry.Position.
  * <br><br>
- * $Id: SkyCoordinate.java,v 1.1 2013-06-28 10:11:49 cjm Exp $
+ * $Id$
  */
 public class SkyCoordinate implements Serializable{
 

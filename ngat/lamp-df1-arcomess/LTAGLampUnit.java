@@ -16,14 +16,14 @@ import ngat.util.logging.*;
  * (controlled via the ngat.df1 library). The communications are currently done over a serial link
  * via an ArcomESS ethernet to serial converter (handled by the ngat.serial.arcomess. library).
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.2 2008-10-03 09:20:00 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Basic unit log level.
 	 */

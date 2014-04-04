@@ -20,7 +20,7 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FrodoSpecConfig.java,v 1.2 2007-07-19 18:38:40 cjm Exp $"); 
+	public final static String RCSID = new String("$Id$"); 
 	/** 
 	 * Serial version UID - used to maintain serialization compatibility
 	 * across modifications of the class's structure.
@@ -110,7 +110,7 @@ public class FrodoSpecConfig extends SpecConfig implements Serializable
     
 	/** 
 	 * Sets the resolution.
-	 * @param a The resolution, one of RESOLUTION_LOW, RESOLUTION_HIGH.
+	 * @param r The resolution, one of RESOLUTION_LOW, RESOLUTION_HIGH.
 	 * @see #resolution
 	 * @see #RESOLUTION_LOW
 	 * @see #RESOLUTION_HIGH

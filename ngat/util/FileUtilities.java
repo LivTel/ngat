@@ -8,7 +8,7 @@ import java.lang.*;
 /**
  * Some useful file routines.
  * There are methods to create/read/test existence of symbolic links.
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @author Chris Mottram
  */
 public class FileUtilities
@@ -16,7 +16,7 @@ public class FileUtilities
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FileUtilities.java,v 1.2 2001-07-31 10:56:24 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Default size of a buffer to read the contents of symbolic link into.
 	 */

@@ -32,14 +32,14 @@ import javax.swing.plaf.metal.MetalTheme;
 /**
  * This class is an LT specific theme.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision$
  */
 public class LTMetalTheme extends MetalTheme
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LTMetalTheme.java,v 0.2 2006-05-16 18:15:30 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Selected foreground colour.
 	 */

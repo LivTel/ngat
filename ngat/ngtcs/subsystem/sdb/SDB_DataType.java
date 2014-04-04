@@ -5,8 +5,8 @@ import ngat.ngtcs.subsystem.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SDB_DataType
 {
@@ -20,7 +20,7 @@ public class SDB_DataType
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SDB_DataType.java,v 1.1 2006-11-20 14:46:54 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -82,6 +82,6 @@ public class SDB_DataType
  *    $Date: 2006-11-20 14:46:54 $
  * $RCSfile: SDB_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/sdb/SDB_DataType.java,v $
- *      $Id: SDB_DataType.java,v 1.1 2006-11-20 14:46:54 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

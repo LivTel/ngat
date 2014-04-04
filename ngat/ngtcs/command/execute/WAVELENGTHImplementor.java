@@ -15,8 +15,8 @@ import ngat.ngtcs.command.*;
  * configuration file, such as Autoguider VTs) will have to have their
  * wavelength set explicitly.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class WAVELENGTHImplementor extends CommandImplementor
 {
@@ -30,7 +30,7 @@ public class WAVELENGTHImplementor extends CommandImplementor
      * String used to identify RCS revision details.
   */
     public static final String rcsid =
-	new String( "$Id: WAVELENGTHImplementor.java,v 1.4 2013-07-04 10:30:23 cjm Exp $" );
+	new String( "$Id$" );
 
   /**
    * The timeout for the WAVELENGTH command (3 seconds), in milliseconds.
@@ -94,7 +94,7 @@ public class WAVELENGTHImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:30:23 $
  * $RCSfile: WAVELENGTHImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/WAVELENGTHImplementor.java,v $
- *      $Id: WAVELENGTHImplementor.java,v 1.4 2013-07-04 10:30:23 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

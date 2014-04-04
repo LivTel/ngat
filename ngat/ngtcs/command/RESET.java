@@ -5,8 +5,8 @@ package ngat.ngtcs.command;
  * <code><b><i>PluggableSubSystem</i></b></code>, or the whole Telescope
  * system, depending on the system name argument.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class RESET extends Command
 {
@@ -20,7 +20,7 @@ public class RESET extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: RESET.java,v 1.3 2013-07-04 10:07:20 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -92,7 +92,7 @@ public class RESET extends Command
  *    $Date: 2013-07-04 10:07:20 $
  * $RCSfile: RESET.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/RESET.java,v $
- *      $Id: RESET.java,v 1.3 2013-07-04 10:07:20 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

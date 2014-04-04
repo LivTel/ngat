@@ -3,8 +3,8 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class IERSData extends Data
 {
@@ -12,7 +12,7 @@ public class IERSData extends Data
      * String used to identify RCS revision details.
      */
     public static final String revisionString =
-	new String( "$Id: IERSData.java,v 1.1 2003-07-01 10:13:04 je Exp $" );
+	new String( "$Id$" );
 
     /**
      * Current differernce between Universal Time (UT1) and Coordinated

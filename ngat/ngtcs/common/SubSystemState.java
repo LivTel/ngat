@@ -12,8 +12,8 @@ package ngat.ngtcs.common;
  * <li>ERROR</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SubSystemState implements java.io.Serializable
 {
@@ -27,7 +27,7 @@ public class SubSystemState implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SubSystemState.java,v 1.3 2013-07-04 10:46:24 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -234,7 +234,7 @@ public class SubSystemState implements java.io.Serializable
  *    $Date: 2013-07-04 10:46:24 $
  * $RCSfile: SubSystemState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/SubSystemState.java,v $
- *      $Id: SubSystemState.java,v 1.3 2013-07-04 10:46:24 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/19 16:00:03  je
  *     Updated Command tx/rx and TTL subsystem interfaces.

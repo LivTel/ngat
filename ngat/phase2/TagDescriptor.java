@@ -8,7 +8,7 @@ import java.io.*;
 /** Contains selected fields of a Tag, suitable for informing remote clients of the
  * details of a Tag without revealing any substructure. Used By ADM_ListTags
  * to store the basic details of a Tag. 
- * $Id: TagDescriptor.java,v 1.1 2006-11-20 14:51:23 cjm Exp $.*/
+ * $Id$.*/
 public class TagDescriptor implements Serializable {
   
     /** Serial version UID - used to maintain serialization compatibility

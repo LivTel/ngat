@@ -18,7 +18,7 @@ import java.util.*;
  * </table><br>
  * ## This utility is not completed only works for RCS_TCS. ##
  * <br>
- * $Id: Makeamess.java,v 1.1 2000-12-01 18:02:54 cjm Exp $
+ * $Id$
  */
 public class Makeamess {
 
@@ -165,7 +165,7 @@ public class Makeamess {
 	out.println(" * </dl>");
 
 	out.println(" * <br>");
-	out.println(" * $Id: Makeamess.java,v 1.1 2000-12-01 18:02:54 cjm Exp $");
+	out.println(" * $Id$");
 	out.println(" */");
         out.println("public class "+command+" extends RCS_TO_TCS {\n");
 

@@ -14,7 +14,7 @@ import java.io.*;
 /**
  * Detector for the 'O' optical CCD camera. This is a Fairchild F486 4kx4k array.
  * Also used to represent the engineering chip, which is a Hamamatsu 512x60 CCD array.
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @author cjm
  * @see Detector
  */

@@ -25,9 +25,9 @@ SRCS           = Angle.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: eng $ 
-# $Revision: 1.3 $
-#       $Id: Makefile,v 1.3 2013-06-28 13:47:16 eng Exp $
+#   $Author$ 
+# $Revision$
+#       $Id$
 #     $Date: 2013-06-28 13:47:16 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/math/Makefile,v $

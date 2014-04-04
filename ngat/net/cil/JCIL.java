@@ -22,7 +22,7 @@ import ngat.util.logging.*;
  *     e.g. <b>java -Xnoclassgc MyApplicationUsingJCIL</b>
  * </pre>
  * <br><br>
- * $Id: JCIL.java,v 1.1 2006-05-16 18:14:00 cjm Exp $
+ * $Id$
  */
 public class JCIL implements CIL {
 

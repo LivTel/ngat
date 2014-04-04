@@ -42,6 +42,8 @@ public class JMSClientProtocolImplementor {
 		throw new IllegalArgumentException("JMSClient::No command set");
 	    
 	    // Send the Command
+	    if (debug)
+		System.err.println("JMSClient::["+command.getId()+" Ready to send ] "+command.getClass().getName());
 	    connection.send(command);
 	    
 	    Object  obj       = null;
@@ -51,8 +53,10 @@ public class JMSClientProtocolImplementor {
 
 	    while (!completed) {
 		if (debug)
-		System.err.println("JMSClient::["+command.getId()+"] Ready receive (to="+timeout);
+		System.err.println("JMSClient::["+command.getId()+"] Ready receive (to="+timeout+"ms)");
 		obj = connection.receive(timeout);
+		if (debug)
+		    System.err.println("JMSClient::["+command.getId()+"received data");
 		if (debug)
 		System.err.println("JMSClient::["+command.getId()+"] Data received type= "+
 				   (obj != null ? obj.getClass().getName() : "NULL"));

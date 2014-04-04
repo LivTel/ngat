@@ -12,8 +12,8 @@ import ngat.ngtcs.common.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class BasicSingletonMechanism
   extends ngat.ngtcs.subsystem.BasicMechanism
@@ -28,7 +28,7 @@ public class BasicSingletonMechanism
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: BasicSingletonMechanism.java,v 1.3 2013-07-04 10:53:11 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The <b>ONLY</b> instance of this class.
@@ -110,7 +110,7 @@ public class BasicSingletonMechanism
  *    $Date: 2013-07-04 10:53:11 $
  * $RCSfile: BasicSingletonMechanism.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/BasicSingletonMechanism.java,v $
- *      $Id: BasicSingletonMechanism.java,v 1.3 2013-07-04 10:53:11 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/07/02 14:10:37  je
  *     Changed BasicSingletonMechanism for PluggableSubSystem in getInstance return type.

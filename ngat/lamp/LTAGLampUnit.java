@@ -14,14 +14,14 @@ import ngat.util.logging.*;
  * that supports 3 lamps (Tungsten,Neon and Xenon). They are controlled with a Micrologix 1100 PLC
  * over Ethernet/IP (controlled via the ngat.eip library). 
  * @author Chris Mottram
- * @version $Revision: 1.9 $
+ * @version $Revision$
  */
 public class LTAGLampUnit implements LampUnitInterface
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: LTAGLampUnit.java,v 1.9 2011-01-12 14:16:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Basic unit log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE

@@ -3,8 +3,8 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ReportedTarget extends Target
     implements java.io.Serializable
@@ -13,7 +13,7 @@ public class ReportedTarget extends Target
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-        new String( "$Id: ReportedTarget.java,v 1.2 2013-07-04 10:38:20 cjm Exp $" );
+        new String( "$Id$" );
 
     /**
      *

@@ -25,8 +25,8 @@ package ngat.ngtcs;
  * <b>Note</b> a Mirror object is to be added to include pin-cushion/barrel
  * distortions.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class FocalStation
 {
@@ -34,7 +34,7 @@ public class FocalStation
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: FocalStation.java,v 1.2 2013-07-02 14:40:07 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Name of this FocalStation.

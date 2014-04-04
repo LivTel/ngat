@@ -9,8 +9,8 @@ import ngat.ngtcs.subsystem.amn.*;
  * Drive the focus to a specified setting.
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class FOCUSImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class FOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: FOCUSImplementor.java,v 1.5 2013-07-04 10:23:34 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the FOCUS command (900 seconds), in milliseconds.
@@ -170,7 +170,7 @@ public class FOCUSImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:23:34 $
  * $RCSfile: FOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/FOCUSImplementor.java,v $
- *      $Id: FOCUSImplementor.java,v 1.5 2013-07-04 10:23:34 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/09/29 14:16:44  je
  *     Implemented execute and added documentation.

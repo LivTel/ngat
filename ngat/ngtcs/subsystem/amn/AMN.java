@@ -15,8 +15,8 @@ import ngat.ngtcs.subsystem.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AMN extends ngat.ngtcs.subsystem.TTL_System
 {
@@ -30,7 +30,7 @@ public class AMN extends ngat.ngtcs.subsystem.TTL_System
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AMN.java,v 1.2 2013-07-04 12:57:46 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -96,7 +96,7 @@ public class AMN extends ngat.ngtcs.subsystem.TTL_System
  *    $Date: 2013-07-04 12:57:46 $
  * $RCSfile: AMN.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/AMN.java,v $
- *      $Id: AMN.java,v 1.2 2013-07-04 12:57:46 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:45  je
  *     Initial revision

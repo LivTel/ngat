@@ -16,7 +16,7 @@ public class PolarimeterDetector extends Detector implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PolarimeterDetector.java,v 1.1 2006-11-20 14:51:23 cjm Exp $"); 
+	public final static String RCSID = new String("$Id$"); 
 
 	/** The name of the detector.*/
 	public static final String name = "E2V4240hs";

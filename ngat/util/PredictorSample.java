@@ -5,13 +5,13 @@ package ngat.util;
  *
  * <dl>
  * <dt><b>RCS:</b>
- * <dd>$Id: PredictorSample.java,v 1.1 2001-07-11 10:24:23 snf Exp $
+ * <dd>$Id$
  * <dt><b>Source:</b>
  * <dd>$Source: /space/home/eng/cjm/cvs/ngat/util/PredictorSample.java,v $
  * </dl>
- * @author $Author: snf $
- * @version $Revision: 1.1 $
- * $Id: PredictorSample.java,v 1.1 2001-07-11 10:24:23 snf Exp $
+ * @author $Author$
+ * @version $Revision$
+ * $Id$
  */
 public class PredictorSample {
 

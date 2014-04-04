@@ -32,7 +32,7 @@ import javax.swing.*;
  * The GUILabelBackgroundColourSetter is Runnable. It is used as an argument to SwingUtilities.invokeLater.
  * It sets a label's background colour. This is needed as updating <b>must</b> be done in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUILabelBackgroundColourSetter implements Runnable
@@ -40,7 +40,7 @@ public class GUILabelBackgroundColourSetter implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUILabelBackgroundColourSetter.java,v 1.1 2008-04-28 17:23:56 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The Swing JLabel to append to.
 	 */

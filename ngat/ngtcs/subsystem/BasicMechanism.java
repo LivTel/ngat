@@ -11,8 +11,8 @@ import ngat.ngtcs.common.*;
 /**
  * Basic super-class of Controllable subsystem used by the NGTCS commands.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public abstract class BasicMechanism
@@ -28,7 +28,7 @@ public abstract class BasicMechanism
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: BasicMechanism.java,v 1.3 2013-07-04 10:53:08 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -227,7 +227,7 @@ public abstract class BasicMechanism
  *    $Date: 2013-07-04 10:53:08 $
  * $RCSfile: BasicMechanism.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/BasicMechanism.java,v $
- *      $Id: BasicMechanism.java,v 1.3 2013-07-04 10:53:08 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/19 16:01:09  je
  *     Updated Command tx/rx and TTL subsystem interfaces.

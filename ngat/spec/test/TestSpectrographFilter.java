@@ -9,14 +9,14 @@ import ngat.spec.*;
 /**
  * Simple test of ngat.spec library.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision$
  */
 public class TestSpectrographFilter
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TestSpectrographFilter.java,v 0.4 2013-06-28 10:13:30 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Run method. 

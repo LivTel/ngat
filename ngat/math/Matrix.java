@@ -8,14 +8,14 @@ import java.util.*;
 /**
  * Defines mathematical matricies.  NB not fully implemented yet!
  * @author $author$
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class Matrix
 {
     /**
      * Revision Control System id string, showing the version of the Class.
      */
-    public static final String RCSID = new String( "$Id: Matrix.java,v 1.1 2000-11-10 13:33:59 je Exp $" );
+    public static final String RCSID = new String( "$Id$" );
 
 
     /**

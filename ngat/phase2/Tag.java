@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * Represents a Time Allocation Group in the Phase II database.
  * <br>
- * $Id: Tag.java,v 1.2 2006-11-23 10:43:05 snf Exp $
+ * $Id$
  *
  */
 

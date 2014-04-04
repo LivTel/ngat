@@ -7,7 +7,7 @@ import java.io.*;
  * orbital elements. The current position is either calculated using these
  * elements at this time or retrieved from either an internal or external cache.
  * 
- * $Id: OrbitalPosition.java,v 1.1 2000-11-29 12:42:02 snf Exp $
+ * $Id$
  *
  */
 public class OrbitalPosition extends Position implements Serializable {
@@ -65,38 +65,9 @@ public class OrbitalPosition extends Position implements Serializable {
 	cacheExpiry = 0L;
     }
     
-    public OrbitalPosition(NPOrbitalPosition npPosition) {
-	this.argPeri       = npPosition.getArgPeri();
-	this.longAscNode   = npPosition.getLongAscNode();
-	this.orbitalInc    = npPosition.getOrbitalInc();
-	this.dailyMotion   = npPosition.getDailyMotion();
-	this.eccentricity  = npPosition.getEccentricity();
-	this.elementEpoch  = npPosition.getElementEpoch();
-	this.meanDistance  = npPosition.getMeanDistance();
-	this.meanAnomaly   = npPosition.getMeanAnomaly();
-	this.longPeri      = npPosition.getLongPeri();
-	this.period        = npPosition.getPeriod();
-	this.periDist      = npPosition.getPeriDist();
-	this.meanLongitude = npPosition.getMeanLongitude();	  
-	cacheExpiry = 0L;
-    }
-    
     
     public NPPosition makeNP() {
-	NPOrbitalPosition  npPosition = new NPOrbitalPosition();
-	npPosition.setArgPeri(argPeri);
-	npPosition.setLongAscNode(longAscNode);
-	npPosition.setOrbitalInc(orbitalInc);
-	npPosition.setDailyMotion(dailyMotion);
-	npPosition.setEccentricity(eccentricity);
-	npPosition.setElementEpoch (elementEpoch);
-	npPosition.setMeanDistance(meanDistance);
-	npPosition.setMeanAnomaly(meanAnomaly);
-	npPosition.setLongPeri(longPeri);
-	npPosition.setPeriod(period);
-	npPosition.setPeriDist(periDist);
-	npPosition.setMeanLongitude(meanLongitude);	
-	return npPosition;
+	return null;
     }
 
     public double getRA() {

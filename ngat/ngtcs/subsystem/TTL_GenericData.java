@@ -14,8 +14,8 @@ package ngat.ngtcs.subsystem;
  * <li>D_MCP_APP_VERSION</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_GenericData
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -30,7 +30,7 @@ public class TTL_GenericData
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_GenericData.java,v 1.2 2013-07-04 10:55:46 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -244,7 +244,7 @@ public class TTL_GenericData
  *    $Date: 2013-07-04 10:55:46 $
  * $RCSfile: TTL_GenericData.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_GenericData.java,v $
- *      $Id: TTL_GenericData.java,v 1.2 2013-07-04 10:55:46 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:01:09  je
  *     Initial revision

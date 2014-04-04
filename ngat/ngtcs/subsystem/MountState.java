@@ -5,8 +5,8 @@ import ngat.ngtcs.common.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class MountState extends SystemState
 {
@@ -20,7 +20,7 @@ public class MountState extends SystemState
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: MountState.java,v 1.3 2013-07-04 10:54:26 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */

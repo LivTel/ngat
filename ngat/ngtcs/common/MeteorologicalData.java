@@ -3,8 +3,8 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public class MeteorologicalData extends Data
 {
@@ -12,7 +12,7 @@ public class MeteorologicalData extends Data
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-        new String( "$Id: MeteorologicalData.java,v 1.2 2013-07-04 10:37:57 cjm Exp $" );
+        new String( "$Id$" );
 
     /**
      *

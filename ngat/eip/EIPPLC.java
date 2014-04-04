@@ -10,14 +10,14 @@ import ngat.util.logging.*;
  * PLCs (for instance Micrologix 1100 and Micrologix 1200). Each instance of this class represents (a connection
  * to) one of these PLCs, with methods for reading and writing integers, floats and booleans (bits).
  * @author Chris Mottram
- * @version $Revision: 1.6 $
+ * @version $Revision$
  */
 public class EIPPLC
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: EIPPLC.java,v 1.6 2011-01-12 14:15:38 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 // eip_session.h
 	/* These constants should be the same as those in eip_session.h */
 	/**

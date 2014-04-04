@@ -19,7 +19,7 @@ import ngat.util.logging.*;
  * ICSDShutdownCommand command = new ICSDShutdownCommand("ltccd1",7368);
  * command.send();
  * </pre>
- * @version $Revision: 1.4 $
+ * @version $Revision$
  * @author Chris Mottram
  * @see ngat.net.TelnetConnection
  */
@@ -28,7 +28,7 @@ public class ICSDShutdownCommand extends ICSDCommand implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ICSDShutdownCommand.java,v 1.4 2004-08-02 10:45:09 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * String containing the command string to send over the connection.
 	 */

@@ -7,7 +7,7 @@ import java.io.*;
  * collect extra information from the stream header.
  *
  * <br><br>
- * $Id: CryptoInputStream.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class CryptoInputStream extends ObjectInputStream {
 

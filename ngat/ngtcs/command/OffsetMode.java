@@ -9,8 +9,8 @@ import java.util.Hashtable;
  * The only references are <code>Offset.TIME</code> and
  * <code>Offset.ARC</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class OffsetMode implements java.io.Serializable
 {
@@ -24,7 +24,7 @@ public class OffsetMode implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: OffsetMode.java,v 1.3 2013-07-04 10:07:07 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -211,7 +211,7 @@ public class OffsetMode implements java.io.Serializable
  *    $Date: 2013-07-04 10:07:07 $
  * $RCSfile: OffsetMode.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/OffsetMode.java,v $
- *      $Id: OffsetMode.java,v 1.3 2013-07-04 10:07:07 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

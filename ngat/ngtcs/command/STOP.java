@@ -3,8 +3,8 @@ package ngat.ngtcs.command;
 /**
  * This command will stop the telescope and place it into an IDLE state.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class STOP extends Command
 {
@@ -18,7 +18,7 @@ public class STOP extends Command
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: STOP.java,v 1.3 2013-07-04 10:08:27 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -72,7 +72,7 @@ public class STOP extends Command
  *    $Date: 2013-07-04 10:08:27 $
  * $RCSfile: STOP.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/STOP.java,v $
- *      $Id: STOP.java,v 1.3 2013-07-04 10:08:27 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:01:31  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

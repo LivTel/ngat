@@ -3,7 +3,7 @@ package ngat.net;
 /** Exception thrown by CryptoSource and Authenticator when illegal
  * or unauthenticated messages are received.
  *
- * $Id: InvalidUserException.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class InvalidUserException extends AuthenticationException {
 

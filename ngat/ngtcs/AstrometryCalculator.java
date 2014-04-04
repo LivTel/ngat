@@ -8,8 +8,8 @@ import ngat.ngtcs.common.*;
  * Interface to the NGTCS through which different astrometric transformations
  * can be implemented.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class AstrometryCalculator
 {
@@ -17,7 +17,7 @@ public abstract class AstrometryCalculator
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AstrometryCalculator.java,v 1.2 2013-07-02 13:28:18 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    *

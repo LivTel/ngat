@@ -25,9 +25,9 @@ SRCS           = AltPanel.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: cjm $
-# $Revision: 1.3 $
-#       $Id: Makefile,v 1.3 2013-07-04 13:07:15 cjm Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2013-07-04 13:07:15 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/Makefile,v $

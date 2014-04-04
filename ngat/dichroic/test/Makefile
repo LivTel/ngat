@@ -1,5 +1,5 @@
 # $Header: /space/home/eng/cjm/cvs/ngat/dichroic/test/Makefile,v 1.2 2013-06-28 10:43:08 cjm Exp $
-# $Id: Makefile,v 1.2 2013-06-28 10:43:08 cjm Exp $
+# $Id$
 PACKAGENAME    = ngat.dichroic.test
 PACKAGEDIR     = ngat/dichroic/test
 JAR_FILE       = ngat_dichroic_test.jar

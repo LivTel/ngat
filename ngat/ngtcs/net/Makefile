@@ -9,9 +9,9 @@ DIRS_TARGET 	= dirs
 include		$(LT_SRC_HOME)/ttl/Makefile.ttl
 
 #
-#   $Author: je $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2003-09-19 16:01:08 je Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2003-09-19 16:01:08 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/Makefile,v $

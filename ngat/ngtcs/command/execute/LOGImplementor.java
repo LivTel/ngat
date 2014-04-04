@@ -9,8 +9,8 @@ import ngat.ngtcs.command.*;
  * Sets the logging level of the specified <code>Logger</code> to the level
  * specified in the command.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class LOGImplementor extends CommandImplementor
 {
@@ -18,7 +18,7 @@ public class LOGImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: LOGImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the LOG command (3 seconds), in milliseconds
@@ -70,7 +70,7 @@ public class LOGImplementor extends CommandImplementor
  *    $Date: 2003-09-26 09:58:41 $
  * $RCSfile: LOGImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/LOGImplementor.java,v $
- *      $Id: LOGImplementor.java,v 1.3 2003-09-26 09:58:41 je Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/22 13:24:36  je
  *     Added TTL TCS-Network-ICD documentation.

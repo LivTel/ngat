@@ -15,8 +15,8 @@ import ngat.ngtcs.subsystem.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class EPT extends ngat.ngtcs.subsystem.TTL_System
 {
@@ -30,7 +30,7 @@ public class EPT extends ngat.ngtcs.subsystem.TTL_System
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: EPT.java,v 1.1 2013-07-04 12:58:40 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -92,6 +92,6 @@ public class EPT extends ngat.ngtcs.subsystem.TTL_System
  *    $Date: 2013-07-04 12:58:40 $
  * $RCSfile: EPT.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ept/EPT.java,v $
- *      $Id: EPT.java,v 1.1 2013-07-04 12:58:40 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

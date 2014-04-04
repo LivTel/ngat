@@ -5,8 +5,8 @@ package ngat.ngtcs.command;
  * An IllegalArgument Exception is thrown if the position specified is outside
  * the lagal values of MIN_POSITION (0) and MAX_POSITION (4).
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class MOVE_FOLD extends ngat.ngtcs.command.Command
 {
@@ -20,7 +20,7 @@ public class MOVE_FOLD extends ngat.ngtcs.command.Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: MOVE_FOLD.java,v 1.3 2013-07-04 10:07:03 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -98,7 +98,7 @@ public class MOVE_FOLD extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:07:03 $
  * $RCSfile: MOVE_FOLD.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/MOVE_FOLD.java,v $
- *      $Id: MOVE_FOLD.java,v 1.3 2013-07-04 10:07:03 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

@@ -5,7 +5,7 @@ import java.math.*;
 
 /** Implements an authenticator for encrypted authentication codes.
  *
- * $Id: CryptoAuthenticator.java,v 1.1 2008-07-23 12:41:17 eng Exp $ */
+ * $Id$ */
 public class CryptoAuthenticator {
     
     /** Magic number for encryption.*/

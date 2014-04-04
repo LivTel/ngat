@@ -9,14 +9,14 @@ import java.lang.*;
  * a set of lower priority threads, should be allowed to run. It implements a round-robin scheduling system.
  * It should be used on CPU intensive tasks. <br>
  * This class was taken from <b>Java Threads</b>, an O'Reilly book by Scott Oaks and Henry Wong, Chapter 6, P149.
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public class CPUScheduler extends Thread
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: CPUScheduler.java,v 0.1 1999-12-10 14:53:08 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Thread priority to run the scheduler at.
 	 */

@@ -12,8 +12,8 @@ package ngat.ngtcs.subsystem;
  * <li>E_CIL_ERR_CLASS</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class TTL_CIL_MessageClass
   implements ngat.net.cil.CIL_MessageClass
@@ -28,7 +28,7 @@ public final class TTL_CIL_MessageClass
    * String used to identify RCS revision details.
    */
   public final static String rcsid =
-    new String( "$Id: TTL_CIL_MessageClass.java,v 1.1 2006-11-20 14:42:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -245,7 +245,7 @@ public final class TTL_CIL_MessageClass
  *    $Date: 2006-11-20 14:42:25 $
  * $RCSfile: TTL_CIL_MessageClass.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_CIL_MessageClass.java,v $
- *      $Id: TTL_CIL_MessageClass.java,v 1.1 2006-11-20 14:42:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:00:50  je
  *     Initial revision

@@ -9,14 +9,14 @@ import java.util.*;
  * Class to do a chi squared fit, which returns chi squared for a model verses an actual data set.
  * Chi squared is a measure of how well the model fits the data.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public class ChiSquaredFit
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ChiSquaredFit.java,v 0.1 2000-08-18 17:24:43 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * This value is the default for how much to shrink a parameter range during a parameter constrain operation.
 	 * It should be greater than one.

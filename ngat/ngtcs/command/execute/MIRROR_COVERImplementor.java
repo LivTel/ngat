@@ -9,8 +9,8 @@ import ngat.ngtcs.subsystem.spt.*;
  * Open/Close mirror cover.
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class MIRROR_COVERImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class MIRROR_COVERImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: MIRROR_COVERImplementor.java,v 1.5 2013-07-04 10:16:46 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the MIRROR_COVER command (60 seconds), in milliseconds.
@@ -129,7 +129,7 @@ public class MIRROR_COVERImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:16:46 $
  * $RCSfile: MIRROR_COVERImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/MIRROR_COVERImplementor.java,v $
- *      $Id: MIRROR_COVERImplementor.java,v 1.5 2013-07-04 10:16:46 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/10/16 15:31:25  je
  *     Implemented execute method.

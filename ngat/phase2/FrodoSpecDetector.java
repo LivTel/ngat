@@ -11,14 +11,14 @@ import ngat.phase2.nonpersist.*;
 /** 
  * Subclass of Detector to represent a FrodoSpec Detector.
  * These are E2V CCD44-82 4kx2k chips. 15um pixel scale.
- * $Id: FrodoSpecDetector.java,v 1.1 2007-05-22 09:07:31 cjm Exp $
+ * $Id$
  */
 public class FrodoSpecDetector extends Detector implements Serializable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FrodoSpecDetector.java,v 1.1 2007-05-22 09:07:31 cjm Exp $"); 
+	public final static String RCSID = new String("$Id$"); 
 	/** 
 	 * The name of the detector.
 	 */

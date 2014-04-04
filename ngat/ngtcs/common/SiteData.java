@@ -12,8 +12,8 @@ import ngat.util.*;
  * Some method overloading has been used to re-direct references to make access
  * from the Java Native Interface easier.
  * 
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public class SiteData extends Data
 {
@@ -21,7 +21,7 @@ public class SiteData extends Data
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-        new String( "$Id: SiteData.java,v 1.2 2013-07-04 10:45:58 cjm Exp $" );
+        new String( "$Id$" );
 
     /**
      * Mean observatory longitude in radians.

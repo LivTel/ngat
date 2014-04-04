@@ -10,14 +10,14 @@ package ngat.util.logging;
  * as here the level parameter is being used as a bit-wise comparator rather than an
  * absolute level.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class BitFieldLogFilter implements LogFilter
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: BitFieldLogFilter.java,v 1.1 2007-02-28 06:17:00 snf Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The level to filter log records against. If a bit set in this variable is also set
 	 * in a LogRecord passed to isLoggable, the LogRecord is passed to the relevant handlers to

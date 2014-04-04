@@ -35,14 +35,14 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 /**
  * This class is an LT specific look and feel.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision$
  */
 public class LTLookAndFeel extends MetalLookAndFeel
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LTLookAndFeel.java,v 0.3 2006-05-16 18:15:30 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Return a string that identifies this look and feel. 

@@ -3,8 +3,8 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class Timestamp implements java.io.Serializable
 {
@@ -12,7 +12,7 @@ public class Timestamp implements java.io.Serializable
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Timestamp.java,v 1.2 2013-07-04 10:47:35 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Integer number of whole seconds since 01/01/1970.

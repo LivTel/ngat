@@ -5,8 +5,8 @@ package ngat.ngtcs.subsystem;
  * possible references of type TTL_CIL_Node.
  * <p>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_CIL_Node
   implements ngat.net.cil.CIL_Node, java.io.Serializable
@@ -21,7 +21,7 @@ public class TTL_CIL_Node
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_CIL_Node.java,v 1.1 2006-11-20 14:42:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -952,7 +952,7 @@ public class TTL_CIL_Node
  *    $Date: 2006-11-20 14:42:25 $
  * $RCSfile: TTL_CIL_Node.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_CIL_Node.java,v $
- *      $Id: TTL_CIL_Node.java,v 1.1 2006-11-20 14:42:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:00:50  je
  *     Initial revision

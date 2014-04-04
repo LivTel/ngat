@@ -5,8 +5,8 @@ package ngat.ngtcs.command;
  * commands.  The CommandImplementor for this command will initialise the
  * specified <code><b>PluggableSubSystem</code></b>-implementing autoguider.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGSELECT extends ngat.ngtcs.command.Command
 {
@@ -20,7 +20,7 @@ public class AGSELECT extends ngat.ngtcs.command.Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: AGSELECT.java,v 1.3 2013-07-04 10:06:19 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -72,7 +72,7 @@ public class AGSELECT extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:06:19 $
  * $RCSfile: AGSELECT.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGSELECT.java,v $
- *      $Id: AGSELECT.java,v 1.3 2013-07-04 10:06:19 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

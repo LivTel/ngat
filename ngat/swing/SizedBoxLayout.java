@@ -29,14 +29,14 @@ import javax.swing.BoxLayout;
 /**
  * This class extends BoxLayout, but tries to keep the container a specified size.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision$
  */
 public class SizedBoxLayout extends BoxLayout
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SizedBoxLayout.java,v 0.2 2006-05-16 18:15:32 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The size we want the layout be to.
 	 */

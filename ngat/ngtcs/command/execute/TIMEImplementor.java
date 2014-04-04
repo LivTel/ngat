@@ -13,8 +13,8 @@ import ngat.ngtcs.subsystem.*;
  * beginning at the simulation time specified in the <code>TIME</code> command
  * incremented by the increment specified in that command.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TIMEImplementor extends CommandImplementor
 {
@@ -22,7 +22,7 @@ public class TIMEImplementor extends CommandImplementor
      * String used to identify RCS revision details.
   */
     public static final String rcsid =
-	new String( "$Id: TIMEImplementor.java,v 1.4 2013-07-04 10:30:00 cjm Exp $" );
+	new String( "$Id$" );
 
   /**
    * The timeout for the TIME command (3 seconds), in milliseconds

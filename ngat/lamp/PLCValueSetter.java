@@ -11,14 +11,14 @@ import ngat.util.logging.*;
  * This class holds information about one PLC address and the value it should contain.
  * This is used to set various values in the LT A&G lamp unit PLC.
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class PLCValueSetter
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PLCValueSetter.java,v 1.4 2011-01-12 14:16:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * A boolean, if true set the value during unit initialisation.
 	 */

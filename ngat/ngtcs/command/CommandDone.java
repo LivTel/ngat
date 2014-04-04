@@ -8,8 +8,8 @@ package ngat.ngtcs.command;
  * For commands that return specific data (e.g. specific mechanism status
  * requests), this class should be sub-classed.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class CommandDone extends ngat.message.base.COMMAND_DONE
 {
@@ -23,7 +23,7 @@ public class CommandDone extends ngat.message.base.COMMAND_DONE
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: CommandDone.java,v 1.3 2013-07-04 10:06:37 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Total number of dones sent.
@@ -217,7 +217,7 @@ public class CommandDone extends ngat.message.base.COMMAND_DONE
  *    $Date: 2013-07-04 10:06:37 $
  * $RCSfile: CommandDone.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/CommandDone.java,v $
- *      $Id: CommandDone.java,v 1.3 2013-07-04 10:06:37 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

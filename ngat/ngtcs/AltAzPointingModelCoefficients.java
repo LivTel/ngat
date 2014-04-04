@@ -8,8 +8,8 @@ import ngat.ngtcs.common.*;
 /**
  * This class contains the coefficients used in a standard AltAzPointingModel.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AltAzPointingModelCoefficients extends PointingModelCoefficients
 {
@@ -23,7 +23,7 @@ public class AltAzPointingModelCoefficients extends PointingModelCoefficients
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AltAzPointingModelCoefficients.java,v 1.2 2013-07-02 13:26:23 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Multiplicative conversion from arcseconds to radians.
@@ -306,7 +306,7 @@ public class AltAzPointingModelCoefficients extends PointingModelCoefficients
  *    $Date: 2013-07-02 13:26:23 $
  * $RCSfile: AltAzPointingModelCoefficients.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/AltAzPointingModelCoefficients.java,v $
- *      $Id: AltAzPointingModelCoefficients.java,v 1.2 2013-07-02 13:26:23 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:11:30  je
  *     Initial revision

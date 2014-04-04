@@ -8,14 +8,14 @@ import java.util.*;
 /**
  * This class holds an x/y position of a data value, that we are trying to obtain a fit for.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public class QuadraticFitPoint
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFitPoint.java,v 0.1 2000-08-18 17:24:43 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * X data point value.
 	 */

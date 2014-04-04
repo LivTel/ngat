@@ -3,8 +3,8 @@ package ngat.ngtcs;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class InitialisationException extends Exception
 {
@@ -12,7 +12,7 @@ public class InitialisationException extends Exception
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: InitialisationException.java,v 1.2 2013-07-02 14:43:13 cjm Exp $" );
+	new String( "$Id$" );
 
 
     /**

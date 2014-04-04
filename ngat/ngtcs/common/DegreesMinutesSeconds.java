@@ -8,8 +8,8 @@ import java.text.*;
  * <br>
  * This class is non-mutable.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class DegreesMinutesSeconds
 {
@@ -23,7 +23,7 @@ public class DegreesMinutesSeconds
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: DegreesMinutesSeconds.java,v 1.2 2013-07-04 10:36:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -390,7 +390,7 @@ public class DegreesMinutesSeconds
  *    $Date: 2013-07-04 10:36:25 $
  * $RCSfile: DegreesMinutesSeconds.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/DegreesMinutesSeconds.java,v $
- *      $Id: DegreesMinutesSeconds.java,v 1.2 2013-07-04 10:36:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:04  je
  *     Initial revision

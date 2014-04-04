@@ -29,8 +29,8 @@ import ngat.ngtcs.subsystem.*;
  * <li>E_SDB_COMMAND_EOL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SDB_Service
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType,
@@ -46,7 +46,7 @@ public final class SDB_Service
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SDB_Service.java,v 1.1 2006-11-20 14:46:54 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -375,7 +375,7 @@ public final class SDB_Service
  *    $Date: 2006-11-20 14:46:54 $
  * $RCSfile: SDB_Service.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/sdb/SDB_Service.java,v $
- *      $Id: SDB_Service.java,v 1.1 2006-11-20 14:46:54 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

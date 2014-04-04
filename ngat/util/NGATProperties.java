@@ -15,7 +15,7 @@ import java.util.*;
  * For all methods taking a default value, the default value is returned if
  * parsing of the value returned on the key search fails.
  *
- * @version $Revision: 0.11 $
+ * @version $Revision$
  * @author Jason Etherton,Chris Mottram
  */
 public class NGATProperties extends Properties
@@ -24,7 +24,7 @@ public class NGATProperties extends Properties
 	 * Revision Control System id string, showing the version of the Class.
 	 */
 	public final static String RCSID = new String
-		("$Id: NGATProperties.java,v 0.11 2005-06-14 13:16:34 cjm Exp $");
+		("$Id$");
 
 	/**
 	 * Method to load the properties.

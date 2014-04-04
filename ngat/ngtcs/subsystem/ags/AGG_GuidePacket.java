@@ -3,8 +3,8 @@ package ngat.ngtcs.subsystem.ags;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGG_GuidePacket
 {
@@ -18,7 +18,7 @@ public class AGG_GuidePacket
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGG_GuidePacket.java,v 1.2 2013-07-04 12:54:58 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -105,7 +105,7 @@ public class AGG_GuidePacket
  *    $Date: 2013-07-04 12:54:58 $
  * $RCSfile: AGG_GuidePacket.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG_GuidePacket.java,v $
- *      $Id: AGG_GuidePacket.java,v 1.2 2013-07-04 12:54:58 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:38  je
  *     Initial revision

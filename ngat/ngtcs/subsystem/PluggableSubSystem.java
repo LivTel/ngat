@@ -7,8 +7,8 @@ import ngat.ngtcs.common.*;
  * Interface describing the core functionality of all NGTCS-pluggable sub
  * systems.
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public interface PluggableSubSystem
 {

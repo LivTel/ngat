@@ -15,8 +15,8 @@ import ngat.ngtcs.command.*;
  * A java (Datagram socket) implementation of the CIL interface, converting
  * to TTL's C-readable format.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class TTL_CIL implements Runnable, CIL
@@ -25,7 +25,7 @@ public class TTL_CIL implements Runnable, CIL
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_CIL.java,v 1.2 2013-07-04 10:48:40 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The 28 bytes taken up by the 7 Int32_t headers.
@@ -411,7 +411,7 @@ public class TTL_CIL implements Runnable, CIL
  *    $Date: 2013-07-04 10:48:40 $
  * $RCSfile: TTL_CIL.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/cil/TTL_CIL.java,v $
- *      $Id: TTL_CIL.java,v 1.2 2013-07-04 10:48:40 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:00:50  je
  *     Initial revision

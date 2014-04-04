@@ -9,8 +9,8 @@ import ngat.ngtcs.common.*;
  * This class is used to return the status of the telescope and/or any 
  * specified mechanisms on that Telescope.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class STATUSDone extends CommandDone
@@ -25,7 +25,7 @@ public class STATUSDone extends CommandDone
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: STATUSDone.java,v 1.3 2013-07-04 10:08:22 cjm Exp $" );
+	new String( "$Id$" );
 
 
     /*=========================================================================*/

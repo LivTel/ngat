@@ -11,8 +11,8 @@ import ngat.ngtcs.subsystem.amn.*;
 /**
  * Set autoguider focus position.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.7 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGFOCUSImplementor extends CommandImplementor
 {
@@ -26,7 +26,7 @@ public class AGFOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGFOCUSImplementor.java,v 1.7 2013-07-04 10:15:40 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the AGFOCUS command (60 seconds), in milliseconds.
@@ -149,7 +149,7 @@ public class AGFOCUSImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:15:40 $
  * $RCSfile: AGFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFOCUSImplementor.java,v $
- *      $Id: AGFOCUSImplementor.java,v 1.7 2013-07-04 10:15:40 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.6  2003/09/29 11:53:18  je
  *     corrected a method name call.

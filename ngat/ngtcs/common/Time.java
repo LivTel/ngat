@@ -15,8 +15,8 @@ package ngat.ngtcs.common;
  * <li>TAI</li>
  * </ul>
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class Time implements java.io.Serializable
 {
@@ -30,7 +30,7 @@ public class Time implements java.io.Serializable
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Time.java,v 1.2 2013-07-04 10:47:19 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -489,7 +489,7 @@ public class Time implements java.io.Serializable
  *    $Date: 2013-07-04 10:47:19 $
  * $RCSfile: Time.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Time.java,v $
- *      $Id: Time.java,v 1.2 2013-07-04 10:47:19 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:04  je
  *     Initial revision

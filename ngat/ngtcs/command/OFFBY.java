@@ -13,8 +13,8 @@ package ngat.ngtcs.command;
  * &plusmn;<code>MAX_RA_OFFSET_TIME</code> (240.00) in Right Ascension, and
  * &plusmn;<code>MAX_DEC_OFFSET_TIME</code> (3600.00) in Decliantion.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class OFFBY extends ngat.ngtcs.command.Command
 {
@@ -28,7 +28,7 @@ public class OFFBY extends ngat.ngtcs.command.Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: OFFBY.java,v 1.3 2013-07-04 10:07:05 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -169,7 +169,7 @@ public class OFFBY extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:07:05 $
  * $RCSfile: OFFBY.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/OFFBY.java,v $
- *      $Id: OFFBY.java,v 1.3 2013-07-04 10:07:05 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

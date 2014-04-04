@@ -16,9 +16,9 @@ SRCS           = IllegalDetectorWindowSizeException.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
-#   $Author: snf $ 
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2006-11-23 10:46:40 snf Exp $
+#   $Author$ 
+# $Revision$
+#       $Id$
 #     $Date: 2006-11-23 10:46:40 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/phase2/nonpersist/Makefile,v $

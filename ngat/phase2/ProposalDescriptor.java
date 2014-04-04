@@ -5,7 +5,7 @@ import java.util.*;
 /** Contains selected fields of a Proposal, suitable for informing remote users of the
  * details of a Proposal without revealing any substructure. Used By USR_ListProposals
  * to store the basic details of a Proposal. 
- * $Id: ProposalDescriptor.java,v 1.1 2006-11-20 14:51:23 cjm Exp $.*/
+ * $Id$.*/
 public class ProposalDescriptor implements Serializable {
     
     /** Serial version UID - used to maintain serialization compatibility

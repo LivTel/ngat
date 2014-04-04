@@ -8,8 +8,8 @@ import java.util.*;
  * An Acknowledge is returned after command receipt with a timeout.  Further
  * Acknowledges may be sent to increase this timeout.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class Acknowledge extends ngat.message.base.ACK
 {
@@ -23,7 +23,7 @@ public class Acknowledge extends ngat.message.base.ACK
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Acknowledge.java,v 1.3 2013-07-04 10:05:28 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Total number of acknowledges sent.
@@ -138,7 +138,7 @@ public class Acknowledge extends ngat.message.base.ACK
  *    $Date: 2013-07-04 10:05:28 $
  * $RCSfile: Acknowledge.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Acknowledge.java,v $
- *      $Id: Acknowledge.java,v 1.3 2013-07-04 10:05:28 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

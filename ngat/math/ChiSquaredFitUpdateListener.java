@@ -9,7 +9,7 @@ import java.util.*;
  * Interface used to call an update function after each new chi squared interation, before
  * new parameter limits are computed.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public interface ChiSquaredFitUpdateListener
 {

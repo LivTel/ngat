@@ -15,14 +15,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the ngat.eip library, by writing an integer value to a PLC.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class IntegerWrite
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: IntegerWrite.java,v 1.2 2009-02-05 11:33:57 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.eip.EIPPLC#PLC_TYPE_MICROLOGIX1100

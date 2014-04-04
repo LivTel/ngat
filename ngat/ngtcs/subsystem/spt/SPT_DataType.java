@@ -251,8 +251,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>D_SPT_DATAID_EOL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SPT_DataType
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -267,7 +267,7 @@ public final class SPT_DataType
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SPT_DataType.java,v 1.1 2006-11-20 14:47:01 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -2160,7 +2160,7 @@ public final class SPT_DataType
  *    $Date: 2006-11-20 14:47:01 $
  * $RCSfile: SPT_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/spt/SPT_DataType.java,v $
- *      $Id: SPT_DataType.java,v 1.1 2006-11-20 14:47:01 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

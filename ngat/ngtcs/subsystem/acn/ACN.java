@@ -16,8 +16,8 @@ import ngat.ngtcs.subsystem.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ACN extends TTL_System implements PluggableSubSystem
 {
@@ -31,7 +31,7 @@ public class ACN extends TTL_System implements PluggableSubSystem
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ACN.java,v 1.2 2013-07-04 12:53:26 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    *
@@ -290,7 +290,7 @@ public class ACN extends TTL_System implements PluggableSubSystem
  *    $Date: 2013-07-04 12:53:26 $
  * $RCSfile: ACN.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/acn/ACN.java,v $
- *      $Id: ACN.java,v 1.2 2013-07-04 12:53:26 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:30  je
  *     Initial revision

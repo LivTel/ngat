@@ -10,8 +10,8 @@ import ngat.ngtcs.subsystem.*;
 /**
  * Select which Autoguider to use.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGSELECTImplementor
   extends CommandImplementor
@@ -26,7 +26,7 @@ public class AGSELECTImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGSELECTImplementor.java,v 1.5 2013-07-04 10:16:04 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the AGSELECT command (20 seconds), in milliseconds.
@@ -116,7 +116,7 @@ public class AGSELECTImplementor
  *    $Date: 2013-07-04 10:16:04 $
  * $RCSfile: AGSELECTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGSELECTImplementor.java,v $
- *      $Id: AGSELECTImplementor.java,v 1.5 2013-07-04 10:16:04 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/09/29 12:03:13  je
  *     Added execute documentation.

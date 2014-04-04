@@ -43,7 +43,7 @@ public class FRODOSPEC_SETUP extends SETUP implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FRODOSPEC_SETUP.java,v 1.1 2013-07-01 09:14:14 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 /* ATTRIBUTES */
 	/**

@@ -64,8 +64,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>D_AMC_DATAID_EOL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class AMC_DataType
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -80,7 +80,7 @@ public final class AMC_DataType
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AMC_DataType.java,v 1.1 2006-11-20 14:46:32 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -664,7 +664,7 @@ public final class AMC_DataType
  *    $Date: 2006-11-20 14:46:32 $
  * $RCSfile: AMC_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/acn/AMC_DataType.java,v $
- *      $Id: AMC_DataType.java,v 1.1 2006-11-20 14:46:32 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

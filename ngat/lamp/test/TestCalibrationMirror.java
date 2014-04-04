@@ -17,14 +17,14 @@ import ngat.util.logging.*;
  * This class tests moving inline and stowing the calibration mirror used via Frodospec and the LTAGLampUnit,#
  * when taking ARCS and Tungsten lampflats.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TestCalibrationMirror
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TestCalibrationMirror.java,v 1.1 2010-12-09 14:46:16 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The filename of a properties file containing the lamp unit configuration.
 	 */

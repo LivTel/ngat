@@ -7,7 +7,7 @@ import java.awt.*;
 /** 
  * A resizeable panel for displaying logging information. 
  *
- * $Id: LogPanel.java,v 1.1 2000-11-21 16:40:40 snf Exp $
+ * $Id$
  *
  **/
 public class LogPanel extends JPanel implements ActionListener {

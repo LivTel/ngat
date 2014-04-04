@@ -10,7 +10,7 @@ import java.io.*;
 /** 
  * A top level object from which all database objects are derived. Contains
  * generic variables and methods.
- * $Id: DBObject.java,v 1.3 2007-07-05 11:57:58 snf Exp $
+ * $Id$
  */
 public class DBObject extends StorableObject implements Serializable {
 

@@ -34,7 +34,7 @@ import java.util.*;
  * <br><br>
  * <b>## TBD - Maybe the ProxyHandler handoff needs to be asynch? ##</b>
  * <br><br>
- * $Id: CIL_ProxyReader.java,v 1.1 2006-11-23 10:37:57 snf Exp $
+ * $Id$
  */
 public class CIL_ProxyReader {
 

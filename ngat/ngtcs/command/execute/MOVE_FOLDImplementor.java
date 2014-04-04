@@ -9,8 +9,8 @@ import ngat.ngtcs.subsystem.amn.*;
  * Move fold mirror to a predetermined position.
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class MOVE_FOLDImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class MOVE_FOLDImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: MOVE_FOLDImplementor.java,v 1.5 2013-07-04 10:16:48 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the MOVE_FOLD command (120 seconds), in milliseconds.
@@ -148,7 +148,7 @@ public class MOVE_FOLDImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:16:48 $
  * $RCSfile: MOVE_FOLDImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/MOVE_FOLDImplementor.java,v $
- *      $Id: MOVE_FOLDImplementor.java,v 1.5 2013-07-04 10:16:48 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/10/16 15:30:36  je
  *     Implemented execute method.

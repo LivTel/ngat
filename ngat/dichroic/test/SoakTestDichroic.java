@@ -15,14 +15,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the IO:O dichroic.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class SoakTestDichroic
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: SoakTestDichroic.java,v 1.2 2013-03-27 16:32:08 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The dichroic instance.
 	 */

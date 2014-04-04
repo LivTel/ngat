@@ -6,7 +6,7 @@ package ngat.spec;
  * This class allows various methods in SpecLibrary to return a double range, i.e. two double
  * values min and max.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision$
  * @see SpecLibrary
  * @see #min
  * @see #max
@@ -16,7 +16,7 @@ public class SpecDoubleRange
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: SpecDoubleRange.java,v 0.1 2000-10-16 17:37:13 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The variable used to hold the minimum double value.
 	 */

@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationCache.java,v 1.2 2000-11-21 17:26:44 snf Exp $
+ * $Id$
  *
  */
 public class ConfigurationCache extends ConfigurationProperties {

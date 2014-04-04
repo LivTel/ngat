@@ -29,7 +29,7 @@ import java.util.*;
  * This class holds data relating to one FITS header card image. A sequence of these card images make up a FITS
  * header. The FitsHeader class uses a list of instances of this class to represent a FITS header unit.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision$
  * @see ngat.fits.FitsHeader
  */
 public class FitsHeaderCardImage implements Serializable
@@ -37,7 +37,7 @@ public class FitsHeaderCardImage implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderCardImage.java,v 0.4 2006-05-16 17:42:22 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Variable holding the keyword this card image represents.
 	 */

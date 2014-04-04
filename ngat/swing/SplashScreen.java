@@ -31,14 +31,14 @@ import javax.swing.border.Border;
  * The splash screen stays up for a user definable length of time.
  * Clicking the mouse on the splash screen unmanages it.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision$
  */
 public class SplashScreen implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SplashScreen.java,v 0.4 2006-05-16 18:15:34 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Amount of time the run method sleeps between calls to toFront.
 	 */

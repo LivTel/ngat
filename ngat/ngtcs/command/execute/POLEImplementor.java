@@ -7,8 +7,8 @@ import ngat.ngtcs.command.*;
  * This command alters the currently used values for the Earth's rotational
  * pole coordinates held in the Telescope's IERSData object.
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class POLEImplementor extends CommandImplementor
 {
@@ -22,7 +22,7 @@ public class POLEImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: POLEImplementor.java,v 1.1 2013-07-04 10:22:32 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the POLE command (3 seconds), in milliseconds.
@@ -88,7 +88,7 @@ public class POLEImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:22:32 $
  * $RCSfile: POLEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/POLEImplementor.java,v $
- *      $Id: POLEImplementor.java,v 1.1 2013-07-04 10:22:32 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

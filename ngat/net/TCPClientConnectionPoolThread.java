@@ -11,14 +11,14 @@ import ngat.message.base.*;
 /**
  * The TCPClientConnectionPoolThread extends thread. It implements the generic ISS instrument command protocol.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TCPClientConnectionPoolThread extends Thread
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TCPClientConnectionPoolThread.java,v 1.1 2008-07-23 12:41:17 eng Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Default buffer size for input and output buffers.
 	 */

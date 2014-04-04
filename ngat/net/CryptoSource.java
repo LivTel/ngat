@@ -8,7 +8,7 @@ import java.security.*;
  * a Client application. The Crypto class is used to carry the sequences
  * between client and server. It also acts to decrypt the server's response. 
  *
- * $Id: CryptoSource.java,v 1.1 2008-07-23 12:41:17 eng Exp $ */
+ * $Id$ */
 public class CryptoSource {
     
     /** Magic number constant used in encryption.*/

@@ -10,7 +10,7 @@ import ngat.phase2.nonpersist.*;
 
 /** Subclass of Detector to represent the SUPIR Cam  CCD Detector.
  *
- * $Id: IRCamDetector.java,v 1.1 2006-11-20 14:51:23 cjm Exp $
+ * $Id$
  *
  */
 public class IRCamDetector extends Detector implements Serializable {

@@ -2,7 +2,7 @@ package ngat.net;
 
 /** Factory for generating appropriate ProtocolImpls for a given protocol.
  * <br><br>
- * $Id: ProtocolImplFactory.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public interface ProtocolImplFactory {
 

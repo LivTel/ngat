@@ -26,14 +26,14 @@ package ngat.ccd;
  * error. The individual parts of the error generated are stored in the exception as well as the complete message.
  * The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class CCDLibraryNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryNativeException.java,v 1.4 2006-05-16 17:41:34 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * A type of error that can cause this exception to be created. This type is when the error type
 	 * is unknown.

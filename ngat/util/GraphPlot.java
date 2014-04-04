@@ -13,7 +13,7 @@ import java.text.*;
  * paint() and putPoint() methods to carry out any additional processing. 
  * This class is now deprecated - Use the ngat.util.charting API instead.
  *
- * $Id: GraphPlot.java,v 1.3 2002-09-25 10:45:13 snf Exp $
+ * $Id$
  */ 
 public class GraphPlot extends JPanel {
 

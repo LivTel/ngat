@@ -9,8 +9,8 @@ import java.lang.String;
  * <p>
  * @see ngat.ngtcs.common.TimescaleType
  * @see ngat.ngtcs.common.CalendarType
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public class Epoch implements java.io.Serializable
 {
@@ -24,7 +24,7 @@ public class Epoch implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Epoch.java,v 1.2 2013-07-04 10:37:11 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -188,7 +188,7 @@ public class Epoch implements java.io.Serializable
  *    $Date: 2013-07-04 10:37:11 $
  * $RCSfile: Epoch.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Epoch.java,v $
- *      $Id: Epoch.java,v 1.2 2013-07-04 10:37:11 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:04  je
  *     Initial revision

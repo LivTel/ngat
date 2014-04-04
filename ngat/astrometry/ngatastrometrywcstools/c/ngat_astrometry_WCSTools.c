@@ -5,7 +5,7 @@
 /**
  * ngat_astrometry_WCSTools.c is the 'glue' between Doug Mink's libwcs.a,and ngat.astrometry.WCSTools.
  * @author Chris Mottram LJMU
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 /**
  * This hash define is needed before including source files give us POSIX.4/IEEE1003.1b-1993 prototypes
@@ -61,7 +61,7 @@ struct Handle_Map_Struct
 /**
  * Revision Control System identifier.
  */
-static char rcsid[] = "$Id: ngat_astrometry_WCSTools.c,v 1.2 2007-08-13 10:42:26 cjm Exp $";
+static char rcsid[] = "$Id$";
 
 /**
  * Internal list of maps between WCSToolsWorldCoorHandle jobject's (i.e. Java references), and

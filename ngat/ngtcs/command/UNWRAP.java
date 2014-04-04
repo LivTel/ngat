@@ -3,8 +3,8 @@ package ngat.ngtcs.command;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class UNWRAP extends ngat.ngtcs.command.Command
 {
@@ -18,7 +18,7 @@ public class UNWRAP extends ngat.ngtcs.command.Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: UNWRAP.java,v 1.3 2013-07-04 10:08:34 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -71,7 +71,7 @@ public class UNWRAP extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:08:34 $
  * $RCSfile: UNWRAP.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/UNWRAP.java,v $
- *      $Id: UNWRAP.java,v 1.3 2013-07-04 10:08:34 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

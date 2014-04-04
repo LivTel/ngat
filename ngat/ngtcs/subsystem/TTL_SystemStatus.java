@@ -10,8 +10,8 @@ package ngat.ngtcs.subsystem;
  * <li>SYS_ERROR_FATAL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class TTL_SystemStatus
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -26,7 +26,7 @@ public final class TTL_SystemStatus
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_SystemStatus.java,v 1.1 2006-11-20 14:42:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -227,7 +227,7 @@ public final class TTL_SystemStatus
  *    $Date: 2006-11-20 14:42:25 $
  * $RCSfile: TTL_SystemStatus.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_SystemStatus.java,v $
- *      $Id: TTL_SystemStatus.java,v 1.1 2006-11-20 14:42:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

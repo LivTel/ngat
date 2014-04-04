@@ -5,8 +5,8 @@ package ngat.ngtcs.command;
  * possible references of type TrackingMechanism.
  * <p>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TrackingMechanism implements java.io.Serializable
 {
@@ -20,7 +20,7 @@ public class TrackingMechanism implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TrackingMechanism.java,v 1.3 2013-07-04 10:08:32 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -231,7 +231,7 @@ public class TrackingMechanism implements java.io.Serializable
  *    $Date: 2013-07-04 10:08:32 $
  * $RCSfile: TrackingMechanism.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/TrackingMechanism.java,v $
- *      $Id: TrackingMechanism.java,v 1.3 2013-07-04 10:08:32 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

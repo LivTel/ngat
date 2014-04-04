@@ -5,8 +5,8 @@ package ngat.ngtcs.subsystem;
  * possible references of type MountType.
  * <p>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class MountType implements java.io.Serializable
 {
@@ -20,7 +20,7 @@ public class MountType implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: MountType.java,v 1.2 2013-07-04 10:54:35 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -205,7 +205,7 @@ public class MountType implements java.io.Serializable
  *    $Date: 2013-07-04 10:54:35 $
  * $RCSfile: MountType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/MountType.java,v $
- *      $Id: MountType.java,v 1.2 2013-07-04 10:54:35 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

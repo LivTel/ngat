@@ -29,14 +29,14 @@ import ngat.util.logging.*;
 /**
  * This class supports an interface to the SDSU CCD Controller library, for controlling CCDs.
  * @author Chris Mottram
- * @version $Revision: 0.45 $
+ * @version $Revision$
  */
 public class CCDLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrary.java,v 0.45 2006-05-16 17:41:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 // ccd_dsp.h
 	/* These constants should be the same as those in ccd_dsp.h */
 	/**

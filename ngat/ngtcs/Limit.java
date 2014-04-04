@@ -5,8 +5,8 @@ import ngat.ngtcs.common.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class Limit
 {
@@ -14,7 +14,7 @@ public class Limit
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Limit.java,v 1.2 2013-07-02 14:45:17 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Timestamp of this Limit.

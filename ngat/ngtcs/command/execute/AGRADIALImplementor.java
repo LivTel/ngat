@@ -11,8 +11,8 @@ import ngat.ngtcs.subsystem.amn.*;
  * Move autoguider probe mirror to a radial position.
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGRADIALImplementor
   extends CommandImplementor
@@ -27,7 +27,7 @@ public class AGRADIALImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGRADIALImplementor.java,v 1.4 2013-07-04 10:15:58 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the AGRADIAL command (60 seconds), in milliseconds.
@@ -150,7 +150,7 @@ public class AGRADIALImplementor
  *    $Date: 2013-07-04 10:15:58 $
  * $RCSfile: AGRADIALImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGRADIALImplementor.java,v $
- *      $Id: AGRADIALImplementor.java,v 1.4 2013-07-04 10:15:58 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

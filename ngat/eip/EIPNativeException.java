@@ -6,14 +6,14 @@ package ngat.eip;
  * This class extends Exception. Objects of this class are thrown when the underlying C code in EIPPLC produces an
  * error. The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class EIPNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: EIPNativeException.java,v 1.1 2008-10-09 14:14:21 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Constructor for the exception.

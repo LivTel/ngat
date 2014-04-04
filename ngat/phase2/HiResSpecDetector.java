@@ -8,7 +8,7 @@ import ngat.phase2.nonpersist.*;
 
 /** Subclass of Detector to represent the SITe SI-502AB Detector.
  *
- * $Id: HiResSpecDetector.java,v 1.1 2006-11-20 14:51:23 cjm Exp $
+ * $Id$
  *
  */
 public class HiResSpecDetector extends Detector implements Serializable {

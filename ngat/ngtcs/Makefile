@@ -30,9 +30,9 @@ SRCS           = AltAzPointingModel.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: cjm $
-# $Revision: 1.4 $
-#       $Id: Makefile,v 1.4 2013-07-02 15:25:05 cjm Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2013-07-02 15:25:05 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/Makefile,v $

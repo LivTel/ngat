@@ -11,7 +11,7 @@ import java.awt.Color;
  * limit of the axis.
  * ## this will be changed to extend SimpleGraphPlot as only ONE channel is needed 
  *
- * $Id: HistogramPlot.java,v 1.2 2007-02-28 06:12:35 snf Exp $
+ * $Id$
  * 
  **/ 
 public class HistogramPlot extends GraphPlot {

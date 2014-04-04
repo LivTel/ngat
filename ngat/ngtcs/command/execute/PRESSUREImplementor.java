@@ -9,8 +9,8 @@ import ngat.ngtcs.command.*;
  * This implementor sets the pressure in the MeteorologicalData object used by
  * the AstrometryCalculator on the specified telescope.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class PRESSUREImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class PRESSUREImplementor extends CommandImplementor
      * String used to identify RCS revision details.
   */
     public static final String rcsid =
-	new String( "$Id: PRESSUREImplementor.java,v 1.4 2013-07-04 10:25:37 cjm Exp $" );
+	new String( "$Id$" );
 
   /**
    * The timeout for the PRESSURE command (3 seconds), in milliseconds.
@@ -90,7 +90,7 @@ public class PRESSUREImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:25:37 $
  * $RCSfile: PRESSUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/PRESSUREImplementor.java,v $
- *      $Id: PRESSUREImplementor.java,v 1.4 2013-07-04 10:25:37 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

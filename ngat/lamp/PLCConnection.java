@@ -10,14 +10,14 @@ import ngat.util.logging.*;
 /**
  * Class, an instance of which holds PLC connection details.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class PLCConnection
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PLCConnection.java,v 1.3 2011-01-12 14:16:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Basic connection log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_VERY_VERBOSE

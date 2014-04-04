@@ -12,15 +12,15 @@ import ngat.util.logging.*;
  * implementation of a set of commands the ISS or instrument wants to
  * implement.
  *
- * @author $Author: eng $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class TCPServerConnectionThread extends Thread
 {
   /**
    * Revision Control System id string, showing the version of the Class.
    */
-  public final static String RCSID = new String("$Id: TCPServerConnectionThread.java,v 1.1 2008-07-23 12:41:17 eng Exp $");
+  public final static String RCSID = new String("$Id$");
   /**
    * Default buffer size for input and output buffers.
    */

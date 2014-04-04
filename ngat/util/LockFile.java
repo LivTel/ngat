@@ -18,7 +18,7 @@ import java.lang.*;
  * new link, and them move it over the last one. This makes the LockFile class more complicated, as there
  * are now potentially two lock files on the filesystem.
  * @see FileUtilities
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @author Chris Mottram
  */
 public class LockFile
@@ -26,7 +26,7 @@ public class LockFile
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LockFile.java,v 1.2 2001-07-31 10:56:42 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Default name of the lock file.
 	 */

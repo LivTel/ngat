@@ -9,14 +9,14 @@ package ngat.spec;
  * The individual parts of the error generated are stored in the exception as well as the complete message.
  * The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public class SpecNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecNativeException.java,v 0.1 2000-10-19 10:42:11 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Error number returned from the libspec shared C library. 0 is no error.
 	 */

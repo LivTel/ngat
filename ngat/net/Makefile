@@ -83,9 +83,9 @@ include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 
 #
-#   $Author: eng $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2008-07-23 12:41:17 eng Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2008-07-23 12:41:17 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/net/Makefile,v $

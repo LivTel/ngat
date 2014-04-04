@@ -16,8 +16,8 @@ import ngat.ngtcs.subsystem.sdb.*;
 /**
  * This class represents the TTL Autoguider System.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_Autoguider extends BasicMechanism
 {
@@ -31,7 +31,7 @@ public class TTL_Autoguider extends BasicMechanism
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_Autoguider.java,v 1.4 2013-07-04 10:55:18 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The single instance of this class.
@@ -774,7 +774,7 @@ public class TTL_Autoguider extends BasicMechanism
  *    $Date: 2013-07-04 10:55:18 $
  * $RCSfile: TTL_Autoguider.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Autoguider.java,v $
- *      $Id: TTL_Autoguider.java,v 1.4 2013-07-04 10:55:18 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/24 13:07:51  je
  *     Added positionTolerance and focusPositionTolerance.

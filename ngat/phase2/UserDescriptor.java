@@ -9,7 +9,7 @@ import java.io.*;
  * remote clients of the details of a User without revealing
  * any substructure.
  * Used By ADM_ListUsers to store the basic details of a User. 
- * $Id: UserDescriptor.java,v 1.1 2006-11-20 14:51:23 cjm Exp $.*/
+ * $Id$.*/
 public class UserDescriptor implements Serializable {
 
     /** Serial version UID - used to maintain serialization compatibility

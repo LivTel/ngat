@@ -6,7 +6,7 @@ import java.io.IOException;
  * Generic interface for classes which wish to act as
  * protocol implementors.
  * <br>
- * $Id: ProtocolImpl.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public interface ProtocolImpl {

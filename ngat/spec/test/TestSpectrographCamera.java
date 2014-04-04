@@ -14,14 +14,14 @@ import ngat.spec.*;
  * java ngat.spec.test.TestSpectrographCamera -l 34560 -f test.fits -e 10000
  * </pre>
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class TestSpectrographCamera
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TestSpectrographCamera.java,v 1.2 2004-07-29 14:47:54 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The logger.
 	 */

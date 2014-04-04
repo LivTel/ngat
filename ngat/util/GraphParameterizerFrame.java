@@ -10,7 +10,7 @@ import java.awt.event.*;
  * supplying a basic set of actions to allow the graph to be interactively modified. 
  *
  *
- * $Id: GraphParameterizerFrame.java,v 1.1 2000-11-21 17:03:04 snf Exp $
+ * $Id$
  *
  */
 public class GraphParameterizerFrame extends JFrame implements ActionListener {

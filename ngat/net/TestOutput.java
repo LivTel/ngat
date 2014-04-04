@@ -7,7 +7,7 @@ import java.io.*;
  * add information to the stream header.
  *
  * <br><br>
- * $Id: TestOutput.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class TestOutput extends ObjectOutputStream {
 

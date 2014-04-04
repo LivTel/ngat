@@ -7,8 +7,8 @@ package ngat.ngtcs.command;
  * the range <code><b>MIN_WAVELENGTH</b></code> (250 nm) to 
  * <code><b>MAX_WAVELENGTH</b></code> (1.0 m)
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class WAVELENGTH extends Command
 {
@@ -22,7 +22,7 @@ public class WAVELENGTH extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: WAVELENGTH.java,v 1.3 2013-07-04 10:08:36 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * The minimum allowable value for the wavelength in metres (2.5E-07)
@@ -94,7 +94,7 @@ public class WAVELENGTH extends Command
  *    $Date: 2013-07-04 10:08:36 $
  * $RCSfile: WAVELENGTH.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/WAVELENGTH.java,v $
- *      $Id: WAVELENGTH.java,v 1.3 2013-07-04 10:08:36 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

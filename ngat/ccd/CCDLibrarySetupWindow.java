@@ -25,14 +25,14 @@ package ngat.ccd;
  * This class allows us to specify the location of a window on the CCD chip. It is used as a parameter to
  * the setup method that sets the windows on the controller.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision$
  */
 public class CCDLibrarySetupWindow
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibrarySetupWindow.java,v 0.2 2006-05-16 17:41:35 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The pixel number of the X start position of the window (upper left corner).
 	 */

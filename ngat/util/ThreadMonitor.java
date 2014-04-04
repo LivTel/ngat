@@ -9,7 +9,7 @@ import java.awt.*;
  * to display the threads in. It monitors all the the active threads in the group and sub-groups of this threads'
  * group.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class ThreadMonitor extends Thread
 {

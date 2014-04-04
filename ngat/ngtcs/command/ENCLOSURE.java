@@ -3,8 +3,8 @@ package ngat.ngtcs.command;
 /**
  * The TTL ENCLOSURE command to control the Cammell Laird Enclosure.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ENCLOSURE extends Command
 {
@@ -18,7 +18,7 @@ public class ENCLOSURE extends Command
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ENCLOSURE.java,v 1.3 2013-07-04 10:06:45 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -145,7 +145,7 @@ public class ENCLOSURE extends Command
  *    $Date: 2013-07-04 10:06:45 $
  * $RCSfile: ENCLOSURE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/ENCLOSURE.java,v $
- *      $Id: ENCLOSURE.java,v 1.3 2013-07-04 10:06:45 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

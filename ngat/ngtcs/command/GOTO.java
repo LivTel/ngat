@@ -5,8 +5,8 @@ import ngat.ngtcs.common.*;
 /**
  * This command will point the telescope at the specified Target and track it.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class GOTO extends ngat.ngtcs.command.Command
 {
@@ -20,7 +20,7 @@ public class GOTO extends ngat.ngtcs.command.Command
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: GOTO.java,v 1.3 2013-07-04 10:06:50 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -121,7 +121,7 @@ public class GOTO extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:06:50 $
  * $RCSfile: GOTO.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/GOTO.java,v $
- *      $Id: GOTO.java,v 1.3 2013-07-04 10:06:50 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

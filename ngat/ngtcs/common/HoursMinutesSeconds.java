@@ -8,8 +8,8 @@ import java.text.*;
  * <br>
  * This class is non-mutable.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class HoursMinutesSeconds
 {
@@ -23,7 +23,7 @@ public class HoursMinutesSeconds
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: HoursMinutesSeconds.java,v 1.2 2013-07-04 10:37:32 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -389,7 +389,7 @@ public class HoursMinutesSeconds
  *    $Date: 2013-07-04 10:37:32 $
  * $RCSfile: HoursMinutesSeconds.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/HoursMinutesSeconds.java,v $
- *      $Id: HoursMinutesSeconds.java,v 1.2 2013-07-04 10:37:32 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:04  je
  *     Initial revision

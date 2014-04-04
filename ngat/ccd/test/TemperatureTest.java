@@ -14,14 +14,14 @@ import ArrayTemperature;
  * Run as follows:
  * java TemperatureTest <temperature>
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TemperatureTest
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TemperatureTest.java,v 1.1 2002-12-16 19:51:57 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The temperature we are testing.
 	 */

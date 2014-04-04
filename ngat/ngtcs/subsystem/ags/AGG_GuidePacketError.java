@@ -10,8 +10,8 @@ package ngat.ngtcs.subsystem.ags;
  * <lu>TOO_NEAR_EDGE</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGG_GuidePacketError implements java.io.Serializable
 {
@@ -25,7 +25,7 @@ public class AGG_GuidePacketError implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGG_GuidePacketError.java,v 1.2 2013-07-04 12:54:47 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -216,7 +216,7 @@ public class AGG_GuidePacketError implements java.io.Serializable
  *    $Date: 2013-07-04 12:54:47 $
  * $RCSfile: AGG_GuidePacketError.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG_GuidePacketError.java,v $
- *      $Id: AGG_GuidePacketError.java,v 1.2 2013-07-04 12:54:47 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:38  je
  *     Initial revision

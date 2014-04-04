@@ -5,8 +5,8 @@ import ngat.ngtcs.common.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TimerState extends SystemState
 {
@@ -20,7 +20,7 @@ public class TimerState extends SystemState
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TimerState.java,v 1.1 2013-07-04 10:54:58 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -129,6 +129,6 @@ public class TimerState extends SystemState
  *    $Date: 2013-07-04 10:54:58 $
  * $RCSfile: TimerState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TimerState.java,v $
- *      $Id: TimerState.java,v 1.1 2013-07-04 10:54:58 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

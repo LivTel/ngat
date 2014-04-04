@@ -5,14 +5,14 @@ package ngat.dichroic;
 /**
  * This class extends Exception. It is used to throw Dichroic level errors.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class DichroicException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: DichroicException.java,v 1.1 2011-10-12 10:16:23 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Constructor for the exception.

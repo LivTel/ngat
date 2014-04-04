@@ -10,8 +10,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>FALSE</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class TTL_Boolean
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -26,7 +26,7 @@ public final class TTL_Boolean
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_Boolean.java,v 1.1 2006-11-20 14:42:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -204,7 +204,7 @@ public final class TTL_Boolean
  *    $Date: 2006-11-20 14:42:25 $
  * $RCSfile: TTL_Boolean.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Boolean.java,v $
- *      $Id: TTL_Boolean.java,v 1.1 2006-11-20 14:42:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

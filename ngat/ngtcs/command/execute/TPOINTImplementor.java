@@ -19,8 +19,8 @@ import ngat.ngtcs.subsystem.*;
  * timestamp through the astrometry routines and the pointing model application
  * and outputs the results to a file suitable for TPOINT.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TPOINTImplementor extends CommandImplementor
 {
@@ -28,7 +28,7 @@ public class TPOINTImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TPOINTImplementor.java,v 1.4 2013-07-04 10:30:13 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the TPOINT command (10 seconds), in milliseconds
@@ -262,7 +262,7 @@ public class TPOINTImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:30:13 $
  * $RCSfile: TPOINTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TPOINTImplementor.java,v $
- *      $Id: TPOINTImplementor.java,v 1.4 2013-07-04 10:30:13 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

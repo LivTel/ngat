@@ -20,8 +20,8 @@ import java.util.Hashtable;
  * <li>VERSION</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ShowType implements java.io.Serializable
 {
@@ -35,7 +35,7 @@ public class ShowType implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ShowType.java,v 1.3 2013-07-04 10:08:16 cjm Exp $" );
+    new String( "$Id$" );
 
 
 
@@ -156,7 +156,7 @@ public class ShowType implements java.io.Serializable
  *    $Date: 2013-07-04 10:08:16 $
  * $RCSfile: ShowType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/ShowType.java,v $
- *      $Id: ShowType.java,v 1.3 2013-07-04 10:08:16 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

@@ -11,8 +11,8 @@ import ngat.ngtcs.subsystem.*;
  * name is <code><i>the telescope system name</i></code>,
  * <code>all</code> or <code>telescope</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class RESETImplementor extends CommandImplementor
 {
@@ -20,7 +20,7 @@ public class RESETImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: RESETImplementor.java,v 1.4 2013-07-04 10:25:58 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the RESET command (30 seconds), in milliseconds
@@ -103,7 +103,7 @@ public class RESETImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:25:58 $
  * $RCSfile: RESETImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/RESETImplementor.java,v $
- *      $Id: RESETImplementor.java,v 1.4 2013-07-04 10:25:58 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

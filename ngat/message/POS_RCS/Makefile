@@ -42,9 +42,9 @@ SRCS           = ABORT_DONE.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: cjm $
-# $Revision: 1.4 $
-#       $Id: Makefile,v 1.4 2007-05-10 09:51:44 cjm Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2007-05-10 09:51:44 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/message/POS_RCS/Makefile,v $

@@ -67,7 +67,7 @@ public class GET_STATUS_DONE extends INTERRUPT_DONE implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GET_STATUS_DONE.java,v 1.1 2013-07-01 09:14:14 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Constant MODE_IDLE of type int with value 0.
 	 */

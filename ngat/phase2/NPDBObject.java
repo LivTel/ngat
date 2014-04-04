@@ -8,7 +8,7 @@ import java.io.*;
  * A top level object from which all database objects are derived. Contains
  * generic variables and methods.
  * <br><br>
- * $Id: NPDBObject.java,v 1.1 2007-08-07 12:02:27 snf Exp $.
+ * $Id$.
  */
 public class NPDBObject implements Serializable, Cloneable {
     

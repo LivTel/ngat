@@ -5,7 +5,7 @@ import java.io.*;
 /** 
  * Temporary class to implement JMS protocol SCT (server side).
  * <br><br>
- * $Id: PipedServerConnectionThread.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class PipedServerConnectionThread extends ServerConnectionThread {
 

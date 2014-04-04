@@ -6,7 +6,7 @@ import java.text.*;
 /**
  * Stores the non-sidereal tracking for a target.
  * <br>
- * $Id: Tracking.java,v 1.1 2013-06-28 10:11:49 cjm Exp $    
+ * $Id$    
  *
  */
 public class Tracking implements Serializable {

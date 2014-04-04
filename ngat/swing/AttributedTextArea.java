@@ -28,14 +28,14 @@ import javax.swing.text.*;
 /** 
  * Subclass of JTextPane allowing colour attributes.
  * @author Chris Mottram
- * @version $Revision: 1.5 $
+ * @version $Revision$
  */
 public class AttributedTextArea extends JTextPane
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: AttributedTextArea.java,v 1.5 2006-05-16 18:15:22 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Document model, used to add coloured text.
 	 */

@@ -3,8 +3,8 @@ package ngat.ngtcs;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class PointingOrigin
 {
@@ -12,7 +12,7 @@ public class PointingOrigin
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: PointingOrigin.java,v 1.2 2013-07-02 15:26:15 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * The X coordinate of this PointingOrigin.

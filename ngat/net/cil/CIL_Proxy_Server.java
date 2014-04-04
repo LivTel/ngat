@@ -28,7 +28,7 @@ import ngat.net.*;
 
 /**
  * <br><br>
- * $Id: CIL_Proxy_Server.java,v 1.1 2006-11-23 10:37:57 snf Exp $
+ * $Id$
  */
 public class CIL_Proxy_Server extends SlotServer {
 

@@ -31,14 +31,14 @@ import javax.swing.JFrame;
  * against the minimum size and re-sizing if appropriate. This is not a very good mechanism
  * for doing this.
  * @author Chris Mottram
- * @version $Revision: 0.5 $
+ * @version $Revision$
  */
 public class MinimumSizeFrame extends JFrame
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: MinimumSizeFrame.java,v 0.5 2006-05-16 18:15:31 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Dimension to hold the minimum size.
  	 */

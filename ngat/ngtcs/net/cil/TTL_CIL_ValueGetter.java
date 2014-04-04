@@ -10,8 +10,8 @@ import ngat.ngtcs.subsystem.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_CIL_ValueGetter
 {
@@ -25,7 +25,7 @@ public class TTL_CIL_ValueGetter
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_CIL_ValueGetter.java,v 1.2 2013-07-04 10:48:56 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -144,7 +144,7 @@ public class TTL_CIL_ValueGetter
  *    $Date: 2013-07-04 10:48:56 $
  * $RCSfile: TTL_CIL_ValueGetter.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/cil/TTL_CIL_ValueGetter.java,v $
- *      $Id: TTL_CIL_ValueGetter.java,v 1.2 2013-07-04 10:48:56 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:00:50  je
  *     Initial revision

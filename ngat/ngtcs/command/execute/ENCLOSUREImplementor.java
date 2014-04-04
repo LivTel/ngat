@@ -8,8 +8,8 @@ import ngat.ngtcs.subsystem.*;
  * Open/close the enclosure.
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.6 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ENCLOSUREImplementor extends CommandImplementor
 {
@@ -23,7 +23,7 @@ public class ENCLOSUREImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ENCLOSUREImplementor.java,v 1.6 2013-07-04 10:16:23 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the ENCLOSURE command (600 seconds), in milliseconds.
@@ -112,7 +112,7 @@ public class ENCLOSUREImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:16:23 $
  * $RCSfile: ENCLOSUREImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/ENCLOSUREImplementor.java,v $
- *      $Id: ENCLOSUREImplementor.java,v 1.6 2013-07-04 10:16:23 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.5  2003/10/02 16:57:58  je
  *     Added 'import ngat.ngtcs.subsystem.*;'

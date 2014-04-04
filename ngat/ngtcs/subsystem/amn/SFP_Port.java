@@ -17,8 +17,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SFP_POS_PORT_8</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SFP_Port
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -33,7 +33,7 @@ public final class SFP_Port
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SFP_Port.java,v 1.1 2006-11-20 14:46:44 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -288,7 +288,7 @@ public final class SFP_Port
  *    $Date: 2006-11-20 14:46:44 $
  * $RCSfile: SFP_Port.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SFP_Port.java,v $
- *      $Id: SFP_Port.java,v 1.1 2006-11-20 14:46:44 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

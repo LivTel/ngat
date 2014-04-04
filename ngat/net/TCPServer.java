@@ -20,14 +20,14 @@ import ngat.util.logging.*;
  * This class should be subclassed  and the <a href="#startConnectionThread">
  * startConnectionThread</a> overwritten to spawn the thread of your choice.
  * @author Chris Mottram Jason Etherton
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TCPServer extends Thread
 {
   /**
    * Revision Control System id string, showing the version of the Class
    */
-  public final static String RCSID = new String("$Id: TCPServer.java,v 1.1 2008-07-23 12:41:17 eng Exp $");
+  public final static String RCSID = new String("$Id$");
 
   /**
    * Constant defining the log level to send for error messages generated

@@ -32,8 +32,8 @@ import ngat.ngtcs.subsystem.TTL_GenericData;
  * <li>D_AGS_PEAKPIXEL</li>
  * <li>D_AGS_AGTEMP</li>
  * </ul>
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGS_DataType
   implements java.io.Serializable, TTL_DataType
@@ -48,7 +48,7 @@ public class AGS_DataType
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGS_DataType.java,v 1.2 2013-07-04 12:55:58 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -357,7 +357,7 @@ public class AGS_DataType
  *    $Date: 2013-07-04 12:55:58 $
  * $RCSfile: AGS_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGS_DataType.java,v $
- *      $Id: AGS_DataType.java,v 1.2 2013-07-04 12:55:58 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:38  je
  *     Initial revision

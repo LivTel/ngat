@@ -32,7 +32,7 @@ import javax.swing.*;
  * It unmanages a JDialog. This is needed when the dialog is unmanaged from a menu item, as otherwise
  * the menu-bar the item is on complains about events from unmanaged components.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUIDialogUnmanager implements Runnable
@@ -40,7 +40,7 @@ public class GUIDialogUnmanager implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUIDialogUnmanager.java,v 0.3 2006-05-16 18:15:25 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The Swing JDialog to unmanage.
 	 */

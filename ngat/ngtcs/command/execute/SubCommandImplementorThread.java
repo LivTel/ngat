@@ -5,8 +5,8 @@ import ngat.ngtcs.command.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class SubCommandImplementorThread implements Runnable
 {
@@ -20,7 +20,7 @@ public abstract class SubCommandImplementorThread implements Runnable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SubCommandImplementorThread.java,v 1.1 2006-11-20 14:48:08 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*  /*                                                                     */
@@ -115,6 +115,6 @@ public abstract class SubCommandImplementorThread implements Runnable
  *    $Date: 2006-11-20 14:48:08 $
  * $RCSfile: SubCommandImplementorThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SubCommandImplementorThread.java,v $
- *      $Id: SubCommandImplementorThread.java,v 1.1 2006-11-20 14:48:08 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

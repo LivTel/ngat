@@ -10,8 +10,8 @@ package ngat.util;
  * int i = Integer.parseInt( "not a String representation of an int" );
  * </pre>
  * 
- * @author $Author: je $ 
- * @version $Revision: 0.3 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class NGATPropertyException extends Exception
@@ -19,7 +19,7 @@ public class NGATPropertyException extends Exception
     /**
      * Revision Control System id string, showing the version of the Class.
      */
-    public final static String RCSID = new String("$Id: NGATPropertyException.java,v 0.3 2002-10-23 09:57:27 je Exp $");
+    public final static String RCSID = new String("$Id$");
 
     /**
      * The basic Constructor.

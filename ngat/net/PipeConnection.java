@@ -6,7 +6,7 @@ import java.net.*;
 /** 
  * Implements an abstraction of a Pipeline connection between 2 threads.
  *
- * $Id: PipeConnection.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public class PipeConnection implements IConnection {

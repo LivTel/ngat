@@ -6,7 +6,7 @@ import java.net.*;
 /** 
  * Implements an abstraction of a SlotBuffer connection between 2 threads.
  * <br><br>
- * $Id: SlotConnection.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class SlotConnection implements IConnection {
 

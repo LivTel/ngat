@@ -32,7 +32,7 @@ import java.util.*;
 /** Provides methods for obtaining a handler for a given JMS command
  * and for registering and looking up sequence numbers.
  * <br><br>
- * $Id: CIL_ProxyRegistry.java,v 1.1 2006-11-23 10:37:57 snf Exp $
+ * $Id$
  */
 public class CIL_ProxyRegistry {
 

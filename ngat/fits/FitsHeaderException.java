@@ -25,14 +25,14 @@ package ngat.fits;
  * This class extends java.lang.Exception. Objects of this class are thrown when the list of keyword/value pairs used
  * to write FITS headers to disc contains keyword/argument pairs that are unexpected..
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision$
  */
 public class FitsHeaderException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderException.java,v 0.3 2006-05-16 17:42:24 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Constructor for the exception.

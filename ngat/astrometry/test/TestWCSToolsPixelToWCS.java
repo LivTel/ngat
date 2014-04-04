@@ -31,7 +31,7 @@ import ngat.astrometry.*;
 /**
  * Test Pixel to WCS (RA/Dec) coordinate conversion routines in WCSTools.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @see ngat.astrometry.WCSTools
  */
 public class TestWCSToolsPixelToWCS
@@ -39,7 +39,7 @@ public class TestWCSToolsPixelToWCS
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TestWCSToolsPixelToWCS.java,v 1.1 2007-08-10 10:37:23 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	public static void main(String args[])
 	{

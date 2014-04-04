@@ -7,7 +7,7 @@ import java.io.*;
  * collect extra information from the stream header.
  *
  * <br><br>
- * $Id: TestInput.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class TestInput extends ObjectInputStream {
 

@@ -15,7 +15,7 @@ import ngat.util.logging.*;
  * SocketConnection is live immediately without having to call open(). 
  * It is intended for use at the server end.
  *
- * $Id: SocketConnection.java,v 1.2 2013-07-01 10:10:46 eng Exp $
+ * $Id$
  *
  */
 public class SocketConnection implements IConnection {
@@ -56,7 +56,7 @@ public class SocketConnection implements IConnection {
 	open = false;
 	logger = LogManager.getLogger("JMS");
 	logger.log(3, "SockConn::Created for "+host+":"+port);
-	cid = host+":"+port
+	cid = host+":"+port;
     }
 
     /** Create a SocketConnection for the specified address.

@@ -5,8 +5,8 @@ import java.util.Hashtable;
 /**
  * Abstract super-class of all NGTCS-pluggable systems states and status.
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class State
 {
@@ -20,7 +20,7 @@ public abstract class State
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: State.java,v 1.3 2013-07-04 10:46:08 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -68,7 +68,7 @@ public abstract class State
  *    $Date: 2013-07-04 10:46:08 $
  * $RCSfile: State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/State.java,v $
- *      $Id: State.java,v 1.3 2013-07-04 10:46:08 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

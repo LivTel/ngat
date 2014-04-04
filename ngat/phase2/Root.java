@@ -12,7 +12,7 @@ import java.io.*;
  * The entry point for the Phase II database. All objects in the
  * database tree hang off this (singleton) object.
  * <br>
- * $Id: Root.java,v 1.3 2006-11-23 10:43:05 snf Exp $
+ * $Id$
  *
  */
 public class Root extends DBObject implements Serializable {

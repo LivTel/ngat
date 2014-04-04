@@ -17,7 +17,7 @@ import java.text.*;
  *
  * A typical arglist might look like: -noresize -heap 200 -stackmin 30 -stackmax 80 -verbose
  *
- * $Id: CommandParser.java,v 1.6 2004-01-15 16:01:57 snf Exp $
+ * $Id$
  *
  */
 public class CommandParser {

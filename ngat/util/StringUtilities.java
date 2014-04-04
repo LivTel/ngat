@@ -7,7 +7,7 @@ import java.lang.*;
 
 /**
  * Some useful string routines.
- * @version $Revision: 1.7 $
+ * @version $Revision$
  * @author Chris Mottram
  */
 public class StringUtilities
@@ -15,7 +15,7 @@ public class StringUtilities
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: StringUtilities.java,v 1.7 2006-12-07 09:27:48 snf Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * This method returns whether character <b>c</b> is in string <b>s</b>.

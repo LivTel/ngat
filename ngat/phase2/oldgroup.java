@@ -19,7 +19,7 @@ import java.io.*;
  * with respect to current observing environment and predefined constraints.
  * The folowing fields are used in scoring:- ##TBD ##
  * <br><br>
- * $Id: oldgroup.java,v 1.1 2006-11-23 10:43:05 snf Exp $
+ * $Id$
  */
 public class Group extends NPDBObject implements Serializable {
    

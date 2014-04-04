@@ -50,8 +50,8 @@ package ngat.ngtcs.subsystem.acn;
  * <li>E_ACN_CMD_LIST_MAX_VALUE</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ACN_Service implements java.io.Serializable
 {
@@ -65,7 +65,7 @@ public class ACN_Service implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ACN_Service.java,v 1.1 2006-11-20 14:46:32 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -549,7 +549,7 @@ public class ACN_Service implements java.io.Serializable
  *    $Date: 2006-11-20 14:46:32 $
  * $RCSfile: ACN_Service.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/acn/ACN_Service.java,v $
- *      $Id: ACN_Service.java,v 1.1 2006-11-20 14:46:32 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:30  je
  *     Initial revision

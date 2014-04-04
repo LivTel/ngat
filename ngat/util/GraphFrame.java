@@ -7,7 +7,7 @@ package ngat.util;
  * and GraphViewerPanel will allow configurable graphs to be displayed.
  *
  *
- * $Id: GraphFrame.java,v 1.1 2000-11-21 16:46:21 snf Exp $
+ * $Id$
  *
  */
 public class GraphFrame extends javax.swing.JFrame {

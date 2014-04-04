@@ -6,8 +6,8 @@ package ngat.ngtcs.command;
  * <p>
  * The humidity is given as a percentile from 0.0 to 1.0.
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class HUMIDITY extends Command
 {
@@ -21,7 +21,7 @@ public class HUMIDITY extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: HUMIDITY.java,v 1.3 2013-07-04 10:06:52 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -96,7 +96,7 @@ public class HUMIDITY extends Command
  *    $Date: 2013-07-04 10:06:52 $
  * $RCSfile: HUMIDITY.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/HUMIDITY.java,v $
- *      $Id: HUMIDITY.java,v 1.3 2013-07-04 10:06:52 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

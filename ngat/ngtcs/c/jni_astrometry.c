@@ -10,15 +10,15 @@
  * Both Field and Method IDs and with _ID.
  * e.g. ThisClassName_thisFieldName_ID or ThisClassName_thisMethodName_ID.
  * 
- *  @author $Author: cjm $
- * @version $Revision: 1.1 $
+ *  @author $Author$
+ * @version $Revision$
  */
 
 /*
  *     $Date: 2013-07-04 09:58:36 $
  *  $RCSfile: jni_astrometry.c,v $
  *   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/c/jni_astrometry.c,v $
- *       $Id: jni_astrometry.c,v 1.1 2013-07-04 09:58:36 cjm Exp $
+ *       $Id$
  *      $Log: not supported by cvs2svn $
 */
 #include<string.h>

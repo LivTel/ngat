@@ -18,8 +18,8 @@ import ngat.ngtcs.subsystem.ags.*;
  * The autoguiding procedure is implemented in a seperate thread after the
  * initial guide star coordinates have been calculated.  When autoguiding is
  * stopped the pointing model corrections are removed.
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AUTOGUIDEImplementor extends CommandImplementor
   implements Runnable
@@ -34,7 +34,7 @@ public class AUTOGUIDEImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AUTOGUIDEImplementor.java,v 1.5 2013-07-04 10:16:14 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the AUTOGUIDE command (200 seconds), in milliseconds.
@@ -269,7 +269,7 @@ public class AUTOGUIDEImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:16:14 $
  * $RCSfile: AUTOGUIDEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AUTOGUIDEImplementor.java,v $
- *      $Id: AUTOGUIDEImplementor.java,v 1.5 2013-07-04 10:16:14 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/09/29 11:42:03  je
  *     Added execute documentation.

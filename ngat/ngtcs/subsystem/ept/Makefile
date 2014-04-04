@@ -12,9 +12,9 @@ SRCS           = EPT_DataType.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2003-09-19 16:09:37 je Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2003-09-19 16:09:37 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ept/Makefile,v $

@@ -5,8 +5,8 @@
  * 
  * Blocking is performed using the <code>wait - notifyAll</code> methods.
  *
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 /* $Date: 2002-09-25 10:09:16 $
@@ -28,7 +28,7 @@ public class BlockingQueue
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: BlockingQueue.java,v 1.2 2002-09-25 10:09:16 je Exp $" );
+	new String( "$Id$" );
 
     /**
      * The Queue.

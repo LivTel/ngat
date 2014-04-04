@@ -6,8 +6,8 @@ import ngat.ngtcs.common.*;
  * Simple class to test the addition of offset vectors for the OFFBYImplementor
  * class.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class OffsetTest
 {
@@ -21,7 +21,7 @@ public class OffsetTest
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: OffsetTest.java,v 1.1 2006-11-20 14:48:31 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -165,6 +165,6 @@ public class OffsetTest
  *    $Date: 2006-11-20 14:48:31 $
  * $RCSfile: OffsetTest.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/OffsetTest.java,v $
- *      $Id: OffsetTest.java,v 1.1 2006-11-20 14:48:31 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

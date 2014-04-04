@@ -12,7 +12,7 @@ import java.util.Enumeration;
  * This implementation does not provide a mechanism for 
  * removing elements.
  *
- * $Id: CircularArray.java,v 1.4 2001-07-11 10:24:23 snf Exp $
+ * $Id$
  *
  */
 public class CircularArray {

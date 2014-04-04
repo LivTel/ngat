@@ -16,8 +16,8 @@ package ngat.ngtcs.subsystem;
  * <li>SYS_SUSPEND_STATE</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class TTL_TelescopeState
   implements java.io.Serializable, TTL_DataType,
@@ -33,7 +33,7 @@ public final class TTL_TelescopeState
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_TelescopeState.java,v 1.1 2006-11-20 14:42:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -309,7 +309,7 @@ public final class TTL_TelescopeState
  *    $Date: 2006-11-20 14:42:25 $
  * $RCSfile: TTL_TelescopeState.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_TelescopeState.java,v $
- *      $Id: TTL_TelescopeState.java,v 1.1 2006-11-20 14:42:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

@@ -15,8 +15,8 @@ import ngat.ngtcs.command.*;
  * This class implements the <code>ngat.message</code> and
  * <code>ngat.net</code> method of client<->server communication for the NGTCS.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class NGAT_NET_Communicator implements Communicator
@@ -31,7 +31,7 @@ public class NGAT_NET_Communicator implements Communicator
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: NGAT_NET_Communicator.java,v 1.4 2013-07-04 13:05:55 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */

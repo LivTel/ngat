@@ -5,8 +5,8 @@ import ngat.ngtcs.common.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class Rotator extends BasicMechanism
 {
@@ -20,7 +20,7 @@ public abstract class Rotator extends BasicMechanism
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Rotator.java,v 1.2 2013-07-04 10:54:46 cjm Exp $" );
+    new String( "$Id$" );
 
 
   /*=========================================================================*/

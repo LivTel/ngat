@@ -3,8 +3,8 @@ package ngat.ngtcs.common;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class Util
 {
@@ -12,7 +12,7 @@ public class Util
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Util.java,v 1.2 2013-07-04 10:47:41 cjm Exp $" );
+	new String( "$Id$" );
 
 
     /**

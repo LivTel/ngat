@@ -25,7 +25,7 @@ package ngat.ccd;
  * This class is a simple double data type object wrapper, allowing us to return a double value from a 
  * method..
  * @author Chris Mottram
- * @version $Revision: 0.6 $
+ * @version $Revision$
  */
 public class CCDLibraryDouble
 {
@@ -36,7 +36,7 @@ public class CCDLibraryDouble
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryDouble.java,v 0.6 2006-05-16 17:41:32 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * This method sets the value of the double.

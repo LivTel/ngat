@@ -3,8 +3,8 @@ package ngat.ngtcs.command;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SUBSYSTEMLIST extends Command
 {
@@ -12,7 +12,7 @@ public class SUBSYSTEMLIST extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: SUBSYSTEMLIST.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id$" );
 
 
 

@@ -30,7 +30,7 @@ import java.util.*;
  * FITS header keywords are written in the right order.
  * Note: this comparator imposes orderings that are inconsistent with equals.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision$
  * @see ngat.fits.FitsHeader
  */
 public class FitsHeaderCardImageOrderNumberComparator implements Comparator
@@ -38,7 +38,7 @@ public class FitsHeaderCardImageOrderNumberComparator implements Comparator
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderCardImageOrderNumberComparator.java,v 0.2 2006-05-16 17:42:23 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Compare the two objects (which should be of class FitsHeaderCardImage, by their orderNumber. 

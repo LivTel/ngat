@@ -7,12 +7,12 @@ package ngat.util;
  *
  * <dl>
  * <dt><b>RCS:</b>
- * <dd>$Id: BooleanLock.java,v 1.1 2001-02-23 18:49:14 snf Exp $
+ * <dd>$Id$
  * <dt><b>Source:</b>
  * <dd>$Source: /space/home/eng/cjm/cvs/ngat/util/BooleanLock.java,v $
  * </dl>
- * @author $Author: snf $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class BooleanLock {
     

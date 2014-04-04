@@ -7,14 +7,14 @@ import java.lang.*;
 /**
  * This class implements a circular linked list.<br>
  * This class was taken from <b>Java Threads</b>, an O'Reilly book by Scott Oaks and Henry Wong, Chapter 5, P90.
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public class CircularList
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: CircularList.java,v 0.1 1999-12-10 14:52:14 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The current element in the list.
 	 */

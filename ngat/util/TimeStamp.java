@@ -5,7 +5,7 @@ package ngat.util;
  * TransactionQueue, may be used for scheduling e.g. monitoring throughput
  * of low order queues to maintain time constraints on server response.
  *
- * $Id: TimeStamp.java,v 1.1 2000-11-21 16:54:10 snf Exp $
+ * $Id$
  *
  */
 public class TimeStamp {

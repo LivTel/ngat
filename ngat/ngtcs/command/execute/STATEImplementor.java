@@ -12,8 +12,8 @@ import ngat.ngtcs.command.*;
  * <code>OperationalMode</code> <code>and SoftwareState</code> of the NGTCS
  * application.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class STATEImplementor extends CommandImplementor
@@ -22,7 +22,7 @@ public class STATEImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: STATEImplementor.java,v 1.4 2013-07-04 10:28:22 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the STATE command (5 seconds), in milliseconds

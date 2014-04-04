@@ -7,8 +7,8 @@ package ngat.ngtcs.command;
  * the range <code><b>MIN_PRESSURE</b></code> (0.0 mB) to 
  * <code><b>MAX_PRESSURE</b></code> (1030.0 mB)
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class PRESSURE extends Command
 {
@@ -22,7 +22,7 @@ public class PRESSURE extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: PRESSURE.java,v 1.3 2013-07-04 10:07:18 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * The minimum allowable value for the pressure (0.00)
@@ -94,7 +94,7 @@ public class PRESSURE extends Command
  *    $Date: 2013-07-04 10:07:18 $
  * $RCSfile: PRESSURE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/PRESSURE.java,v $
- *      $Id: PRESSURE.java,v 1.3 2013-07-04 10:07:18 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

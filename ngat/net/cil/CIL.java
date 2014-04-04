@@ -46,7 +46,7 @@ import java.io.*;
  * }
  * </pre>
  * <br><br>
- * $Id: CIL.java,v 1.1 2006-05-16 18:14:00 cjm Exp $
+ * $Id$
  */
 public interface CIL {
 

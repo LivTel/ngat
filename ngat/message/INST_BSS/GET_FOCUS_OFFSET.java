@@ -48,7 +48,7 @@ public class GET_FOCUS_OFFSET extends INST_TO_BSS implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GET_FOCUS_OFFSET.java,v 1.1 2013-07-01 08:57:31 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 /* ATTRIBUTES */
 	/**

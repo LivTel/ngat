@@ -12,8 +12,8 @@ import ngat.ngtcs.common.*;
  * handled by the relevant method, and swapped back to right-handed before
  * returning.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AltAzPointingModel extends PointingModel
 {
@@ -27,7 +27,7 @@ public class AltAzPointingModel extends PointingModel
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AltAzPointingModel.java,v 1.2 2013-07-02 13:27:15 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Multiplicative conversion from arcseconds to radians.
@@ -520,7 +520,7 @@ public class AltAzPointingModel extends PointingModel
  *    $Date: 2013-07-02 13:27:15 $
  * $RCSfile: AltAzPointingModel.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/AltAzPointingModel.java,v $
- *      $Id: AltAzPointingModel.java,v 1.2 2013-07-02 13:27:15 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:11:30  je
  *     Initial revision

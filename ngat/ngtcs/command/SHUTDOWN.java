@@ -3,8 +3,8 @@ package ngat.ngtcs.command;
 /**
  * This command will shutdown the sub-system with the specified name.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SHUTDOWN extends Command
 {
@@ -18,7 +18,7 @@ public class SHUTDOWN extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: SHUTDOWN.java,v 1.3 2013-07-04 10:08:18 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -90,7 +90,7 @@ public class SHUTDOWN extends Command
  *    $Date: 2013-07-04 10:08:18 $
  * $RCSfile: SHUTDOWN.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/SHUTDOWN.java,v $
- *      $Id: SHUTDOWN.java,v 1.3 2013-07-04 10:08:18 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

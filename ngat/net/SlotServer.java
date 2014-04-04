@@ -2,7 +2,7 @@ package ngat.net;
 
 /** Abstract base class for SlotServers.
  * <br><br>
- * $Id: SlotServer.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class SlotServer implements Server {
 

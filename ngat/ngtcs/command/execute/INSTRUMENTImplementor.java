@@ -9,8 +9,8 @@ import ngat.ngtcs.subsystem.*;
  * will set the focal station, rotator, default focus, fold mirror position
  * and initialise the autoguider.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class INSTRUMENTImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class INSTRUMENTImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: INSTRUMENTImplementor.java,v 1.5 2013-07-04 10:16:31 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the INSTRUMENT command (300 seconds), in milliseconds.
@@ -224,7 +224,7 @@ public class INSTRUMENTImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:16:31 $
  * $RCSfile: INSTRUMENTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/INSTRUMENTImplementor.java,v $
- *      $Id: INSTRUMENTImplementor.java,v 1.5 2013-07-04 10:16:31 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/10/14 13:55:15  je
  *     Implemented execute.

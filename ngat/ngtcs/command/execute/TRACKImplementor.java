@@ -29,8 +29,8 @@ import ngat.ngtcs.subsystem.*;
  * In the run method the position error determines the state of the telescope,
  * i.e. SLEWING or TRACKING.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TRACKImplementor extends CommandImplementor
     implements java.lang.Runnable
@@ -39,7 +39,7 @@ public class TRACKImplementor extends CommandImplementor
      * String used to identify RCS revision details.
      */
     public static final String RevisionString =
-	new String( "$Id: TRACKImplementor.java,v 1.1 2003-07-02 11:10:41 je Exp $" );
+	new String( "$Id$" );
 
     protected Target target;
 

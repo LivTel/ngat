@@ -5,12 +5,12 @@ import ngat.phase2.*;
  *
  * <dl>	
  * <dt><b>RCS:</b>
- * <dd>$Id: ExposureCalculator.java,v 1.1 2013-06-28 10:13:41 cjm Exp $
+ * <dd>$Id$
  * <dt><b>Source:</b>
  * <dd>$Source: /space/home/eng/cjm/cvs/ngat/instrument/ExposureCalculator.java,v $
  * </dl>
- * @author $Author: cjm $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public interface ExposureCalculator {
  

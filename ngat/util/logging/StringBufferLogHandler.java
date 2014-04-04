@@ -5,7 +5,7 @@ import java.util.*;
 
 /** LogHandler which logs data into a StringBuffer.
  * <br><br>
- * $Id: StringBufferLogHandler.java,v 1.1 2007-02-28 06:17:00 snf Exp $
+ * $Id$
  */
 public class StringBufferLogHandler extends LogHandler {
 

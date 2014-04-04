@@ -9,7 +9,7 @@ import ngat.astrometry.*;
 
 /** Holds the state of the TCS and telescope systems.
  * <br><br>
- * $Id: TCS_Status.java,v 1.4 2013-07-01 09:40:15 eng Exp $
+ * $Id$
  */
 public class TCS_Status implements Serializable, Cloneable {
 

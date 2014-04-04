@@ -64,9 +64,9 @@ SRCS           = GET_STATUS_DONE.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: eng $
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2008-08-21 10:28:08 eng Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2008-08-21 10:28:08 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/message/GUI_RCS/Makefile,v $

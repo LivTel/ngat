@@ -42,14 +42,14 @@ import java.util.*;
  * </ul>
  * Note more calls are needed to get individual window filenames.
  * @author Chris Mottram
- * @version $Revision: 1.11 $
+ * @version $Revision$
  */
 public class FitsFilename
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsFilename.java,v 1.11 2011-11-01 10:06:43 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	// instrument codes
 	/**
 	 * Instrument code constant - FrodoSpec blue arm.

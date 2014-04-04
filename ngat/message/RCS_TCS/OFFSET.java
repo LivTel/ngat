@@ -19,7 +19,7 @@ import ngat.phase2.*;
  *    none.
  * </dl>
  * <br>
- * $Id: OFFSET.java,v 1.1 2006-12-18 11:58:47 snf Exp $
+ * $Id$
  */
 public class OFFSET extends RCS_TO_TCS {
 

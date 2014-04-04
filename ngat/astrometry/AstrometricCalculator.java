@@ -5,7 +5,7 @@ import ngat.phase2.*;
 /** Methods for calculating various astrometric quantities and
  * carrying out transformations etc..
  * <br><br>
- * $Id: AstrometricCalculator.java,v 1.1 2013-06-28 10:11:49 cjm Exp $
+ * $Id$
  */
 public interface AstrometricCalculator {
 

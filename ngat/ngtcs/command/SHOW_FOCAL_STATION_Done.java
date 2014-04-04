@@ -14,8 +14,8 @@ import ngat.ngtcs.common.*;
  * <b>MUST</b> be checked for in the control process that requested the data
  * with the SHOW command.
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class SHOW_FOCAL_STATION_Done extends CommandDone
 {
@@ -29,7 +29,7 @@ public class SHOW_FOCAL_STATION_Done extends CommandDone
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SHOW_FOCAL_STATION_Done.java,v 1.1 2006-11-20 14:47:33 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -98,7 +98,7 @@ public class SHOW_FOCAL_STATION_Done extends CommandDone
  *    $Date: 2006-11-20 14:47:33 $
  * $RCSfile: SHOW_FOCAL_STATION_Done.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/SHOW_FOCAL_STATION_Done.java,v $
- *      $Id: SHOW_FOCAL_STATION_Done.java,v 1.1 2006-11-20 14:47:33 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

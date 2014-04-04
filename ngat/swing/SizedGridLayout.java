@@ -27,14 +27,14 @@ import java.awt.event.*;
 /**
  * This class extends GridLayout, but tries to keep the container a specified size.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision$
  */
 public class SizedGridLayout extends GridLayout
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SizedGridLayout.java,v 0.2 2006-05-16 18:15:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The size we want the layout be to.
 	 */

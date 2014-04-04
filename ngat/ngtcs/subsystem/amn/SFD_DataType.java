@@ -30,8 +30,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>D_SFD_DATAID_EOL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SFD_DataType
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -46,7 +46,7 @@ public final class SFD_DataType
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SFD_DataType.java,v 1.2 2013-07-04 12:57:51 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -392,7 +392,7 @@ public final class SFD_DataType
  *    $Date: 2013-07-04 12:57:51 $
  * $RCSfile: SFD_DataType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SFD_DataType.java,v $
- *      $Id: SFD_DataType.java,v 1.2 2013-07-04 12:57:51 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

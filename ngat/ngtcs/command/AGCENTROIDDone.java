@@ -5,8 +5,8 @@ import ngat.ngtcs.command.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGCENTROIDDone extends CommandDone
 {
@@ -20,7 +20,7 @@ public class AGCENTROIDDone extends CommandDone
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGCENTROIDDone.java,v 1.3 2013-07-04 10:05:47 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -155,7 +155,7 @@ public class AGCENTROIDDone extends CommandDone
  *    $Date: 2013-07-04 10:05:47 $
  * $RCSfile: AGCENTROIDDone.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGCENTROIDDone.java,v $
- *      $Id: AGCENTROIDDone.java,v 1.3 2013-07-04 10:05:47 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:05:54  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

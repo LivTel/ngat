@@ -5,8 +5,8 @@ package ngat.ngtcs.common;
  * <font size = +2>  y</font><b>j</b>
  * <font size = +2>  z</font><b>k</b><font size = +2> ]</font></pre>
  *
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public class XYZMatrix extends Matrix
 {
@@ -14,7 +14,7 @@ public class XYZMatrix extends Matrix
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: XYZMatrix.java,v 1.2 2013-07-04 10:47:44 cjm Exp $" );
+    new String( "$Id$" );
 
 
   /**
@@ -131,7 +131,7 @@ public class XYZMatrix extends Matrix
  *    $Date: 2013-07-04 10:47:44 $
  * $RCSfile: XYZMatrix.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/XYZMatrix.java,v $
- *      $Id: XYZMatrix.java,v 1.2 2013-07-04 10:47:44 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:04  je
  *     Initial revision

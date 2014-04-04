@@ -14,8 +14,8 @@ import ngat.ngtcs.common.*;
  * <b>MUST</b> be checked for in the control process that requested the data
  * with the SHOW command.
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class SHOW_CALIBRATE_Done extends CommandDone
 {

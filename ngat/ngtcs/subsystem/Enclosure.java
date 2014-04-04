@@ -3,8 +3,8 @@ package ngat.ngtcs.subsystem;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public abstract class Enclosure extends BasicMechanism
@@ -13,7 +13,7 @@ public abstract class Enclosure extends BasicMechanism
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Enclosure.java,v 1.2 2013-07-04 10:54:11 cjm Exp $" );
+    new String( "$Id$" );
 
 
   /**

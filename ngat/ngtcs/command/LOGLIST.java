@@ -5,8 +5,8 @@ package ngat.ngtcs.command;
  * Control System. The name of the logger is used in (re)setting the log-level
  * for that logger.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class LOGLIST extends Command
 {
@@ -14,7 +14,7 @@ public class LOGLIST extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: LOGLIST.java,v 1.2 2003-09-26 12:10:06 je Exp $" );
+	new String( "$Id$" );
 
 
 
@@ -50,7 +50,7 @@ public class LOGLIST extends Command
  *    $Date: 2003-09-26 12:10:06 $
  * $RCSfile: LOGLIST.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/LOGLIST.java,v $
- *      $Id: LOGLIST.java,v 1.2 2003-09-26 12:10:06 je Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:12:39  je
  *     Initial revision

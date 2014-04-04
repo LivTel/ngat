@@ -8,8 +8,8 @@ import ngat.util.TypeSafeEnumeration;
 /**
  * Definitions of Equinoxes
  * 
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public class Equinox
   implements java.io.Serializable, ngat.util.TypeSafeEnumeration

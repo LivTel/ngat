@@ -12,8 +12,8 @@ import ngat.ngtcs.subsystem.ags.*;
  * Move autoguider probe mirror to a radial position, rotator to a
  * mount-position angle and set autoguider pixel on which to guide.
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.6 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class AGMOVEImplementor
   extends CommandImplementor
@@ -28,7 +28,7 @@ public class AGMOVEImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGMOVEImplementor.java,v 1.6 2013-07-04 10:15:48 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the AGMOVE command (500 seconds), in milliseconds.
@@ -197,7 +197,7 @@ public class AGMOVEImplementor
  *    $Date: 2013-07-04 10:15:48 $
  * $RCSfile: AGMOVEImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGMOVEImplementor.java,v $
- *      $Id: AGMOVEImplementor.java,v 1.6 2013-07-04 10:15:48 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.5  2003/09/29 11:55:56  je
  *     Copied code from AUTOGUIDEImplementor.

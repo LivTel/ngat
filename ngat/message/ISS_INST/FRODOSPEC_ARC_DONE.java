@@ -46,7 +46,7 @@ public class FRODOSPEC_ARC_DONE extends FRODOSPEC_CALIBRATE_DONE implements Seri
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FRODOSPEC_ARC_DONE.java,v 1.1 2013-07-01 09:14:14 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 /* DONE ATTRIBUTES */
 

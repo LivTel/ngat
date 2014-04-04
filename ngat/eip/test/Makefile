@@ -1,5 +1,5 @@
 # $Header: /space/home/eng/cjm/cvs/ngat/eip/test/Makefile,v 1.3 2013-06-28 10:53:21 cjm Exp $
-# $Id: Makefile,v 1.3 2013-06-28 10:53:21 cjm Exp $
+# $Id$
 PACKAGENAME    = ngat.eip.test
 PACKAGEDIR     = ngat/eip/test
 JAR_FILE       = ngat_eip_test.jar

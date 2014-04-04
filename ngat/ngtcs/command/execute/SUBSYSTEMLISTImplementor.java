@@ -9,8 +9,8 @@ import ngat.ngtcs.command.*;
  * Returns a list of all <code>PluggableSubSystem</code> implementing objects
  * used on the telescope.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.6 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class SUBSYSTEMLISTImplementor extends CommandImplementor
@@ -25,7 +25,7 @@ public class SUBSYSTEMLISTImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SUBSYSTEMLISTImplementor.java,v 1.6 2013-07-04 10:29:22 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the SUBSYSTEMLIST command (3 seconds), in milliseconds

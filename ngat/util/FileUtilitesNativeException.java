@@ -7,14 +7,14 @@ package ngat.util;
  * produces an error. 
  * The JNI interface itself can also generate these exceptions.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class FileUtilitesNativeException extends Exception
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: FileUtilitesNativeException.java,v 1.1 2001-06-20 15:40:12 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The function name supplied to the exception.
 	 */

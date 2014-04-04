@@ -9,7 +9,7 @@ import ngat.util.logging.*;
  * JMS_ClientConnectionThread to which the concrete Client object 
  * is passed as a handler (typically as <i>this</i>).
  * <br>
- * $Id: JMSMA_ClientImpl.java,v 1.2 2013-07-01 13:26:18 eng Exp $
+ * $Id$
  *
  */
 public abstract class JMSMA_ClientImpl implements JMSMA_Client { 

@@ -21,14 +21,14 @@ import ngat.util.logging.*;
  * <li>N55:2/1 signal indicated DEPLOYED
  * </ul>
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class ScienceFoldMove
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: ScienceFoldMove.java,v 1.1 2013-06-28 10:53:06 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Which type of device to try to connect to.
 	 * @see ngat.eip.EIPPLC#PLC_TYPE_MICROLOGIX1100

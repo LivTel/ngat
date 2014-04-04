@@ -11,8 +11,8 @@ package ngat.ngtcs.common;
  * <li>ERROR</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class OperationalMode
   implements java.io.Serializable
@@ -27,7 +27,7 @@ public final class OperationalMode
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: OperationalMode.java,v 1.1 2013-07-04 10:38:08 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -236,7 +236,7 @@ public final class OperationalMode
  *    $Date: 2013-07-04 10:38:08 $
  * $RCSfile: OperationalMode.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/OperationalMode.java,v $
- *      $Id: OperationalMode.java,v 1.1 2013-07-04 10:38:08 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

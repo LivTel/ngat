@@ -10,7 +10,7 @@ import java.awt.*;
  * will allow these controlled Panels to be added to GenericDlgs. 
  *
  *
- * $Id: SphereFrame.java,v 1.1 2000-11-21 16:47:18 snf Exp $
+ * $Id$
  *
  */
 public class SphereFrame extends GraphFrame implements ActionListener {

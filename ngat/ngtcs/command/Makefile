@@ -74,9 +74,9 @@ SRCS           = AGCENTROID.java \
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: je $
-# $Revision: 1.8 $
-#       $Id: Makefile,v 1.8 2003-11-12 12:27:58 je Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2003-11-12 12:27:58 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Makefile,v $

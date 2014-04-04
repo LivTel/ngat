@@ -42,7 +42,7 @@ import ngat.message.RCS_TCS.*;
  *    ..
  * </pre>
  * <br><br>
- * $Id: CIL_ProxyHandlerFactory.java,v 1.1 2006-11-23 10:37:57 snf Exp $
+ * $Id$
  */
 public class CIL_ProxyHandlerFactory implements RequestHandlerFactory {
 

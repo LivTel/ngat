@@ -32,7 +32,7 @@ import javax.swing.*;
  * It sets a label's text. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUILabelSetter implements Runnable
@@ -40,7 +40,7 @@ public class GUILabelSetter implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUILabelSetter.java,v 0.4 2006-05-16 18:15:25 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The Swing JLabel to append to.
 	 */

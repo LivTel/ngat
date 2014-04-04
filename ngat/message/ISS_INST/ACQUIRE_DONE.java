@@ -38,6 +38,10 @@ import java.io.*;
  *              One of ACQUIRE_MODE_NONE, ACQUIRE_MODE_BRIGHTEST, ACQUIRE_MODE_WCS.
  * <li><b><i>double</i> RA</b> assumed J2000, radians. The right ascension of the object to acquire.
  * <li><b><i>double</i> dec</b> assumed J2000, radians. The declination of the object to acquire.
+ * <li><b><i>double</i> RARate</b> Tracking rate in RA assumed J2000, radians/sec.
+ * <li><b><i>double</i> decRate</b> Tracking rate in dec assumed J2000, radians/sec.
+ * <li><b><i>long</i> calculationTime</b> Time at which the coordinates and rates were calculated.
+ * <li><b><i>double</i> moving</b> True if the target is moving.
  * <li><b><i>int</i> xPixel</b> (pixels) The x pixel position to place the specified RA/Dec on acquisition instrument.
  * <li><b><i>int</i> yPixel</b> (pixels) The y pixel position to place the specified RA/Dec on acquisition instrument.
  * </ul>
@@ -53,7 +57,7 @@ public class ACQUIRE_DONE extends ISS_TO_INST_DONE implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ACQUIRE_DONE.java,v 1.1 2013-07-01 09:14:14 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 /* DONE ATTRIBUTES */
 

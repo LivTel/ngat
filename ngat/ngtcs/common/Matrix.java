@@ -6,8 +6,8 @@ import java.util.Vector;
 /**
  * Defines mathematical matricies.  NB not fully implemented yet!
  * 
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public class Matrix implements java.io.Serializable
 {
@@ -15,7 +15,7 @@ public class Matrix implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Matrix.java,v 1.2 2013-07-04 10:37:49 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Number of rows in this matrix

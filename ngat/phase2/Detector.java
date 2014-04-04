@@ -11,7 +11,7 @@ import jyd.collection.*;
  * This class is a base class and should always be subclassed to provide
  * implementations of the accessor methods.
  * <br>
- * $Id: Detector.java,v 1.3 2006-11-23 10:43:05 snf Exp $
+ * $Id$
  *
  */
 public class Detector implements Serializable {

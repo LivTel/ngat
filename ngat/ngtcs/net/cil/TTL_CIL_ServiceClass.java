@@ -16,8 +16,8 @@ package ngat.ngtcs.net.cil;
  * The objects in this class have a 32 bit int to identify them to the
  * communications broker, and a human-readable name in String format.
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_CIL_ServiceClass extends ngat.net.cil.CIL_ServiceClass
 {
@@ -31,7 +31,7 @@ public class TTL_CIL_ServiceClass extends ngat.net.cil.CIL_ServiceClass
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_CIL_ServiceClass.java,v 1.1 2003-09-19 16:00:50 je Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -276,7 +276,7 @@ public class TTL_CIL_ServiceClass extends ngat.net.cil.CIL_ServiceClass
  *    $Date: 2003-09-19 16:00:50 $
  * $RCSfile: TTL_CIL_ServiceClass.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/cil/TTL_CIL_ServiceClass.java,v $
- *      $Id: TTL_CIL_ServiceClass.java,v 1.1 2003-09-19 16:00:50 je Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

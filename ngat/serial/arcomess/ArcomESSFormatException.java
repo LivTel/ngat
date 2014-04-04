@@ -6,14 +6,14 @@ package ngat.serial.arcomess;
  * This class extends java.lang.IllegalArgumentException. Objects of this class are thrown when an illegal
  * format argument is passed into various parse routines in ArcomESS.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class ArcomESSFormatException extends IllegalArgumentException
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ArcomESSFormatException.java,v 1.1 2009-02-04 11:26:41 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Constructor for the exception.

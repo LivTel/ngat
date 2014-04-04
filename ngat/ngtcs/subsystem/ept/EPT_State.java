@@ -60,8 +60,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_EPT_STATE_EOL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class EPT_State
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -76,7 +76,7 @@ public final class EPT_State
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: EPT_State.java,v 1.2 2013-07-04 12:58:50 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -632,7 +632,7 @@ public final class EPT_State
  *    $Date: 2013-07-04 12:58:50 $
  * $RCSfile: EPT_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ept/EPT_State.java,v $
- *      $Id: EPT_State.java,v 1.2 2013-07-04 12:58:50 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:09:30  je
  *     Initial revision

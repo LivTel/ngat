@@ -15,8 +15,8 @@ import ngat.ngtcs.subsystem.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGG extends TTL_System
 {
@@ -30,7 +30,7 @@ public class AGG extends TTL_System
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGG.java,v 1.2 2013-07-04 12:55:38 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    *
@@ -124,7 +124,7 @@ public class AGG extends TTL_System
  *    $Date: 2013-07-04 12:55:38 $
  * $RCSfile: AGG.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG.java,v $
- *      $Id: AGG.java,v 1.2 2013-07-04 12:55:38 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:38  je
  *     Initial revision

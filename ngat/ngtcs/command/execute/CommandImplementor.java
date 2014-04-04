@@ -9,8 +9,8 @@ import ngat.ngtcs.command.*;
  * Super-class for all executives of <code>Command</code> objects that are to
  * be implemented by the telescope control system.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.7 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class CommandImplementor
 {
@@ -24,7 +24,7 @@ public abstract class CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: CommandImplementor.java,v 1.7 2013-07-04 10:16:18 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*  /*                                                                     */

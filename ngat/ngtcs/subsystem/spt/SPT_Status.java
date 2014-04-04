@@ -36,8 +36,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SPT_STATUS_EOL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SPT_Status
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -52,7 +52,7 @@ public final class SPT_Status
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SPT_Status.java,v 1.1 2006-11-20 14:47:01 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -440,7 +440,7 @@ public final class SPT_Status
  *    $Date: 2006-11-20 14:47:01 $
  * $RCSfile: SPT_Status.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/spt/SPT_Status.java,v $
- *      $Id: SPT_Status.java,v 1.1 2006-11-20 14:47:01 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

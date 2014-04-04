@@ -34,7 +34,7 @@ import javax.swing.text.BadLocationException;
  * It appends some passed in text to the AttributedTextArea. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUIAttributedTextAreaAppender implements Runnable
@@ -42,7 +42,7 @@ public class GUIAttributedTextAreaAppender implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUIAttributedTextAreaAppender.java,v 1.2 2006-05-16 18:15:23 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The Swing AttributedTextArea component to append to.
 	 */

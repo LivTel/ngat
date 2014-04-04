@@ -4,12 +4,12 @@ package ngat.util;
 *
 * <dl>	
 * <dt><b>RCS:</b>
-* <dd>$Id: StatusProvider.java,v 1.1 2006-11-20 14:35:17 cjm Exp $
+* <dd>$Id$
 * <dt><b>Source:</b>
 * <dd>$Source: /space/home/eng/cjm/cvs/ngat/util/StatusProvider.java,v $
 * </dl>
-* @author $Author: cjm $
-* @version $Revision: 1.1 $
+* @author $Author$
+* @version $Revision$
 */
 
 public interface StatusProvider {

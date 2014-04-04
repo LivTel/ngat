@@ -15,7 +15,7 @@ import ngat.message.base.*;
  *    ## do not rebroadcast our Acks in time and our ##<br>
  *    ## client will probably die. ##
  * <br><br>
- * $Id: JMSMA_ProtocolClientImpl.java,v 1.2 2013-07-01 12:45:45 eng Exp $
+ * $Id$
  */
 public class JMSMA_ProtocolClientImpl implements ProtocolImpl, Logging {
     

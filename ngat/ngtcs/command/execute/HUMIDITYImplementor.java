@@ -9,8 +9,8 @@ import ngat.ngtcs.command.*;
  * This implementor sets the humidity in the MeteorologicalData object used by
  * the AstrometryCalculator on the specified telescope.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class HUMIDITYImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class HUMIDITYImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: HUMIDITYImplementor.java,v 1.5 2013-07-04 10:16:29 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the HUMIDITY command (3 seconds), in milliseconds.
@@ -89,7 +89,7 @@ public class HUMIDITYImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:16:29 $
  * $RCSfile: HUMIDITYImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/HUMIDITYImplementor.java,v $
- *      $Id: HUMIDITYImplementor.java,v 1.5 2013-07-04 10:16:29 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/10/02 12:35:30  je
  *     Updated documentation.

@@ -7,8 +7,8 @@ package ngat.ngtcs.command;
  * <code><b>MAX_FOCUS_POSITION</b></code>.  (25.00mm) If the argument is
  * outside this range an IllegalArgumentException will be thrown.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGFOCUS extends ngat.ngtcs.command.Command
 {
@@ -22,7 +22,7 @@ public class AGFOCUS extends ngat.ngtcs.command.Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: AGFOCUS.java,v 1.3 2013-07-04 10:06:10 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Maximum position (25.00) along the autoguider focus in millimetres.
@@ -94,7 +94,7 @@ public class AGFOCUS extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:06:10 $
  * $RCSfile: AGFOCUS.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGFOCUS.java,v $
- *      $Id: AGFOCUS.java,v 1.3 2013-07-04 10:06:10 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

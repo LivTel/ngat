@@ -6,14 +6,14 @@ package ngat.df1;
  * This class extends java.lang.IllegalArgumentException. Objects of this class are thrown when an illegal
  * format argument is passed into various parse routines in Df1Library.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class Df1LibraryFormatException extends IllegalArgumentException
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: Df1LibraryFormatException.java,v 1.1 2008-03-06 10:46:40 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Constructor for the exception.

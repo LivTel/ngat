@@ -14,8 +14,8 @@ import ngat.ngtcs.subsystem.ags.*;
  * half-maximum of the object's Gaussian point-spread function, and the
  * magnitude.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.6 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGCENTROIDImplementor
   extends CommandImplementor
@@ -30,7 +30,7 @@ public class AGCENTROIDImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGCENTROIDImplementor.java,v 1.6 2013-07-04 10:15:18 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the AGCENTROID command (120 seconds), in milliseconds.
@@ -114,7 +114,7 @@ public class AGCENTROIDImplementor
  *    $Date: 2013-07-04 10:15:18 $
  * $RCSfile: AGCENTROIDImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGCENTROIDImplementor.java,v $
- *      $Id: AGCENTROIDImplementor.java,v 1.6 2013-07-04 10:15:18 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.5  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

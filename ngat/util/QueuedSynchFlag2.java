@@ -20,7 +20,7 @@ import java.util.Vector;
  *    }
  * </pre>
  *
- * $Id: QueuedSynchFlag2.java,v 1.1 2002-09-25 10:48:55 snf Exp $
+ * $Id$
  *
  */
 public class QueuedSynchFlag2 extends SynchFlag {

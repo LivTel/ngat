@@ -7,8 +7,8 @@ import ngat.net.cil.*;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_CIL_Message extends CIL_Message
 {
@@ -22,7 +22,7 @@ public class TTL_CIL_Message extends CIL_Message
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_CIL_Message.java,v 1.1 2003-09-19 16:00:50 je Exp $" );
+    new String( "$Id$" );
 
   /*=======================================================================*/
   /*                                                                       */
@@ -104,6 +104,6 @@ public class TTL_CIL_Message extends CIL_Message
  *    $Date: 2003-09-19 16:00:50 $
  * $RCSfile: TTL_CIL_Message.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/cil/TTL_CIL_Message.java,v $
- *      $Id: TTL_CIL_Message.java,v 1.1 2003-09-19 16:00:50 je Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

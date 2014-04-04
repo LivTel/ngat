@@ -9,8 +9,8 @@ import ngat.ngtcs.command.*;
  *
  * Returns a list of all the <code>Logger</code>s used on the telescope.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class LOGLISTImplementor extends CommandImplementor
 {
@@ -18,7 +18,7 @@ public class LOGLISTImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: LOGLISTImplementor.java,v 1.4 2013-07-04 10:16:42 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the LOGLIST command (5 seconds), in milliseconds

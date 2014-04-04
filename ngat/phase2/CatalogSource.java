@@ -80,7 +80,7 @@ public class CatalogSource extends SolarSystemSource implements Serializable {
     /** Returns the catalog source's current position. This is calculated 
      * via an appropriate algorithm dependant on the type of source and
      * obtained via ngat.astrometry.Astrometry.*/
-    public Position getPosition() {
+    public ngat.astrometry.Position getPosition() {
 	
 	switch (catalogId) {
 	case SUN:

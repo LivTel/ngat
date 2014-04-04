@@ -2,7 +2,7 @@ package ngat.util;
 
 /**
  *
- * $Id: SynchFlag.java,v 1.1 2000-11-21 16:49:11 snf Exp $
+ * $Id$
  *
  */
 public class SynchFlag {

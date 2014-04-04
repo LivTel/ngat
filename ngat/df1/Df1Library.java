@@ -13,14 +13,14 @@ import ngat.serial.arcomess.*;
  * allows communication with the motion controller's serial interface either directly or via
  * a Arcom ESS (Ethernet Serial Server).
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class Df1Library
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: Df1Library.java,v 1.3 2013-06-28 10:39:57 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 // df1_general.h
 	/* These constants should be the same as those in df1_general.h */
 	/**

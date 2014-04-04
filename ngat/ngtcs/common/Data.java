@@ -9,8 +9,8 @@ import java.lang.String;
  * Some method overloading has been used to re-direct references to make access
  * from the Java Native Interface easier.
  * 
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public abstract class Data implements java.io.Serializable
 {
@@ -18,7 +18,7 @@ public abstract class Data implements java.io.Serializable
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-        new String( "$Id: Data.java,v 1.2 2013-07-04 10:36:18 cjm Exp $" );
+        new String( "$Id$" );
 
     /**
      * Data Constructor.

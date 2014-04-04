@@ -27,8 +27,8 @@ import ngat.ngtcs.subsystem.*;
  * <li>E_SDB_COMMAND_MAX_VALUE</li>
  * </ul>
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SDB_ServiceClass
   extends ngat.ngtcs.net.cil.TTL_CIL_ServiceClass implements TTL_DataType
@@ -43,7 +43,7 @@ public class SDB_ServiceClass
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SDB_ServiceClass.java,v 1.1 2003-09-19 16:09:40 je Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -362,7 +362,7 @@ public class SDB_ServiceClass
  *    $Date: 2003-09-19 16:09:40 $
  * $RCSfile: SDB_ServiceClass.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/sdb/SDB_ServiceClass.java,v $
- *      $Id: SDB_ServiceClass.java,v 1.1 2003-09-19 16:09:40 je Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

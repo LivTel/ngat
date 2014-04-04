@@ -3,7 +3,7 @@ package ngat.net.cil;
 /** Container for messages (responses) returned by the TTL
  * CIL library functions via UDP from the TCS.
  * <br><br>
- * $Id: CIL_Message.java,v 1.1 2006-05-16 18:14:00 cjm Exp $
+ * $Id$
  **/
 public class CIL_Message {
 

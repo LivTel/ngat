@@ -14,14 +14,14 @@ import ngat.util.*;
  * Command line arguments are a,b,c,perturbation factor,number of points.
  * Then does a quadratic fit and prints the result out.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision$
  */
 public class QuadraticFitTest2 implements ChiSquaredFitUpdateListener
 {
   /**
    * Revision Control System id string, showing the version of the Class.
    */
-  public final static String RCSID = new String("$Id: QuadraticFitTest2.java,v 0.4 2004-02-12 17:30:24 cjm Exp $");
+  public final static String RCSID = new String("$Id$");
   private QuadraticFit quadraticFit = null;
   private GraphPlot graphPlot = null;
   private GraphFrame graphFrame = null;

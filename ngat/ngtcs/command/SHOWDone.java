@@ -14,8 +14,8 @@ import ngat.ngtcs.common.*;
  * <b>MUST</b> be checked for in the control process that requested the data
  * with the SHOW command.
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.3 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class SHOW_CALIBRATE_Done extends CommandDone
 {
@@ -171,7 +171,7 @@ public class SHOW_CALIBRATE_Done extends CommandDone
  *    $Date: 2013-07-04 10:08:05 $
  * $RCSfile: SHOWDone.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/SHOWDone.java,v $
- *      $Id: SHOWDone.java,v 1.3 2013-07-04 10:08:05 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

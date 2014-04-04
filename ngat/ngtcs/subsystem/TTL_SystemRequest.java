@@ -35,8 +35,8 @@ package ngat.ngtcs.subsystem;
  * <li>E_MCP_SYSREQ_SOFT_SHUTDOWN</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_SystemRequest implements java.io.Serializable
 {
@@ -50,7 +50,7 @@ public class TTL_SystemRequest implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_SystemRequest.java,v 1.2 2013-07-04 10:57:09 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -415,7 +415,7 @@ public class TTL_SystemRequest implements java.io.Serializable
  *    $Date: 2013-07-04 10:57:09 $
  * $RCSfile: TTL_SystemRequest.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_SystemRequest.java,v $
- *      $Id: TTL_SystemRequest.java,v 1.2 2013-07-04 10:57:09 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:01:09  je
  *     Initial revision

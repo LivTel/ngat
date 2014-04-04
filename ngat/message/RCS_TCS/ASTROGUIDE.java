@@ -26,7 +26,7 @@ import ngat.phase2.*;
  * <dd>guidemag - magnitude of the selected guide star.</dd>
  * </dl>
  * <br>
- * $Id: ASTROGUIDE.java,v 1.1 2006-12-18 11:58:47 snf Exp $
+ * $Id$
  */
 public class ASTROGUIDE extends RCS_TO_TCS {
 

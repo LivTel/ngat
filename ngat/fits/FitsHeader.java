@@ -31,7 +31,7 @@ import ngat.util.logging.*;
  * This class holds FITS header information for a FITS file, and routines using JNI to save the
  * header card images to a file, ready for concatenating the data.
  * @author Chris Mottram
- * @version $Revision: 0.11 $
+ * @version $Revision$
  * @see ngat.fits.FitsHeaderCardImage
  */
 public class FitsHeader
@@ -39,7 +39,7 @@ public class FitsHeader
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeader.java,v 0.11 2013/08/08 13:28:06 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The fits header contains keywords with values associated with them. A List (Vector) is used
 	 * to store these. Each element of the vector contains an instance of FitsHeaderCardImage,
@@ -329,12 +329,18 @@ public class FitsHeader
 		int i;
 
 	// open the fits file.
+		logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+":writeFitsHeader:"+filename+
+			   ":Opening FITS file.");
 		Fits_Header_Open(filename);
+		logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+":writeFitsHeader:"+filename+
+			   ":Opened.");
 		try
 		{
 		// sort the List into orderNumber order.
 			Collections.sort(cardImageList,cardImageCompareByOrderNumber);
 		// write the keywords into the FITS file
+			logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+":writeFitsHeader:"+filename+
+				   ":Writing "+cardImageList.size()+" FITS headers.");
 			for(i=0;i<cardImageList.size();i++)
 			{
 				cardImage = (FitsHeaderCardImage)(cardImageList.get(i));
@@ -346,8 +352,12 @@ public class FitsHeader
 		finally
 		{
 		// close the fits file.
+			logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+":writeFitsHeader:"+filename+
+				   ":Closing.");
 			Fits_Header_Close();
 		}
+		logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+":writeFitsHeader:"+filename+
+			   ":Finished.");
 	}
 
 	/**

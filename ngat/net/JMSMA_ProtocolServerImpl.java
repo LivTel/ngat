@@ -9,7 +9,7 @@ import ngat.message.base.*;
 /** Implementation of the JMS (Multiple Acknowledge) protocol at
  * the server end.
  * <br><br>
- * $Id: JMSMA_ProtocolServerImpl.java,v 1.2 2013-07-01 12:43:48 eng Exp $
+ * $Id$
  */
 public class JMSMA_ProtocolServerImpl implements ProtocolImpl, Logging {
 

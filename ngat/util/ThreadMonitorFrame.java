@@ -8,7 +8,7 @@ import java.awt.event.*;
 /**
  * This class uses the ThreadMonitor thread to display the currently executing threads in a box
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class ThreadMonitorFrame extends Frame implements ActionListener
 {

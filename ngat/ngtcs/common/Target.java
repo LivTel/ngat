@@ -7,8 +7,8 @@ package ngat.ngtcs.common;
  * Some method overloading has been used to re-direct references to make access
  * from the Java Native Interface easier.
  * 
- * @version $Revision: 1.2 $
- * @author $Author: cjm $
+ * @version $Revision$
+ * @author $Author$
  */
 public class Target implements java.lang.Cloneable, java.io.Serializable
 {
@@ -16,7 +16,7 @@ public class Target implements java.lang.Cloneable, java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Target.java,v 1.2 2013-07-04 10:46:51 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Name of this Target.

@@ -9,7 +9,7 @@ package ngat.util;
  * ## This is likely to be replaced by an implementation using wait/notify but needs some work
  * ## to allow waiting Threads to be still interruptable by their controller.
  *
- * $Id: SharedStore.java,v 1.2 2000-12-11 14:38:16 snf Exp $
+ * $Id$
  *
  */
 public class SharedStore {

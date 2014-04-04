@@ -9,7 +9,7 @@ import java.text.*;
  * This object holds the next schedulable group if any available and other relevant data.
  * Some of the data is packed in by the OSS after running schedule.
  *
- * $Id: ScheduleDescriptor.java,v 1.5 2008-08-21 10:07:28 eng Exp $
+ * $Id$
  *
  */
 public class ScheduleDescriptor implements Serializable {

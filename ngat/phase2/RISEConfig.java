@@ -18,7 +18,7 @@ public class RISEConfig extends InstrumentConfig implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: RISEConfig.java,v 1.1 2007-12-11 16:00:28 cjm Exp $"); 
+	public final static String RCSID = new String("$Id$"); 
 	/** 
 	 * Serial version UID - used to maintain serialization compatibility
 	 * across modifications of the class's structure.

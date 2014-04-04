@@ -29,14 +29,14 @@ import java.util.*;
 /**
  * This class wraps two doubles, allowing a coordinate return object to be generated from WCSTools methods.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class WCSToolsCoordinate
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: WCSToolsCoordinate.java,v 1.1 2013-06-28 10:11:49 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The 'x' coordinate value.
 	 */

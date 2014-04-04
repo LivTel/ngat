@@ -16,7 +16,7 @@ public class RISEDetector extends Detector implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: RISEDetector.java,v 1.1 2007-12-11 16:00:31 cjm Exp $"); 
+	public final static String RCSID = new String("$Id$"); 
 
 	/** The name of the detector.*/
 	public static final String name = "Andor-DV435";

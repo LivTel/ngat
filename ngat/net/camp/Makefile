@@ -17,9 +17,9 @@ SRCS           =CAMPRequestHandlerFactory.java \
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 #
-#   $Author: snf $
-# $Revision: 1.3 $
-#       $Id: Makefile,v 1.3 2007-01-15 07:58:36 snf Exp $
+#   $Author$
+# $Revision$
+#       $Id$
 #     $Date: 2007-01-15 07:58:36 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/net/camp/Makefile,v $

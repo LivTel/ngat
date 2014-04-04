@@ -7,12 +7,12 @@ package ngat.net;
  *
  * <dl>
  * <dt><b>RCS:</b>
- * <dd>$Id: UnknownResourceException.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * <dd>$Id$
  * <dt><b>Source:</b>
  * <dd>$Source: /space/home/eng/cjm/cvs/ngat/net/UnknownResourceException.java,v $
  * </dl>
- * @author $Author: eng $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class UnknownResourceException extends Exception {
     

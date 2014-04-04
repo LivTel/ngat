@@ -8,7 +8,7 @@ import ngat.phase2.nonpersist.*;
 
 /** Subclass of Detector to represent the  Detector.
  *
- * $Id: FixedFormatSpecDetector.java,v 1.1 2003-11-13 15:54:27 snf Exp $
+ * $Id$
  *
  */
 public class FixedFormatSpecDetector extends Detector implements Serializable {

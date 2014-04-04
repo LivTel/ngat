@@ -3,8 +3,8 @@ package ngat.ngtcs.common;
 /**
  * The generic SubSystemStatus class - used only for testing
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SubSystemStatus extends Status
 {
@@ -18,7 +18,7 @@ public class SubSystemStatus extends Status
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SubSystemStatus.java,v 1.2 2013-07-04 10:46:31 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */

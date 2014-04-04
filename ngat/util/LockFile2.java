@@ -27,7 +27,7 @@ import java.lang.*;
  * @see java.nio.channels.FileLock
  * @see ngat.util.LockFile
  * @see java.io.File
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @author Chris Mottram
  */
 public class LockFile2
@@ -35,7 +35,7 @@ public class LockFile2
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LockFile2.java,v 1.1 2010-02-02 14:39:15 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Default extension of the lock file.
 	 */

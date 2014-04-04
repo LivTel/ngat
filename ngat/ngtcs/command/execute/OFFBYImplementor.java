@@ -10,8 +10,8 @@ import ngat.ngtcs.subsystem.*;
  * a specified distance in the sky or tangent plane.
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.6 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class OFFBYImplementor extends CommandImplementor
 {
@@ -25,7 +25,7 @@ public class OFFBYImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: OFFBYImplementor.java,v 1.6 2013-07-04 10:25:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the OFFBY command (60 seconds), in milliseconds.
@@ -125,7 +125,7 @@ public class OFFBYImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:25:25 $
  * $RCSfile: OFFBYImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/OFFBYImplementor.java,v $
- *      $Id: OFFBYImplementor.java,v 1.6 2013-07-04 10:25:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.5  2003/10/16 16:50:30  je
  *     Added documentation.

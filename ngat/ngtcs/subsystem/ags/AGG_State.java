@@ -27,8 +27,8 @@ package ngat.ngtcs.subsystem.ags;
  * <li>E_AGG_TSTATE_ERROR</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGG_State
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -43,7 +43,7 @@ public class AGG_State
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGG_State.java,v 1.2 2013-07-04 12:55:46 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -385,7 +385,7 @@ public class AGG_State
  *    $Date: 2013-07-04 12:55:46 $
  * $RCSfile: AGG_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG_State.java,v $
- *      $Id: AGG_State.java,v 1.2 2013-07-04 12:55:46 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:38  je
  *     Initial revision

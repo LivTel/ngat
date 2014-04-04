@@ -48,7 +48,7 @@ public class COMMAND_DONE extends MESSAGE implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: COMMAND_DONE.java,v 1.1 2013-07-01 08:56:34 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 /* ATTRIBUTES */
 	/**

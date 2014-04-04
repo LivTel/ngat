@@ -5,8 +5,8 @@ import ngat.ngtcs.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class Autoguider extends BasicMechanism
 {
@@ -14,7 +14,7 @@ public abstract class Autoguider extends BasicMechanism
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Autoguider.java,v 1.2 2013-07-04 10:52:40 cjm Exp $" );
+    new String( "$Id$" );
 
 
   /**

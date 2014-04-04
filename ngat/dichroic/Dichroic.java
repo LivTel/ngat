@@ -13,14 +13,14 @@ import ngat.util.logging.*;
  * which provides a telnet-like interface to move the 3 position dichroic (0|1|2|left|middle|right), and get
  * status and error information. 
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class Dichroic
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: Dichroic.java,v 1.3 2012-01-18 15:14:41 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Basic log level.
 	 * @see ngat.util.logging.Logging#VERBOSITY_INTERMEDIATE

@@ -7,7 +7,7 @@ import java.text.*;
 /** Extension of java.util.Properties to allow configuration settings
  * to be obtained via some useful methods..
  * 
- * $Id: ConfigurationProperties.java,v 1.7 2008-08-21 09:52:53 eng Exp $
+ * $Id$
  *
  */
 public class ConfigurationProperties extends Properties {

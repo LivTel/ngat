@@ -6,7 +6,7 @@ import java.io.*;
  * Contains serializable information about a Client, can be sent across a
  * socket connection and used as an entry in a key/value table.
  *
- * $Id: ClientDescriptor.java,v 1.1 2008-08-21 10:26:24 eng Exp $
+ * $Id$
  *
  */
 

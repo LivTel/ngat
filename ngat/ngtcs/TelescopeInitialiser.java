@@ -3,8 +3,8 @@ package ngat.ngtcs;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public interface TelescopeInitialiser
 {
@@ -17,6 +17,6 @@ public interface TelescopeInitialiser
  *    $Date: 2013-07-02 15:27:41 $
  * $RCSfile: TelescopeInitialiser.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/TelescopeInitialiser.java,v $
- *      $Id: TelescopeInitialiser.java,v 1.1 2013-07-02 15:27:41 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

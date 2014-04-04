@@ -27,8 +27,8 @@ import ngat.ngtcs.subsystem.*;
  * refracted, pointing model etc.)
  * </li></ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TESTImplementor extends CommandImplementor
 {
@@ -36,7 +36,7 @@ public class TESTImplementor extends CommandImplementor
      * String used to identify RCS revision details.
   */
     public static final String rcsid =
-	new String( "$Id: TESTImplementor.java,v 1.4 2013-07-04 10:29:41 cjm Exp $" );
+	new String( "$Id$" );
 
   /**
    * The timeout for the  command (3 seconds), in milliseconds
@@ -154,7 +154,7 @@ public class TESTImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:29:41 $
  * $RCSfile: TESTImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/TESTImplementor.java,v $
- *      $Id: TESTImplementor.java,v 1.4 2013-07-04 10:29:41 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

@@ -9,7 +9,7 @@ package ngat.net;
  * to send and receive data via a ClientConnectionThread to which the
  * concrete Client object should be passed as a handler.
  * <br>
- * $Id: Client.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public interface Client extends ExceptionCallbackHandler {

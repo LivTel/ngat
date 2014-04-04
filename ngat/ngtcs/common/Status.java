@@ -4,8 +4,8 @@ package ngat.ngtcs.common;
  * The abstract Status class which is to be sub-classed by all Status objects
  * returned by either a telescope PluggableSubSystem, or the Telescope itself.
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class Status implements java.io.Serializable
 {
@@ -13,7 +13,7 @@ public class Status implements java.io.Serializable
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Status.java,v 1.2 2013-07-04 10:46:13 cjm Exp $" );
+	new String( "$Id$" );
 
 
     /**

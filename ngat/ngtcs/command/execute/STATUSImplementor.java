@@ -14,8 +14,8 @@ import ngat.ngtcs.subsystem.*;
  * The <code>STATUS</code> command obtains the status of the telescope and
  * all sub-systems and mechanisms.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class STATUSImplementor extends CommandImplementor 
 {
@@ -23,7 +23,7 @@ public class STATUSImplementor extends CommandImplementor
      * String used to identify RCS revision details.
   */
     public static final String rcsid =
-	new String( "$Id: STATUSImplementor.java,v 1.4 2013-07-04 10:28:24 cjm Exp $" );
+	new String( "$Id$" );
 
   /**
    * The timeout for the STATUS command (10 seconds), in milliseconds

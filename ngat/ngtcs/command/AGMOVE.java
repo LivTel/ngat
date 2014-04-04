@@ -7,8 +7,8 @@ package ngat.ngtcs.command;
  * (110.00mm).  If the radius is outside this position an
  * IllegalArgumentException will be thrown.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGMOVE extends ngat.ngtcs.command.Command
 {
@@ -22,7 +22,7 @@ public class AGMOVE extends ngat.ngtcs.command.Command
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGMOVE.java,v 1.2 2013-07-04 10:06:14 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Minimum radius of the autoguider probe mirror.
@@ -175,6 +175,6 @@ public class AGMOVE extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:06:14 $
  * $RCSfile: AGMOVE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGMOVE.java,v $
- *      $Id: AGMOVE.java,v 1.2 2013-07-04 10:06:14 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * Represents a user (observer) in the Phase II database.
  * <br>
- * $Id: User.java,v 1.4 2006-11-23 10:43:05 snf Exp $
+ * $Id$
  *
  */
 public class User extends DBObject implements Serializable {

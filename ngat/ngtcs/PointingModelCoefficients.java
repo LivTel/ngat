@@ -10,8 +10,8 @@ package ngat.ngtcs;
  * primitives (<code>int</code>s, <code>double</code>s etc.), then the
  * <code>Object.clone</code> method should be over-ridden to perform a deep
  * copy to ensure that it is values and not references that are cloned.
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class PointingModelCoefficients
   implements Cloneable, java.io.Serializable
@@ -26,7 +26,7 @@ public abstract class PointingModelCoefficients
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: PointingModelCoefficients.java,v 1.2 2013-07-02 15:25:33 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -92,7 +92,7 @@ public abstract class PointingModelCoefficients
  *    $Date: 2013-07-02 15:25:33 $
  * $RCSfile: PointingModelCoefficients.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/PointingModelCoefficients.java,v $
- *      $Id: PointingModelCoefficients.java,v 1.2 2013-07-02 15:25:33 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:11:30  je
  *     Initial revision

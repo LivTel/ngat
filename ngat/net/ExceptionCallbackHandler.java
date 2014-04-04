@@ -37,7 +37,7 @@ package ngat.net;
  * the callback has returned.
  * <br>
  * 
- * $Id: ExceptionCallbackHandler.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public interface ExceptionCallbackHandler {

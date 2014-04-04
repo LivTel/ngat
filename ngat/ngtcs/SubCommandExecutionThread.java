@@ -15,8 +15,8 @@ import ngat.ngtcs.command.execute.*;
  * commands within larger, more complex commands such as AGMOVE compared to
  * AGRADIAL.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SubCommandExecutionThread extends ExecutionThread
 {
@@ -30,7 +30,7 @@ public class SubCommandExecutionThread extends ExecutionThread
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SubCommandExecutionThread.java,v 1.1 2013-07-02 15:27:17 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -111,7 +111,7 @@ public class SubCommandExecutionThread extends ExecutionThread
  *    $Date: 2013-07-02 15:27:17 $
  * $RCSfile: SubCommandExecutionThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/SubCommandExecutionThread.java,v $
- *      $Id: SubCommandExecutionThread.java,v 1.1 2013-07-02 15:27:17 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

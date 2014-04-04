@@ -34,7 +34,7 @@ import ngat.util.logging.*;
  * The GUIDialogManager is Runnable. It is used as an argument to SwingUtilities.invokeLater.
  * It manages a Window (JDialog and JFrame are subclasses thereof). 
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUIDialogManager implements Runnable
@@ -42,7 +42,7 @@ public class GUIDialogManager implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUIDialogManager.java,v 1.2 2008-02-29 14:47:26 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The awt Window to manage.
 	 */

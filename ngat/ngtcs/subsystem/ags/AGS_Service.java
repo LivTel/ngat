@@ -9,8 +9,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_AGS_CMD</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGS_Service implements ngat.net.cil.CIL_ServiceClass
 {
@@ -24,7 +24,7 @@ public class AGS_Service implements ngat.net.cil.CIL_ServiceClass
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGS_Service.java,v 1.1 2006-11-20 14:46:39 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -199,7 +199,7 @@ public class AGS_Service implements ngat.net.cil.CIL_ServiceClass
  *    $Date: 2006-11-20 14:46:39 $
  * $RCSfile: AGS_Service.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGS_Service.java,v $
- *      $Id: AGS_Service.java,v 1.1 2006-11-20 14:46:39 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:38  je
  *     Initial revision

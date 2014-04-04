@@ -11,8 +11,8 @@ import ngat.ngtcs.common.*;
 /**
  * Simple GUI to experiment with (x,y), (xi,eta), (RA,Dec) and (alt,az).
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class VTTests implements ActionListener
 {
@@ -26,7 +26,7 @@ public class VTTests implements ActionListener
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: VTTests.java,v 1.2 2013-07-04 13:07:08 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * String formatter for the Azimuth.
@@ -587,7 +587,7 @@ public class VTTests implements ActionListener
  *    $Date: 2013-07-04 13:07:08 $
  * $RCSfile: VTTests.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/VTTests.java,v $
- *      $Id: VTTests.java,v 1.2 2013-07-04 13:07:08 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:54  je
  *     Initial revision

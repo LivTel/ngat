@@ -1,6 +1,6 @@
 # $Header: /space/home/eng/cjm/cvs/ngat/lamp/Makefile,v 1.1 2010-03-15 14:43:05 cjm Exp $
-# $Author: cjm $
-# $Id: Makefile,v 1.1 2010-03-15 14:43:05 cjm Exp $
+# $Author$
+# $Id$
 PACKAGENAME    	= ngat.lamp
 PACKAGEDIR     	= ngat/lamp
 JAR_FILE       	= ngat_lamp.jar

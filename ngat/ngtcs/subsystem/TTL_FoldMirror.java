@@ -9,8 +9,8 @@ import ngat.ngtcs.subsystem.amn.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_FoldMirror
   extends BasicMechanism
@@ -26,7 +26,7 @@ public class TTL_FoldMirror
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_FoldMirror.java,v 1.1 2006-11-20 14:42:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The single instance of this class.
@@ -213,7 +213,7 @@ public class TTL_FoldMirror
  *    $Date: 2006-11-20 14:42:25 $
  * $RCSfile: TTL_FoldMirror.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_FoldMirror.java,v $
- *      $Id: TTL_FoldMirror.java,v 1.1 2006-11-20 14:42:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

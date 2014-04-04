@@ -15,8 +15,8 @@ import ngat.util.logging.*;
  * Defaults for non-existence of the configuration file or keywords in the file
  * are implemented.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class LoggingInitialiser
 {
@@ -30,7 +30,7 @@ public class LoggingInitialiser
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: LoggingInitialiser.java,v 1.2 2013-07-02 14:45:41 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Default port for NGTCS multicast logging.

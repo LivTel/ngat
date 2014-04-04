@@ -4,12 +4,12 @@ package ngat.util;
  *
  * <dl>	
  * <dt><b>RCS:</b>
- * <dd>$Id: StatusCategoryGrabber.java,v 1.2 2006-11-23 10:17:09 snf Exp $
+ * <dd>$Id$
  * <dt><b>Source:</b>
  * <dd>$Source: /space/home/eng/cjm/cvs/ngat/util/StatusCategoryGrabber.java,v $
  * </dl>
- * @author $Author: snf $
- * @version $Revision: 1.2 $
+ * @author $Author$
+ * @version $Revision$
  */
 public interface StatusCategoryGrabber {
     

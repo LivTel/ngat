@@ -9,14 +9,14 @@ import java.util.*;
  * This class does a quadratic fit for a series of (x,y) data points.
  * It works out values (a,b,c) for a quadratic fit such that y = a(x*x)+bx+c.
  * @author Chris Mottram
- * @version $Revision: 0.3 $
+ * @version $Revision$
  */
 public class QuadraticFit
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: QuadraticFit.java,v 0.3 2000-09-01 15:30:37 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The number of parameter fit for a quadratic. This is three (a,b,c).
 	 */

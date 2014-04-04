@@ -6,8 +6,8 @@ import ngat.net.*;
  * Thread used to sleep for the specified seconds, then exit with the specified
  * exit value.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class ShutdownThread extends Thread
@@ -22,7 +22,7 @@ public class ShutdownThread extends Thread
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ShutdownThread.java,v 1.2 2013-07-02 15:26:34 cjm Exp $" );
+    new String( "$Id$" );
 
 
   /*=========================================================================*/

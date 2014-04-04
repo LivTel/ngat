@@ -10,14 +10,14 @@ import java.lang.*;
  * uses Runtime.exec to execute the command, and waits for the commands termination. The output and error streams are
  * piped to Strings which can be returned.
  * This class will not execute system commands that require typed input.
- * @version $Revision: 0.4 $
+ * @version $Revision$
  */
 public class ExecuteCommand implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ExecuteCommand.java,v 0.4 2007-08-21 16:53:26 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The command an instance of this command executes when the run method is called.
 	 */

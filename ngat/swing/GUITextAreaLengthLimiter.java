@@ -36,7 +36,7 @@ import javax.swing.text.BadLocationException;
  * The GUITextAreaLengthLimiter is Runnable. It is used as an argument to SwingUtilities.invokeLater.
  * This is needed as updating <b>must</b> be done in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUITextAreaLengthLimiter implements Runnable
@@ -44,7 +44,7 @@ public class GUITextAreaLengthLimiter implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUITextAreaLengthLimiter.java,v 1.2 2006-05-16 18:15:28 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The Swing JTextArea component to examine.
 	 */

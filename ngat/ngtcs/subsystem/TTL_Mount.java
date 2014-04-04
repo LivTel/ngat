@@ -13,8 +13,8 @@ import ngat.ngtcs.subsystem.acn.*;
  * functionality specified by the class
  * <code>ngat.ngtcs.subsystem.Mount</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_Mount extends Mount implements ControllableSubSystem
 {
@@ -28,7 +28,7 @@ public class TTL_Mount extends Mount implements ControllableSubSystem
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_Mount.java,v 1.2 2013-07-04 10:55:53 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Park altitude of a TTL_Mount, in degrees.
@@ -405,7 +405,7 @@ public class TTL_Mount extends Mount implements ControllableSubSystem
  *    $Date: 2013-07-04 10:55:53 $
  * $RCSfile: TTL_Mount.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Mount.java,v $
- *      $Id: TTL_Mount.java,v 1.2 2013-07-04 10:55:53 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:01:09  je
  *     Initial revision

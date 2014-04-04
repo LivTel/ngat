@@ -10,7 +10,7 @@ import java.util.*;
  * The model can have various parameters which are set to a value for one run through
  * the chi squared fit.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public interface ChiSquaredFitModeller extends ChiSquaredFitDataValuer
 {

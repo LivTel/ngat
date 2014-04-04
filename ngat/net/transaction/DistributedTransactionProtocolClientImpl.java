@@ -11,7 +11,7 @@ import ngat.util.logging.*;
  * DTP from the client perspective.<br>
  *   
  * <br><br>
- * $Id: DistributedTransactionProtocolClientImpl.java,v 1.1 2006-05-16 18:14:14 cjm Exp $
+ * $Id$
  */
 public class DistributedTransactionProtocolClientImpl implements ProtocolImpl, Logging {
     

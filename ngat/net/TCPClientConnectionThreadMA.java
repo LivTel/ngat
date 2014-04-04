@@ -13,14 +13,14 @@ import ngat.util.logging.*;
  * client to the server. This is needed when the server does not have sufficient information to
  * calculate an acknowledge time for the total operation of a command.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TCPClientConnectionThreadMA extends Thread
 {
   /**
    * Revision Control System id string, showing the version of the Class.
    */
-  public final static String RCSID = new String("$Id: TCPClientConnectionThreadMA.java,v 1.1 2008-07-23 12:41:17 eng Exp $");
+  public final static String RCSID = new String("$Id$");
   /**
    * Default buffer size for input and output buffers.
    */

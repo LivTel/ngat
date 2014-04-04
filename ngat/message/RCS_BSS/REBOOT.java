@@ -52,7 +52,7 @@ public class REBOOT extends RCS_TO_BSS implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: REBOOT.java,v 1.1 2013-07-01 09:26:43 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Constant LEVEL_REDATUM of type int with value 1.
 	 */

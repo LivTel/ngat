@@ -3,8 +3,8 @@ package ngat.ngtcs.subsystem;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class PluggableSubSystemFactory
   implements PluggableSubSystemCreator
@@ -19,7 +19,7 @@ public abstract class PluggableSubSystemFactory
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: PluggableSubSystemFactory.java,v 1.3 2013-07-04 10:54:37 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -71,7 +71,7 @@ public abstract class PluggableSubSystemFactory
  *    $Date: 2013-07-04 10:54:37 $
  * $RCSfile: PluggableSubSystemFactory.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/PluggableSubSystemFactory.java,v $
- *      $Id: PluggableSubSystemFactory.java,v 1.3 2013-07-04 10:54:37 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/19 16:01:09  je
  *     Updated Command tx/rx and TTL subsystem interfaces.

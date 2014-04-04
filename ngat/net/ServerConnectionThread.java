@@ -7,7 +7,7 @@ import ngat.util.*;
  * over a generic IConnection. This class is used to provide an
  * execution thread for a ProtocolImpl acting as server.
  * <br><br>
- * $Id: ServerConnectionThread.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */public class ServerConnectionThread extends ControlThread {
 
      /** The ProtocolImplementor which will carry out the operations

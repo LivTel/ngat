@@ -9,8 +9,8 @@ package ngat.ngtcs.command;
  * the range <code><b>MIN_POLE</b></code> (-1.00") to 
  * <code><b>MAX_POLE</b></code> (1.00")
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.1 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class POLE extends Command
 {
@@ -24,7 +24,7 @@ public class POLE extends Command
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: POLE.java,v 1.1 2006-11-20 14:47:33 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The minimum allowable value for the pressure (0.00)
@@ -119,7 +119,7 @@ public class POLE extends Command
  *    $Date: 2006-11-20 14:47:33 $
  * $RCSfile: POLE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/POLE.java,v $
- *      $Id: POLE.java,v 1.1 2006-11-20 14:47:33 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

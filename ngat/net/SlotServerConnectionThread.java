@@ -3,7 +3,7 @@ package ngat.net;
 /** Executive for running ProtocolImplementors using a SlotBuffer
  * as the connection paradigm.
  * <br><br>
- * $Id: SlotServerConnectionThread.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class SlotServerConnectionThread extends ServerConnectionThread {
 

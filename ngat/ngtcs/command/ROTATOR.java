@@ -14,8 +14,8 @@ import ngat.ngtcs.common.RotatorMode;
  * <code><b>MIN_MOUNT_POSITION_ANGLE</b></code> (-240.0) to
  * <code><b>MAX_MOUNT_POSITION_ANGLE</b></code> (240.0).
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ROTATOR extends ngat.ngtcs.command.Command
 {
@@ -29,7 +29,7 @@ public class ROTATOR extends ngat.ngtcs.command.Command
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ROTATOR.java,v 1.3 2013-07-04 10:07:23 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Minimum value for the rotator position angle in sky mode (0.0), in
@@ -152,7 +152,7 @@ public class ROTATOR extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:07:23 $
  * $RCSfile: ROTATOR.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/ROTATOR.java,v $
- *      $Id: ROTATOR.java,v 1.3 2013-07-04 10:07:23 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

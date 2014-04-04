@@ -9,14 +9,14 @@ import ngat.util.logging.*;
  * This class supports an interface to a serial device, either over a 
  * serial link, or over a socket conenction via an Arcom ESS.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class ArcomESS
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ArcomESS.java,v 1.2 2011-01-05 14:27:05 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 // arcom_ess_interface.h
 	/* These constants should be the same as those in arcom_ess_interface.h */
 	/**

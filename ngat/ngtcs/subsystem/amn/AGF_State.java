@@ -12,8 +12,8 @@ package ngat.ngtcs.subsystem.amn;
  * <li>E_AGF_STATE_ERROR</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGF_State
   implements java.io.Serializable
@@ -28,7 +28,7 @@ public class AGF_State
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGF_State.java,v 1.2 2013-07-04 12:57:41 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -256,7 +256,7 @@ public class AGF_State
  *    $Date: 2013-07-04 12:57:41 $
  * $RCSfile: AGF_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/AGF_State.java,v $
- *      $Id: AGF_State.java,v 1.2 2013-07-04 12:57:41 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:45  je
  *     Initial revision

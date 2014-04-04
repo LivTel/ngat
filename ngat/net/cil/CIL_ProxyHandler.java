@@ -39,7 +39,7 @@ import ngat.message.RCS_TCS.*;
  * response is sent back to the client using the JMSMA_ProtocolServerImpl's
  * sendDone() method via its connection. 
  * <br><br>
- * $Id: CIL_ProxyHandler.java,v 1.1 2006-11-23 10:37:57 snf Exp $
+ * $Id$
  */
 public class CIL_ProxyHandler implements RequestHandler { 
 

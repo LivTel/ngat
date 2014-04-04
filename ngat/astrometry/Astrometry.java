@@ -17,7 +17,7 @@ import java.io.*;
  * previously been included in the CLASSPATH environment variable in order for it to
  * be found.
  * <br><br>
- * $Id: Astrometry.java,v 1.1 2013-06-28 10:11:49 cjm Exp $
+ * $Id$
  */
 public class Astrometry {
 

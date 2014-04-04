@@ -49,7 +49,7 @@ public class OFFSET_TT_X_Y extends OFFSET_TT implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: OFFSET_TT_X_Y.java,v 1.1 2013-07-01 09:26:43 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 /* ATTRIBUTES */
 	/**

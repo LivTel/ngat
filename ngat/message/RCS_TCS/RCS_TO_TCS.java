@@ -4,7 +4,7 @@ import ngat.message.base.*;
 
 /** Base class ro all RCS to TCS commands.
  * <br>
- * $Id: RCS_TO_TCS.java,v 1.1 2006-12-18 11:58:47 snf Exp $
+ * $Id$
  */
 public class RCS_TO_TCS extends COMMAND {
 

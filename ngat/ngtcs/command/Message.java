@@ -9,8 +9,8 @@ package ngat.ngtcs.command;
  * @see ngat.ngtcs.command.CommandDone
  * @see ngat.ngtcs.Communicator
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public abstract class Message extends ngat.message.base.MESSAGE
   implements java.io.Serializable
@@ -25,7 +25,7 @@ public abstract class Message extends ngat.message.base.MESSAGE
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: Message.java,v 1.3 2013-07-04 10:06:59 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Total number of messages sent.
@@ -112,7 +112,7 @@ public abstract class Message extends ngat.message.base.MESSAGE
  *    $Date: 2013-07-04 10:06:59 $
  * $RCSfile: Message.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/Message.java,v $
- *      $Id: Message.java,v 1.3 2013-07-04 10:06:59 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

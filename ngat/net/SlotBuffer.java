@@ -7,7 +7,7 @@ import java.io.InterruptedIOException;
  * when only single or small numbers of objects are to be
  * transferred between threads.
  * <br><br>
- * $Id: SlotBuffer.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class SlotBuffer {
 

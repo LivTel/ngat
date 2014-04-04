@@ -18,7 +18,7 @@ import java.io.*;
  * <li>A 14 position single filter wheel (filter 1).
  * <li>Two neutral density filter slides containing a neutral density filter (filter 2 and filter 3).
  * </ul>
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @author cjm
  * @see InstrumentConfig
  */

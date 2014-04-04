@@ -10,7 +10,7 @@ import java.net.*;
  * forms of data e.g. passing via a channel. The send and receive
  * methods should support blocking i/o.
  * <br>
- * $Id: IConnection.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public interface IConnection {

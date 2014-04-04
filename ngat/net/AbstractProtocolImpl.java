@@ -4,7 +4,7 @@ package ngat.net;
  * Abstract class for implementation of the Client or Server end of
  * a connection based Protocol.
  * <br><br>
- * $Id: AbstractProtocolImpl.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  *
  */
 public abstract class AbstractProtocolImpl implements ProtocolImpl {

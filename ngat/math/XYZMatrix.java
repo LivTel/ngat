@@ -11,7 +11,7 @@ public class XYZMatrix extends Matrix
     /**
      * Revision Control System id string, showing the version of the Class.
      */
-    public static final String RCSID = new String( "$Id: XYZMatrix.java,v 1.1 2000-11-10 13:48:04 je Exp $" );
+    public static final String RCSID = new String( "$Id$" );
 
 
     /**

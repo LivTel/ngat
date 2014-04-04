@@ -31,14 +31,14 @@ import java.util.*;
  * but has no new fields or methods! When instansiated, the objects reference is used in the JNI code to
  * map to a 'struct WorldCoor*' instance, which is the C layer handle used for accessing WCSTools routines.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class WCSToolsWorldCoorHandle extends Object
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: WCSToolsWorldCoorHandle.java,v 1.1 2013-06-28 10:11:49 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Default null constructor.

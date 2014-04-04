@@ -38,6 +38,10 @@ import java.io.*;
  *              One of ACQUIRE_MODE_NONE, ACQUIRE_MODE_BRIGHTEST, ACQUIRE_MODE_WCS.
  * <li><b><i>double</i> RA</b> assumed J2000, radians. The right ascension of the object to acquire.
  * <li><b><i>double</i> dec</b> assumed J2000, radians. The declination of the object to acquire.
+ * <li><b><i>double</i> RARate</b> Tracking rate in RA assumed J2000, radians/sec.
+ * <li><b><i>double</i> decRate</b> Tracking rate in dec assumed J2000, radians/sec.
+ * <li><b><i>long</i> calculationTime</b> Time at which the coordinates and rates were calculated.
+ * <li><b><i>double</i> moving</b> True if the target is moving.
  * <li><b><i>int</i> xPixel</b> (pixels) The x pixel position to place the specified RA/Dec on acquisition instrument.
  * <li><b><i>int</i> yPixel</b> (pixels) The y pixel position to place the specified RA/Dec on acquisition instrument.
  * </ul>
@@ -53,7 +57,7 @@ public class ACQUIRE extends ISS_TO_INST implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ACQUIRE.java,v 1.1 2013-07-01 09:14:14 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 /* ATTRIBUTES */
 	/**
@@ -68,6 +72,22 @@ public class ACQUIRE extends ISS_TO_INST implements Serializable
 	 * Attribute dec of type double.
 	 */
 	private double dec;
+	/**
+	 * Attribute RARate of type double.
+	 */
+	private double RARate;
+	/**
+	 * Attribute decRate of type double.
+	 */
+	private double decRate;
+	/**
+	 * Attribute calculationTime of type long.
+	 */
+	private long calculationTime;
+	/**
+	 * Attribute moving of type boolean.
+	 */
+	private boolean moving;
 	/**
 	 * Attribute xPixel of type int.
 	 */
@@ -130,6 +150,78 @@ public class ACQUIRE extends ISS_TO_INST implements Serializable
 	public double getDec()
 	{
 		return this.dec;
+	}
+
+	/**
+	 * Method to set RARate.
+	 * @param in The value to set, of type double.
+	 */
+	public void setRARate(double in)
+	{
+		this.RARate=in;
+	}
+
+	/**
+	 * Method to get RARate.
+	 * @return The method returns the attribute RARate.
+	 */
+	public double getRARate()
+	{
+		return this.RARate;
+	}
+
+	/**
+	 * Method to set decRate.
+	 * @param in The value to set, of type double.
+	 */
+	public void setDecRate(double in)
+	{
+		this.decRate=in;
+	}
+
+	/**
+	 * Method to get decRate.
+	 * @return The method returns the attribute decRate.
+	 */
+	public double getDecRate()
+	{
+		return this.decRate;
+	}
+
+	/**
+	 * Method to set calculationTime.
+	 * @param in The value to set, of type long.
+	 */
+	public void setCalculationTime(long in)
+	{
+		this.calculationTime=in;
+	}
+
+	/**
+	 * Method to get calculationTime.
+	 * @return The method returns the attribute calculationTime.
+	 */
+	public long getCalculationTime()
+	{
+		return this.calculationTime;
+	}
+
+	/**
+	 * Method to set moving.
+	 * @param in The value to set, of type boolean.
+	 */
+	public void setMoving(boolean in)
+	{
+		this.moving=in;
+	}
+
+	/**
+	 * Method to get moving.
+	 * @return The method returns the attribute moving.
+	 */
+	public boolean getMoving()
+	{
+		return this.moving;
 	}
 
 	/**

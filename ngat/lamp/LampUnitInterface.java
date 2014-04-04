@@ -10,7 +10,7 @@ import ngat.util.logging.*;
  * installed on the telescope. This allows moving the mirror in and out of the beam,
  * the turning on and off of lamps, measuring their brightness and error checking.
  * @author Chris Mottram
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public interface LampUnitInterface
 {

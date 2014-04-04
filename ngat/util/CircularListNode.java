@@ -7,14 +7,14 @@ import java.lang.*;
 /**
  * This class holds all the information needed for each object in a circular list.<br>
  * This class was taken from <b>Java Threads</b>, an O'Reilly book by Scott Oaks and Henry Wong, Chapter 5, P90.
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public class CircularListNode
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: CircularListNode.java,v 0.1 1999-12-10 14:52:34 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The object in the list.
 	 */

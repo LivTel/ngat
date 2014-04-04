@@ -6,8 +6,8 @@ package ngat.ngtcs.command;
  * <code><b>MAX_WAVELENGTH</b></code> an IllegalArgumentException will be
  * thrown.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGWAVELENGTH extends ngat.ngtcs.command.Command
 {
@@ -21,7 +21,7 @@ public class AGWAVELENGTH extends ngat.ngtcs.command.Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: AGWAVELENGTH.java,v 1.4 2013-07-04 10:06:22 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Minimum wavelength in metres.
@@ -93,7 +93,7 @@ public class AGWAVELENGTH extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:06:22 $
  * $RCSfile: AGWAVELENGTH.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AGWAVELENGTH.java,v $
- *      $Id: AGWAVELENGTH.java,v 1.4 2013-07-04 10:06:22 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

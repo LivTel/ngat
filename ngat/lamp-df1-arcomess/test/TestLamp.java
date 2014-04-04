@@ -17,14 +17,14 @@ import ngat.util.logging.*;
 /**
  * This class tests the LTAGLampUnit.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class TestLamp
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: TestLamp.java,v 1.2 2008-10-03 09:21:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The filename of a properties file containing the lamp unit configuration.
 	 */

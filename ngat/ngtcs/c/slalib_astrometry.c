@@ -4,8 +4,8 @@
  * is an implementation of the AstrometryCalculator interface used by
  * the NGTCS.
  * 
- *  @author $Author: cjm $
- * @version $Revision: 1.1 $
+ *  @author $Author$
+ * @version $Revision$
  *
  *     $Date: 2013-07-04 09:58:36 $
  *  $RCSfile: slalib_astrometry.c,v $

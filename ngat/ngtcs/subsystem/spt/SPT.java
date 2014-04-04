@@ -18,8 +18,8 @@ import ngat.ngtcs.subsystem.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SPT extends ngat.ngtcs.subsystem.TTL_System
 {
@@ -33,7 +33,7 @@ public class SPT extends ngat.ngtcs.subsystem.TTL_System
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SPT.java,v 1.1 2006-11-20 14:47:01 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -113,6 +113,6 @@ public class SPT extends ngat.ngtcs.subsystem.TTL_System
  *    $Date: 2006-11-20 14:47:01 $
  * $RCSfile: SPT.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/spt/SPT.java,v $
- *      $Id: SPT.java,v 1.1 2006-11-20 14:47:01 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

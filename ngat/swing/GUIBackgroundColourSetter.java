@@ -32,7 +32,7 @@ import javax.swing.*;
  * The GUIBackgroundColourSetter is Runnable. It is used as an argument to SwingUtilities.invokeLater.
  * It sets a component's background colour. This is needed as updating <b>must</b> be done in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUIBackgroundColourSetter implements Runnable
@@ -40,7 +40,7 @@ public class GUIBackgroundColourSetter implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUIBackgroundColourSetter.java,v 1.1 2008-04-29 09:53:59 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The Swing JComponent to append to.
 	 */

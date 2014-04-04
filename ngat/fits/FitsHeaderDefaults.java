@@ -40,14 +40,14 @@ import java.util.*;
  * </ul>
  * A list of keywords can also optionally be specified, using:<b>ngat.fits.keyword.&lt;number&gt;</b>.
  * @author Chris Mottram
- * @version $Revision: 0.4 $
+ * @version $Revision$
  */
 public class FitsHeaderDefaults
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderDefaults.java,v 0.4 2006-05-16 17:42:23 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Default value to put in the FITS header, against the OBSTYPE keyword, when the
 	 * image is an Arc.

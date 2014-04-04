@@ -13,8 +13,8 @@ import ngat.ngtcs.subsystem.*;
  * <p>
  * The interface is described in TTL document <b>97-001-AGS-TEL_ICD</b>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGG_GuidePacketReader
 {
@@ -28,7 +28,7 @@ public class AGG_GuidePacketReader
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGG_GuidePacketReader.java,v 1.2 2013-07-04 12:55:03 cjm Exp $" );
+    new String( "$Id$" );
 
 
   /**
@@ -254,7 +254,7 @@ public class AGG_GuidePacketReader
  *    $Date: 2013-07-04 12:55:03 $
  * $RCSfile: AGG_GuidePacketReader.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/ags/AGG_GuidePacketReader.java,v $
- *      $Id: AGG_GuidePacketReader.java,v 1.2 2013-07-04 12:55:03 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:38  je
  *     Initial revision

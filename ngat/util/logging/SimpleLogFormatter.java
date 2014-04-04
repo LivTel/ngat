@@ -26,7 +26,7 @@ import java.text.*;
  * --------------------------------------------------------------<br>
  *
  * <br><br>
- * $Id: SimpleLogFormatter.java,v 1.1 2007-02-28 06:17:00 snf Exp $
+ * $Id$
  */
 public class SimpleLogFormatter extends LogFormatter {
 

@@ -10,7 +10,7 @@ import java.util.*;
  * This interface allows the Chi squared fit to get an actual data value for a given i in the
  * list of data objects.
  * @author Chris Mottram
- * @version $Revision: 0.1 $
+ * @version $Revision$
  */
 public interface ChiSquaredFitDataValuer
 {

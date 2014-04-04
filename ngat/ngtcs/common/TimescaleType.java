@@ -14,8 +14,8 @@ package ngat.ngtcs.common;
  * <li>TDT</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TimescaleType implements java.io.Serializable
 {
@@ -29,7 +29,7 @@ public class TimescaleType implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TimescaleType.java,v 1.3 2013-07-04 10:47:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -242,7 +242,7 @@ public class TimescaleType implements java.io.Serializable
  *    $Date: 2013-07-04 10:47:25 $
  * $RCSfile: TimescaleType.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/TimescaleType.java,v $
- *      $Id: TimescaleType.java,v 1.3 2013-07-04 10:47:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/19 16:00:03  je
  *     Updated Command tx/rx and TTL subsystem interfaces.

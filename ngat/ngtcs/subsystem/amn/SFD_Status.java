@@ -22,8 +22,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SFD_STOPPED</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SFD_Status
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -38,7 +38,7 @@ public final class SFD_Status
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: SFD_Status.java,v 1.2 2013-07-04 12:58:02 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -328,7 +328,7 @@ public final class SFD_Status
  *    $Date: 2013-07-04 12:58:02 $
  * $RCSfile: SFD_Status.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SFD_Status.java,v $
- *      $Id: SFD_Status.java,v 1.2 2013-07-04 12:58:02 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

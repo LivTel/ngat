@@ -8,7 +8,7 @@ import jyd.storable.*;
  * One or more instances of this class reside within each 
  * instance of Instrument (in the windowList field).
  * <br>
- * $Id: Window.java,v 1.2 2007-07-05 11:56:37 snf Exp $ 
+ * $Id$ 
  */
 public class Window implements Serializable {
 

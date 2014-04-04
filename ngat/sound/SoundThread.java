@@ -48,14 +48,14 @@ import ngat.util.logging.*;
  * </pre>
  * Note all loading and playing of wavs is done in a different thread to the one issuing the play sequence.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class SoundThread implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SoundThread.java,v 1.2 2006-05-16 18:14:57 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * A boolean deciding when to stop the Runnable.
 	 * @see #quit

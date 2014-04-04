@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class Convert
 {
@@ -16,7 +16,7 @@ public class Convert
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: Convert.java,v 1.2 2013-07-04 10:35:38 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Format used to align argument values.
@@ -579,7 +579,7 @@ public class Convert
  *    $Date: 2013-07-04 10:35:38 $
  * $RCSfile: Convert.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/common/Convert.java,v $
- *      $Id: Convert.java,v 1.2 2013-07-04 10:35:38 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:04  je
  *     Initial revision

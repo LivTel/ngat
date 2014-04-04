@@ -10,14 +10,14 @@ import ngat.eip.*;
  * This class provides a handle for referencing a connection made with EIPPLC (libtuxeip).
  * Instances of this Java class are mapped to an equivalent C layer EIP_Handle_T in the JNI layer.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class EIPHandle
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: EIPHandle.java,v 1.1 2008-10-09 14:14:21 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Hostname of the PLC, of the form xxx.xxx.xxx.xxx .
 	 */

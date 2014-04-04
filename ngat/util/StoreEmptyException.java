@@ -3,7 +3,7 @@ package ngat.util;
 /**
  * Exception thrown when an attempt is made to read from an empty SharedStore.
  *
- * $Id: StoreEmptyException.java,v 1.1 2000-11-21 16:59:35 snf Exp $
+ * $Id$
  *
  */
 public class StoreEmptyException extends Exception {

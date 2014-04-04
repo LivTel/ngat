@@ -8,8 +8,8 @@ import ngat.ngtcs.subsystem.ept.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_Enclosure
   extends BasicMechanism
@@ -25,7 +25,7 @@ public class TTL_Enclosure
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_Enclosure.java,v 1.2 2013-07-04 10:55:42 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The single instance of this class.
@@ -195,7 +195,7 @@ public class TTL_Enclosure
  *    $Date: 2013-07-04 10:55:42 $
  * $RCSfile: TTL_Enclosure.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_Enclosure.java,v $
- *      $Id: TTL_Enclosure.java,v 1.2 2013-07-04 10:55:42 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:01:09  je
  *     Initial revision

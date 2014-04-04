@@ -25,14 +25,14 @@ package ngat.ccd;
  * This class extends java.lang.IllegalArgumentException. Objects of this class are thrown when an illegal
  * format argument is passed into various parse routines in CCDLibrary.
  * @author Chris Mottram
- * @version $Revision: 0.5 $
+ * @version $Revision$
  */
 public class CCDLibraryFormatException extends IllegalArgumentException
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: CCDLibraryFormatException.java,v 0.5 2006-05-16 17:41:33 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Constructor for the exception.

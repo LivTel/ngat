@@ -20,7 +20,7 @@ public class ConnectionThread extends ControlThread
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ConnectionThread.java,v 1.2 2013-07-04 13:01:31 cjm Exp $" );
+    new String( "$Id$" );
 
 
   /*=========================================================================*/
@@ -92,7 +92,7 @@ public class ConnectionThread extends ControlThread
  *    $Date: 2013-07-04 13:01:31 $
  * $RCSfile: ConnectionThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/ConnectionThread.java,v $
- *      $Id: ConnectionThread.java,v 1.2 2013-07-04 13:01:31 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:13:54  je
  *     Initial revision

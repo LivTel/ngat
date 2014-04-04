@@ -12,8 +12,8 @@ import ngat.ngtcs.subsystem.amn.*;
  * This implementor will move the autoguider filter either in or out of the
  * autoguider beam.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.7 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AGFILTERImplementor
   extends CommandImplementor
@@ -28,7 +28,7 @@ public class AGFILTERImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AGFILTERImplementor.java,v 1.7 2013-07-04 10:15:30 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the AGFILTER command (60 seconds), in milliseconds.
@@ -175,7 +175,7 @@ public class AGFILTERImplementor
  *    $Date: 2013-07-04 10:15:30 $
  * $RCSfile: AGFILTERImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/AGFILTERImplementor.java,v $
- *      $Id: AGFILTERImplementor.java,v 1.7 2013-07-04 10:15:30 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.6  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

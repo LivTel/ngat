@@ -29,14 +29,14 @@ import javax.swing.*;
 /**
  * Look And Feel selection menu bar.
  * @author Chris Mottram
- * @version $Revision: 0.2 $
+ * @version $Revision$
  */
 public class LookAndFeelMenu extends JMenu implements ActionListener
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: LookAndFeelMenu.java,v 0.2 2006-05-16 18:15:29 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Top Level frame to update.
 	 */

@@ -14,8 +14,8 @@ import ngat.ngtcs.command.*;
 /**
  * Provides the command connection from TTL's CIL implementation to the NGTCS.
  *
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public class TTL_CIL_Communicator implements Communicator
@@ -24,7 +24,7 @@ public class TTL_CIL_Communicator implements Communicator
    * String used to identify RCS revision details.
    */
   public static final String RevisionString =
-    new String( "$Id: TTL_CIL_Communicator.java,v 1.1 2003-09-19 16:00:50 je Exp $" );
+    new String( "$Id$" );
 
   /**
    * The telescope for which this is the Communicator.
@@ -241,6 +241,6 @@ public class TTL_CIL_Communicator implements Communicator
  *    $Date: 2003-09-19 16:00:50 $
  * $RCSfile: TTL_CIL_Communicator.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/net/cil/TTL_CIL_Communicator.java,v $
- *      $Id: TTL_CIL_Communicator.java,v 1.1 2003-09-19 16:00:50 je Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

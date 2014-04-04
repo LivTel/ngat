@@ -10,8 +10,8 @@ import ngat.ngtcs.common.*;
  * Panel containing the hours, minutes and seconds fields to be able to input
  * a right ascension.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class JRAInputPanel extends JApplet
 {
@@ -19,7 +19,7 @@ public class JRAInputPanel extends JApplet
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: JRAInputPanel.java,v 1.2 2013-07-04 13:01:41 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Hour input field.

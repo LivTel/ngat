@@ -14,8 +14,8 @@ package ngat.ngtcs.command;
  * <li>PIXEL</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class AutoguideMode implements java.io.Serializable
 {
@@ -29,7 +29,7 @@ public class AutoguideMode implements java.io.Serializable
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: AutoguideMode.java,v 1.3 2013-07-04 10:06:26 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -233,7 +233,7 @@ public class AutoguideMode implements java.io.Serializable
  *    $Date: 2013-07-04 10:06:26 $
  * $RCSfile: AutoguideMode.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/AutoguideMode.java,v $
- *      $Id: AutoguideMode.java,v 1.3 2013-07-04 10:06:26 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

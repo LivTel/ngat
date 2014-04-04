@@ -8,8 +8,8 @@ import ngat.ngtcs.subsystem.*;
  * Change the focus by a specified amount.
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.5 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class DFOCUSImplementor extends CommandImplementor
 {
@@ -23,7 +23,7 @@ public class DFOCUSImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: DFOCUSImplementor.java,v 1.5 2013-07-04 10:16:21 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the DFOCUS command (300 seconds), in milliseconds.
@@ -134,7 +134,7 @@ public class DFOCUSImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:16:21 $
  * $RCSfile: DFOCUSImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/DFOCUSImplementor.java,v $
- *      $Id: DFOCUSImplementor.java,v 1.5 2013-07-04 10:16:21 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.4  2003/09/29 13:27:41  je
  *     Added execute documentation.

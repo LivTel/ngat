@@ -2,7 +2,7 @@ package ngat.net;
 
 /** Factory for generating handlers for specific requests.
  * <br><br>
- * $Id: RequestHandlerFactory.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public interface RequestHandlerFactory {
  

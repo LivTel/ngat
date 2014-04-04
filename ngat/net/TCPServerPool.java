@@ -20,14 +20,14 @@ import java.util.*;
  * This class should be subclassed  and the <a href="#startConnectionThread">startConnectionThread</a> overwritten to
  * notify the thread of your choice.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TCPServerPool extends Thread
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TCPServerPool.java,v 1.1 2008-07-23 12:41:17 eng Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Default size of Thread pool for server.
 	 */

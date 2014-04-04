@@ -3,7 +3,7 @@ package ngat.net;
 /** Classes which wish to acts as handlers for requests in the
  * context of a server should implement this interface.
  * <br><br>
- * $Id: RequestHandler.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public interface RequestHandler extends ExceptionCallbackHandler {
 

@@ -4,7 +4,7 @@ import java.util.*;
 
 /** Generates random (doubles) with a Gaussian distribution.
  * <br><br>
- * $Id: GaussianRandom.java,v 1.6 2008-08-21 09:58:14 eng Exp $
+ * $Id$
  */
 public class GaussianRandom {
     

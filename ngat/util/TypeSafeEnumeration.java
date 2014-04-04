@@ -21,8 +21,8 @@ package ngat.util;
  * </pre>
  * where <code>array</code> contains all the possible references, created as a
  * final static array.
- * @author $Author: snf $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public interface TypeSafeEnumeration
 {
@@ -34,6 +34,6 @@ public interface TypeSafeEnumeration
  *    $Date: 2007-02-28 06:14:24 $
  * $RCSfile: TypeSafeEnumeration.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/util/TypeSafeEnumeration.java,v $
- *      $Id: TypeSafeEnumeration.java,v 1.4 2007-02-28 06:14:24 snf Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

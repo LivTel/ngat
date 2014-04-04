@@ -30,8 +30,8 @@ import ngat.ngtcs.subsystem.*;
  * In the run method the position error determines the state of the telescope,
  * i.e. SLEWING or TRACKING.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class GOTOImplementor extends CommandImplementor
   implements java.lang.Runnable
@@ -46,7 +46,7 @@ public class GOTOImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: GOTOImplementor.java,v 1.4 2013-07-04 10:25:03 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the GOTO command (300 seconds), in milliseconds.

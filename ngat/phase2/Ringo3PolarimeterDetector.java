@@ -16,7 +16,7 @@ public class Ringo3PolarimeterDetector extends Detector implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: Ringo3PolarimeterDetector.java,v 1.1 2013-06-28 10:13:18 cjm Exp $"); 
+	public final static String RCSID = new String("$Id$"); 
 
 	/** The name of the detector.*/
 	public static final String name = "EMCCD";

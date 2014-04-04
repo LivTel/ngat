@@ -11,14 +11,14 @@ import ngat.util.logging.*;
 /**
  * This class holds the JNI interface to the general spectrograph access routines provided by libspec.
  * @author Chris Mottram
- * @version $Revision: 0.11 $
+ * @version $Revision$
  */
 public class SpecLibrary
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: SpecLibrary.java,v 0.11 2004-07-29 18:50:45 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 // general constants
 	/**
 	 * Bit definition to pass into open to tell the routine to open communication with the IO card hardware. 

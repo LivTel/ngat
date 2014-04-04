@@ -7,9 +7,9 @@ DIRS_TARGET    = dirs
 SRCS           = 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 #
-#   $Author: cjm $ 
-# $Revision: 1.1 $
-#       $Id: Makefile,v 1.1 2013-06-28 10:14:04 cjm Exp $
+#   $Author$ 
+# $Revision$
+#       $Id$
 #     $Date: 2013-06-28 10:14:04 $
 #  $RCSfile: Makefile,v $
 #   $Source: /space/home/eng/cjm/cvs/ngat/serial/Makefile,v $

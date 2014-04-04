@@ -12,14 +12,14 @@ import java.net.*;
  * The class includes a main method for testing, and a startable thread to deal with out from the server
  * being connected to. It implments Runnable.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class TelnetConnection implements Runnable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: TelnetConnection.java,v 1.1 2008-07-23 12:41:17 eng Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The address the connetion is made to.
 	 */

@@ -10,7 +10,7 @@ import ngat.phase2.nonpersist.*;
 
 /** 
  * Subclass of Detector to represent the THOR  CCD Detector.
- * $Id: THORDetector.java,v 1.1 2013-06-28 10:13:18 cjm Exp $
+ * $Id$
  */
 public class THORDetector extends Detector implements Serializable 
 {

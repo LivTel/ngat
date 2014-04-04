@@ -16,14 +16,14 @@ import ngat.util.logging.*;
  * This class tests the using the ngat.eip library to communicate with two
  * PLCs in different threads at the same time.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class OnePlcTwoThreadTest
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class
 	 */
-	public final static String RCSID = new String("$Id: OnePlcTwoThreadTest.java,v 1.2 2009-02-05 11:33:57 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Number of Threads to communicate with.
 	 */

@@ -5,8 +5,8 @@ import ngat.ngtcs.PointingModelCoefficients;
 /**
  *
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.3 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class CALIBRATEDone extends CommandDone
 {
@@ -20,7 +20,7 @@ public class CALIBRATEDone extends CommandDone
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: CALIBRATEDone.java,v 1.3 2013-07-04 10:06:29 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -77,7 +77,7 @@ public class CALIBRATEDone extends CommandDone
  *    $Date: 2013-07-04 10:06:29 $
  * $RCSfile: CALIBRATEDone.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/CALIBRATEDone.java,v $
- *      $Id: CALIBRATEDone.java,v 1.3 2013-07-04 10:06:29 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

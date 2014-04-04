@@ -11,14 +11,14 @@ import ngat.util.logging.*;
 /**
  * Class, an instance of which holds PLC connection details.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class ConnectionParameters
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: ConnectionParameters.java,v 1.2 2008-10-03 09:20:00 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * What sort of connection is to be used to talk to the PLC.
 	 * @see ngat.serial.arcomess.ArcomESS#INTERFACE_DEVICE_NONE

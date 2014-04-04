@@ -34,7 +34,7 @@ import javax.swing.*;
  * It shows a message dialog. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 1.2 $
+ * @version $Revision$
  * @see javax.swing.JOptionPane#showMessageDialog
  */
 public class GUIMessageDialogShower implements Runnable
@@ -42,7 +42,7 @@ public class GUIMessageDialogShower implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUIMessageDialogShower.java,v 1.2 2006-05-16 18:15:26 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * Parent component to pass to the message dialog.
 	 */

@@ -15,8 +15,8 @@ import ngat.ngtcs.command.execute.*;
  * This class is a wrapper for the ngat.net.TCPServerConnectionThread to 
  * implement the JMS protocol for NGTCS command communication.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.4 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TestExecutionThread extends TCPServerConnectionThread
 {
@@ -30,7 +30,7 @@ public class TestExecutionThread extends TCPServerConnectionThread
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TestExecutionThread.java,v 1.4 2013-07-04 13:07:05 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -195,7 +195,7 @@ public class TestExecutionThread extends TCPServerConnectionThread
  *    $Date: 2013-07-04 13:07:05 $
  * $RCSfile: TestExecutionThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/test/TestExecutionThread.java,v $
- *      $Id: TestExecutionThread.java,v 1.4 2013-07-04 13:07:05 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/23 11:48:45  je
  *     Documentation change and replaced System.err reporting with logger.log

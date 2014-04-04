@@ -5,8 +5,8 @@ import ngat.ngtcs.command.*;
 /**
  * 
  * 
- * @author $Author: je $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  *
  */
 public interface Communicator
@@ -49,6 +49,6 @@ public interface Communicator
  *    $Date: 2003-07-01 10:11:30 $
  * $RCSfile: Communicator.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/Communicator.java,v $
- *      $Id: Communicator.java,v 1.1 2003-07-01 10:11:30 je Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  */

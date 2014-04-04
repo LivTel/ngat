@@ -14,7 +14,7 @@ import javax.swing.text.BadLocationException;
  * It appends some passed in text to the JTextArea. This is needed as updating <b>must</b> be done
  * in the Swing thread.
  * @author Chris Mottram
- * @version $Revision: 0.5 $
+ * @version $Revision$
  * @see javax.swing.SwingUtilities#invokeLater
  */
 public class GUITextAppender implements Runnable
@@ -22,7 +22,7 @@ public class GUITextAppender implements Runnable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: GUITextAppender.java,v 0.5 2003-08-14 16:40:56 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 	/**
 	 * The Swing JTextAreacomponent to append to.
 	 */

@@ -8,7 +8,7 @@ import ngat.phase2.nonpersist.*;
 
 /** Subclass of Detector to represent the RATCam EEV42-40 CCD Detector.
  *
- * $Id: CCDDetector.java,v 1.3 2007-07-05 11:57:36 snf Exp $
+ * $Id$
  *
  */
 public class CCDDetector extends Detector implements Serializable {

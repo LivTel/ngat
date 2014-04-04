@@ -18,7 +18,7 @@ public class PolarimeterConfig extends InstrumentConfig implements Serializable
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: PolarimeterConfig.java,v 1.3 2007-10-05 09:34:52 snf Exp $"); 
+	public final static String RCSID = new String("$Id$"); 
 	/** 
 	 * Serial version UID - used to maintain serialization compatibility
 	 * across modifications of the class's structure.

@@ -7,8 +7,8 @@ import javax.swing.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class JExceptionMessage extends javax.swing.JOptionPane
 {
@@ -16,7 +16,7 @@ public class JExceptionMessage extends javax.swing.JOptionPane
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: JExceptionMessage.java,v 1.2 2013-07-04 13:01:39 cjm Exp $" );
+	new String( "$Id$" );
 
 
     /**

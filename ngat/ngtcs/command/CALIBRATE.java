@@ -4,8 +4,8 @@ package ngat.ngtcs.command;
  * This command updates the pointing model by either performing a pointing
  * test, or by reverting to the 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class CALIBRATE extends ngat.ngtcs.command.Command
 {
@@ -19,7 +19,7 @@ public class CALIBRATE extends ngat.ngtcs.command.Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: CALIBRATE.java,v 1.3 2013-07-04 10:06:31 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -72,7 +72,7 @@ public class CALIBRATE extends ngat.ngtcs.command.Command
  *    $Date: 2013-07-04 10:06:31 $
  * $RCSfile: CALIBRATE.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/CALIBRATE.java,v $
- *      $Id: CALIBRATE.java,v 1.3 2013-07-04 10:06:31 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

@@ -20,8 +20,8 @@ import ngat.ngtcs.command.*;
 /**
  * Simple GUI to test the NGTCS commands and execution.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class JTestGUI extends JApplet implements ActionListener
 {
@@ -29,7 +29,7 @@ public class JTestGUI extends JApplet implements ActionListener
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: JTestGUI.java,v 1.3 2013-07-04 13:02:29 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    *

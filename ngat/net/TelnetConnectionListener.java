@@ -9,7 +9,7 @@ import java.lang.*;
  * The TelnetConnection thread receives input from the connection, and for each line calls
  * the <i>lineRead</i> method in this interface.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public interface TelnetConnectionListener
 {

@@ -9,8 +9,8 @@ import ngat.ngtcs.command.*;
  * information necessary to build a FITS header.
  * 
  * 
- * @author $Author: cjm $
- * @version $Revision: 1.4 $
+ * @author $Author$
+ * @version $Revision$
  */
 public class SHOWImplementor extends CommandImplementor
 {
@@ -24,7 +24,7 @@ public class SHOWImplementor extends CommandImplementor
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SHOWImplementor.java,v 1.4 2013-07-04 10:26:08 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * The timeout for the SHOW command (60 seconds), in milliseconds.
@@ -275,7 +275,7 @@ public class SHOWImplementor extends CommandImplementor
  *    $Date: 2013-07-04 10:26:08 $
  * $RCSfile: SHOWImplementor.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/execute/SHOWImplementor.java,v $
- *      $Id: SHOWImplementor.java,v 1.4 2013-07-04 10:26:08 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.3  2003/09/26 09:58:41  je
  *     Implemented public final static TIMEOUT and public abstract int calcAcknowledgeTime()

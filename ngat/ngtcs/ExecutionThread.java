@@ -12,8 +12,8 @@ import ngat.ngtcs.command.execute.*;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class ExecutionThread extends Thread
 {
@@ -27,7 +27,7 @@ public class ExecutionThread extends Thread
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: ExecutionThread.java,v 1.2 2013-07-02 13:30:06 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -230,7 +230,7 @@ public class ExecutionThread extends Thread
  *    $Date: 2013-07-02 13:30:06 $
  * $RCSfile: ExecutionThread.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/ExecutionThread.java,v $
- *      $Id: ExecutionThread.java,v 1.2 2013-07-02 13:30:06 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/07/01 10:11:30  je
  *     Initial revision

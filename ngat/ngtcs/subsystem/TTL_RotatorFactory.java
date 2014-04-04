@@ -6,8 +6,8 @@ import ngat.ngtcs.subsystem.PluggableSubSystem;
 /**
  * 
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.1 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class TTL_RotatorFactory
   implements PluggableSubSystemCreator
@@ -22,7 +22,7 @@ public class TTL_RotatorFactory
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: TTL_RotatorFactory.java,v 1.1 2006-11-20 14:42:25 cjm Exp $" );
+    new String( "$Id$" );
 
   /*=========================================================================*/
   /*                                                                         */
@@ -58,7 +58,7 @@ public class TTL_RotatorFactory
  *    $Date: 2006-11-20 14:42:25 $
  * $RCSfile: TTL_RotatorFactory.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/TTL_RotatorFactory.java,v $
- *      $Id: TTL_RotatorFactory.java,v 1.1 2006-11-20 14:42:25 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *
  */

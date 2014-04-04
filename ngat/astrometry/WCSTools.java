@@ -30,14 +30,14 @@ import java.util.*;
  * This class wraps Doug Mink wcstools library, such that we can extract coordinate positions from a WCS fitted
  * FITS image.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class WCSTools
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: WCSTools.java,v 1.1 2013-06-28 10:11:49 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Static code to load libngatastrometrywcstools, the shared C library that implements an interface to the

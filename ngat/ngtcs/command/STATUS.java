@@ -3,8 +3,8 @@ package ngat.ngtcs.command;
 /**
  * Request status information from the telescope system.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.3 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class STATUS extends Command
 {
@@ -18,7 +18,7 @@ public class STATUS extends Command
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: STATUS.java,v 1.3 2013-07-04 10:08:24 cjm Exp $" );
+	new String( "$Id$" );
 
     /*=========================================================================*/
     /*                                                                         */
@@ -73,7 +73,7 @@ public class STATUS extends Command
  *    $Date: 2013-07-04 10:08:24 $
  * $RCSfile: STATUS.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/command/STATUS.java,v $
- *      $Id: STATUS.java,v 1.3 2013-07-04 10:08:24 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.2  2003/09/26 12:10:06  je
  *     Changed 'RevisionString' to 'rcsid' for ident command.

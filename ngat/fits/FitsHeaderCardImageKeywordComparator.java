@@ -29,7 +29,7 @@ import java.util.*;
  * order lists of card images by keyword, to enable searching lists of FitsHeaderCardImages by keyword.
  * Note: this comparator imposes orderings that are inconsistent with equals.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  * @see ngat.fits.FitsHeader
  */
 public class FitsHeaderCardImageKeywordComparator implements Comparator
@@ -37,7 +37,7 @@ public class FitsHeaderCardImageKeywordComparator implements Comparator
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: FitsHeaderCardImageKeywordComparator.java,v 1.1 2009-11-20 11:15:16 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Compare the two objects (which should be of class FitsHeaderCardImage, by their keywords. 

@@ -3,7 +3,7 @@ package ngat.net;
 /** Factory for generating ProtocolImplementors for the JMS (MA) 
  * multiple acknowledge protocol.
  * <br><br>
- * $Id: JMSMA_ProtocolImplFactory.java,v 1.1 2008-07-23 12:41:17 eng Exp $
+ * $Id$
  */
 public class JMSMA_ProtocolImplFactory implements ProtocolImplFactory {
 

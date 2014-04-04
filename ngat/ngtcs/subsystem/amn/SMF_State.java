@@ -13,8 +13,8 @@ import ngat.ngtcs.subsystem.TTL_Package;
  * <li>E_SMF_STATE_ERROR</li>
  * </ul>
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public final class SMF_State
   implements java.io.Serializable, ngat.ngtcs.subsystem.TTL_DataType
@@ -29,7 +29,7 @@ public final class SMF_State
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SMF_State.java,v 1.2 2013-07-04 12:58:06 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    * Hashtable of instances for retrieval by the enumeration's String name.
@@ -255,7 +255,7 @@ public final class SMF_State
  *    $Date: 2013-07-04 12:58:06 $
  * $RCSfile: SMF_State.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/amn/SMF_State.java,v $
- *      $Id: SMF_State.java,v 1.2 2013-07-04 12:58:06 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:08:45  je
  *     Initial revision

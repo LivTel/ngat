@@ -6,14 +6,14 @@ package ngat.eip;
  * This class extends java.lang.IllegalArgumentException. Objects of this class are thrown when an illegal
  * format argument is passed into various parse routines in EIPPLC.
  * @author Chris Mottram
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class EIPFormatException extends IllegalArgumentException
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
 	 */
-	public final static String RCSID = new String("$Id: EIPFormatException.java,v 1.1 2008-10-09 14:14:21 cjm Exp $");
+	public final static String RCSID = new String("$Id$");
 
 	/**
 	 * Constructor for the exception.

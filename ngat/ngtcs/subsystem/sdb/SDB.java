@@ -18,8 +18,8 @@ import ngat.ngtcs.subsystem.*;
  * As with all singletons, the object reference is obtained by calling the
  * static method <code>getReference</code>.
  * 
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class SDB extends TTL_System implements PluggableSubSystem
 {
@@ -33,7 +33,7 @@ public class SDB extends TTL_System implements PluggableSubSystem
    * String used to identify RCS revision details.
    */
   public static final String rcsid =
-    new String( "$Id: SDB.java,v 1.2 2013-07-04 12:59:43 cjm Exp $" );
+    new String( "$Id$" );
 
   /**
    *
@@ -223,7 +223,7 @@ public class SDB extends TTL_System implements PluggableSubSystem
  *    $Date: 2013-07-04 12:59:43 $
  * $RCSfile: SDB.java,v $
  *  $Source: /space/home/eng/cjm/cvs/ngat/ngtcs/subsystem/sdb/SDB.java,v $
- *      $Id: SDB.java,v 1.2 2013-07-04 12:59:43 cjm Exp $
+ *      $Id$
  *     $Log: not supported by cvs2svn $
  *     Revision 1.1  2003/09/19 16:09:40  je
  *     Initial revision

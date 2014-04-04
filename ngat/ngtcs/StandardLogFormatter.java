@@ -19,8 +19,8 @@ import ngat.util.logging.*;
  * exception stack trace...
  * </pre>
  *
- * @author $Author: cjm $ 
- * @version $Revision: 1.2 $
+ * @author $Author$ 
+ * @version $Revision$
  */
 public class StandardLogFormatter extends LogFormatter
 {
@@ -28,7 +28,7 @@ public class StandardLogFormatter extends LogFormatter
      * String used to identify RCS revision details.
      */
     public static final String rcsid =
-	new String( "$Id: StandardLogFormatter.java,v 1.2 2013-07-02 15:26:49 cjm Exp $" );
+	new String( "$Id$" );
 
     /**
      * Format of the logged time.
