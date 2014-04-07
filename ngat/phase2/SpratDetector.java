@@ -26,7 +26,7 @@ public class SpratDetector extends Detector implements Serializable
 	 * Serial version UID - used to maintain serialization compatibility
 	 * across modifications of the class's structure.
 	 */
-	//private static final long serialVersionUID = ;
+	static final long serialVersionUID = -5849512773408521734L;
 	/** 
 	 * The maximum window count: 1.
 	 */

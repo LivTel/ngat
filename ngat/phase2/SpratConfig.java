@@ -38,7 +38,7 @@ public class SpratConfig extends SpecConfig implements Serializable
 	 * Serial version UID - used to maintain serialization compatibility
 	 * across modifications of the class's structure.
 	 */
-	//private static final long serialVersionUID = ;
+	static final long serialVersionUID = 5373766310465511420L;
 	public static final int maxDetectorCount = 1;
 	/**
 	 * Position state - in this case, the mechanism is IN the beam.
