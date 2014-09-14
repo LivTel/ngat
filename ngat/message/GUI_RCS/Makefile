@@ -39,6 +39,8 @@ SRCS           = GET_STATUS_DONE.java \
 		 SEND_EVENT_DONE.java \
 		 SEND_LOG.java \
 		 SEND_LOG_DONE.java \
+		GET_SEEING.java \
+		GET_SEEING_DONE.java \
 		 SET_SEEING.java \
 		 SET_SEEING_DONE.java \
 		SET_EXTINCTION.java \
@@ -59,6 +61,7 @@ SRCS           = GET_STATUS_DONE.java \
 		 SpyInfo.java \
 		 ObservationStatusInfo.java \
 		 StatusInfo.java \
+		SeeingData.java \
 		AvailabilityModel.java \
 		WeatherMonitoring.java
 

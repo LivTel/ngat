@@ -130,6 +130,10 @@ public class FitsFilename
 	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_SUPIRCAM        	= 's';
+	/**
+	 * Instrument code constant - Sprat.
+	 */
+	public final static char INSTRUMENT_CODE_SPRAT        	        = 'v';
 
 
 	// exposure codes 
@@ -540,6 +544,7 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_RISE
 	 * @see #INSTRUMENT_CODE_I
 	 * @see #INSTRUMENT_CODE_O
+	 * @see #INSTRUMENT_CODE_SPRAT
 	 */
 	public void setInstrumentCode(String code) throws Exception
 	{
@@ -565,7 +570,7 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_RINGOIII_GREEN) &&
 		   (ch != INSTRUMENT_CODE_RISE) && 
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
-		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O))
+		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O)&& (ch != INSTRUMENT_CODE_SPRAT))
 		{
 			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
 					    ch+".");

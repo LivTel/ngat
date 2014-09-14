@@ -16,7 +16,7 @@ public class TestCalculator implements AstrometricCalculator {
     /** Tracking delta time - we may need to use an adaptive scheme.*/
     public static final long TRACK_DELTA = 24 * 3600 *  1000L;
 
-    /** Maximum ns track diff allowed in ns track calculation (rads) corresponds 1/2 deg/sec which is massive.*/
+    /** Maximum ns track diff allowed in ns track calculation (rads).*/
     public static final double MAX_DD = Math.toRadians(0.01); // 1/100 deg is about 40 asec
     
     Vector[] ephem;
@@ -103,27 +103,27 @@ public class TestCalculator implements AstrometricCalculator {
 		Position planet =
 		    JSlalib.getPlanetCoordinates(epoch, iplanet);
 
-// 		PositionVelocity sun = 
-// 		    JSlalib.getSolarCoordinates(epoch);
+		// 		PositionVelocity sun = 
+		// 		    JSlalib.getSolarCoordinates(epoch);
 		
-// 		double x = planet.x + sun.x;
-// 		double y = planet.y + sun.y;
-// 		double z = planet.z + sun.z;
+		// 		double x = planet.x + sun.x;
+		// 		double y = planet.y + sun.y;
+		// 		double z = planet.z + sun.z;
 			
-// 		double r = Math.sqrt(x*x + y*y);
-// 		double n = Math.sqrt(x*x+y*y+z*z);
+		// 		double r = Math.sqrt(x*x + y*y);
+		// 		double n = Math.sqrt(x*x+y*y+z*z);
 		
-// 		double ra = Math.atan(y/x);
-// 		if (x < 0.0)
-// 		    ra += Math.PI;
-// 		if (x > 0.0 && y < 0.0)
-// 		    ra += 2.0*Math.PI;		
+		// 		double ra = Math.atan(y/x);
+		// 		if (x < 0.0)
+		// 		    ra += Math.PI;
+		// 		if (x > 0.0 && y < 0.0)
+		// 		    ra += 2.0*Math.PI;		
 
-// 		double dec = Math.atan(z/r);
+		// 		double dec = Math.atan(z/r);
 		
-// 		System.err.println("TCalc:: RA: "+Math.toDegrees(ra)+" Dec: "+Math.toDegrees(dec));
+		// 		System.err.println("TCalc:: RA: "+Math.toDegrees(ra)+" Dec: "+Math.toDegrees(dec));
 		
-// 		return new Position(ra, dec);
+		// 		return new Position(ra, dec);
 
 		return planet;
 
@@ -154,15 +154,15 @@ public class TestCalculator implements AstrometricCalculator {
 	    // Call SlaPlante. HOW DOES THIS EVER WORK ?
 	    MinorPlanet minor = (MinorPlanet)source;
 	    // 	return JSlalib.getVeryCleverAsteroidPosition(epoch, 
-		// 							     Position.ll,
-		// 							     Position.phi,
-		// 							     minor.getElementEpoch(),
-		// 							     minor.getOrbitalInc(),
-		// 							     minor.getLongAscNode(),
-		// 							     minor.getArgPeri(),
-		// 							     minor.getMeanDistance(),
-		// 							     minor.getEccentricity(),
-		// 							     minor.getMeanAnomaly());
+	    // 							     Position.ll,
+	    // 							     Position.phi,
+	    // 							     minor.getElementEpoch(),
+	    // 							     minor.getOrbitalInc(),
+	    // 							     minor.getLongAscNode(),
+	    // 							     minor.getArgPeri(),
+	    // 							     minor.getMeanDistance(),
+	    // 							     minor.getEccentricity(),
+	    // 							     minor.getMeanAnomaly());
 	    return JSlalib.getAsteroidPosition(epoch, 
 					       Position.ll,
 					       Position.phi,
@@ -191,7 +191,7 @@ public class TestCalculator implements AstrometricCalculator {
 					     planet.getDailyMotion());
 	    
 	} else if
-	    (source instanceof EphemerisSource) {
+		(source instanceof EphemerisSource) {
 	    
 	    EphemerisSource ephem = (EphemerisSource)source;
 	    
@@ -215,18 +215,18 @@ public class TestCalculator implements AstrometricCalculator {
 		
 		EphemerisSource.Coordinate first = (EphemerisSource.Coordinate)track.firstElement();
 		EphemerisSource.Coordinate last  = (EphemerisSource.Coordinate)track.lastElement();
-		EphemerisSource.Coordinate a = null;
-		EphemerisSource.Coordinate b = null;
+		EphemerisSource.Coordinate c1 = null;
+		EphemerisSource.Coordinate c2 = null;
 		
 		long ts = first.getTime();
 		long te = last.getTime();
 		if (epoch < ts) {
-		    a = first;
-		    b = (EphemerisSource.Coordinate)track.get(1);
+		    c1 = first;
+		    c2 = (EphemerisSource.Coordinate)track.get(1);
 		} else if
-		    (epoch > te) { 
-		    a = (EphemerisSource.Coordinate)track.get(track.size()-2);
-		    b = last;			  
+			(epoch > te) { 
+		    c1 = (EphemerisSource.Coordinate)track.get(track.size()-2);
+		    c2 = last;			  
 		} else {
 		    
 		    EphemerisSource.Coordinate current = first;
@@ -243,11 +243,40 @@ public class TestCalculator implements AstrometricCalculator {
 			}
 		    }
 		    // should be between curr and next.
-		    a = current;
-		    b = next;
-		}		
-		// We have the 2 interpolation points
+		    c1 = current;
+		    c2 = next;
+		}
 		
+		// We have the 2 interpolation points c1 and c2
+	
+		// times at c1,c2
+		double t1 = (double)(c1.getTime());
+		double t2 = (double)(c2.getTime());
+
+		// t1 <= epoch <= t2 hopefully
+		// calculate fraction of interval
+		double f = (epoch-t1)/(t2-t1);
+
+		double ra1 = c1.getRA();
+		double ra2 = c2.getRA();
+		double dec1 = c1.getDec();
+		double dec2 = c2.getDec();
+		
+		// angular seperation - distance to travel - TODO do we need to check wraps ??? or does it just work anyway ???
+		double dd = Math.acos(Math.cos(dec1)*Math.cos(dec2)*Math.cos(ra1-ra2) + Math.sin(dec1)*Math.sin(dec2));
+		
+		// calculations....
+		double aa = Math.sin((1-f)*dd)/Math.sin(dd);
+		double bb = Math.sin(f*dd)/Math.sin(dd);
+
+		double x = aa*Math.cos(dec1)*Math.cos(ra1) + bb*Math.cos(dec2)*Math.cos(ra2);
+		double y = aa*Math.cos(dec1)*Math.sin(ra1) + bb*Math.cos(dec2)*Math.sin(ra2);	
+		double z = aa*Math.sin(dec1) + bb*Math.sin(dec2);
+
+		double fdec = Math.atan2(z, Math.sqrt(x*x+y*y));
+		double fra  = Math.atan2(y, x);
+
+		/*
 		double s   = (double)(b.getTime() - a.getTime());
 		double dra = b.getRA()   - a.getRA();
 		double ddc = b.getDec()  - a.getDec();
@@ -258,18 +287,19 @@ public class TestCalculator implements AstrometricCalculator {
 
 		double ra  = a.getRA()  + dra * dt / s;
 		double dec = a.getDec() + ddc * dt / s;
-		//System.err.println("**Ephem Target at: "+Position.toHMSString(ra)+","+Position.toDMSString(dec)); 
-		return new Position(ra,dec);
+		*/
+		System.err.println("**Ephem Target at: "+Position.toHMSString(fra)+","+Position.toDMSString(fdec)); 
+		return new Position(fra,fdec);
 		
 	    } catch (Exception e) {
 		e.printStackTrace();
-		return new Position();
+		return null;
 	    }
 	    
 	}
 	
 	// Here we should deal with anything else ???
-	return new Position(0.0,0.0);	
+	return null;
     }
 
     /** Calculate the planetary non-sidereal tracking rate at the current epoch i.e. now.
@@ -284,24 +314,80 @@ public class TestCalculator implements AstrometricCalculator {
      * @param epoch The epoch for the calculation millis from 1970.
      */ 
     public Tracking getPlanetTracking(Source source, long epoch) {
-	double d_ra  = 999.0;
-	double d_dec = 999.0;
+	/*double d_ra  = 999.0;
+	  double d_dec = 999.0;*/
 	long   dt    = TRACK_DELTA;
+
+	// start with a guess of 180degs
+	double dd = Math.toRadians(Math.PI);
+
+	Position p0 = null;
+	Position p1 = null;
+
 	int ic = 0;
-	while ((Math.abs(d_ra) + Math.abs(d_dec) > MAX_DD)) {
+	while ((dd > MAX_DD)  && dt > 1L) {
 	    ic++;
 	    dt /= 2;
-	    Position p0 = getPlanetPosition(source, epoch);
-	    Position p1 = getPlanetPosition(source, (long)(epoch+dt));
-	    d_ra  = (p1.getRA()-p0.getRA());
-	    d_dec = (p1.getDec()-p0.getDec());
-	    System.err.println("NS Track iteration ["+ic+"] D_t = "+(dt/1000)+"s, D_ra = "+
-			       (Math.toDegrees(d_ra)*3600.0)+"asec,  D_dec = "+
-			       (Math.toDegrees(d_dec)*3600.0)+"asec");
+	
+	    // work out 2 positions, now and now plus dt
+	    p0 = getPlanetPosition(source, epoch);
+	    p1 = getPlanetPosition(source, (long)(epoch+dt));
+	
+	    double ra1 = p0.getRA();
+	    double dec1 = p0.getDec();
+	    double ra2 = p1.getRA();
+            double dec2= p1.getDec();
+ 
+	    // angular seperation - distance to travel - TODO do we need to check wraps ??? or does it just work anyway ???                                                  
+	    dd = Math.acos(Math.cos(dec1)*Math.cos(dec2)*Math.cos(ra1-ra2) + Math.sin(dec1)*Math.sin(dec2));
+
+	    /*d_ra  = (p1.getRA()-p0.getRA());
+	      d_dec = (p1.getDec()-p0.getDec());*/
+
+	    System.err.println("OA NS Track iteration ["+ic+"] S = "+new Date(epoch)+", E = "+new Date(epoch+dt));
+	    System.err.println("OA NS Track iteration ["+ic+"] DT = "+dt+"ms, DD = "+
+			       (Math.toDegrees(dd)*3600.0)+"asec");
+
 	}
-	System.err.println("NS Track calculated after ["+ic+"] iterations");
-	// Ok we can use these they are small enough now... mult by 1k as want per second
-	return new Tracking(1000.0*d_ra/(double)dt, 1000.0*d_dec/(double)dt);
+
+	System.err.println("OA NS Track calculated after ["+ic+"] iterations");
+
+	// we need to calculate rates
+	double ra1  = p0.getRA();
+	double dec1 = p0.getDec();
+	double ra2  = p1.getRA();
+	double dec2 = p1.getDec();
+
+	// check if ra1 and ra2 are in different quadrants ie 0-90 and 270-360
+	// NOTE:in theory we could have one or other in 180-270 and one in 0-90 but that would mean an enormous
+	// tracking length which we will ignore as being ridiculous
+
+	boolean ra1neg = (ra1 >= 1.5*Math.PI && ra1 < 2.0*Math.PI);
+	boolean ra2neg = (ra2 >= 1.5*Math.PI && ra2 < 2.0*Math.PI);
+
+	boolean ra1pos = (ra1 >= 0.0 && ra1 < 0.5*Math.PI);
+	boolean ra2pos = (ra2 >= 0.0 &&ra2 < 0.5*Math.PI);
+	
+	if ( (ra1neg && ra2pos) || (ra1pos && ra2neg) ) {
+
+	    // whichever one is neg needs shifting
+	    if (ra1neg)
+		ra1 = ra1 - 2.0*Math.PI;
+	    else
+		ra2 = ra2 - 2.0*Math.PI;
+
+	}
+	
+	// the rates, mult by 1k as want per second...  
+	double rarate  = 1000.0*(ra2 - ra1)/(double)dt;
+	double decrate = 1000.0*(dec2 - dec1)/(double)dt;
+    
+	System.err.println("OA NS Returning rates: "+
+			   Math.toDegrees(rarate)*3600.0+"as/s, "+
+			   Math.toDegrees(decrate)*3600.0+"as/s");
+   
+	return new Tracking(rarate, decrate);
+    
     }
 
     /** Calculate the position of the MOON at the current epoch.
@@ -317,25 +403,25 @@ public class TestCalculator implements AstrometricCalculator {
      * @return The ngat.astrometry.Position of the MOON.
      */
     public Position getLunarPosition(long epoch) {	
-// 	PositionVelocity moon = 
-// 	    JSlalib.getLunarCoordinates(epoch);
+	// 	PositionVelocity moon = 
+	// 	    JSlalib.getLunarCoordinates(epoch);
 	
-// 	double x = moon.x;
-// 	double y = moon.y;
-// 	double z = moon.z;
+	// 	double x = moon.x;
+	// 	double y = moon.y;
+	// 	double z = moon.z;
 	
-// 	double r = Math.sqrt(x*x + y*y);
-// 	double n = Math.sqrt(x*x+y*y+z*z);
+	// 	double r = Math.sqrt(x*x + y*y);
+	// 	double n = Math.sqrt(x*x+y*y+z*z);
 		
-// 	double ra = Math.atan(y/x);
-// 	if (x < 0.0)
-// 	    ra += Math.PI;
-// 	if (x > 0.0 && y < 0.0)
-// 	    ra += 2.0*Math.PI;
+	// 	double ra = Math.atan(y/x);
+	// 	if (x < 0.0)
+	// 	    ra += Math.PI;
+	// 	if (x > 0.0 && y < 0.0)
+	// 	    ra += 2.0*Math.PI;
 	
-// 	double dec = Math.atan(z/r);
+	// 	double dec = Math.atan(z/r);
 	
-// 	return new Position(ra, dec);	
+	// 	return new Position(ra, dec);	
 
 	return JSlalib.getLunarCoordinates(epoch);
     }
@@ -352,36 +438,36 @@ public class TestCalculator implements AstrometricCalculator {
      * @return The ngat.astrometry.Tracking of the moon.
      */
     public Tracking getLunarTracking(long epoch) {
- // 	PositionVelocity moon = 
-//  	    JSlalib.getLunarCoordinates(epoch);
+	// 	PositionVelocity moon = 
+	//  	    JSlalib.getLunarCoordinates(epoch);
 	
-//  	double x = moon.x;
-//  	double y = moon.y;
-//  	double z = moon.z;
+	//  	double x = moon.x;
+	//  	double y = moon.y;
+	//  	double z = moon.z;
 	
-//  	double r = Math.sqrt(x*x + y*y);
-//  	double n = Math.sqrt(x*x+y*y+z*z);
+	//  	double r = Math.sqrt(x*x + y*y);
+	//  	double n = Math.sqrt(x*x+y*y+z*z);
 	
-//  	double ra = Math.atan(y/x);
-//  	if (x < 0.0)
-//  	    ra += Math.PI;
-//  	if (x > 0.0 && y < 0.0)
-//  	    ra += 2.0*Math.PI;
+	//  	double ra = Math.atan(y/x);
+	//  	if (x < 0.0)
+	//  	    ra += Math.PI;
+	//  	if (x > 0.0 && y < 0.0)
+	//  	    ra += 2.0*Math.PI;
 	
-//  	double dec = Math.atan(z/r);
+	//  	double dec = Math.atan(z/r);
 	
-//  	double vx = moon.vx;
-//  	double vy = moon.vy;
-//  	double vz = moon.vz;
+	//  	double vx = moon.vx;
+	//  	double vy = moon.vy;
+	//  	double vz = moon.vz;
 	
-//  	double cosra  = Math.cos(ra);
-//  	double cosdec = Math.cos(dec);
+	//  	double cosra  = Math.cos(ra);
+	//  	double cosdec = Math.cos(dec);
 	
-//  	double radot  = ( vy / x + ( y / ( x*x ) ) * vx ) * cosra * cosra;
-//  	double decdot = ( r * vz - ( z * ( x * vx + y * vy ) / r ) ) * cosdec * cosdec / ( r * r );
+	//  	double radot  = ( vy / x + ( y / ( x*x ) ) * vx ) * cosra * cosra;
+	//  	double decdot = ( r * vz - ( z * ( x * vx + y * vy ) / r ) ) * cosdec * cosdec / ( r * r );
 	
-//  	return new Tracking(radot, decdot);
-		return new Tracking(0.0,0.0);
+	//  	return new Tracking(radot, decdot);
+	return new Tracking(0.0,0.0);
     }
     
     /** Calculate the position of the SUN at the current epoch. 
@@ -461,54 +547,54 @@ public class TestCalculator implements AstrometricCalculator {
     }
     
 
-   //  public Tracking getPlanetTracking(Source source, long epoch){
+    //  public Tracking getPlanetTracking(Source source, long epoch){
 
-// 	if (source instanceof MajorPlanet) {
-// 	    // Call SlaPlante.
-// 	    MajorPlanet planet = (MajorPlanet)source;
-// 	    return JSlalib.getPlanetPositionVelocity(epoch, 
-// 						     Position.ll,
-// 						     Position.phi,
-// 						     planet.getElementEpoch(),
-// 						     planet.getOrbitalInc(),
-// 						     planet.getLongAscNode(),
-// 						     planet.getLongPeri(),
-// 						     planet.getMeanDistance(),
-// 						     planet.getEccentricity(),
-// 						     planet.getMeanLongitude(),
-// 						     planet.getDailyMotion());
+    // 	if (source instanceof MajorPlanet) {
+    // 	    // Call SlaPlante.
+    // 	    MajorPlanet planet = (MajorPlanet)source;
+    // 	    return JSlalib.getPlanetPositionVelocity(epoch, 
+    // 						     Position.ll,
+    // 						     Position.phi,
+    // 						     planet.getElementEpoch(),
+    // 						     planet.getOrbitalInc(),
+    // 						     planet.getLongAscNode(),
+    // 						     planet.getLongPeri(),
+    // 						     planet.getMeanDistance(),
+    // 						     planet.getEccentricity(),
+    // 						     planet.getMeanLongitude(),
+    // 						     planet.getDailyMotion());
 	    
-// 	PositionVelocity planet = 
-// 	    JSlalib.getPlanetCoordinates(epoch);
+    // 	PositionVelocity planet = 
+    // 	    JSlalib.getPlanetCoordinates(epoch);
 	
-// 	double x = planet.x;
-// 	double y = planet.y;
-// 	double z = planet.z;
+    // 	double x = planet.x;
+    // 	double y = planet.y;
+    // 	double z = planet.z;
 	
-// 	double r = Math.sqrt(x*x + y*y);
-// 	double n = Math.sqrt(x*x+y*y+z*z);
+    // 	double r = Math.sqrt(x*x + y*y);
+    // 	double n = Math.sqrt(x*x+y*y+z*z);
 	
-// 	double ra = Math.atan(y/x);
-// 	if (x < 0.0)
-// 	    ra += Math.PI;
-// 	if (x > 0.0 && y < 0.0)
-// 	    ra += 2.0*Math.PI;
+    // 	double ra = Math.atan(y/x);
+    // 	if (x < 0.0)
+    // 	    ra += Math.PI;
+    // 	if (x > 0.0 && y < 0.0)
+    // 	    ra += 2.0*Math.PI;
 	
-// 	double dec = Math.atan(z/r);
+    // 	double dec = Math.atan(z/r);
 	
-// 	double vx = planet.vx;
-// 	double vy = planet.vy;
-// 	double vz = planet.vz;
+    // 	double vx = planet.vx;
+    // 	double vy = planet.vy;
+    // 	double vz = planet.vz;
 	
-// 	double cosra  = Math.cos(ra);
-// 	double cosdec = Math.cos(dec);
+    // 	double cosra  = Math.cos(ra);
+    // 	double cosdec = Math.cos(dec);
 	
-// 	double radot  = ( vy / x + ( y / ( x*x ) ) * vx ) * cosra * cosra;
-// 	double decdot = ( r * vz - ( z * ( x * vx + y * vy ) / r ) ) * cosdec * cosdec / ( r * r );
+    // 	double radot  = ( vy / x + ( y / ( x*x ) ) * vx ) * cosra * cosra;
+    // 	double decdot = ( r * vz - ( z * ( x * vx + y * vy ) / r ) ) * cosdec * cosdec / ( r * r );
 	
-// 	return new Tracking(radot, decdot);
+    // 	return new Tracking(radot, decdot);
 
-//     }
+    //     }
     
     
 
@@ -579,7 +665,7 @@ public class TestCalculator implements AstrometricCalculator {
 	
     }
     
-    /** Calculate the position from stored ephemeris.*/
+    /** Calculate the position from stored ephemeris. This will NOT work for targets crossing north azm = 0*/
     private Position interpolateFromEphemeris(int catId, long epoch) {	
 	int first = 0;
 	Vector v = ephem[catId];

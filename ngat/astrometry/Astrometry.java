@@ -29,12 +29,13 @@ public class Astrometry {
     
     static {
 	try {
-	    astroCalculator = (AstrometricCalculator)
-		(Class.forName(System.getProperty("astrometry.impl")).newInstance());
-	    //System.err.println("OK. Loaded astrometric calculator.");
+	    /* Get rid of this we only ever use the TestCalculator and only ever will....
+	       astroCalculator = (AstrometricCalculator)
+		(Class.forName(System.getProperty("astrometry.impl")).newInstance());*/
+	    astroCalculator = new TestCalculator();
 	    catalogs = new HashMap();
 	} catch (Exception e) {
-	    System.err.println("Error loading AstrometricCalculator: "+System.getProperty("astrometry.impl"));
+	    System.err.println("FATAL: Error loading AstrometricCalculator: ");
 	    e.printStackTrace();
 	    System.exit(1);
 	}

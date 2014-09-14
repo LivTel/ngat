@@ -8,13 +8,39 @@ public class JSlalib {
     static final TimeZone GMT = TimeZone.getTimeZone("GMT");
     static final TimeZone UTC = new SimpleTimeZone(0, "UTC");
 
-    /** TAI-UTC correction = no of leapseconds since datum.*/
-    static final double TAIUTC = 34; // last LS was 2008-12-31
+    // This information is updated weekly
 
-    // DUT1 (UT1-UTC) corrections broadcast by NIST for 2009-03-12 0000 UTC = 0.3
-    // DUT1 (UT1-UTC) corrections broadcast by NIST for 2009-06-11 0000 UTC = 0.2
+    /*
+**********************************************************************   
+*                                                                    *   
+*                   I E R S   B U L L E T I N - A                    *   
+*                                                                    *   
+*           Rapid Service/Prediction of Earth Orientation            *   
+**********************************************************************   
+4 September 2014                                    Vol. XXVII No. 036   
+______________________________________________________________________   
+GENERAL INFORMATION:                                                     
+To receive this information electronically, contact:                  
+ser7@maia.usno.navy.mil or use                                     
+<http://maia.usno.navy.mil/docrequest.html>                        
+MJD = Julian Date - 2 400 000.5 days                                  
+UT2-UT1 = 0.022 sin(2*pi*T) - 0.012 cos(2*pi*T)                       
+- 0.006 sin(4*pi*T) + 0.007 cos(4*pi*T)   
+where pi = 3.14159265... and T is the date in Besselian years.     
+TT = TAI + 32.184 seconds                                             
+DUT1= (UT1-UTC) transmitted with time signals                         
+=  -0.3 seconds beginning 8 May 2014 at 0000 UTC                  
+=  -0.4 seconds beginning 25 Sep 2014 at 0000 UTC                 
+Beginning 1 July 2012:                                                
+TAI-UTC = 35.000 000 seconds                                       
+***********************************************************************
+*/
+
+    /** TAI-UTC correction = no of leapseconds since datum.*/
+    static final double TAIUTC = 35; 
+
     /** UT1-UTC correction from USNO Bulletin-A - this is never more than +-1.0 sec.*/
-    static final double  UT1UTC = 0.2;          
+    static final double  UT1UTC = -0.4;          
   
     /** Calls slaPlante with the specified parameters.
      * @param date The date of observation of planet as MJD.
@@ -64,7 +90,7 @@ public class JSlalib {
      * @param eta Tangent plane Y offset (rads).
      * @param raz RA off centre of field (rads).
      * @param decz Dec of centre of field (rads).
-      */
+     */
     private static native Position callSlaDtp2s(double xi, double eta, double raz, double decz);
 
     /** Calls slaCldj with the specified parameters.
@@ -205,16 +231,16 @@ public class JSlalib {
     public static Position getCometPosition(long   time,  double elong,  double phi, 
 					    double epoch, double orbinc, double anode, 
 					    double perih, double aorq,   double e) {
-// 	System.err.println("JSlalib:: GetCometPosition: I will be using these comet parameters in degrees:"+
-// 			   "\nfor obs time:  "+time+
-// 			   "\nelong: "+Position.toDegrees(elong,3)+" / "+elong+
-// 			   "\nphi:   "+Position.toDegrees(phi,3)+" / "+phi+
-// 			   "\nepoch: "+epoch+
-// 			   "\norbinc:"+Position.toDegrees(orbinc,3)+" / "+orbinc+
-// 			   "\nanode: "+Position.toDegrees(anode,3)+" / "+anode+
-// 			   "\nperih: "+Position.toDegrees(perih,3)+" / "+perih+
-// 			   "\naorq:  "+aorq+" AU"+
-// 			   "\necc:   "+e);
+	// 	System.err.println("JSlalib:: GetCometPosition: I will be using these comet parameters in degrees:"+
+	// 			   "\nfor obs time:  "+time+
+	// 			   "\nelong: "+Position.toDegrees(elong,3)+" / "+elong+
+	// 			   "\nphi:   "+Position.toDegrees(phi,3)+" / "+phi+
+	// 			   "\nepoch: "+epoch+
+	// 			   "\norbinc:"+Position.toDegrees(orbinc,3)+" / "+orbinc+
+	// 			   "\nanode: "+Position.toDegrees(anode,3)+" / "+anode+
+	// 			   "\nperih: "+Position.toDegrees(perih,3)+" / "+perih+
+	// 			   "\naorq:  "+aorq+" AU"+
+	// 			   "\necc:   "+e);
 	
 	return callSlaPlante(getMJD(time)+getUT(time)+getEtUt2(time)/86400.0, elong, phi, 3, epoch, orbinc, anode, perih,
 			     aorq, e, 0.0, 0.0);
@@ -252,9 +278,9 @@ public class JSlalib {
 
     /** This is an attempt to get apparent geocentric coordinates back.*/
     public static Position getAsteroidPosition2(long   time,  double elong,  double phi,
-						     double epoch, double orbinc, double anode,
-						     double perih, double aorq,   double e,
-						     double aorl) {
+						double epoch, double orbinc, double anode,
+						double perih, double aorq,   double e,
+						double aorl) {
 	
 	// calc time as tt
 	double mjdut = getMJD(time)+getUT(time);
