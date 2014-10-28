@@ -95,13 +95,13 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_FTSPEC_SOUTH 	        = 'g';
 	/**
-	 * Instrument code constant - IO:I (HUGINN).
+	 * Instrument code constant - IO:O.
 	 */
-	public final static char INSTRUMENT_CODE_I        	        = 'h';
+	public final static char INSTRUMENT_CODE_O        	        = 'h';
 	/**
-	 * Instrument code constant - IO:O (MUNINN).
+	 * Instrument code constant - IO:I.
 	 */
-	public final static char INSTRUMENT_CODE_O        	        = 'm';
+	public final static char INSTRUMENT_CODE_I        	        = 'i';
 	/**
 	 * Instrument code constant - NuView.
 	 * This code is now deprecated.
