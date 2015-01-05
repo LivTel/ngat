@@ -36,6 +36,7 @@ import java.io.*;
  * <ul>
  * <li><b><i>int</i> acquisitionMode</b> What sort of acquisition to do, see ngat.phase2.TelescopeConfig#ACQUIRE_MODE_*
  *              One of ACQUIRE_MODE_NONE, ACQUIRE_MODE_BRIGHTEST, ACQUIRE_MODE_WCS.
+ * <li><b><i>double</i> threshold</b> How close to the specified location the pixel has to be, in decimal arcseconds.
  * <li><b><i>double</i> RA</b> assumed J2000, radians. The right ascension of the object to acquire.
  * <li><b><i>double</i> dec</b> assumed J2000, radians. The declination of the object to acquire.
  * <li><b><i>double</i> RARate</b> Tracking rate in RA assumed J2000, radians/sec.
@@ -64,6 +65,10 @@ public class ACQUIRE extends ISS_TO_INST implements Serializable
 	 * Attribute acquisitionMode of type int.
 	 */
 	private int acquisitionMode;
+	/**
+	 * Attribute threshold of type double.
+	 */
+	private double threshold;
 	/**
 	 * Attribute RA of type double.
 	 */
@@ -114,6 +119,24 @@ public class ACQUIRE extends ISS_TO_INST implements Serializable
 	public int getAcquisitionMode()
 	{
 		return this.acquisitionMode;
+	}
+
+	/**
+	 * Method to set threshold.
+	 * @param in The value to set, of type double.
+	 */
+	public void setThreshold(double in)
+	{
+		this.threshold=in;
+	}
+
+	/**
+	 * Method to get threshold.
+	 * @return The method returns the attribute threshold.
+	 */
+	public double getThreshold()
+	{
+		return this.threshold;
 	}
 
 	/**

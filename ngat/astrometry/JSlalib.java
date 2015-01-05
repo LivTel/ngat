@@ -30,7 +30,8 @@ where pi = 3.14159265... and T is the date in Besselian years.
 TT = TAI + 32.184 seconds                                             
 DUT1= (UT1-UTC) transmitted with time signals                         
 =  -0.3 seconds beginning 8 May 2014 at 0000 UTC                  
-=  -0.4 seconds beginning 25 Sep 2014 at 0000 UTC                 
+=  -0.4 seconds beginning 25 Sep 2014 at 0000 UTC   
+=  -0.5 seconds beginning 25 Dec 2014 at 0000 UTC
 Beginning 1 July 2012:                                                
 TAI-UTC = 35.000 000 seconds                                       
 ***********************************************************************
@@ -40,7 +41,7 @@ TAI-UTC = 35.000 000 seconds
     static final double TAIUTC = 35; 
 
     /** UT1-UTC correction from USNO Bulletin-A - this is never more than +-1.0 sec.*/
-    static final double  UT1UTC = -0.4;          
+    static final double  UT1UTC = -0.5;          
   
     /** Calls slaPlante with the specified parameters.
      * @param date The date of observation of planet as MJD.
