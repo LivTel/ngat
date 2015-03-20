@@ -32,8 +32,10 @@ DUT1= (UT1-UTC) transmitted with time signals
 =  -0.3 seconds beginning 8 May 2014 at 0000 UTC                  
 =  -0.4 seconds beginning 25 Sep 2014 at 0000 UTC   
 =  -0.5 seconds beginning 25 Dec 2014 at 0000 UTC
+=  -0.6 seconds beginning 19 Mar 2015 at 0000 UTC                 
 Beginning 1 July 2012:                                                
 TAI-UTC = 35.000 000 seconds                                       
+*  A positive leap second WILL be introduced in UTC on 30 June 2015.  *
 ***********************************************************************
 */
 
@@ -41,7 +43,7 @@ TAI-UTC = 35.000 000 seconds
     static final double TAIUTC = 35; 
 
     /** UT1-UTC correction from USNO Bulletin-A - this is never more than +-1.0 sec.*/
-    static final double  UT1UTC = -0.5;          
+    static final double  UT1UTC = -0.6;          
   
     /** Calls slaPlante with the specified parameters.
      * @param date The date of observation of planet as MJD.
