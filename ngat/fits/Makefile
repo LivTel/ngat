@@ -13,6 +13,8 @@ SRCS           = FitsFilename.java \
 		 FitsHeaderCardImageKeywordComparator.java \
                  FitsHeaderDefaults.java \
                  FitsHeaderException.java \
-                 FitsHeader.java
+                 FitsHeader.java \
+                 FitsFlipException.java \
+		 FitsFlip.java
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
