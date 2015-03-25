@@ -97,7 +97,7 @@ public class FitsFlip
 	 * @param flipY A boolean, if true flip the image in y.
 	 * @exception FitsFlipException Thrown if the operation fails.
 	 */
-	protected void flip(String filename,boolean flipX,boolean flipY) throws FitsFlipException
+	public void flip(String filename,boolean flipX,boolean flipY) throws FitsFlipException
 	{
 		logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+":flip:"+filename+
 			   ":Opening FITS file.");
