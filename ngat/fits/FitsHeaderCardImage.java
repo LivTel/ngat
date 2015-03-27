@@ -219,6 +219,40 @@ public class FitsHeaderCardImage implements Serializable
 		return new String(getClass().getName()+
 			"["+keyword+":"+value+":"+comment+":"+units+":"+orderNumber+"]");
 	}
+
+	/**
+	 * Create a copy of this card image. This has the same data values as the original, but a new object
+	 * reference. The inner immutable sub-object references are the same, if the sub-object is mutable
+	 * (value can be an instance of Date which it mutable) a new sub-object is created with the same value.
+	 * @return A new copy of the original object, with the same values, and with mutable sub-objects copied.
+	 * @see #keyword
+	 * @see #value
+	 * @see #comment
+	 * @see #units
+	 * @see #orderNumber
+	 */
+	public FitsHeaderCardImage copy()
+	{
+		FitsHeaderCardImage clone = null;
+		Object newValue = null;
+		Date oldDate = null;
+		Date newDate = null;
+
+		// keyword, comment and units are all strings - therefore immutable
+		// value can be a String/Integer/Float/Double/Boolean/Date. These are all immutable except Date.
+		// Therefore we must copy the value (if it is an instance of Date) to prevent the original and
+		// copy being tied together my a common reference to a mutable object.
+		if(value instanceof Date)
+		{
+			oldDate = (Date)value;
+			newDate = new Date(oldDate.getTime());
+			newValue = newDate;
+		}
+		else
+			newValue = value;
+		clone = new FitsHeaderCardImage(keyword,newValue,comment,units,orderNumber);
+		return clone;
+	}
 }
 //
 // $Log: not supported by cvs2svn $

@@ -306,6 +306,32 @@ public class FitsHeader
 	}
 
 	/**
+	 * Create a copy of this FitsHeader instance. We try to end up with a copy which does _not_ share any 
+	 * references to mutable objects in it's structure. 
+	 * This involves creating a new FitsHeader instance (therefore containing a new cardImageList instance, 
+	 * and manually copying acroos each FitsHeaderCardImage (using it's copy method, 
+	 * which tries to create a copy containing sharing no references to mutable objects).
+	 * @return A copy of the FitsHeader instance.
+	 * @see #cardImageList
+	 * @see FitsHeaderCardImage#copy
+	 */
+	public FitsHeader copy()
+	{
+		FitsHeader copy = null;
+		FitsHeaderCardImage cardImage = null;
+		FitsHeaderCardImage newCardImage = null;
+
+		copy = new FitsHeader();
+		for(int i=0;i<cardImageList.size();i++)
+		{
+			cardImage = (FitsHeaderCardImage)(cardImageList.get(i));
+			newCardImage = cardImage.copy();
+			copy.add(newCardImage);
+		}
+		return copy;
+	}
+
+	/**
 	 * Routine to write out the keyword-value combinations into a new or existing file in the FITS format.
 	 * This method is synchronised, as using CFITSIO to write headers to two FITS
 	 * files simultaeously from within the same JVM seems to cause SIGSEGV (even when CFITSIO has
