@@ -39,6 +39,11 @@ public class FitsHeaderCardImage implements Serializable
 	 */
 	public final static String RCSID = new String("$Id$");
 	/**
+	 * Serial version ID as instances of this class are serialized for transmission of FITS headers
+	 * from the ISS to instruments.
+	 */
+	static final long serialVersionUID = -1411057302313729429L;
+	/**
 	 * Variable holding the keyword this card image represents.
 	 */
 	private String keyword = null;
