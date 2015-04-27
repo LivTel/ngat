@@ -336,7 +336,9 @@ public class FitsFilename
 		numberFormat = NumberFormat.getInstance();
 		numberFormat.setMinimumIntegerDigits(2);
 		date = new Date(f.date.getTime());
-		dateString = getDateString();
+		// Note dateString must be the same as the copied version, not regenerated from getDateString().
+		// Otherwise this will go wrong when MULTRUNs are run over midday.
+		dateString = f.dateString;
 		multRunNumber = f.multRunNumber;
 		runNumber = f.runNumber;
 		windowNumber = f.windowNumber;
