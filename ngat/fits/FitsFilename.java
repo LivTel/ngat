@@ -306,6 +306,47 @@ public class FitsFilename
 	}
 
 	/**
+	 * Copy constructor for a FitsFilename. The new FitsFilename instance has the same values for it's data fields 
+	 * as the passed in instance. Mostly these are copied where the values are non-mutable, 
+	 * date has a new instance created as it is mutable. calendar and numberFormat are new instances, setup in the
+	 * same way as the default constructor.
+	 * @param f The FitsFilename instance to copy settings from.
+	 * @see #directory
+	 * @see #instrumentCode
+	 * @see #exposureCode
+	 * @see #calendar
+	 * @see #numberFormat
+	 * @see #date
+	 * @see #dateString
+	 * @see #multRunNumber
+	 * @see #runNumber
+	 * @see #windowNumber
+	 * @see #pipelineProcessing
+	 * @see #fileExtension
+	 * @see #isTelfocus
+	 * @see #isTwilightCalibrate
+	 */
+	public FitsFilename(FitsFilename f)
+	{
+		super();
+		directory = f.directory;
+		instrumentCode = f.instrumentCode;
+		exposureCode = f.exposureCode;
+		calendar = Calendar.getInstance();
+		numberFormat = NumberFormat.getInstance();
+		numberFormat.setMinimumIntegerDigits(2);
+		date = new Date(f.date.getTime());
+		dateString = getDateString();
+		multRunNumber = f.multRunNumber;
+		runNumber = f.runNumber;
+		windowNumber = f.windowNumber;
+		pipelineProcessing = f.pipelineProcessing;
+		fileExtension = f.fileExtension;
+		isTelfocus = f.isTelfocus;
+		isTwilightCalibrate = f.isTwilightCalibrate;
+	}
+
+	/**
 	 * This method should be called after the object has been constructed and the directory path 
 	 * and instrument code have been set.
 	 * It initialises the multRunNumber to be the last one used on this night (zero if none exist), for when the
