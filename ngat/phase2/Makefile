@@ -40,6 +40,8 @@ SRCS           = CatalogSource.java \
                  MinorPlanet.java \
                  MonitorGroup.java \
                  Mosaic.java \
+		 LOTUSConfig.java \
+		 LOTUSDetector.java \
                  Observation.java \
 		 Offset.java \
                  OConfig.java \

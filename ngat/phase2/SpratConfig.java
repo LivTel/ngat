@@ -302,4 +302,4 @@ public class SpratConfig extends SpecConfig implements Serializable
 		return position;
 	}
 
-} // end class def [FrodoSpecConfig].
+} // end class def [SpratConfig].
