@@ -103,6 +103,10 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_I        	        = 'i';
 	/**
+	 * Instrument code constant - LOTUS.
+	 */
+	public final static char INSTRUMENT_CODE_LOTUS        	        = 'l';
+	/**
 	 * Instrument code constant - NuView.
 	 * This code is now deprecated.
 	 */
@@ -579,6 +583,7 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_RINGOIII_RED
 	 * @see #INSTRUMENT_CODE_RINGOIII_BLUE
 	 * @see #INSTRUMENT_CODE_RINGOIII_GREEN
+	 * @see #INSTRUMENT_CODE_LOTUS
 	 * @see #INSTRUMENT_CODE_NUVIEW
 	 * @see #INSTRUMENT_CODE_RINGO_STAR
 	 * @see #INSTRUMENT_CODE_RINGO2
@@ -610,10 +615,10 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_NUVIEW) && 
 		   (ch != INSTRUMENT_CODE_RINGO_STAR) && (ch != INSTRUMENT_CODE_RINGO2) && 
 		   (ch != INSTRUMENT_CODE_RINGOIII_RED) &&(ch != INSTRUMENT_CODE_RINGOIII_BLUE) &&
-		   (ch != INSTRUMENT_CODE_RINGOIII_GREEN) &&
-		   (ch != INSTRUMENT_CODE_RISE) && 
+		   (ch != INSTRUMENT_CODE_RINGOIII_GREEN) && (ch != INSTRUMENT_CODE_RISE) && 
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
-		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O)&& (ch != INSTRUMENT_CODE_SPRAT))
+		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O)&& (ch != INSTRUMENT_CODE_SPRAT) && 
+		   (ch != INSTRUMENT_CODE_LOTUS))
 		{
 			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
 					    ch+".");
