@@ -40,10 +40,10 @@ TAI-UTC = 35.000 000 seconds
 */
 
     /** TAI-UTC correction = no of leapseconds since datum.*/
-    static final double TAIUTC = 35; 
+    static final double TAIUTC = 36; 
 
     /** UT1-UTC correction from USNO Bulletin-A - this is never more than +-1.0 sec.*/
-    static final double  UT1UTC = -0.6;          
+    static final double  UT1UTC = +0.3;          
   
     /** Calls slaPlante with the specified parameters.
      * @param date The date of observation of planet as MJD.
