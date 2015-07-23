@@ -5,7 +5,7 @@
 PACKAGENAME    = ngat.astrometry
 PACKAGEDIR     = ngat/astrometry
 JAR_FILE       = ngat_astrometry.jar
-DIRS           = test ngatastrometrywcstools
+DIRS           = test ngatastrometrywcstools ngatastrojni
 DIRS_TARGET    = dirs
 
 SRCS           = AstrometricCalculator.java \
@@ -20,12 +20,14 @@ SRCS           = AstrometricCalculator.java \
 		Site.java \
                  TestCalculator.java \
                  Tracking.java \
-		WCSToolsCoordinate.java WCSToolsWorldCoorHandle.java WCSToolsNativeException.java WCSTools.java 
+		WCSToolsCoordinate.java WCSToolsWorldCoorHandle.java WCSToolsNativeException.java WCSTools.java \
+		NGATAstro.java NGATAstroNativeException.java
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat
 
 depend:
 	(echo depend in ngatastrometrywcstools...; cd ngatastrometrywcstools; $(MAKE) depend); \
+	(echo depend in ngatastrojni...; cd ngatastrojni; $(MAKE) depend); \
 
 
 #
