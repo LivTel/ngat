@@ -42,6 +42,8 @@ SRCS           = CatalogSource.java \
                  Mosaic.java \
 		 LOTUSConfig.java \
 		 LOTUSDetector.java \
+		 MOPTOPPolarimeterDetector.java \
+		 MOPTOPPolarimeterConfig.java \
                  Observation.java \
 		 Offset.java \
                  OConfig.java \
