@@ -69,7 +69,7 @@ public class MOPTOPPolarimeterDetector extends Detector implements Serializable
 
 	/**
 	 * Retrieve number of windowss.
-	 * @return The number of windows (2).
+	 * @return The number of windows (0).
 	 * @see #maxWindowCount
 	 */
 	public final int getMaxWindowCount()
