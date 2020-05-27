@@ -212,6 +212,8 @@ JNIEXPORT jobject JNICALL Java_ngat_astrometry_WCSTools_pix2wcs(JNIEnv *env, jcl
  * Class:     ngat_astrometry_WCSTools<br>
  * Method:    wcs2pix<br>
  * Signature: (Lngat/astrometry/WCSToolsWorldCoorHandle;DD)Lngat/astrometry/WCSToolsCoordinate;<br>
+ * @param xpos The X position, world coordinates in decimal degrees.
+ * @param ypos The Y position, world coordinates in decimal degrees.
  * @see #WCSTools_Handle_Map_Find
  * @see #WCSTools_Create_WCSToolsCoordinate
  */
@@ -235,7 +237,7 @@ JNIEXPORT jobject JNICALL Java_ngat_astrometry_WCSTools_wcs2pix(JNIEnv *env, jcl
 	wcs2pix(wcs,(double)xpos,(double)ypos,&xpix,&ypix,&offscl);
 	if(offscl != 0)
 	{
-		sprintf(error_string,"Position RA %.2f rads, Dec %.2f rads was off bounds (offscl=%d).",
+		sprintf(error_string,"Position RA %.2f degs, Dec %.2f degs was off bounds (offscl=%d).",
 			xpos,ypos,offscl);
 		WCSTools_Throw_Exception_String(env,"wcs2pix",error_string);
 		return NULL;
