@@ -235,7 +235,12 @@ JNIEXPORT jobject JNICALL Java_ngat_astrometry_WCSTools_wcs2pix(JNIEnv *env, jcl
 	/* do wcslib conversion
 	** V3.6.8 adds offscl parameter. */
 	wcs2pix(wcs,(double)xpos,(double)ypos,&xpix,&ypix,&offscl);
-	if(offscl != 0)
+	/* offscl is set to: 
+	** 0 on success
+	** 1 if the conversion fails
+	** 2 if the position is off the image but within the bounds of the projection 
+	*/
+	if((offscl != 0)&&(offscl != 2))
 	{
 		sprintf(error_string,"Position RA %.2f degs, Dec %.2f degs was off bounds (offscl=%d).",
 			xpos,ypos,offscl);
