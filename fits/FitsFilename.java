@@ -103,6 +103,10 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_I        	        = 'i';
 	/**
+	 * Instrument code constant - Raptor.
+	 */
+	public final static char INSTRUMENT_CODE_RAPTOR                 = 'j';
+	/**
 	 * Instrument code constant - LOTUS.
 	 */
 	public final static char INSTRUMENT_CODE_LOTUS        	        = 'l';
@@ -139,13 +143,21 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_SPRAT        	        = 'v';
 	/**
-	 * Instrument code constant - Moptop camera 1.
+	 * Instrument code constant - Moptop Andor camera 1.
 	 */
 	public final static char INSTRUMENT_CODE_MOPTOP_1               = '1';
 	/**
-	 * Instrument code constant - Moptop camera 2.
+	 * Instrument code constant - Moptop Andor camera 2.
 	 */
 	public final static char INSTRUMENT_CODE_MOPTOP_2               = '2';
+	/**
+	 * Instrument code constant - Moptop PCO camera 1.
+	 */
+	public final static char INSTRUMENT_CODE_MOPTOP_3               = '3';
+	/**
+	 * Instrument code constant - Moptop PCO camera 2.
+	 */
+	public final static char INSTRUMENT_CODE_MOPTOP_4               = '4';
 
 	// exposure codes 
 	/**
@@ -602,6 +614,9 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_SPRAT
 	 * @see #INSTRUMENT_CODE_MOPTOP_1
 	 * @see #INSTRUMENT_CODE_MOPTOP_2
+	 * @see #INSTRUMENT_CODE_MOPTOP_3
+	 * @see #INSTRUMENT_CODE_MOPTOP_4
+	 * @see #INSTRUMENT_CODE_RAPTOR
 	 */
 	public void setInstrumentCode(String code) throws Exception
 	{
@@ -627,8 +642,9 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_RINGOIII_GREEN) && (ch != INSTRUMENT_CODE_RISE) && 
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
 		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O)&& (ch != INSTRUMENT_CODE_SPRAT) && 
-		   (ch != INSTRUMENT_CODE_LOTUS) &&
-		   (ch != INSTRUMENT_CODE_MOPTOP_1) && (ch != INSTRUMENT_CODE_MOPTOP_2))
+		   (ch != INSTRUMENT_CODE_LOTUS) && (ch != INSTRUMENT_CODE_RAPTOR) &&
+		   (ch != INSTRUMENT_CODE_MOPTOP_1) && (ch != INSTRUMENT_CODE_MOPTOP_2) &&
+		   (ch != INSTRUMENT_CODE_MOPTOP_3) && (ch != INSTRUMENT_CODE_MOPTOP_4))
 		{
 			throw new Exception(this.getClass().getName()+":setInstrumentCode:Illegal instrument code "+
 					    ch+".");
