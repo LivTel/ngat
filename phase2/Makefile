@@ -52,6 +52,8 @@ SRCS           = CatalogSource.java \
 		 PolarimeterDetector.java \
 		 PolarimeterConfig.java \
                  Proposal.java \
+		 RaptorDetector.java \
+		 RaptorConfig.java \
 		 RISEDetector.java \
 		 RISEConfig.java \
 		 Ringo2PolarimeterDetector.java \
