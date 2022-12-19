@@ -16,7 +16,7 @@ import java.io.*;
  * <li>A Starlight Express 5 position filter wheel containing filters.
  * <li>A 'Nudgematic' mechanisn that we use to offset the target on the detector, 
  *     for each 'exposure' (actually a series of coaads equalling the exposure length) in a multrun. 
- *     The offsets can be 'SMALL' or 'LARGE'.
+ *     The offsets can be 'NONE', 'SMALL' or 'LARGE'.
  * <li>A Raptor Ninox-640 IR detector.  This only has a few fixed coadd exposure lengths, and the exposure length
  *     for each exposure in a multrun is actually a series of coadds. We define the coadd exposure length here
  *     (which must have a '.fmt' Raptor API config file defined for it).
@@ -36,6 +36,10 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	 * across modifications of the class's structure.
 	 */    
 	//private static final long serialVersionUID = ;
+	/**
+	 * Nudgematic offset sizes - in this case, none.
+	 */
+	public final static int NUDGEMATIC_OFFSET_SIZE_NONE = 0;
 	/**
 	 * Nudgematic offset sizes - in this case, small.
 	 */
@@ -63,7 +67,8 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	 */
 	protected String filterName;
 	/**
-	 * Whether the nudgematic will be doing small or large offsets.
+	 * Whether the nudgematic will be doing small, large or no offsets.
+	 * @see #NUDGEMATIC_OFFSET_SIZE_NONE
 	 * @see #NUDGEMATIC_OFFSET_SIZE_SMALL
 	 * @see #NUDGEMATIC_OFFSET_SIZE_LARGE
 	 */
@@ -120,8 +125,10 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 
 	/**
 	 * Set the size of offsets the Nudgematic is to perform.
-	 * @param size The Nudgematic offset size, one of NUDGEMATIC_OFFSET_SIZE_SMALL/NUDGEMATIC_OFFSET_SIZE_LARGE.
+	 * @param size The Nudgematic offset size, one of NUDGEMATIC_OFFSET_SIZE_NONE/ 
+	 *             NUDGEMATIC_OFFSET_SIZE_SMALL/ NUDGEMATIC_OFFSET_SIZE_LARGE.
 	 * @see #nudgematicOffsetSize
+	 * @see #NUDGEMATIC_OFFSET_SIZE_NONE
 	 * @see #NUDGEMATIC_OFFSET_SIZE_SMALL
 	 * @see #NUDGEMATIC_OFFSET_SIZE_LARGE
 	 */
@@ -132,8 +139,10 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 
 	/**
 	 * Returns the currently selected size of offsets the Nudgematic is to perform.
-	 * @return The Nudgematic offset size, one of NUDGEMATIC_OFFSET_SIZE_SMALL/NUDGEMATIC_OFFSET_SIZE_LARGE.
+	 * @return The Nudgematic offset size, one of NUDGEMATIC_OFFSET_SIZE_NONE/ NUDGEMATIC_OFFSET_SIZE_SMALL/ 
+	 *         NUDGEMATIC_OFFSET_SIZE_LARGE.
 	 * @see #nudgematicOffsetSize
+	 * @see #NUDGEMATIC_OFFSET_SIZE_NONE
 	 * @see #NUDGEMATIC_OFFSET_SIZE_SMALL
 	 * @see #NUDGEMATIC_OFFSET_SIZE_LARGE
 	 */
@@ -252,15 +261,18 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	
 	/**
 	 * Return a string version of the nudgematicOffsetSize.
-	 * @return A string, one of "small" or "large".
+	 * @return A string, one of "none", "small" or "large".
 	 * @exception IllegalArgumentException Thrown if the nudgematicOffsetSize is not a known offset size.
 	 * @see #nudgematicOffsetSize
+	 * @see #NUDGEMATIC_OFFSET_SIZE_NONE
 	 * @see #NUDGEMATIC_OFFSET_SIZE_SMALL
 	 * @see #NUDGEMATIC_OFFSET_SIZE_LARGE
 	 */
 	public String nudgematicOffsetSizeToString() throws IllegalArgumentException
 	{
-		if(nudgematicOffsetSize == NUDGEMATIC_OFFSET_SIZE_SMALL)
+		if(nudgematicOffsetSize == NUDGEMATIC_OFFSET_SIZE_NONE)
+			return "none";
+		else if(nudgematicOffsetSize == NUDGEMATIC_OFFSET_SIZE_SMALL)
 			return "small";
 		else if(nudgematicOffsetSize == NUDGEMATIC_OFFSET_SIZE_LARGE)
 			return "large";
@@ -272,10 +284,11 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	
 	/**
 	 * Parse a string into a suitable nudgematic offset size.
-	 * @param sizeString A String, should be one of "small" or "large" to be successful.
+	 * @param sizeString A String, should be one of "none", "small" or "large" to be successful.
 	 * @return The nudgematic offset size number corresponding to the sizeString, one of 
-	 *         NUDGEMATIC_OFFSET_SIZE_SMALL or NUDGEMATIC_OFFSET_SIZE_LARGE.
+	 *         NUDGEMATIC_OFFSET_SIZE_NONE, NUDGEMATIC_OFFSET_SIZE_SMALL or NUDGEMATIC_OFFSET_SIZE_LARGE.
 	 * @exception IllegalArgumentException Thrown if sizeString is not a suitable string.
+	 * @see #NUDGEMATIC_OFFSET_SIZE_NONE
 	 * @see #NUDGEMATIC_OFFSET_SIZE_SMALL
 	 * @see #NUDGEMATIC_OFFSET_SIZE_LARGE
 	 */
@@ -283,7 +296,9 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	{
 		int offsetSize;
 
-		if(sizeString.equals("small"))
+		if(sizeString.equals("none"))
+			offsetSize = NUDGEMATIC_OFFSET_SIZE_NONE;
+		else if(sizeString.equals("small"))
 			offsetSize = NUDGEMATIC_OFFSET_SIZE_SMALL;
 		else if(sizeString.equals("large"))
 			offsetSize = NUDGEMATIC_OFFSET_SIZE_LARGE;
