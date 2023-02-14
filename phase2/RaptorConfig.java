@@ -38,14 +38,17 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	//private static final long serialVersionUID = ;
 	/**
 	 * Nudgematic offset sizes - in this case, none.
+	 * These constants match those in ngat.phase2.XRaptorInstrumentConfig.java.
 	 */
 	public final static int NUDGEMATIC_OFFSET_SIZE_NONE = 0;
 	/**
 	 * Nudgematic offset sizes - in this case, small.
+	 * These constants match those in ngat.phase2.XRaptorInstrumentConfig.java.
 	 */
 	public final static int NUDGEMATIC_OFFSET_SIZE_SMALL = 1;
 	/**
 	 * Nudgematic offset sizes - in this case, large.
+	 * These constants match those in ngat.phase2.XRaptorInstrumentConfig.java.
 	 */
 	public final static int NUDGEMATIC_OFFSET_SIZE_LARGE = 2;
 
