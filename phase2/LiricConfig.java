@@ -1,4 +1,4 @@
-// RaptorConfig.java
+// LiricConfig.java
 // $Id$
 package ngat.phase2;
 
@@ -11,7 +11,7 @@ import java.util.*;
 import java.io.*;
 
 /**
- * Instrument configuration for the Raptor IR camera. This consists of:
+ * Instrument configuration for the Liric IR camera. This consists of:
  * <ul>
  * <li>A Starlight Express 5 position filter wheel containing filters.
  * <li>A 'Nudgematic' mechanisn that we use to offset the target on the detector, 
@@ -25,7 +25,7 @@ import java.io.*;
  * @author cjm
  * @see InstrumentConfig
  */
-public class RaptorConfig extends InstrumentConfig implements Serializable
+public class LiricConfig extends InstrumentConfig implements Serializable
 {
 	/**
 	 * Revision Control System id string, showing the version of the Class.
@@ -38,17 +38,17 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	//private static final long serialVersionUID = ;
 	/**
 	 * Nudgematic offset sizes - in this case, none.
-	 * These constants match those in ngat.phase2.XRaptorInstrumentConfig.java.
+	 * These constants match those in ngat.phase2.XLiricInstrumentConfig.java.
 	 */
 	public final static int NUDGEMATIC_OFFSET_SIZE_NONE = 0;
 	/**
 	 * Nudgematic offset sizes - in this case, small.
-	 * These constants match those in ngat.phase2.XRaptorInstrumentConfig.java.
+	 * These constants match those in ngat.phase2.XLiricInstrumentConfig.java.
 	 */
 	public final static int NUDGEMATIC_OFFSET_SIZE_SMALL = 1;
 	/**
 	 * Nudgematic offset sizes - in this case, large.
-	 * These constants match those in ngat.phase2.XRaptorInstrumentConfig.java.
+	 * These constants match those in ngat.phase2.XLiricInstrumentConfig.java.
 	 */
 	public final static int NUDGEMATIC_OFFSET_SIZE_LARGE = 2;
 
@@ -78,7 +78,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	protected int nudgematicOffsetSize = NUDGEMATIC_OFFSET_SIZE_SMALL;
 	/**
 	 * The exposure length of an individual coadd, in milliseconds. This value can only take a few
-	 * fixed values, dependant on a Raptor API '.fmt' file being generated for the relevant length.
+	 * fixed values, dependant on a Liric Raptor API '.fmt' file being generated for the relevant length.
 	 */
 	protected int coaddExposureLength;
 
@@ -86,24 +86,24 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	/**
 	 * Default constructor.
 	 */
-	public RaptorConfig()
+	public LiricConfig()
 	{
 		this("untitled");
 	}
     
 	/**
 	 * Constructor. Constructs the detector objects in the detector list.
-	 * @see RaptorDetector
+	 * @see LiricDetector
 	 * @see #maxDetectorCount
 	 * @see #wheelCount
 	 * @see #maxWheelCount
 	 */
-	public RaptorConfig(String name)
+	public LiricConfig(String name)
 	{
 		super(name);
-		detectors = new RaptorDetector[maxDetectorCount];
+		detectors = new LiricDetector[maxDetectorCount];
 		for(int i = 0; i < maxDetectorCount; i++)
-			detectors[i] = new RaptorDetector();
+			detectors[i] = new LiricDetector();
 		wheelCount = maxWheelCount;
 	}
     
@@ -156,7 +156,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 
 	/**
 	 * Set the Coadd exposure length. This value can only take a few
-	 * fixed values, dependant on a Raptor API '.fmt' file being generated for the relevant length.
+	 * fixed values, dependant on a Liric Raptor API '.fmt' file being generated for the relevant length.
 	 * @param length The Coadd exposure length, in milliseconds.
 	 * @see #coaddExposureLength
 	 */
@@ -186,7 +186,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	}
 
 	/** 
-	 * Compares this instance of RaptorConfig with another InstConfig to see if they are the same.
+	 * Compares this instance of LiricConfig with another InstConfig to see if they are the same.
 	 * @param other The comparison InstrumentConfig.
 	 * @return The method returns true if the instrument configurations are the same, and false otherwise.
 	 */
@@ -194,7 +194,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	{
 		if (! super.sameAs(other))
 			return false;
-		RaptorConfig cother = (RaptorConfig)other;
+		LiricConfig cother = (LiricConfig)other;
 		// filter wheel
 		if(filterName.equals(cother.getFilterName()) == false)
 			return false;		
@@ -220,7 +220,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	{
 		try
 		{
-			return (RaptorConfig)clone();
+			return (LiricConfig)clone();
 		} 
 		catch (CloneNotSupportedException ce) 
 		{
@@ -231,7 +231,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 	// Formatted Text Output.
 	public void writeXml(PrintStream out, int level)
 	{
-		out.println(tab(level)+"<RaptorConfig name = '"+name+"'>");
+		out.println(tab(level)+"<LiricConfig name = '"+name+"'>");
 		out.println(tab(level+1)+"<filterName>"+filterName+"</filterName>");
 	        out.println(tab(level+1)+"<nudgematicOffsetSize>"+nudgematicOffsetSizeToString()+
 			    "</nudgematicOffsetSize>");
@@ -240,14 +240,14 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 		{
 			detectors[i].writeXml(out,level+1);
 		}
-		out.println(tab(level)+"</RaptorConfig>");
+		out.println(tab(level)+"</LiricConfig>");
 	} // end (write).
 	
 	public String toString()
 	{
 		StringBuffer sb = null;
 		sb = new StringBuffer();
-		sb.append("RaptorConfig: ");
+		sb.append("LiricConfig: ");
 		sb.append(instrumentName);
 		sb.append(" name = "+name);
 		sb.append(" filter = "+filterName);
@@ -280,7 +280,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 		else if(nudgematicOffsetSize == NUDGEMATIC_OFFSET_SIZE_LARGE)
 			return "large";
 		else
-			throw new IllegalArgumentException("ngat.phase2.RaptorConfig:nudgematicOffsetSizeToString:"+
+			throw new IllegalArgumentException("ngat.phase2.LiricConfig:nudgematicOffsetSizeToString:"+
 							   "Illegal offset size number:"+nudgematicOffsetSize);
 
 	}
@@ -306,7 +306,7 @@ public class RaptorConfig extends InstrumentConfig implements Serializable
 		else if(sizeString.equals("large"))
 			offsetSize = NUDGEMATIC_OFFSET_SIZE_LARGE;
 		else
-			throw new IllegalArgumentException("ngat.phase2.RaptorConfig:parseNudgematicOffsetSize:"+
+			throw new IllegalArgumentException("ngat.phase2.LiricConfig:parseNudgematicOffsetSize:"+
 							   "Illegal size string:"+sizeString);
 		return offsetSize;
 	}

@@ -40,6 +40,8 @@ SRCS           = CatalogSource.java \
                  MinorPlanet.java \
                  MonitorGroup.java \
                  Mosaic.java \
+		 LiricDetector.java \
+		 LiricConfig.java \
 		 LOTUSConfig.java \
 		 LOTUSDetector.java \
 		 MOPTOPPolarimeterDetector.java \
@@ -52,8 +54,6 @@ SRCS           = CatalogSource.java \
 		 PolarimeterDetector.java \
 		 PolarimeterConfig.java \
                  Proposal.java \
-		 RaptorDetector.java \
-		 RaptorConfig.java \
 		 RISEDetector.java \
 		 RISEConfig.java \
 		 Ringo2PolarimeterDetector.java \
