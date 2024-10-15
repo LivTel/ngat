@@ -1,7 +1,7 @@
 # $Header: /space/home/eng/cjm/cvs/ngat/Makefile,v 1.3 2013-06-28 10:20:33 cjm Exp $
 # $Revision$
 
-DIRS		= ccd fits math net swing sound util latex message astrometry \
+DIRS		= ccd fits flask math net swing sound util latex message astrometry \
 		  phase2 spec instrument ngtcs serial
 DIRS_TARGET 	= dirs
 
