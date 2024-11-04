@@ -164,7 +164,8 @@ public class ConfigurationProperties extends Properties {
 	 } catch (FileNotFoundException e) {
 	     File file = new File(def);
 	     if (!file.exists())
-		 throw new FileNotFoundException("No such file: "+file.getPath());
+		 throw new FileNotFoundException("No such file: Neither the file defined by key: "+key+
+						 " or the default file:"+file.getPath()+" could be found:"+e);
 	     return file;
 	 }
      }
