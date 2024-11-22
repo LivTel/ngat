@@ -245,6 +245,7 @@ public class EndPoint implements Runnable
 	 * @see #createEndPointURL
 	 * @see #createEndPointConnection
 	 * @see #endPointConnection
+	 * @see #endPointParameters
 	 * @see #createPostData
 	 * @see #getReplyData
 	 * @see #endPointURL
@@ -271,22 +272,36 @@ public class EndPoint implements Runnable
 			// Configure the endPointConnection to do a POST
 			logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
 				   ":doPostRequest:Configuring connection.");
-			endPointConnection.setDoOutput(true);
 			endPointConnection.setRequestMethod("POST");
-			endPointConnection.setRequestProperty("Content-Type", "application/json");
-			endPointConnection.setRequestProperty( "charset", "utf-8");
-			// create the end-point post parameter data (method key/value pairs) from the parameter JSON.
-			logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
-				   ":doPostRequest:Creating post data.");
-			postData = createPostData();
-			logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+
-				   ":doPostRequest:Post data:"+postData);
-			// write the parameter data to the conenction's output stream
-			logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
-				   ":doPostRequest:Writing post data to connection.");
-			os = new DataOutputStream(endPointConnection.getOutputStream());
-			os.write(postData);
-			os.flush();
+			endPointConnection.setDoOutput(true);
+			// only set the content-type and post the end-point parameter data if there are parameters to send
+			if(endPointParameters.isEmpty() == false)
+			{
+				logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
+					   ":doPostRequest:Setting content type to json.");
+				endPointConnection.setRequestProperty("Content-Type", "application/json");
+				endPointConnection.setRequestProperty( "charset", "utf-8");
+				// create the end-point post parameter data (method key/value pairs) from the parameter JSON.
+				logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
+					   ":doPostRequest:Creating post data.");
+				postData = createPostData();
+				logger.log(Logging.VERBOSITY_VERBOSE,this.getClass().getName()+
+					   ":doPostRequest:Post data:"+postData);
+				// write the parameter data to the connection's output stream
+				logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
+					   ":doPostRequest:Writing post data to connection.");
+				os = new DataOutputStream(endPointConnection.getOutputStream());
+				os.write(postData);
+				os.flush();
+			}
+			else
+			{
+				logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
+					   ":doPostRequest:End point parameters are empty:Not setting content-type / posting data.");
+				endPointConnection.setRequestProperty("Content-Length", "0");
+				endPointConnection.getOutputStream().flush();
+				//endPointConnection.getInputStream().close();
+			}
 			logger.log(Logging.VERBOSITY_VERY_VERBOSE,this.getClass().getName()+
 				   ":doPostRequest:Connection response code:"+endPointConnection.getResponseCode());
 			if (endPointConnection.getResponseCode() != 200)
@@ -294,12 +309,13 @@ public class EndPoint implements Runnable
 				logger.log(LOG_LEVEL_ERROR,this.getClass().getName()+
 					   ":doPostRequest:Failed accessing end-point: "+endPointURL+
 					   " with parameters: "+endPointParameters.toString()+
-					   " : HTTP error code : "+ endPointConnection.getResponseCode());
+					   " : HTTP error code : "+ endPointConnection.getResponseCode()+
+					   " : HTTP error message : "+ endPointConnection.getResponseMessage());
 				throw new RuntimeException(this.getClass().getName()+
 							   ":doPostRequest:Failed accessing end-point: "+endPointURL+
 							   " with parameters: "+endPointParameters.toString()+
-							   " : HTTP error code : "+
-							   endPointConnection.getResponseCode());
+							   " : HTTP error code : "+endPointConnection.getResponseCode()+
+							   " : HTTP error message : "+ endPointConnection.getResponseMessage());
 			}
 			// read the end-point's reply data, and parse it into a JSONObject
 			getReplyData();
