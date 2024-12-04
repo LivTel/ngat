@@ -107,6 +107,10 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_LIRIC                  = 'j';
 	/**
+	 * Instrument code constant - LOCI.
+	 */
+	public final static char INSTRUMENT_CODE_LOCI        	        = 'k';
+	/**
 	 * Instrument code constant - LOTUS.
 	 */
 	public final static char INSTRUMENT_CODE_LOTUS        	        = 'l';
@@ -617,6 +621,7 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_MOPTOP_3
 	 * @see #INSTRUMENT_CODE_MOPTOP_4
 	 * @see #INSTRUMENT_CODE_LIRIC
+	 * @see #INSTRUMENT_CODE_LOCI
 	 */
 	public void setInstrumentCode(String code) throws Exception
 	{
@@ -642,7 +647,7 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_RINGOIII_GREEN) && (ch != INSTRUMENT_CODE_RISE) && 
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
 		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O)&& (ch != INSTRUMENT_CODE_SPRAT) && 
-		   (ch != INSTRUMENT_CODE_LOTUS) && (ch != INSTRUMENT_CODE_LIRIC) &&
+		   (ch != INSTRUMENT_CODE_LOTUS) && (ch != INSTRUMENT_CODE_LIRIC) && (ch != INSTRUMENT_CODE_LOCI) &&
 		   (ch != INSTRUMENT_CODE_MOPTOP_1) && (ch != INSTRUMENT_CODE_MOPTOP_2) &&
 		   (ch != INSTRUMENT_CODE_MOPTOP_3) && (ch != INSTRUMENT_CODE_MOPTOP_4))
 		{
