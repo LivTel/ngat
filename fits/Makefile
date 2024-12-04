@@ -5,7 +5,8 @@
 PACKAGENAME    = ngat.fits
 PACKAGEDIR     = ngat/fits
 JAR_FILE       = ngat_fits.jar
-
+DIRS           = test
+DIRS_TARGET    = dirs
 
 SRCS           = FitsFilename.java \
                  FitsHeaderCardImage.java \
