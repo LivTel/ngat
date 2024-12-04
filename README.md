@@ -12,6 +12,8 @@ Dichroic control code (not installed on the telescope).
 PLC communication library using CIP/EIP over ethernet (i.e. Micrologix 1100).
 ## fits
 FITS handling library, used by instruments.
+## flask
+Client-side code for interacting with python Flask API servers. We are thinking of using Flask for NRT, and this allows LT Java client-side calls to be made to these servers.
 ## instrument
 ## lamp
 This class supports an interface to the LT A&G lamp unit. This unit is a PLC controlled device
