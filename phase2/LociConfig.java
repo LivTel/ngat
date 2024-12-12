@@ -58,9 +58,9 @@ public class LociConfig  extends InstrumentConfig implements Serializable
 	public LociConfig(String name) 
 	{
 		super(name);
-		detectors = new LiricDetector[maxDetectorCount];
+		detectors = new LociDetector[maxDetectorCount];
 		for(int i = 0; i < maxDetectorCount; i++)
-			detectors[i] = new LiricDetector();
+			detectors[i] = new LociDetector();
 		wheelCount = maxWheelCount;
 	}
 
