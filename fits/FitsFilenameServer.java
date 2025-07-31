@@ -190,10 +190,10 @@ public class FitsFilenameServer implements Runnable
 		   (code != FitsFilename.INSTRUMENT_CODE_MOPTOP_4))
 		{
 			throw new IllegalArgumentException(this.getClass().getName()+
-							   ":setInstrumentCode:Illegal instrument code "+code+".");
+							   ":setInstrumentCode:Illegal instrument code '"+code+"'.");
 		}
 		instrumentCode = code;
-		endPoint.addParameter("instrument",instrumentCode);
+		endPoint.addParameter("instrument",""+instrumentCode);
 	}
 
 	/**
@@ -223,10 +223,10 @@ public class FitsFilenameServer implements Runnable
 		    (code != FitsFilename.EXPOSURE_CODE_LAMP_FLAT))
 		{
 			throw new IllegalArgumentException(this.getClass().getName()+
-							   ":setExposureCode:Illegal exposure code "+code+".");
+							   ":setExposureCode:Illegal exposure code '"+code+"'.");
 		}
 		exposureCode = code;
-		endPoint.addParameter("exposure",exposureCode);
+		endPoint.addParameter("exposure",""+exposureCode);
 	}
 
 	/**
@@ -240,25 +240,25 @@ public class FitsFilenameServer implements Runnable
 	 */
 	public void setMultrunFlag(String flag) throws IllegalArgumentException
 	{
-		if((flag != MULTRUN_FLAG_START) &&
-		   (flag != MULTRUN_FLAG_NEXT))
+		if((flag.equals(MULTRUN_FLAG_START) == false) &&
+		   (flag.equals(MULTRUN_FLAG_NEXT) == false))
 		{
 			throw new IllegalArgumentException(this.getClass().getName()+
-							   ":setMultrunFlag:Illegal multrun flag "+flag+".");
+							   ":setMultrunFlag:Illegal multrun flag '"+flag+"'.");
 		}
 		multrunFlag = flag;
 		endPoint.addParameter("multrun",multrunFlag);
 	}
 	
 	/**
-	 * Set routine for the file extension string.
+	 * Set routine for the file extension string. The end-point's "extension" parameter is set accordingly.
 	 * @param s The string to set the file extension to, withour the '.'.
 	 * @see #fileExtension
 	 */
 	public void setFileExtension(String s)
 	{
-		if(s != null)
-			fileExtension = new String(s);
+		fileExtension = new String(s);
+		endPoint.addParameter("extension",fileExtension);
 	}
 
 	/**
@@ -333,6 +333,7 @@ public class FitsFilenameServer implements Runnable
 
 	/**
 	 * Return the message string returned by the Flask end-point.
+	 * The message is only returned when the return status is "Error" (not OK).
 	 * @return The message as a string returned by the Flask end-point 
 	 *         (with the JSON key 'message').
 	 * @see #endPoint
@@ -346,6 +347,7 @@ public class FitsFilenameServer implements Runnable
 
 	/**
 	 * Get the LT FITS filename returned by the Flask end-point.
+	 * The filename is only returned when the return status is "OK".
 	 * @return The LT FITS filename string returned by the Flask end-point 
 	 *         (with the JSON key 'filename').
 	 * @see #endPoint
@@ -422,8 +424,10 @@ public class FitsFilenameServer implements Runnable
 			System.out.println("Http Response Code (200 on success):"+fitsFilenameServer.getHttpResponseCode());
 			System.out.println("Return Status:"+fitsFilenameServer.getReturnStatus());
 			System.out.println("Is Return Status OK:"+fitsFilenameServer.isReturnStatusOK());
-			System.out.println("Filename:"+fitsFilenameServer.getReturnFilename());
-			System.out.println("Message:"+fitsFilenameServer.getReturnMessage());
+			if(fitsFilenameServer.isReturnStatusOK())
+				System.out.println("Filename:"+fitsFilenameServer.getReturnFilename());
+			else
+				System.out.println("Message:"+fitsFilenameServer.getReturnMessage());
 		}
 		catch(Exception e)
 		{
