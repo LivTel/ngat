@@ -137,6 +137,8 @@ public class FitsHeaderDefaults
 	 * @see #properties
 	 * @see #load(java.lang.String)
 	 * @see #DEFAULT_PROPERTY_FILE_NAME
+	 * @exception FileNotFoundException Thrown if DEFAULT_PROPERTY_FILE_NAME does not exist.
+	 * @exception IOException Throwen if there is a problem loading the property file.
 	 */
 	public void load() throws FileNotFoundException,IOException
 	{
@@ -146,7 +148,10 @@ public class FitsHeaderDefaults
 	/**
 	 * The load method for the class. This loads the property file from disc, using the specified
 	 * filename. Any old properties are first cleared.
+	 * @param filename A string representing the properties filename to load.
 	 * @see #properties
+	 * @exception FileNotFoundException Thrown if the filename does not exist.
+	 * @exception IOException Throwen if there is a problem loading the property file.
 	 */
 	public void load(String filename) throws FileNotFoundException,IOException
 	{

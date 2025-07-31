@@ -16,6 +16,7 @@ SRCS           = FitsFilename.java \
                  FitsHeaderException.java \
                  FitsHeader.java \
                  FitsFlipException.java \
-		 FitsFlip.java
+		 FitsFlip.java \
+		 FitsFilenameServer.java
 
 include         $(LT_SRC_HOME)/ngat/Makefile.ngat

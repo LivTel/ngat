@@ -95,6 +95,8 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type String.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @param comment The comment for the header.
+	 * @param units A string describing the units of the header's value.
 	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_String(String keyword,String value,
@@ -103,6 +105,8 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Integer.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @param comment The comment for the header.
+	 * @param units A string describing the units of the header's value.
 	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Integer(String keyword,Integer value,
@@ -111,6 +115,8 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Float.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @param comment The comment for the header.
+	 * @param units A string describing the units of the header's value.
 	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Float(String keyword,Float value,
@@ -119,6 +125,8 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Double.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @param comment The comment for the header.
+	 * @param units A string describing the units of the header's value.
 	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Double(String keyword,Double value,
@@ -127,6 +135,8 @@ public class FitsHeader
 	 * Native wrapper to a libngatfits routine to update a keywords value that is of type Boolean.
 	 * @param keyword The FITS keyword.
 	 * @param value The value for this keyword.
+	 * @param comment The comment for the header.
+	 * @param units A string describing the units of the header's value.
 	 * @exception FitsHeaderException Thrown if the operation fails.
 	 */
 	private native void Fits_Header_Update_Keyword_Boolean(String keyword,Boolean value,
@@ -298,6 +308,7 @@ public class FitsHeader
 
 	/**
 	 * Get the number of keywords and values to write into the FITS header.
+	 * @return The number of keywords / values in the cardImageList.
 	 * @see #cardImageList
 	 */
 	public int getKeywordValueCount()
