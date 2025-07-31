@@ -300,7 +300,7 @@ public class FitsFilename
 	 */
 	private String fileExtension = new String("fits");
 	/**
-	 * Boolean, if true, indicates filename is a temporary one of the form: telFocus<n>[_1].fits
+	 * Boolean, if true, indicates filename is a temporary one of the form: telFocus&lt;n&gt;[_1].fits
 	 */
 	private boolean isTelfocus = false;
 	/**
@@ -447,6 +447,7 @@ public class FitsFilename
 	 * This method should be called after the object has been constructed and the directory path has been set.
 	 * This method parses an already existing filename string into it's component parts and sets the fields
 	 * in this object accordingly.
+	 * @param filename A string representing a valid FITS filename to be parsed.
 	 * @exception Exception Thrown if the specified directory cannot be found, or an error occurs
 	 * 	during the parsing.
 	 * @see #multRunNumber
@@ -699,7 +700,7 @@ public class FitsFilename
 		if(codeString.length() != 1)
 		{
 			throw new Exception(this.getClass().getName()+
-					    ":setExposureCode:Illegal instrument code length"+
+					    ":setExposureCode:Illegal exposure code"+
 					    codeString+" with length "+codeString.length()+".");
 		}
 		code = codeString.charAt(0);

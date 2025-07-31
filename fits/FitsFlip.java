@@ -93,6 +93,7 @@ public class FitsFlip
 
 	/**
 	 * Method to flip the image.
+	 * @param filename A string representing the FITS filename to flip.
 	 * @param flipX A boolean, if true flip the image in x.
 	 * @param flipY A boolean, if true flip the image in y.
 	 * @exception FitsFlipException Thrown if the operation fails.
