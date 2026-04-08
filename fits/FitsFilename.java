@@ -75,6 +75,10 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_FTSPEC_NORTH 	        = 'f';
 	/**
+	 * Instrument code constant - Sophia camera (Frodospec replacement, eventually COSMOS IO:O camera).
+	 */
+	public final static char INSTRUMENT_CODE_SOPHIA 	        = 'g';
+	/**
 	 * Instrument code constant - RingoIII Red.
 	 * This code is now deprecated.
 	 */
@@ -623,6 +627,7 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_MOPTOP_4
 	 * @see #INSTRUMENT_CODE_LIRIC
 	 * @see #INSTRUMENT_CODE_LOCI
+	 * @see #INSTRUMENT_CODE_SOPHIA
 	 */
 	public void setInstrumentCode(String code) throws Exception
 	{
@@ -649,6 +654,7 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
 		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O)&& (ch != INSTRUMENT_CODE_SPRAT) && 
 		   (ch != INSTRUMENT_CODE_LOTUS) && (ch != INSTRUMENT_CODE_LIRIC) && (ch != INSTRUMENT_CODE_LOCI) &&
+		   (ch != INSTRUMENT_CODE_SOPHIA) &&
 		   (ch != INSTRUMENT_CODE_MOPTOP_1) && (ch != INSTRUMENT_CODE_MOPTOP_2) &&
 		   (ch != INSTRUMENT_CODE_MOPTOP_3) && (ch != INSTRUMENT_CODE_MOPTOP_4))
 		{
