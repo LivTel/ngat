@@ -71,6 +71,7 @@ public class FitsFilenameServer implements Runnable
 	 * @see FitsFilename#INSTRUMENT_CODE_SPRAT
 	 * @see FitsFilename#INSTRUMENT_CODE_MOPTOP_3
 	 * @see FitsFilename#INSTRUMENT_CODE_MOPTOP_4
+	 * @see FitsFilename#INSTRUMENT_CODE_SOPHIA
 	 */
 	protected char instrumentCode;
 	/**
@@ -174,6 +175,7 @@ public class FitsFilenameServer implements Runnable
 	 * @see FitsFilename#INSTRUMENT_CODE_SPRAT
 	 * @see FitsFilename#INSTRUMENT_CODE_LIRIC
 	 * @see FitsFilename#INSTRUMENT_CODE_LOCI
+	 * @see FitsFilename#INSTRUMENT_CODE_SOPHIA
 	 * @see FitsFilename#INSTRUMENT_CODE_MOPTOP_3
 	 * @see FitsFilename#INSTRUMENT_CODE_MOPTOP_4
 	 */
@@ -186,6 +188,7 @@ public class FitsFilenameServer implements Runnable
 		   (code != FitsFilename.INSTRUMENT_CODE_SPRAT) && 
 		   (code != FitsFilename.INSTRUMENT_CODE_LIRIC) &&
 		   (code != FitsFilename.INSTRUMENT_CODE_LOCI) &&
+		   (code != FitsFilename.INSTRUMENT_CODE_SOPHIA) &&
 		   (code != FitsFilename.INSTRUMENT_CODE_MOPTOP_3) &&
 		   (code != FitsFilename.INSTRUMENT_CODE_MOPTOP_4))
 		{
