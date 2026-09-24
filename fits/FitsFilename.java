@@ -75,7 +75,7 @@ public class FitsFilename
 	 */
 	public final static char INSTRUMENT_CODE_FTSPEC_NORTH 	        = 'f';
 	/**
-	 * Instrument code constant - Sophia camera (Frodospec replacement, eventually COSMOS IO:O camera).
+	 * Instrument code constant - Sophia camera (Frodospec replacement).
 	 */
 	public final static char INSTRUMENT_CODE_SOPHIA 	        = 'g';
 	/**
@@ -116,8 +116,13 @@ public class FitsFilename
 	public final static char INSTRUMENT_CODE_LOCI        	        = 'k';
 	/**
 	 * Instrument code constant - LOTUS.
+	 * Now deprecated, see LUMEN below.
 	 */
-	public final static char INSTRUMENT_CODE_LOTUS        	        = 'l';
+       	public final static char INSTRUMENT_CODE_LOTUS        	        = 'l';
+	/**
+	 * Instrument code constant - LUMEN (Liverpool Universal Multi-band Explorer for New transients).
+	 */
+	public final static char INSTRUMENT_CODE_LUMEN        	        = 'l';
 	/**
 	 * Instrument code constant - NuView.
 	 * This code is now deprecated.
@@ -146,6 +151,10 @@ public class FitsFilename
 	 * This code is now deprecated.
 	 */
 	public final static char INSTRUMENT_CODE_SUPIRCAM        	= 's';
+	/**
+	 * Instrument code constant - Squash spectrograph.
+	 */
+	public final static char INSTRUMENT_CODE_SQUASH          	= 's';	
 	/**
 	 * Instrument code constant - Sprat.
 	 */
@@ -612,11 +621,13 @@ public class FitsFilename
 	 * @see #INSTRUMENT_CODE_RINGOIII_BLUE
 	 * @see #INSTRUMENT_CODE_RINGOIII_GREEN
 	 * @see #INSTRUMENT_CODE_LOTUS
+	 * @see #INSTRUMENT_CODE_LUMEN
 	 * @see #INSTRUMENT_CODE_NUVIEW
 	 * @see #INSTRUMENT_CODE_RINGO_STAR
 	 * @see #INSTRUMENT_CODE_RINGO2
 	 * @see #INSTRUMENT_CODE_FRODOSPEC_RED
 	 * @see #INSTRUMENT_CODE_SUPIRCAM
+	 * @see #INSTRUMENT_CODE_SQUASH
 	 * @see #INSTRUMENT_CODE_RISE
 	 * @see #INSTRUMENT_CODE_I
 	 * @see #INSTRUMENT_CODE_O
@@ -651,9 +662,9 @@ public class FitsFilename
 		   (ch != INSTRUMENT_CODE_RINGO_STAR) && (ch != INSTRUMENT_CODE_RINGO2) && 
 		   (ch != INSTRUMENT_CODE_RINGOIII_RED) &&(ch != INSTRUMENT_CODE_RINGOIII_BLUE) &&
 		   (ch != INSTRUMENT_CODE_RINGOIII_GREEN) && (ch != INSTRUMENT_CODE_RISE) && 
-		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SUPIRCAM) &&
+		   (ch != INSTRUMENT_CODE_FRODOSPEC_RED) && (ch != INSTRUMENT_CODE_SQUASH) &&
 		   (ch != INSTRUMENT_CODE_I) && (ch != INSTRUMENT_CODE_O)&& (ch != INSTRUMENT_CODE_SPRAT) && 
-		   (ch != INSTRUMENT_CODE_LOTUS) && (ch != INSTRUMENT_CODE_LIRIC) && (ch != INSTRUMENT_CODE_LOCI) &&
+		   (ch != INSTRUMENT_CODE_LUMEN) && (ch != INSTRUMENT_CODE_LIRIC) && (ch != INSTRUMENT_CODE_LOCI) &&
 		   (ch != INSTRUMENT_CODE_SOPHIA) &&
 		   (ch != INSTRUMENT_CODE_MOPTOP_1) && (ch != INSTRUMENT_CODE_MOPTOP_2) &&
 		   (ch != INSTRUMENT_CODE_MOPTOP_3) && (ch != INSTRUMENT_CODE_MOPTOP_4))
