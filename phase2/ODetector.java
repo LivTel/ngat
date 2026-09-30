@@ -12,8 +12,9 @@ import java.io.*;
 
 
 /**
- * Detector for the 'O' optical CCD camera. This is a Fairchild F486 4kx4k array.
- * Also used to represent the engineering chip, which is a Hamamatsu 512x60 CCD array.
+ * Detector for the 'O' optical CCD camera. This was a Fairchild F486 4kx4k array. It is now a E2V CCD231-84
+ * 4kx4k array.
+ * Also used to represent the engineering chip, which was a Hamamatsu 512x60 CCD array.
  * @version $Revision$
  * @author cjm
  * @see Detector
@@ -23,7 +24,7 @@ public class ODetector extends Detector implements Serializable
 	/**
 	 * The detector name.
 	 */
-	public static final String name = "Fairchild F486";
+	public static final String name = "E2V CCD231-84";
 	/**
 	 * Serial Version UID.This is used to maintain serialization compatibility
 	 * across modifications of the class's structure.
