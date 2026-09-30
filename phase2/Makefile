@@ -44,6 +44,8 @@ SRCS           = CatalogSource.java \
 		 LiricConfig.java \
 		 LociDetector.java \
 		 LociConfig.java \
+		 LUMENDetector.java \
+		 LUMENConfig.java \
 		 LOTUSConfig.java \
 		 LOTUSDetector.java \
 		 MOPTOPPolarimeterDetector.java \
